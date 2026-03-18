@@ -1,0 +1,20 @@
+{
+  "DEPLOY.md": {
+    "DEPLOY.html": "832d27a6"
+  },
+  "hiphop/hiphop_dashboard.qmd": {
+    "hiphop_dashboard.html": "a5898bf5"
+  },
+  "index.qmd": {
+    "index.html": "87698140"
+  },
+  "projects/index.qmd": {
+    "index.html": "7d05d871"
+  },
+  "teaching/index.qmd": {
+    "index.html": "dc367b83"
+  },
+  "writing/index.qmd": {
+    "index.html": "fe66a229"
+  }
+}

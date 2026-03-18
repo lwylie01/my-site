@@ -1,0 +1,43 @@
+---
+title: "Writing"
+subtitle: "Essays, notes, and longer-form thinking"
+toc: false
+---
+
+::: {.callout-note}
+This section is a placeholder — add your essays and posts as `.qmd` files
+in the `writing/` folder and list them here. Each file becomes a page
+at `yourdomain.com/writing/filename.html`.
+:::
+
+## Essays {.section-heading}
+
+::: {.post-list}
+
+::: {.post-item}
+<a href="#" class="post-title">What "Lyricism" Actually Means: A Measurement Problem</a>
+<p class="post-meta">Coming soon · Data / Music</p>
+<p class="post-excerpt">
+  We started with a single number and ended up with five dimensions, a confidence
+  flag system, and a 17-source bibliography. This is what the construct validity
+  problem looks like in practice.
+</p>
+:::
+
+::: {.post-item}
+<a href="#" class="post-title">Your Second Essay Title</a>
+<p class="post-meta">Coming soon · [Topic]</p>
+<p class="post-excerpt">
+  A short preview sentence or two about what the essay covers.
+  Replace this placeholder when ready.
+</p>
+:::
+
+:::
+
+---
+
+## Notes {.section-heading}
+
+Short observations that don't deserve a full essay but are worth writing down.
+Coming soon.

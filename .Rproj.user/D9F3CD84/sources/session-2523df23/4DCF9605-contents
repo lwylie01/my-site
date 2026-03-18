@@ -1,0 +1,888 @@
+---
+title: "Hip-Hop Periodic Table"
+subtitle: "A Data Storytelling Teaching Module"
+author: "Lindsey E. Wylie"
+format:
+  dashboard:
+    theme: 
+      - cosmo
+      - custom.scss
+    logo: ""
+    nav-buttons:
+      - icon: github
+        href: "#"
+    scrolling: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(plotly)
+library(scales)
+library(forcats)
+library(stringr)
+library(reactable)
+library(htmltools)
+
+# ── Artist data ───────────────────────────────────────────────────────────────
+# Each row: sym, name, region, era, style, debut, rhyme, vocab, story, metaphor,
+#           concept, confidence, confidence_note, description
+
+artists_raw <- tribble(
+  ~sym,  ~name,                    ~region,        ~era,         ~style,                ~debut, ~rhyme, ~vocab, ~story, ~metaphor, ~concept, ~confidence, ~confidence_note,
+  "KH",  "Kool Herc",              "NYC",          "Old School", "Party/Pop",            1973,    3,      3,      3,      2,         4,        "H", "",
+  "GA",  "Grandmaster Flash",      "NYC",          "Old School", "Political",            1977,    5,      5,      6,      5,         7,        "H", "",
+  "ML",  "Melle Mel",              "NYC",          "Old School", "Political",            1979,    7,      7,      8,      7,         9,        "H", "",
+  "SC",  "Sugarhill Gang",         "NYC",          "Old School", "Party/Pop",            1979,    4,      4,      3,      3,         2,        "H", "",
+  "AF",  "Afrika Bambaataa",       "NYC",          "Old School", "Party/Pop",            1982,    4,      5,      3,      4,         6,        "H", "",
+  "LL",  "LL Cool J",              "NYC",          "Old School", "Party/Pop",            1984,    6,      6,      5,      6,         4,        "H", "",
+  "RD",  "Run-DMC",                "NYC",          "Old School", "Party/Pop",            1983,    6,      5,      5,      5,         5,        "H", "",
+  "BB",  "Beastie Boys",           "NYC",          "Old School", "Party/Pop",            1984,    6,      7,      5,      6,         5,        "H", "",
+  "KR",  "KRS-One",                "NYC",          "Old School", "Conscious/Lyrical",    1986,    8,      8,      7,      7,         9,        "H", "",
+  "PE",  "Public Enemy",           "NYC",          "Old School", "Political",            1987,    7,      8,      7,      8,        10,        "H", "",
+  "RS",  "Roxanne Shante",         "NYC",          "Old School", "Conscious/Lyrical",    1984,    7,      6,      6,      6,         6,        "M", "Fewer academic sources; mostly cited in battle rap history",
+  "MC",  "MC Lyte",                "NYC",          "Old School", "Conscious/Lyrical",    1988,    7,      7,      7,      6,         7,        "M", "Well-documented but less scholarly attention than male peers",
+  "SL",  "Slick Rick",             "NYC",          "Old School", "Conscious/Lyrical",    1988,    8,      8,      9,      8,         6,        "H", "",
+  "DS2", "Doug E. Fresh",          "NYC",          "Old School", "Party/Pop",            1984,    6,      6,      5,      6,         4,        "M", "Celebrated in beatbox literature; sparse lyrical analysis",
+  "WR",  "Whodini",                "NYC",          "Old School", "Party/Pop",            1983,    5,      5,      4,      5,         4,        "M", "Cited in electro-rap histories; limited close analysis",
+  "SB",  "Schoolly D",             "South",        "Old School", "Gangsta/Street",       1984,    5,      5,      6,      5,         6,        "M", "Historically significant but thinly analyzed",
+  "JJ",  "J.J. Fad",               "LA",           "Old School", "Party/Pop",            1988,    4,      4,      3,      4,         3,        "L", "Limited critical documentation beyond chart performance",
+  "DL",  "Dana Dane",              "NYC",          "Old School", "Party/Pop",            1987,    6,      6,      7,      6,         4,        "L", "Minimal scholarly attention; regional cult following",
+  "BK",  "Big Daddy Kane",         "NYC",          "Golden Age", "Conscious/Lyrical",    1988,    9,      8,      7,      8,         7,        "H", "",
+  "RA",  "Rakim",                  "NYC",          "Golden Age", "Conscious/Lyrical",    1987,   10,      9,      8,      9,         8,        "H", "",
+  "QL",  "Queen Latifah",          "NYC",          "Golden Age", "Political",            1988,    7,      8,      7,      7,         9,        "H", "",
+  "NW",  "N.W.A",                  "LA",           "Golden Age", "Gangsta/Street",       1987,    7,      7,      8,      7,         7,        "H", "",
+  "IC",  "Ice Cube",               "LA",           "Golden Age", "Gangsta/Street",       1988,    8,      8,      9,      8,         8,        "H", "",
+  "DS",  "De La Soul",             "NYC",          "Golden Age", "Abstract",             1989,    7,      9,      7,      8,         7,        "H", "",
+  "AT",  "A Tribe Called Quest",   "NYC",          "Golden Age", "Jazz-Rap",             1990,    8,      9,      8,      9,         8,        "H", "",
+  "NA",  "Nas",                    "NYC",          "Golden Age", "Conscious/Lyrical",    1994,    9,     10,     10,      9,         9,        "H", "",
+  "BN",  "Biggie",                 "NYC",          "Golden Age", "Gangsta/Street",       1993,    9,      9,     10,      9,         8,        "H", "",
+  "WU",  "Wu-Tang Clan",           "NYC",          "Golden Age", "Abstract",             1993,    8,      9,      8,      9,         8,        "H", "",
+  "SN",  "Snoop Dogg",             "LA",           "Golden Age", "Gangsta/Street",       1992,    7,      7,      7,      7,         5,        "H", "",
+  "DR",  "Dr. Dre",                "LA",           "Golden Age", "Gangsta/Street",       1987,    6,      6,      6,      5,         5,        "H", "",
+  "PH",  "Pharcyde",               "LA",           "Golden Age", "Abstract",             1992,    7,      8,      7,      8,         6,        "H", "",
+  "MD",  "Mobb Deep",              "NYC",          "Golden Age", "Gangsta/Street",       1993,    8,      8,      9,      8,         7,        "H", "",
+  "E4",  "E-40",                   "Bay Area",     "Golden Age", "Party/Pop",            1990,    7,      9,      6,      7,         5,        "H", "",
+  "PM",  "Pete Rock & CL Smooth",  "NYC",          "Golden Age", "Jazz-Rap",             1992,    7,      8,      7,      8,         7,        "M", "Production history well-cited; lyrical analysis thinner",
+  "GG",  "Gang Starr",             "NYC",          "Golden Age", "Conscious/Lyrical",    1989,    8,      8,      8,      8,         8,        "H", "",
+  "BW",  "Brand Nubian",           "NYC",          "Golden Age", "Political",            1990,    7,      8,      6,      7,         8,        "M", "Cited in 5% Nation scholarship; limited broader analysis",
+  "BI",  "Big L",                  "NYC",          "Golden Age", "Conscious/Lyrical",    1993,    9,      9,      7,      9,         7,        "H", "",
+  "GL",  "The Geto Boys",          "South",        "Golden Age", "Gangsta/Street",       1987,    7,      8,      8,      7,         7,        "H", "",
+  "FK",  "Freestyle Fellowship",   "LA",           "Golden Age", "Abstract",             1991,    8,      9,      7,      8,         7,        "M", "Significant in underground circles; limited mainstream docs",
+  "DG",  "Digable Planets",        "NYC",          "Golden Age", "Jazz-Rap",             1993,    7,      8,      6,      7,         7,        "M", "Grammy win but limited sustained scholarly attention",
+  "BR",  "Busta Rhymes",           "NYC",          "Golden Age", "Conscious/Lyrical",    1993,    9,      8,      7,      8,         7,        "H", "",
+  "2P",  "2Pac",                   "LA",           "Late 90s",   "Political",            1991,    8,      8,      9,      8,         9,        "H", "",
+  "JZ",  "Jay-Z",                  "NYC",          "Late 90s",   "Gangsta/Street",       1996,    8,      9,      9,      9,         8,        "H", "",
+  "EM",  "Eminem",                 "Midwest",      "Late 90s",   "Conscious/Lyrical",    1997,   10,     10,      9,      9,         8,        "H", "",
+  "DX",  "DMX",                    "NYC",          "Late 90s",   "Gangsta/Street",       1998,    6,      6,      7,      6,         6,        "H", "",
+  "LH",  "Lauryn Hill",            "NYC",          "Late 90s",   "Conscious/Lyrical",    1996,    8,      9,      9,      9,         9,        "H", "",
+  "MS",  "Missy Elliott",          "South",        "Late 90s",   "Experimental",         1997,    7,      8,      6,      8,         7,        "H", "",
+  "MB",  "Mos Def",                "NYC",          "Late 90s",   "Conscious/Lyrical",    1999,    8,      9,      8,      9,         9,        "H", "",
+  "TK",  "Talib Kweli",            "NYC",          "Late 90s",   "Conscious/Lyrical",    1998,    8,      9,      8,      8,         9,        "H", "",
+  "OK",  "OutKast",                "South",        "Late 90s",   "Experimental",         1994,    8,      9,      8,      9,         9,        "H", "",
+  "MP",  "Master P",               "South",        "Late 90s",   "Party/Pop",            1991,    4,      4,      4,      3,         4,        "H", "",
+  "CW",  "Cam'ron",                "NYC",          "Late 90s",   "Gangsta/Street",       1998,    7,      8,      7,      7,         6,        "M", "Cult critical reassessment ongoing",
+  "LK",  "Lil Kim",                "NYC",          "Late 90s",   "Gangsta/Street",       1996,    7,      7,      7,      8,         6,        "H", "",
+  "BT2", "Big Pun",                "NYC",          "Late 90s",   "Conscious/Lyrical",    1998,    9,      8,      8,      9,         7,        "H", "",
+  "FA",  "Foxy Brown",             "NYC",          "Late 90s",   "Gangsta/Street",       1996,    7,      7,      7,      7,         6,        "M", "Significant historically; less scholarly attention than Lil Kim",
+  "JR",  "Juvenile",               "South",        "Late 90s",   "Party/Pop",            1994,    6,      6,      6,      6,         5,        "M", "Significant in bounce history; modest critical depth",
+  "KW",  "Kanye West",             "Midwest",      "2000s",      "Experimental",         2004,    7,      8,      8,      9,        10,        "H", "",
+  "LW",  "Lil Wayne",              "South",        "2000s",      "Conscious/Lyrical",    1999,    9,      9,      7,     10,         7,        "H", "",
+  "TI",  "T.I.",                   "South",        "2000s",      "Gangsta/Street",       2001,    7,      7,      8,      7,         7,        "H", "",
+  "GM",  "Gucci Mane",             "South",        "2000s",      "Trap/Drill",           2005,    5,      5,      5,      5,         4,        "H", "",
+  "GK",  "Ghostface Killah",       "NYC",          "2000s",      "Conscious/Lyrical",    1994,    8,      9,      9,      9,         7,        "H", "",
+  "MD2", "MF DOOM",                "NYC",          "2000s",      "Abstract",             1999,   10,     10,      8,     10,         8,        "H", "",
+  "CM",  "Common",                 "Midwest",      "2000s",      "Conscious/Lyrical",    1992,    7,      8,      8,      8,         9,        "H", "",
+  "LU",  "Ludacris",               "South",        "2000s",      "Party/Pop",            2000,    7,      7,      6,      8,         5,        "H", "",
+  "YJ",  "Young Jeezy",            "South",        "2000s",      "Gangsta/Street",       2005,    5,      5,      6,      5,         6,        "H", "",
+  "LF",  "Lupe Fiasco",            "Midwest",      "2000s",      "Conscious/Lyrical",    2006,    8,      9,      8,      9,        10,        "H", "",
+  "SF",  "Scarface",               "South",        "2000s",      "Gangsta/Street",       1991,    7,      8,     10,      8,         8,        "H", "",
+  "AE",  "Aesop Rock",             "NYC",          "2000s",      "Abstract",             2000,    8,     10,      7,      9,         8,        "H", "",
+  "JE",  "Jadakiss",               "NYC",          "2000s",      "Gangsta/Street",       2001,    7,      7,      7,      7,         6,        "M", "Well-regarded but limited scholarly analysis",
+  "FK2", "50 Cent",                "NYC",          "2000s",      "Gangsta/Street",       2003,    6,      6,      7,      6,         5,        "H", "",
+  "TS",  "Three 6 Mafia",          "South",        "2000s",      "Gangsta/Street",       1995,    5,      6,      6,      6,         5,        "M", "Oscar win elevated profile; lyrical analysis limited",
+  "UG",  "UGK",                    "South",        "2000s",      "Gangsta/Street",       1992,    7,      8,      8,      7,         7,        "H", "",
+  "RA2", "Raekwon",                "NYC",          "2000s",      "Gangsta/Street",       1995,    8,      8,      9,      8,         7,        "H", "",
+  "EL",  "El-P",                   "NYC",          "2000s",      "Experimental",         2002,    8,      9,      7,      9,         9,        "H", "",
+  "IL",  "Immortal Technique",     "NYC",          "2000s",      "Political",            2001,    7,      8,      7,      7,        10,        "M", "Heavy political reputation; thin formal lyrical analysis",
+  "AC",  "Aceyalone",              "LA",           "2000s",      "Abstract",             1993,    8,      9,      7,      8,         7,        "M", "Highly regarded underground; thin mainstream documentation",
+  "KL",  "Kendrick Lamar",         "LA",           "2010s",      "Conscious/Lyrical",    2011,   10,     10,     10,     10,        10,        "H", "",
+  "DK",  "Drake",                  "International","2010s",      "Party/Pop",            2006,    6,      7,      7,      7,         5,        "H", "",
+  "JC",  "J. Cole",                "South",        "2010s",      "Conscious/Lyrical",    2011,    8,      8,      9,      8,         9,        "H", "",
+  "YT",  "Young Thug",             "South",        "2010s",      "Experimental",         2011,    5,      6,      4,      6,         5,        "H", "",
+  "FT",  "Future",                 "South",        "2010s",      "Trap/Drill",           2012,    5,      5,      5,      6,         5,        "H", "",
+  "CH",  "Chance the Rapper",      "Midwest",      "2010s",      "Conscious/Lyrical",    2013,    8,      8,      8,      8,         9,        "H", "",
+  "ES",  "Earl Sweatshirt",        "LA",           "2010s",      "Abstract",             2010,    9,      9,      7,      9,         8,        "H", "",
+  "MM",  "Meek Mill",              "South",        "2010s",      "Gangsta/Street",       2012,    6,      6,      7,      6,         6,        "H", "",
+  "AR",  "A$AP Rocky",             "NYC",          "2010s",      "Experimental",         2011,    6,      7,      5,      7,         5,        "H", "",
+  "NM",  "Nicki Minaj",            "NYC",          "2010s",      "Conscious/Lyrical",    2010,    9,      9,      7,      8,         7,        "H", "",
+  "VS",  "Vince Staples",          "LA",           "2010s",      "Political",            2012,    7,      8,      8,      8,         9,        "H", "",
+  "BK2", "Big K.R.I.T.",           "South",        "2010s",      "Conscious/Lyrical",    2010,    8,      8,      8,      8,         8,        "H", "",
+  "RL",  "Run The Jewels",         "Midwest",      "2010s",      "Political",            2013,    8,      9,      7,      9,         9,        "H", "",
+  "KM",  "Killer Mike",            "South",        "2010s",      "Political",            2003,    8,      8,      8,      8,         9,        "H", "",
+  "FS",  "Freddie Gibbs",          "Midwest",      "2010s",      "Gangsta/Street",       2004,    8,      8,      9,      7,         7,        "H", "",
+  "MO",  "Migos",                  "South",        "2010s",      "Trap/Drill",           2013,    4,      4,      4,      5,         3,        "H", "",
+  "TR",  "Tierra Whack",           "NYC",          "2010s",      "Experimental",         2018,    7,      8,      7,      8,         8,        "M", "Breakout 2018; career short; scoring may shift",
+  "NL",  "Noname",                 "Midwest",      "2010s",      "Conscious/Lyrical",    2016,    8,      9,      8,      8,         9,        "H", "",
+  "SZ",  "Saba",                   "Midwest",      "2010s",      "Conscious/Lyrical",    2014,    8,      8,      9,      8,         8,        "H", "",
+  "DC",  "Danny Brown",            "Midwest",      "2010s",      "Experimental",         2010,    8,      9,      7,      9,         8,        "H", "",
+  "MH2", "Mac Miller",             "Midwest",      "2010s",      "Conscious/Lyrical",    2010,    7,      8,      7,      7,         8,        "H", "",
+  "JD2", "J.I.D",                  "South",        "2010s",      "Conscious/Lyrical",    2017,    9,      8,      8,      8,         8,        "M", "Late emergence; critical acclaim building; may rescore upward",
+  "TY",  "Tyler the Creator",      "LA",           "2010s",      "Experimental",         2009,    7,      9,      8,      9,         9,        "H", "",
+  "RP",  "Rapsody",                "South",        "2010s",      "Conscious/Lyrical",    2010,    8,      8,      8,      8,         9,        "H", "",
+  "PZ",  "Pusha T",                "NYC",          "2010s",      "Gangsta/Street",       2002,    8,      7,      7,      8,         7,        "H", "",
+  "CB",  "Cardi B",                "NYC",          "2010s",      "Party/Pop",            2018,    6,      6,      6,      6,         4,        "H", "",
+  "PG",  "Polo G",                 "Midwest",      "2020s",      "Gangsta/Street",       2019,    7,      7,      8,      7,         7,        "M", "Recent; trajectory still forming",
+  "RW",  "Rod Wave",               "South",        "2020s",      "Experimental",         2019,    5,      5,      7,      6,         5,        "M", "Recent; critical consensus not yet settled",
+  "DO",  "Doechii",                "South",        "2020s",      "Experimental",         2021,    8,      8,      8,      8,         9,        "M", "Breakout recent; scoring may shift upward",
+  "GN",  "Gunna",                  "South",        "2020s",      "Trap/Drill",           2018,    4,      5,      4,      5,         3,        "M", "Significant commercial presence; thin critical analysis",
+  "LB",  "Lil Baby",               "South",        "2020s",      "Gangsta/Street",       2017,    5,      5,      6,      5,         5,        "M", "Recent; commercial dominance clear; critical depth forming",
+  "BT",  "Benny the Butcher",      "NYC",          "2020s",      "Gangsta/Street",       2012,    8,      8,      9,      8,         7,        "H", "",
+  "ST",  "Stormzy",                "UK",           "2020s",      "Political",            2015,    7,      7,      7,      7,         8,        "H", "",
+  "BD",  "Bad Bunny",              "International","2020s",      "Party/Pop",            2016,    5,      6,      6,      6,         6,        "M", "Massive influence; English-language scoring inadequate",
+  "SR",  "Smino",                  "Midwest",      "2020s",      "Experimental",         2017,    7,      8,      7,      8,         7,        "M", "Critical darling; broader recognition still forming",
+  "AB2", "Armand Hammer",          "NYC",          "2020s",      "Abstract",             2012,    8,      9,      7,      9,         8,        "M", "Critical underground darling; thin mainstream documentation",
+  "LI",  "Lil Durk",              "South",        "2020s",      "Gangsta/Street",       2013,    5,      5,      6,      5,         5,        "M", "Commercial dominance clear; critical depth limited",
+  "RC",  "Rapsody (Eve era)",      "South",        "2020s",      "Conscious/Lyrical",    2019,    8,      8,      8,      8,         9,        "H", "",
+  "GG2", "GloRilla",               "South",        "2020s",      "Party/Pop",            2022,    5,      5,      5,      5,         4,        "L", "Very recent; limited critical record",
+  "MX",  "Maxo Kream",             "South",        "2020s",      "Gangsta/Street",       2017,    7,      7,      9,      7,         7,        "M", "Critical acclaim in narrative circles; limited mainstream docs",
+  "JS",  "JID (2020s)",            "South",        "2020s",      "Conscious/Lyrical",    2022,    9,      8,      8,      8,         8,        "M", "Recent; scoring likely conservative",
+  "MV",  "Mavi",                   "South",        "2020s",      "Abstract",             2019,    7,      8,      7,      7,         7,        "L", "Very limited critical documentation",
+  "KS",  "Kodak Black",            "South",        "2020s",      "Gangsta/Street",       2014,    5,      5,      6,      5,         4,        "M", "Commercial success; thin critical framework"
+)
+
+# ── Derived variables ─────────────────────────────────────────────────────────
+artists <- artists_raw |>
+  mutate(
+    composite = round((rhyme + vocab + story + metaphor + concept) / 5, 1),
+    era = factor(era, levels = c("Old School","Golden Age","Late 90s","2000s","2010s","2020s")),
+    confidence = factor(confidence, levels = c("H","M","L")),
+    region = factor(region, levels = c("NYC","LA","South","Midwest","Bay Area","UK","International")),
+    style = factor(style),
+    strongest_dim = case_when(
+      rhyme == pmax(rhyme, vocab, story, metaphor, concept) ~ "Rhyme Density",
+      vocab == pmax(rhyme, vocab, story, metaphor, concept) ~ "Vocab Breadth",
+      story == pmax(rhyme, vocab, story, metaphor, concept) ~ "Storytelling",
+      metaphor == pmax(rhyme, vocab, story, metaphor, concept) ~ "Metaphor/Imagery",
+      TRUE ~ "Conceptual Depth"
+    )
+  )
+
+
+# Region palette — terracotta/mauve family + warm neutrals
+region_pal <- c(
+  "NYC"           = "#8C6A8D",   # primary mauve
+  "LA"            = "#E98973",   # secondary terracotta
+  "South"         = "#C4956A",   # warm amber-brown
+  "Midwest"       = "#B08FAF",   # lighter mauve
+  "Bay Area"      = "#D4A843",   # warm gold
+  "UK"            = "#D2B1A3",   # accent dusty rose
+  "International" = "#7A9E9F"    # cool sage — intentional contrast for intl
+)
+
+# Era palette — sequential warm-to-cool across time
+era_pal <- c(
+  "Old School" = "#6b4f6c",   # deep mauve
+  "Golden Age" = "#8C6A8D",   # primary mauve
+  "Late 90s"   = "#E98973",   # terracotta
+  "2000s"      = "#C4956A",   # amber-brown
+  "2010s"      = "#D2B1A3",   # dusty rose
+  "2020s"      = "#A3B5B5"    # cool sage-grey
+)
+
+# Dimension palette — five distinct tones all harmonious with brand
+dim_pal <- c(
+  "Rhyme Density"    = "#8C6A8D",   # primary mauve
+  "Vocab Breadth"    = "#C4956A",   # amber-brown
+  "Storytelling"     = "#E98973",   # terracotta
+  "Metaphor/Imagery" = "#D2B1A3",   # dusty rose
+  "Conceptual Depth" = "#6b4f6c"    # deep mauve
+)
+
+# Confidence palette — traffic light logic kept, warmed to brand
+conf_pal <- c(
+  "H" = "#7A9E7E",   # muted sage green  — high confidence
+  "M" = "#D4A843",   # warm amber        — medium / provisional
+  "L" = "#E98973"    # terracotta        — low / estimate only
+)
+
+
+# ── Shared ggplot2 theme ─────────────────────────────────────────────────────
+theme_hiphop <- function() {
+  theme_minimal(base_family = "sans", base_size = 12) +
+    theme(
+      plot.title    = element_text(size = 14, face = "bold", color = "#1a1a2e"),
+      plot.subtitle = element_text(size = 11, color = "#555555"),
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(color = "#eeeeee"),
+      axis.text     = element_text(color = "#444444"),
+      legend.position = "bottom",
+      legend.title  = element_text(size = 10, face = "bold"),
+      strip.text    = element_text(face = "bold", color = "#333333")
+    )
+}
+```
+
+# Overview {.sidebar}
+
+```{r sidebar-summary}
+n_artists  <- nrow(artists)
+n_high     <- sum(artists$confidence == "H")
+n_medium   <- sum(artists$confidence == "M")
+n_low      <- sum(artists$confidence == "L")
+avg_comp   <- round(mean(artists$composite), 2)
+top_artist <- artists |> slice_max(composite, n = 1) |> pull(name)
+
+tagList(
+  tags$div(style = "padding: 1rem 0;",
+    tags$h4("Dataset at a Glance", style = "color:#1a1a2e; font-weight:700;"),
+    tags$hr(style = "border-color:#dddddd;"),
+    tags$p(tags$strong(n_artists), " artists across 6 eras"),
+    tags$p(tags$strong(length(levels(artists$region))), " geographic regions"),
+    tags$p(tags$strong(length(levels(artists$style))), " lyrical styles"),
+    tags$hr(style = "border-color:#dddddd;"),
+    tags$h5("Confidence breakdown", style = "color:#555;"),
+    tags$p(
+      tags$span(style = "color:#41ab5d; font-weight:700;", paste0("H: ", n_high, " artists")),
+      tags$br(),
+      tags$span(style = "color:#c8a000; font-weight:700;", paste0("M: ", n_medium, " artists (provisional)")),
+      tags$br(),
+      tags$span(style = "color:#e08214; font-weight:700;", paste0("L: ", n_low, " artists (estimates only)"))
+    ),
+    tags$hr(style = "border-color:#dddddd;"),
+    tags$h5("Mean composite score", style = "color:#555;"),
+    tags$p(tags$strong(avg_comp, " / 10")),
+    tags$p(tags$em(paste0("Highest: ", top_artist))),
+    tags$hr(style = "border-color:#dddddd;"),
+    tags$h5("Teaching concepts", style = "color:#555; margin-top:1rem;"),
+    tags$ul(style = "padding-left:1.2rem; font-size:0.85rem;",
+      tags$li("Measurement validity"),
+      tags$li("Sampling & bias"),
+      tags$li("Multidimensional scoring"),
+      tags$li("Composite vs. dimensions"),
+      tags$li("Uncertainty communication"),
+      tags$li("Visualization design")
+    )
+  )
+)
+```
+
+# 1 · What Are We Measuring?
+
+## Row {height="15%"}
+
+::: {.callout-tip title="Teaching Prompt — Construct Validity"}
+**The central measurement problem:** We started with one variable called "Lyricism" and ended up with five. Was that the right decision? What are we gaining and losing? This is the construct validity question that underlies every KPI, survey instrument, and performance rating in your organization.
+:::
+
+## Row {height="85%"}
+
+### Radar: Single artist — five dimensions {width="40%"}
+
+```{r radar-single}
+# Radar chart for a single anchor artist to show dimension profile
+# Using Kendrick (perfect 10s) vs. Scarface (storytelling specialist)
+radar_artists <- c("Kendrick Lamar", "Scarface", "MF DOOM", "Rakim")
+
+radar_data <- artists |>
+  filter(name %in% radar_artists) |>
+  select(name, rhyme, vocab, story, metaphor, concept) |>
+  pivot_longer(-name, names_to = "dimension", values_to = "score") |>
+  mutate(dimension = recode(dimension,
+    rhyme    = "Rhyme Density",
+    vocab    = "Vocab Breadth",
+    story    = "Storytelling",
+    metaphor = "Metaphor/Imagery",
+    concept  = "Conceptual Depth"
+  ))
+
+fig_radar <- plot_ly(type = "scatterpolar", fill = "toself", mode = "lines+markers")
+
+colors_radar <- c("#4472C4","#C0392B","#70AD47","#E08214")
+for (i in seq_along(radar_artists)) {
+  d <- radar_data |> filter(name == radar_artists[i])
+  fig_radar <- fig_radar |> add_trace(
+    r = c(d$score, d$score[1]),
+    theta = c(d$dimension, d$dimension[1]),
+    name = radar_artists[i],
+    line = list(color = colors_radar[i], width = 2),
+    fillcolor = paste0(colors_radar[i], "22")
+  )
+}
+
+fig_radar |>
+  layout(
+    polar = list(radialaxis = list(visible = TRUE, range = c(0, 10), tickfont = list(size = 10))),
+    legend = list(orientation = "h", x = 0.1, y = -0.1),
+    margin = list(t = 10, b = 10),
+    paper_bgcolor = "rgba(0,0,0,0)",
+    plot_bgcolor  = "rgba(0,0,0,0)"
+  )
+```
+
+### Scatter: Composite score vs. Storytelling {width="60%"}
+
+```{r scatter-composite-v-story}
+# Key teaching point: artists with similar composites can have wildly different profiles
+p_scatter <- artists |>
+  filter(confidence != "L") |>
+  ggplot(aes(x = story, y = composite,
+             color = era, size = composite,
+             text = paste0(
+               "<b>", name, "</b><br>",
+               "Era: ", era, "<br>",
+               "Composite: ", composite, "<br>",
+               "Storytelling: ", story, "<br>",
+               "Rhyme Density: ", rhyme
+             ))) +
+  geom_jitter(alpha = 0.75, width = 0.15, height = 0.05) +
+  scale_color_manual(values = era_pal) +
+  scale_size_continuous(range = c(2, 6), guide = "none") +
+  scale_x_continuous(breaks = 1:10) +
+  scale_y_continuous(limits = c(2, 10.5), breaks = seq(2, 10, 2)) +
+  labs(
+    title = "Composite score vs. Storytelling dimension",
+    subtitle = "Artists with the same composite can have very different dimension profiles",
+    x = "Storytelling score (1–10)",
+    y = "Composite score",
+    color = "Era"
+  ) +
+  theme_hiphop() +
+  theme(legend.position = "right")
+
+ggplotly(p_scatter, tooltip = "text") |>
+  layout(
+    paper_bgcolor = "rgba(0,0,0,0)",
+    plot_bgcolor  = "rgba(0,0,0,0)"
+  )
+```
+
+# 2 · Who Is In the Data?
+
+## Row {height="15%"}
+
+::: {.callout-warning title="Teaching Prompt — Sampling Decisions and Bias"}
+**Every dataset has a frame — and a gap.** This dataset over-represents critically acclaimed artists, NYC, the Golden Age, and men. Those are documented choices. What datasets do you use at work where the frame is undocumented? What populations are missing?
+:::
+
+## Row {height="45%"}
+
+### Artists by region {width="50%"}
+
+```{r bar-region}
+p_region <- artists |>
+  count(region, era) |>
+  ggplot(aes(x = fct_rev(region), y = n, fill = era,
+             text = paste0(era, ": ", n, " artists"))) +
+  geom_col(position = "stack") +
+  scale_fill_manual(values = era_pal) +
+  coord_flip() +
+  labs(
+    title = "Artists by region and era",
+    subtitle = "NYC and the South dominate — International is the largest gap",
+    x = NULL, y = "Number of artists", fill = "Era"
+  ) +
+  theme_hiphop()
+
+ggplotly(p_region, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+### Gender representation gap {width="50%"}
+
+```{r bar-gender}
+# Identify female/mixed artists manually
+female_artists <- c(
+  "Roxanne Shante","MC Lyte","Queen Latifah","J.J. Fad",
+  "Lauryn Hill","Missy Elliott","Lil Kim","Foxy Brown",
+  "Nicki Minaj","Rapsody","Noname","Tierra Whack",
+  "Doechii","GloRilla","Cardi B","Rapsody (Eve era)"
+)
+
+gender_data <- artists |>
+  mutate(gender_group = if_else(name %in% female_artists, "Female / non-binary", "Male")) |>
+  count(era, gender_group)
+
+p_gender <- gender_data |>
+  ggplot(aes(x = era, y = n, fill = gender_group,
+             text = paste0(gender_group, ": ", n, " artists"))) +
+  geom_col(position = "fill") +
+  scale_fill_manual(values = c("Female / non-binary" = "#e377c2", "Male" = "#7f7f7f")) +
+  scale_y_continuous(labels = percent) +
+  labs(
+    title = "Gender representation by era",
+    subtitle = paste0(
+      length(female_artists), " female/non-binary artists of ", nrow(artists), " total (",
+      round(length(female_artists)/nrow(artists)*100), "%)"
+    ),
+    x = NULL, y = "Share of era", fill = NULL
+  ) +
+  theme_hiphop()
+
+ggplotly(p_gender, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+## Row {height="40%"}
+
+### Confidence distribution {width="35%"}
+
+```{r confidence-donut}
+conf_counts <- artists |>
+  count(confidence) |>
+  mutate(
+    label = case_when(
+      confidence == "H" ~ paste0("High\n", n, " artists"),
+      confidence == "M" ~ paste0("Medium\n", n, " artists"),
+      confidence == "L" ~ paste0("Low\n", n, " artists")
+    )
+  )
+
+plot_ly(conf_counts,
+  labels = ~label, values = ~n,
+  type = "pie", hole = 0.55,
+  marker = list(colors = c("#41ab5d","#f6c141","#e08214"),
+                line = list(color = "#ffffff", width = 2)),
+  textinfo = "label+percent",
+  hoverinfo = "label+value"
+) |>
+  layout(
+    title = list(text = "Scoring confidence distribution", font = list(size = 13)),
+    showlegend = FALSE,
+    paper_bgcolor = "rgba(0,0,0,0)"
+  )
+```
+
+### What bias looks like in practice {width="65%"}
+
+```{r bias-table}
+bias_df <- tribble(
+  ~"Bias type",        ~"Direction",                              ~"Practical implication",
+  "Prestige",         "Over-represents critically acclaimed artists", "Commercial artists scored lower; vibe-first artists may be underrated",
+  "Gender",           "~12% female/non-binary vs. ~50% of rap audience", "Female artists face different critical frameworks; scores may not be comparable",
+  "Geography",        "NYC + Golden Age disproportionate",        "Southern and international artists underrepresented in critical canon used for scoring",
+  "Language",         "English-language criticism only",          "Latin, African, French rap scored through an inadequate lens; L-flag applied",
+  "Survivorship",     "Only artists who entered critical canon",  "Regionally significant artists without national coverage are absent",
+  "Recency (inverted)","Post-2020 artists scored conservatively", "Emerging talent may be systematically underscored; revisit annually"
+)
+
+reactable(
+  bias_df,
+  columns = list(
+    "Bias type"             = colDef(minWidth = 100, style = list(fontWeight = "600")),
+    "Direction"             = colDef(minWidth = 160),
+    "Practical implication" = colDef(minWidth = 200)
+  ),
+  striped = TRUE, highlight = TRUE, bordered = TRUE,
+  theme = reactableTheme(
+    headerStyle = list(background = "#1F3864", color = "#ffffff", fontWeight = "600")
+  )
+)
+```
+
+# 3 · Dimensions vs. Composite
+
+## Row {height="15%"}
+
+::: {.callout-note title="Teaching Prompt — The Aggregation Problem"}
+**What does averaging destroy?** Rakim (Rhyme Density 10) and Scarface (Storytelling 10) both score around 8.8 composite. Is that meaningful equivalence — or does the composite erase the most important information? When does aggregation help, and when does it lie?
+:::
+
+## Row {height="45%"}
+
+### Heatmap: All artists, all dimensions {width="65%"}
+
+```{r heatmap-dims}
+dim_long <- artists |>
+  filter(confidence == "H") |>
+  arrange(era, composite) |>
+  select(name, era, rhyme, vocab, story, metaphor, concept) |>
+  pivot_longer(rhyme:concept, names_to = "dimension", values_to = "score") |>
+  mutate(
+    dimension = recode(dimension,
+      rhyme    = "Rhyme",
+      vocab    = "Vocab",
+      story    = "Story",
+      metaphor = "Metaphor",
+      concept  = "Concept"
+    ),
+    dimension = factor(dimension, levels = c("Rhyme","Vocab","Story","Metaphor","Concept")),
+    name = factor(name, levels = unique(name))
+  )
+
+p_heat <- dim_long |>
+  ggplot(aes(x = dimension, y = name, fill = score,
+             text = paste0(name, " — ", dimension, ": ", score))) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  scale_fill_gradient2(
+    low = "#f7fbff", mid = "#6baed6", high = "#08306b",
+    midpoint = 5.5, limits = c(1, 10),
+    name = "Score"
+  ) +
+  facet_grid(era ~ ., scales = "free_y", space = "free_y") +
+  labs(
+    title = "Dimension scores by artist (High-confidence only)",
+    subtitle = "Each column is a dimension; each row an artist; color = score 1–10",
+    x = NULL, y = NULL
+  ) +
+  theme_hiphop() +
+  theme(
+    axis.text.y = element_text(size = 7),
+    strip.text.y = element_text(angle = 0, size = 8),
+    panel.spacing = unit(0.3, "lines")
+  )
+
+ggplotly(p_heat, tooltip = "text", height = 900) |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+### Era averages by dimension {width="35%"}
+
+```{r era-dim-lines}
+era_dim_avg <- artists |>
+  group_by(era) |>
+  summarise(
+    `Rhyme Density`    = mean(rhyme),
+    `Vocab Breadth`    = mean(vocab),
+    `Storytelling`     = mean(story),
+    `Metaphor/Imagery` = mean(metaphor),
+    `Conceptual Depth` = mean(concept),
+    .groups = "drop"
+  ) |>
+  pivot_longer(-era, names_to = "dimension", values_to = "avg")
+
+p_era_lines <- era_dim_avg |>
+  ggplot(aes(x = era, y = avg, color = dimension, group = dimension,
+             text = paste0(dimension, " (", era, "): ", round(avg, 1)))) +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 2.5) +
+  scale_color_manual(values = dim_pal) +
+  scale_y_continuous(limits = c(4, 9), breaks = seq(4, 9, 1)) +
+  labs(
+    title = "Dimension averages across eras",
+    subtitle = "Which dimensions rose or fell over time?",
+    x = NULL, y = "Mean score", color = NULL
+  ) +
+  theme_hiphop() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+ggplotly(p_era_lines, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+## Row {height="40%"}
+
+### Strongest dimension by style {width="50%"}
+
+```{r strongest-dim-style}
+strongest <- artists |>
+  count(style, strongest_dim) |>
+  group_by(style) |>
+  mutate(pct = n / sum(n))
+
+p_strongest <- strongest |>
+  ggplot(aes(x = style, y = pct, fill = strongest_dim,
+             text = paste0(strongest_dim, ": ", round(pct*100), "%"))) +
+  geom_col(position = "fill") +
+  scale_fill_manual(values = dim_pal) +
+  scale_y_continuous(labels = percent) +
+  coord_flip() +
+  labs(
+    title = "Dominant dimension by style",
+    subtitle = "What does each style specialize in?",
+    x = NULL, y = "Share", fill = "Strongest dimension"
+  ) +
+  theme_hiphop() +
+  theme(legend.position = "bottom")
+
+ggplotly(p_strongest, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+### Top 20 — composite score (High confidence) {width="50%"}
+
+```{r top20-bar}
+top20 <- artists |>
+  filter(confidence == "H") |>
+  slice_max(composite, n = 20) |>
+  arrange(composite) |>
+  mutate(name = factor(name, levels = name))
+
+p_top20 <- top20 |>
+  ggplot(aes(x = name, y = composite, fill = era,
+             text = paste0(name, "\n", era, " | ", style, "\nComposite: ", composite))) +
+  geom_col() +
+  scale_fill_manual(values = era_pal) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 10.5)) +
+  labs(
+    title = "Top 20 composite scores (High confidence)",
+    subtitle = "Composite = unweighted average of 5 dimensions",
+    x = NULL, y = "Composite score (1–10)", fill = "Era"
+  ) +
+  theme_hiphop()
+
+ggplotly(p_top20, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+# 4 · Uncertainty in Practice
+
+## Row {height="15%"}
+
+::: {.callout-important title="Teaching Prompt — Communicating Uncertainty"}
+**Most dashboards show you the number. This one shows you how much to trust it.** The confidence flag is almost never present in executive reporting — but it should be. Where in your organization's reporting does uncertainty get hidden? What decisions are being made on L-confidence data presented as H-confidence?
+:::
+
+## Row {height="45%"}
+
+### Composite distribution by confidence tier {width="50%"}
+
+```{r violin-confidence}
+p_violin <- artists |>
+  mutate(confidence = factor(confidence,
+    levels = c("H","M","L"),
+    labels = c("High","Medium","Low"))) |>
+  ggplot(aes(x = confidence, y = composite,
+             fill = confidence, color = confidence,
+             text = paste0(name, ": ", composite))) +
+  geom_boxplot(alpha = 0.25, outlier.shape = NA, width = 0.45) +
+  geom_jitter(width = 0.15, size = 2, alpha = 0.7) +
+  scale_fill_manual(values  = c("High" = "#41ab5d",
+                                "Medium" = "#f6c141",
+                                "Low"   = "#e08214")) +
+  scale_color_manual(values = c("High" = "#41ab5d",
+                                "Medium" = "#c8a000",
+                                "Low"   = "#e08214")) +
+  labs(
+    title    = "Score distribution by confidence tier",
+    subtitle = "Do H, M, and L artists score differently — or is confidence independent of score?",
+    x = "Confidence tier", y = "Composite score"
+  ) +
+  theme_hiphop() +
+  theme(legend.position = "none")
+
+ggplotly(p_violin, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)",
+         plot_bgcolor  = "rgba(0,0,0,0)")
+```
+
+### Score range: What we don't know {width="50%"}
+
+```{r uncertainty-range}
+# Show a plausible ±1 score range for M and L artists
+uncertain <- artists |>
+  filter(confidence %in% c("M","L")) |>
+  arrange(desc(composite)) |>
+  head(25) |>
+  mutate(
+    lo = pmax(1,  composite - if_else(confidence == "M", 0.8, 1.6)),
+    hi = pmin(10, composite + if_else(confidence == "M", 0.8, 1.6)),
+    name = fct_reorder(name, composite)
+  )
+
+p_range <- uncertain |>
+  ggplot(aes(y = name, color = confidence,
+             text = paste0(name, "\nScore: ", composite,
+                           "\nPlausible range: ", round(lo,1), "–", round(hi,1)))) +
+  geom_segment(aes(x = lo, xend = hi, yend = name), linewidth = 1.8, alpha = 0.4) +
+  geom_point(aes(x = composite), size = 3) +
+  scale_color_manual(values = conf_pal,
+                     labels = c("M" = "Medium (±0.8)", "L" = "Low (±1.6)")) +
+  scale_x_continuous(limits = c(1, 10), breaks = 1:10) +
+  labs(
+    title = "Plausible score ranges for provisional artists",
+    subtitle = "Point = scored value; bar = plausible range given evidence quality",
+    x = "Composite score", y = NULL, color = "Confidence tier"
+  ) +
+  theme_hiphop()
+
+ggplotly(p_range, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+## Row {height="40%"}
+
+### Confidence notes — M and L entries {width="100%"}
+
+```{r conf-notes-table}
+conf_notes <- artists |>
+  filter(confidence %in% c("M","L"), confidence_note != "") |>
+  select(Artist = name, Era = era, Region = region, Confidence = confidence,
+         Composite = composite, `Confidence note` = confidence_note) |>
+  arrange(Confidence, desc(Composite))
+
+reactable(
+  conf_notes,
+  columns = list(
+    Artist     = colDef(minWidth = 140, style = list(fontWeight = "600")),
+    Era        = colDef(minWidth = 90),
+    Region     = colDef(minWidth = 90),
+    Confidence = colDef(minWidth = 80,
+      style = function(value) {
+        color <- if (value == "M") "#c8a000" else "#e08214"
+        list(fontWeight = "700", color = color)
+      }),
+    Composite  = colDef(minWidth = 80),
+    `Confidence note` = colDef(minWidth = 280)
+  ),
+  searchable = TRUE, striped = TRUE, highlight = TRUE, bordered = TRUE,
+  theme = reactableTheme(
+    headerStyle = list(background = "#1F3864", color = "#ffffff", fontWeight = "600")
+  )
+)
+```
+
+# 5 · Visualization Design
+
+## Row {height="15%"}
+
+::: {.callout-tip title="Teaching Prompt — The Same Data, Different Stories"}
+**Every visualization choice is an argument.** The four charts below show the same underlying data — composite scores by era — rendered four different ways. Each emphasizes something different and hides something else. Which one is most honest? Which is most persuasive? Are those the same chart?
+:::
+
+## Row {height="85%"}
+
+### A: Ranked bar {width="25%"}
+
+```{r viz-bar}
+era_summary <- artists |>
+  group_by(era) |>
+  summarise(mean_comp = round(mean(composite), 2), .groups = "drop")
+
+p_bar <- era_summary |>
+  ggplot(aes(x = fct_reorder(era, mean_comp), y = mean_comp, fill = era,
+             text = paste0(era, ": ", mean_comp))) +
+  geom_col(show.legend = FALSE) +
+  scale_fill_manual(values = era_pal) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 10)) +
+  labs(title = "A: Bar chart", subtitle = "Ranking emphasis", x = NULL, y = "Mean composite") +
+  theme_hiphop()
+
+ggplotly(p_bar, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+### B: Time trend line {width="25%"}
+
+```{r viz-line}
+p_line <- era_summary |>
+  ggplot(aes(x = era, y = mean_comp, group = 1, color = era,
+             text = paste0(era, ": ", mean_comp))) +
+  geom_line(color = "#444444", linewidth = 1.1) +
+  geom_point(size = 4, show.legend = FALSE) +
+  scale_color_manual(values = era_pal) +
+  scale_y_continuous(limits = c(5.5, 8.5)) +
+  labs(title = "B: Line chart", subtitle = "Trend / change emphasis", x = NULL, y = "Mean composite") +
+  theme_hiphop() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+ggplotly(p_line, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+### C: Distribution (violin) {width="25%"}
+
+```{r viz-violin}
+p_viol <- artists |>
+  ggplot(aes(x = era, y = composite,
+             fill = era, color = era,
+             text = paste0(name, ": ", composite))) +
+  geom_boxplot(alpha = 0.25, outlier.shape = NA, width = 0.5) +
+  geom_jitter(width = 0.15, size = 1.5, alpha = 0.6) +
+  scale_fill_manual(values  = era_pal, guide = "none") +
+  scale_color_manual(values = era_pal, guide = "none") +
+  scale_y_continuous(limits = c(1, 10.5)) +
+  labs(
+    title    = "C: Box + jitter",
+    subtitle = "Distribution emphasis",
+    x = NULL, y = "Composite"
+  ) +
+  theme_hiphop() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+ggplotly(p_viol, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)",
+         plot_bgcolor  = "rgba(0,0,0,0)")
+```
+
+### D: Scatter with n shown {width="25%"}
+
+```{r viz-scatter-n}
+era_n <- artists |> count(era, name = "n_artists")
+era_summary2 <- left_join(era_summary, era_n, by = "era")
+
+p_scatter_n <- era_summary2 |>
+  ggplot(aes(x = era, y = mean_comp, size = n_artists, color = era,
+             text = paste0(era, "\nMean: ", mean_comp, "\nN = ", n_artists, " artists"))) +
+  geom_point(show.legend = FALSE, alpha = 0.85) +
+  scale_color_manual(values = era_pal) +
+  scale_size_continuous(range = c(4, 16)) +
+  scale_y_continuous(limits = c(5.5, 8.5)) +
+  labs(title = "D: Bubble chart", subtitle = "Shows sample size", x = NULL, y = "Mean composite") +
+  theme_hiphop() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+ggplotly(p_scatter_n, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+# 6 · Full Data Table
+
+## Row
+
+```{r full-table}
+display_data <- artists |>
+  select(
+    Symbol = sym, Artist = name, Region = region, Era = era, Style = style,
+    Debut = debut, Rhyme = rhyme, Vocab = vocab, Story = story,
+    Metaphor = metaphor, Concept = concept, Composite = composite,
+    Conf = confidence
+  ) |>
+  arrange(Era, desc(Composite))
+
+reactable(
+  display_data,
+  columns = list(
+    Symbol    = colDef(maxWidth = 65, style = list(fontWeight = "700", color = "#1F3864")),
+    Artist    = colDef(minWidth = 150, style = list(fontWeight = "600")),
+    Region    = colDef(maxWidth = 110),
+    Era       = colDef(maxWidth = 110),
+    Style     = colDef(minWidth = 145),
+    Debut     = colDef(maxWidth = 70),
+    Rhyme     = colDef(maxWidth = 65,
+      style = function(v) list(background = colorRampPalette(c("#deebf7","#08519c"))(10)[max(1,v)],
+                                color = if(v >= 7) "#fff" else "#000")),
+    Vocab     = colDef(maxWidth = 65,
+      style = function(v) list(background = colorRampPalette(c("#e5f5e0","#006d2c"))(10)[max(1,v)],
+                                color = if(v >= 7) "#fff" else "#000")),
+    Story     = colDef(maxWidth = 65,
+      style = function(v) list(background = colorRampPalette(c("#feedde","#a63603"))(10)[max(1,v)],
+                                color = if(v >= 7) "#fff" else "#000")),
+    Metaphor  = colDef(maxWidth = 75,
+      style = function(v) list(background = colorRampPalette(c("#f2e2f7","#6a1a8a"))(10)[max(1,v)],
+                                color = if(v >= 7) "#fff" else "#000")),
+    Concept   = colDef(maxWidth = 75,
+      style = function(v) list(background = colorRampPalette(c("#fee0d2","#a50f15"))(10)[max(1,v)],
+                                color = if(v >= 7) "#fff" else "#000")),
+    Composite = colDef(maxWidth = 85, style = list(fontWeight = "700", background = "#1F3864", color = "#fff")),
+    Conf      = colDef(maxWidth = 55,
+      style = function(v) {
+        color <- switch(v, H = "#41ab5d", M = "#c8a000", L = "#e08214", "#000")
+        list(fontWeight = "700", color = color)
+      })
+  ),
+  searchable = TRUE, filterable = TRUE, sortable = TRUE,
+  striped = TRUE, highlight = TRUE, bordered = TRUE,
+  defaultPageSize = 25, showPageSizeOptions = TRUE,
+  theme = reactableTheme(
+    headerStyle = list(background = "#1F3864", color = "#ffffff", fontWeight = "600")
+  )
+)
+```

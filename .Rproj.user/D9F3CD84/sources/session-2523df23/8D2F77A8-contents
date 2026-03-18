@@ -1,0 +1,118 @@
+---
+title: ""
+page-layout: full
+toc: false
+---
+
+```{=html}
+<div class="hero-section container">
+  <div class="row align-items-center">
+    <div class="col-md-8">
+      <p class="hero-name">Data with a Plot</p>
+      <p class="hero-tagline">Lindsey E. Wylie, J.D., Ph.D.</p>
+      <div class="hero-pills">
+        <span class="hero-pill">Applied Research</span>
+        <span class="hero-pill">Program Evaluation</span>
+         <span class="hero-pill">Measurement & Design</span>
+        <span class="hero-pill">Data Storytelling</span>
+      </div>
+      <a href="projects/index.html" class="hero-cta">See my work</a>
+      <a href="#about" class="hero-cta-outline">About me</a>
+    </div>
+  </div>
+</div>
+```
+
+---
+
+## Featured project {.section-heading}
+
+::: {.project-grid}
+
+::: {.project-card}
+<span class="project-card-tag">Data Storytelling</span>
+<p class="project-card-title">The Hip-Hop Periodic Table</p>
+<p class="project-card-desc">
+  139 artists. Five lyricism dimensions. A fully documented dataset built to teach
+  measurement validity, sampling bias, uncertainty communication, and visualization
+  design — using a subject matter executives actually argue about.
+</p>
+<div class="project-card-meta">
+  <span><span class="project-card-accent" style="background:#4472C4;"></span>R / Quarto</span>
+  <span><span class="project-card-accent" style="background:#70AD47;"></span>Interactive</span>
+  <span><span class="project-card-accent" style="background:#ED7D31;"></span>Teaching module</span>
+</div>
+<br>
+<a href="hiphop/hiphop_dashboard.html" style="font-weight:600; color:#2B2D42;">
+  Explore the dashboard →
+</a>
+:::
+
+:::
+
+---
+
+## About {#about .section-heading}
+
+::: {.bio-block}
+
+<div class="bio-avatar-placeholder">LEW</div>
+
+::: {}
+I work at the intersection of data, law, and organizational decision-making.
+My non-work work focuses on making rigorous analytical thinking accessible —
+through unexpected datasets, honest methodology, and visualizations that
+show their own uncertainty.
+
+::: {.credential-badges}
+<span class="badge-item">PhD — [Social Psychology, certificate in Research Methods and Data Analysis]</span>
+<span class="badge-item">JD — [specialized in Health Law]</span>
+<span class="badge-item">[Senior Research Associate / National Center for State Courts]</span>
+:::
+
+I'm particularly interested in the gap between how organizations say they
+make decisions and how they actually make decisions — and in the role
+that poorly designed measurement plays in that gap.
+
+When I'm not doing that, I'm building models of hip-hop artists.
+:::
+
+:::
+
+---
+
+## What I do {.section-heading}
+
+::: {.columns}
+
+::: {.column width="33%"}
+**Teaching**
+
+Executive and graduate education in data storytelling, measurement design,
+and evidence-based decision-making. I use real datasets with documented
+flaws — because clean pedagogical data teaches the wrong lessons.
+:::
+
+::: {.column width="33%"}
+**Research**
+
+Applied work at the boundary of law, psychology, and data storytelling.
+Particular interest in construct validity, uncertainty quantification,
+and the politics of how metrics get built and used.
+:::
+
+::: {.column width="33%"}
+**Projects**
+
+Independent projects that translate methodological ideas into
+interactive, shareable artifacts. The hip-hop table is one.
+More in [the projects gallery](projects/index.html).
+:::
+
+:::
+
+---
+
+::: {style="text-align: center; padding: 3rem 0 1rem; color: #6b7280; font-size: 0.9rem;"}
+Built with [Quarto](https://quarto.org) · Hosted on [GitHub Pages](https://pages.github.com)
+:::

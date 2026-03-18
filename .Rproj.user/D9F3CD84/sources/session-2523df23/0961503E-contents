@@ -1,0 +1,241 @@
+/*-- scss:defaults --*/
+
+/*-- Dashboard theme --*/
+/*-- Data with a Plot — Hip-Hop Periodic Table --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/*-- Brand colour tokens --*/
+$primary:     #8C6A8D;
+$secondary:   #E98973;
+$accent:      #D2B1A3;
+$light-bg:    #F8F7F4;
+$text-main:   #2B2D42;
+$text-muted:  #3C3C3C;
+$border:      #e5e7eb;
+
+/*-- Derived tones --*/
+$primary-light:    #f3edf3;
+$primary-dark:     #6b4f6c;
+$secondary-light:  #fdf0ec;
+$secondary-dark:   #c96b52;
+$accent-light:     #f5ede9;
+$accent-dark:      #a6806e;
+
+/*-- Typography --*/
+$font-family-base:     "Inter", "Helvetica Neue", Arial, sans-serif;
+$font-family-serif:    "Playfair Display", Georgia, serif;
+$headings-font-weight: 600;
+$line-height-base:     1.7;
+
+/*-- scss:rules --*/
+
+/*-- Navbar --*/
+.navbar {
+  background-color: $primary !important;
+  border-bottom: 3px solid $secondary;
+  padding: 0.75rem 1rem;
+
+  .navbar-brand {
+    font-family: $font-family-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #ffffff !important;
+    letter-spacing: -0.01em;
+  }
+
+  .navbar-brand img {
+    max-height: 38px;
+    width: auto;
+  }
+
+  .navbar-subtitle {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+    font-style: italic;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.88) !important;
+    transition: color 0.15s;
+    &:hover { color: #ffffff !important; }
+  }
+
+  .nav-link.active {
+    color: #ffffff !important;
+    border-bottom: 2px solid $accent;
+  }
+}
+
+/*-- Page and card backgrounds --*/
+body {
+  color: $text-main;
+  background-color: #ffffff;
+  font-family: $font-family-base;
+}
+
+.card {
+  border: 0.5px solid $border;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.card-header {
+  background: $light-bg;
+  border-bottom: 1px solid $border;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: $primary;
+  font-family: $font-family-base;
+}
+
+/*-- Dashboard tab strip --*/
+.nav-tabs .nav-link {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: $text-muted;
+}
+
+.nav-tabs .nav-link.active {
+  font-weight: 700;
+  color: $primary;
+  border-bottom: 3px solid $secondary;
+  background: transparent;
+}
+
+.nav-tabs .nav-link:hover {
+  color: $primary;
+}
+
+/*-- Value boxes --*/
+.valuebox {
+  border-radius: 10px;
+  font-family: $font-family-base;
+}
+
+/*-- Sidebar --*/
+.sidebar {
+  background: $light-bg;
+  border-right: 1px solid $border;
+  font-size: 0.875rem;
+  color: $text-main;
+
+  h4, h5 {
+    font-family: $font-family-serif;
+    color: $primary;
+  }
+
+  hr {
+    border-color: $border;
+  }
+}
+
+/*-- Callouts — all four types mapped to brand palette --*/
+.callout {
+  border-radius: 8px;
+  font-size: 0.92rem;
+}
+
+.callout-tip {
+  border-left-color: $primary !important;
+  background-color: $primary-light !important;
+
+  .callout-title {
+    color: $primary-dark;
+    font-weight: 700;
+  }
+}
+
+.callout-warning {
+  border-left-color: $secondary !important;
+  background-color: $secondary-light !important;
+
+  .callout-title {
+    color: $secondary-dark;
+    font-weight: 700;
+  }
+}
+
+.callout-note {
+  border-left-color: $accent-dark !important;
+  background-color: $accent-light !important;
+
+  .callout-title {
+    color: $accent-dark;
+    font-weight: 700;
+  }
+}
+
+.callout-important {
+  border-left-color: $secondary-dark !important;
+  background-color: $secondary-light !important;
+
+  .callout-title {
+    color: $secondary-dark;
+    font-weight: 700;
+  }
+}
+
+/*-- reactable tables --*/
+.rt-table {
+  font-size: 0.82rem;
+  font-family: $font-family-base;
+}
+
+.rt-th {
+  background-color: $primary !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.rt-tr-striped {
+  background-color: $light-bg !important;
+}
+
+.rt-tr:hover {
+  background-color: $primary-light !important;
+}
+
+/*-- Links --*/
+a {
+  color: $primary;
+  &:hover { color: $secondary-dark; }
+}
+
+/*-- Footer --*/
+.quarto-dashboard-footer,
+.nav-footer {
+  background: $light-bg;
+  border-top: 1px solid $border;
+  font-size: 0.83rem;
+  color: $text-muted;
+  padding: 1rem 0;
+}
+
+/*-- Headings --*/
+h1, h2, h3 {
+  font-family: $font-family-serif;
+  color: $primary;
+}
+
+h4, h5, h6 {
+  font-family: $font-family-base;
+  color: $text-main;
+}
+
+/*-- Horizontal rule --*/
+hr {
+  border-color: $border;
+  margin: 1.5rem 0;
+}
+
+/*-- Code blocks (if any appear) --*/
+code {
+  background: $light-bg;
+  color: $primary-dark;
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.88em;
+}

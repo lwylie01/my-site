@@ -1,0 +1,330 @@
+/*-- scss:defaults --*/
+
+/*-- Site-wide theme --*/
+/*-- Hip-Hop Periodic Table / Personal Site --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/*-- Colour tokens --*/
+$primary:     #8C6A8D;
+$secondary:   #E98973;
+$accent:      #D2B1A3;
+$light-bg:    #F8F7F4;
+$text-main:   #2B2D42;
+$text-muted:  #3C3C3C;
+$border:      #e5e7eb;
+
+/*-- Typography --*/
+$font-family-base:    "Inter", "Helvetica Neue", Arial, sans-serif;
+$font-family-serif:   "Playfair Display", Georgia, serif;
+$headings-font-weight: 700;
+$line-height-base:    1.75;
+
+/*-- scss:rules --*/
+
+/*-- Navbar --*/
+.navbar {
+  background-color: $primary !important;
+  border-bottom: 3px solid $secondary;
+  padding: 0.75rem 1rem;
+
+  .navbar-brand {
+    font-family: $font-family-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #ffffff !important;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.85) !important;
+    transition: color 0.15s;
+
+    &:hover { color: #ffffff !important; }
+  }
+
+  .nav-link.active {
+    color: #ffffff !important;
+    border-bottom: 2px solid $accent;
+  }
+}
+
+/*-- Page body --*/
+body {
+  color: $text-main;
+  background-color: #ffffff;
+}
+
+.page-layout-full  { max-width: 100%; }
+.page-layout-article { max-width: 860px; }
+
+/*-- Hero section (home page) --*/
+.hero-section {
+  padding: 5rem 0 4rem;
+  border-bottom: 1px solid $border;
+
+  .hero-name {
+    font-family: $font-family-serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: $primary;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-tagline {
+    font-size: 1.25rem;
+    color: $text-muted;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-pill {
+    background: $light-bg;
+    border: 1px solid $border;
+    border-radius: 20px;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: $primary;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: $primary;
+    color: #fff !important;
+    border-radius: 8px;
+    padding: 0.65rem 1.4rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.15s;
+    margin-right: 0.75rem;
+
+    &:hover { background: $secondary; }
+  }
+
+  .hero-cta-outline {
+    display: inline-block;
+    background: transparent;
+    color: $primary !important;
+    border: 1.5px solid $primary;
+    border-radius: 8px;
+    padding: 0.65rem 1.4rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      background: $primary;
+      color: #fff !important;
+    }
+  }
+}
+
+/*-- Project cards --*/
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.project-card {
+  background: #ffffff;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: box-shadow 0.2s, transform 0.15s;
+  text-decoration: none !important;
+
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  .project-card-tag {
+    display: inline-block;
+    background: lighten($secondary, 45%);
+    color: $secondary;
+    border-radius: 4px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-card-title {
+    font-family: $font-family-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: $primary;
+    margin-bottom: 0.5rem;
+    line-height: 1.35;
+  }
+
+  .project-card-desc {
+    font-size: 0.875rem;
+    color: $text-muted;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-card-meta {
+    font-size: 0.8rem;
+    color: $text-muted;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .project-card-accent {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+}
+
+/*-- Section headings --*/
+.section-heading {
+  font-family: $font-family-serif;
+  font-size: 1.75rem;
+  color: $primary;
+  border-bottom: 3px solid $secondary;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+/*-- About / bio block --*/
+.bio-block {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  margin: 2rem 0;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+
+  .bio-avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid $border;
+  }
+
+  .bio-avatar-placeholder {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: $light-bg;
+    border: 4px solid $border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-family-serif;
+    font-size: 3rem;
+    color: $primary;
+    font-weight: 700;
+  }
+}
+
+/*-- Credential badges --*/
+.credential-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1rem 0;
+
+  .badge-item {
+    background: $light-bg;
+    border: 1px solid $border;
+    border-left: 3px solid $accent;
+    border-radius: 0 6px 6px 0;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.83rem;
+    font-weight: 500;
+    color: $text-main;
+  }
+}
+
+/*-- Teaching concept pills --*/
+.concept-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.concept-pill {
+  border-radius: 20px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1.5px solid;
+}
+
+/*-- Footer --*/
+.nav-footer {
+  background: $light-bg;
+  border-top: 1px solid $border;
+  padding: 1.5rem 0;
+  font-size: 0.85rem;
+  color: $text-muted;
+}
+
+/*-- Callouts --*/
+.callout { border-radius: 8px; }
+
+/*-- Writing / post list --*/
+.post-list {
+  list-style: none;
+  padding: 0;
+
+  .post-item {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid $border;
+
+    &:last-child { border-bottom: none; }
+
+    .post-title {
+      font-family: $font-family-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: $primary;
+      text-decoration: none;
+
+      &:hover { color: $secondary; }
+    }
+
+    .post-meta {
+      font-size: 0.82rem;
+      color: $text-muted;
+      margin-top: 0.25rem;
+    }
+
+    .post-excerpt {
+      font-size: 0.9rem;
+      color: $text-muted;
+      margin-top: 0.4rem;
+      line-height: 1.6;
+    }
+  }
+}

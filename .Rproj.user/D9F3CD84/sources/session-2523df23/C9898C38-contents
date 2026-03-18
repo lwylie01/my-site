@@ -1,0 +1,61 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Data with a Plot"
+  description: "Lindsey E. Wylie, J.D., Ph.D."
+  favicon: favicon.ico
+  site-url: https://datawithaplot.org
+
+  navbar:
+    logo: pics/logoW.png     
+    logo-alt: "Data with a Plot"
+    title: false
+    left:
+      - href: index.qmd
+        text: Home
+      - href: projects/index.qmd
+        text: Projects
+      - href: teaching/index.qmd
+        text: Teaching
+      - href: writing/index.qmd
+        text: Writing
+    right:
+      - icon: github
+        href: https://github.com/lwylie01
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://linkedin.com/in/lindsey-wylie-jd-phd-8a06342a/
+        aria-label: LinkedIn
+
+  sidebar: false
+
+  page-footer:
+    left: "© 2026 Wylie Insights"
+    right:
+      - icon: github
+        href: https://github.com/lwylie01
+      - icon: linkedin
+        href: https://linkedin.com/in/lindsey-wylie-jd-phd-8a06342a/
+
+  open-graph: true
+  twitter-card: false
+
+format:
+  html:
+    theme:
+      - cosmo
+      - site-theme.scss
+    toc: false
+    link-external-icon: false
+    link-external-newwindow: true
+    smooth-scroll: true
+    code-fold: true
+    code-tools: false
+
+execute:
+  freeze: auto   # only re-render changed files
+  echo: false
+  warning: false
+  message: false

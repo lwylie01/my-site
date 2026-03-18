@@ -1,0 +1,58 @@
+---
+title: "Projects"
+subtitle: "Independent work at the intersection of data, law, and applied research"
+toc: false
+---
+
+::: {.project-grid}
+
+::: {.project-card}
+<span class="project-card-tag" style="background:#e8f0fe; color:#1a56db;">Data Storytelling</span>
+<p class="project-card-title">The Hip-Hop Periodic Table</p>
+<p class="project-card-desc">
+  A multidimensional dataset of 139 hip-hop artists scored across five independently
+  defined lyricism dimensions with documented confidence flags, a formal data dictionary,
+  and a source bibliography. Built as a teaching artifact for professional/executive
+  education in measurement design and data storytelling.
+</p>
+<div class="project-card-meta">
+  <span><span class="project-card-accent" style="background:#4472C4;"></span>R · Quarto · Excel</span>
+  <span><span class="project-card-accent" style="background:#41ab5d;"></span>139 artists · 6 eras</span>
+</div>
+<br>
+<a href="../hiphop/hiphop_dashboard.html" style="font-weight:600; color:#2E75B6;">
+  Open dashboard →
+</a>
+:::
+
+::: {.project-card}
+<span class="project-card-tag" style="background:#fef3c7; color:#92400e;">Coming Soon</span>
+<p class="project-card-title">Project Two Title</p>
+<p class="project-card-desc">
+  A short description of your next project. What question does it ask?
+  What data does it use? What should a reader expect to learn?
+</p>
+<div class="project-card-meta">
+  <span>Tools / methods</span>
+</div>
+:::
+
+::: {.project-card}
+<span class="project-card-tag" style="background:#fef3c7; color:#92400e;">Coming Soon</span>
+<p class="project-card-title">Project Three Title</p>
+<p class="project-card-desc">
+  Another project placeholder. Delete this card or replace it when ready.
+</p>
+<div class="project-card-meta">
+  <span>Tools / methods</span>
+</div>
+:::
+
+:::
+
+---
+
+::: {.callout-note}
+All datasets, code, and methodology documents for completed projects are
+available on [GitHub](https://github.com/yourgithubusername).
+:::
