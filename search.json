@@ -1,0 +1,135 @@
+[
+  {
+    "objectID": "writing/index.html",
+    "href": "writing/index.html",
+    "title": "Teaching",
+    "section": "",
+    "text": "Good data teaching uses datasets with documented flaws, not cleaned-up pedagogical examples. Real data has sampling gaps, contested measurements, uncertain scores, and design choices someone made on a Thursday afternoon without writing them down. That’s what professionals actually encounter — and that’s what I build teaching materials around.\nThe six concepts I return to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
+  },
+  {
+    "objectID": "writing/index.html#philosophy",
+    "href": "writing/index.html#philosophy",
+    "title": "Teaching",
+    "section": "",
+    "text": "Good data teaching uses datasets with documented flaws, not cleaned-up pedagogical examples. Real data has sampling gaps, contested measurements, uncertain scores, and design choices someone made on a Thursday afternoon without writing them down. That’s what professionals actually encounter — and that’s what I build teaching materials around.\nThe six concepts I return to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
+  },
+  {
+    "objectID": "writing/index.html#teaching-materials",
+    "href": "writing/index.html#teaching-materials",
+    "title": "Teaching",
+    "section": "Teaching materials",
+    "text": "Teaching materials\n\nThe Hip-Hop Periodic Table — Data Storytelling Module\nA complete 90-minute session built around a dataset of 139 hip-hop artists scored across five lyricism dimensions. Designed for professional and executive audiences. Includes an interactive Quarto dashboard, data dictionary, source bibliography, and facilitator guide.\nConcepts covered: All six above.\nDeliverables available:\n\nInteractive dashboard — live Quarto site\nData dictionary (Word) — variable definitions, rubrics, source bibliography\nExcel workbook — full dataset with scoring rubric and era analysis sheets\nFacilitator README — session structure, discussion questions by tab\n\n\n\n\n\n\n\nTipSession design note\n\n\n\nI open this module by asking executives to rate their favorite rapper on lyricism — 1 to 10, right now, no thinking. After they do, I ask what they just measured. That question takes 45 minutes to properly answer, and by the end the room is arguing about construct validity using their own KPIs."
+  },
+  {
+    "objectID": "writing/index.html#topics-available-for-custom-sessions",
+    "href": "writing/index.html#topics-available-for-custom-sessions",
+    "title": "Teaching",
+    "section": "Topics available for custom sessions",
+    "text": "Topics available for custom sessions\n\n\nMeasurement and metrics\n\nBuilding defensible KPIs from first principles\nWhen composite scores help and when they lie\nCommunicating confidence and uncertainty to non-technical stakeholders\nThe politics of how organizational metrics get designed\n\n\nData visualization\n\nChoosing chart types that match your argument\nDesigning for uncertainty, not false precision\nInteractive vs. static — when each is appropriate\nCommon visualization mistakes in executive reporting\n\n\n\n\n\nGet in touch about custom session design, keynotes, or workshop facilitation: your@email.com"
+  },
+  {
+    "objectID": "projects/index.html",
+    "href": "projects/index.html",
+    "title": "Writing",
+    "section": "",
+    "text": "Note\n\n\n\nThis section is a placeholder — add your essays and posts as .qmd files in the writing/ folder and list them here. Each file becomes a page at yourdomain.com/writing/filename.html."
+  },
+  {
+    "objectID": "projects/index.html#essays",
+    "href": "projects/index.html#essays",
+    "title": "Writing",
+    "section": "Essays",
+    "text": "Essays\n\n\nWhat “Lyricism” Actually Means: A Measurement Problem\n\nComing soon · Data / Music\n\n\nWe started with a single number and ended up with five dimensions, a confidence flag system, and a 17-source bibliography. This is what the construct validity problem looks like in practice.\n\n\n\nYour Second Essay Title\n\nComing soon · [Topic]\n\n\nA short preview sentence or two about what the essay covers. Replace this placeholder when ready."
+  },
+  {
+    "objectID": "projects/index.html#notes",
+    "href": "projects/index.html#notes",
+    "title": "Writing",
+    "section": "Notes",
+    "text": "Notes\nShort observations that don’t deserve a full essay but are worth writing down. Coming soon."
+  },
+  {
+    "objectID": "DEPLOY.html",
+    "href": "DEPLOY.html",
+    "title": "Deployment Guide",
+    "section": "",
+    "text": "You need three things installed:\nQuarto CLI Download from https://quarto.org/docs/get-started/ Verify: open Terminal and run quarto --version\nGit Mac: run git --version — if not installed, macOS will prompt you. Windows: download from https://git-scm.com\nGitHub CLI (optional but much easier) Mac: brew install gh Windows: download from https://cli.github.com Verify: gh --version\n\n\n\n\nYour site folder should look exactly like this:\nmy-site/\n├── _quarto.yml              ← site config (already built)\n├── site-theme.scss          ← visual theme (already built)\n├── index.qmd                ← home page (already built)\n├── projects/\n│   └── index.qmd            ← projects gallery (already built)\n├── teaching/\n│   └── index.qmd            ← teaching page (already built)\n├── writing/\n│   └── index.qmd            ← writing page (already built)\n└── hiphop/\n    ├── hiphop_dashboard.qmd ← your dashboard (already built)\n    └── custom.scss          ← dashboard theme (already built)\nIMPORTANT: The hiphop dashboard uses format: dashboard in its own YAML, which overrides the site’s format: html. That’s correct — leave it as is. Quarto handles mixed formats within one site automatically.\n\n\n\n\nOpen _quarto.yml and replace every placeholder:\nwebsite:\n  title: \"Your Actual Name\"\n  site-url: https://youractualdomain.com\n\n  navbar:\n    right:\n      - href: https://github.com/youractualusername\n      - href: https://linkedin.com/in/youractualprofile\nAlso update index.qmd: - Replace “Your Name” in the hero section - Replace “YN” initials in the avatar placeholder - Update bio text, credentials, and email\n\n\n\n\nIn Terminal, navigate to your site folder and run:\ncd path/to/my-site\nquarto preview\nThis opens a live-reloading preview at http://localhost:4949 Check every page and link before publishing.\nTo do a full render without previewing:\nquarto render\nThis creates a _site/ folder with all the HTML — that’s what gets published.\n\n\n\n\n\n\n\nOption A — GitHub CLI (easiest)\ncd path/to/my-site\ngh auth login        # follow prompts, choose HTTPS, authenticate in browser\ngh repo create my-site --public --source=. --remote=origin\nOption B — GitHub website 1. Go to https://github.com/new 2. Repository name: my-site (or anything you like) 3. Set to Public 4. Do NOT initialise with README (your folder already has files) 5. Click Create repository 6. Back in Terminal:\ncd path/to/my-site\ngit init\ngit add .\ngit commit -m \"Initial site\"\ngit remote add origin https://github.com/YOURUSERNAME/my-site.git\ngit push -u origin main\n\n\n\n\nRun this single command from your site folder:\nquarto publish gh-pages\nWhat this does automatically: 1. Renders your entire site to _site/ 2. Creates a gh-pages branch in your repo 3. Pushes all the rendered HTML to that branch 4. GitHub Pages serves it at: https://YOURUSERNAME.github.io/my-site/\nQuarto will ask “Publish update to: https://YOURUSERNAME.github.io/my-site/? (Y/n)” → Press Y\nYour site is now live at the github.io URL. Test it before connecting the domain.\n\n\n\n\nAfter the first publish, confirm the settings: 1. Go to your repo on github.com 2. Click Settings → Pages (left sidebar) 3. Source should show “Deploy from a branch” 4. Branch should show “gh-pages / (root)” 5. If not, set it manually and Save\n\n\n\n\n\n\n\n\nIn your GitHub repo → Settings → Pages\nScroll to “Custom domain”\nType your domain exactly: yourdomain.com (no https://, no www)\nClick Save\nCheck “Enforce HTTPS” (may take a few minutes to become available)\n\nGitHub will create a file called CNAME in your gh-pages branch automatically. You’ll also need it in your source — create a file called CNAME (no extension) in your site root folder containing just your domain name:\nyourdomain.com\nThen re-run quarto publish gh-pages to include it.\n\n\n\n\n\nLog in to namecheap.com\nClick “Domain List” in the left sidebar\nClick “Manage” next to your domain\nClick the “Advanced DNS” tab at the top\n\nYou’ll see a table of DNS records. You need to:\nDelete any existing A records and CNAME records for @ and www (There may be default parking page records — delete them)\nAdd these four A records (click “Add New Record” four times):\n\n\n\nType\nHost\nValue\nTTL\n\n\n\n\nA\n@\n185.199.108.153\nAutomatic\n\n\nA\n@\n185.199.109.153\nAutomatic\n\n\nA\n@\n185.199.110.153\nAutomatic\n\n\nA\n@\n185.199.111.153\nAutomatic\n\n\n\nAdd one CNAME record:\n\n\n\nType\nHost\nValue\nTTL\n\n\n\n\nCNAME\nwww\nYOURUSERNAME.github.io.\nAutomatic\n\n\n\nNOTE: Include the trailing dot after .github.io — Namecheap requires it.\nClick the green checkmark to save each record.\n\n\n\n\nDNS propagation typically takes 5–60 minutes (occasionally up to 48 hours).\nTo check if it’s working without waiting, open Terminal and run:\ndig yourdomain.com +short\nWhen you see the four GitHub IP addresses returned, DNS has propagated.\nTo check from a browser: - Try https://yourdomain.com — should show your site - Try https://www.yourdomain.com — should redirect to the same site - The padlock (HTTPS) should be green — if not, wait 10 more minutes\n\n\n\n\n\n\n\nEvery time you edit content:\n# 1. Make your changes in RStudio\n# 2. Preview locally\nquarto preview\n\n# 3. When happy, publish\nquarto publish gh-pages\nThat’s the entire workflow. Quarto re-renders only changed files (because of freeze: auto in _quarto.yml) and pushes the update.\n\n\n\n\nCreate a new .qmd file anywhere in the site folder\nAdd a link to it in _quarto.yml navbar or in projects/index.qmd\nRun quarto publish gh-pages\n\n\n\n\n\nCreate a new subfolder: e.g. projects/project2/\nPut your .qmd file there\nAdd a card to projects/index.qmd linking to it\nPublish\n\n\n\n\n\n\n“Site not found” after setting custom domain → DNS hasn’t propagated yet. Wait and run dig yourdomain.com +short\nHTTPS padlock missing / “Not secure” → Go to GitHub repo → Settings → Pages → check “Enforce HTTPS” → May take 10–30 mins after DNS propagates\nDashboard page shows wrong layout / missing styles → Make sure custom.scss is in the same folder as hiphop_dashboard.qmd → Check the dashboard YAML references custom.scss correctly\nquarto publish gh-pages asks for credentials repeatedly → Run gh auth login and authenticate — Quarto uses git credentials\nLocal preview works but published site has broken links → Check site-url in _quarto.yml matches your actual domain exactly\nNamecheap CNAME “already exists” error → You have an existing CNAME for www — delete it first, then add the new one\n\n\n\n\n# Preview locally\nquarto preview\n\n# Full render (no preview)\nquarto render\n\n# Publish / update live site\nquarto publish gh-pages\n\n# Check DNS propagation\ndig yourdomain.com +short\n\n# GitHub CLI login (if needed)\ngh auth login\nGitHub IPs (for Namecheap A records): 185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153"
+  },
+  {
+    "objectID": "DEPLOY.html#part-1-local-setup-do-this-once",
+    "href": "DEPLOY.html#part-1-local-setup-do-this-once",
+    "title": "Deployment Guide",
+    "section": "",
+    "text": "You need three things installed:\nQuarto CLI Download from https://quarto.org/docs/get-started/ Verify: open Terminal and run quarto --version\nGit Mac: run git --version — if not installed, macOS will prompt you. Windows: download from https://git-scm.com\nGitHub CLI (optional but much easier) Mac: brew install gh Windows: download from https://cli.github.com Verify: gh --version\n\n\n\n\nYour site folder should look exactly like this:\nmy-site/\n├── _quarto.yml              ← site config (already built)\n├── site-theme.scss          ← visual theme (already built)\n├── index.qmd                ← home page (already built)\n├── projects/\n│   └── index.qmd            ← projects gallery (already built)\n├── teaching/\n│   └── index.qmd            ← teaching page (already built)\n├── writing/\n│   └── index.qmd            ← writing page (already built)\n└── hiphop/\n    ├── hiphop_dashboard.qmd ← your dashboard (already built)\n    └── custom.scss          ← dashboard theme (already built)\nIMPORTANT: The hiphop dashboard uses format: dashboard in its own YAML, which overrides the site’s format: html. That’s correct — leave it as is. Quarto handles mixed formats within one site automatically.\n\n\n\n\nOpen _quarto.yml and replace every placeholder:\nwebsite:\n  title: \"Your Actual Name\"\n  site-url: https://youractualdomain.com\n\n  navbar:\n    right:\n      - href: https://github.com/youractualusername\n      - href: https://linkedin.com/in/youractualprofile\nAlso update index.qmd: - Replace “Your Name” in the hero section - Replace “YN” initials in the avatar placeholder - Update bio text, credentials, and email\n\n\n\n\nIn Terminal, navigate to your site folder and run:\ncd path/to/my-site\nquarto preview\nThis opens a live-reloading preview at http://localhost:4949 Check every page and link before publishing.\nTo do a full render without previewing:\nquarto render\nThis creates a _site/ folder with all the HTML — that’s what gets published."
+  },
+  {
+    "objectID": "DEPLOY.html#part-2-github-setup-do-this-once",
+    "href": "DEPLOY.html#part-2-github-setup-do-this-once",
+    "title": "Deployment Guide",
+    "section": "",
+    "text": "Option A — GitHub CLI (easiest)\ncd path/to/my-site\ngh auth login        # follow prompts, choose HTTPS, authenticate in browser\ngh repo create my-site --public --source=. --remote=origin\nOption B — GitHub website 1. Go to https://github.com/new 2. Repository name: my-site (or anything you like) 3. Set to Public 4. Do NOT initialise with README (your folder already has files) 5. Click Create repository 6. Back in Terminal:\ncd path/to/my-site\ngit init\ngit add .\ngit commit -m \"Initial site\"\ngit remote add origin https://github.com/YOURUSERNAME/my-site.git\ngit push -u origin main\n\n\n\n\nRun this single command from your site folder:\nquarto publish gh-pages\nWhat this does automatically: 1. Renders your entire site to _site/ 2. Creates a gh-pages branch in your repo 3. Pushes all the rendered HTML to that branch 4. GitHub Pages serves it at: https://YOURUSERNAME.github.io/my-site/\nQuarto will ask “Publish update to: https://YOURUSERNAME.github.io/my-site/? (Y/n)” → Press Y\nYour site is now live at the github.io URL. Test it before connecting the domain.\n\n\n\n\nAfter the first publish, confirm the settings: 1. Go to your repo on github.com 2. Click Settings → Pages (left sidebar) 3. Source should show “Deploy from a branch” 4. Branch should show “gh-pages / (root)” 5. If not, set it manually and Save"
+  },
+  {
+    "objectID": "DEPLOY.html#part-3-namecheap-dns-the-fun-part",
+    "href": "DEPLOY.html#part-3-namecheap-dns-the-fun-part",
+    "title": "Deployment Guide",
+    "section": "",
+    "text": "In your GitHub repo → Settings → Pages\nScroll to “Custom domain”\nType your domain exactly: yourdomain.com (no https://, no www)\nClick Save\nCheck “Enforce HTTPS” (may take a few minutes to become available)\n\nGitHub will create a file called CNAME in your gh-pages branch automatically. You’ll also need it in your source — create a file called CNAME (no extension) in your site root folder containing just your domain name:\nyourdomain.com\nThen re-run quarto publish gh-pages to include it.\n\n\n\n\n\nLog in to namecheap.com\nClick “Domain List” in the left sidebar\nClick “Manage” next to your domain\nClick the “Advanced DNS” tab at the top\n\nYou’ll see a table of DNS records. You need to:\nDelete any existing A records and CNAME records for @ and www (There may be default parking page records — delete them)\nAdd these four A records (click “Add New Record” four times):\n\n\n\nType\nHost\nValue\nTTL\n\n\n\n\nA\n@\n185.199.108.153\nAutomatic\n\n\nA\n@\n185.199.109.153\nAutomatic\n\n\nA\n@\n185.199.110.153\nAutomatic\n\n\nA\n@\n185.199.111.153\nAutomatic\n\n\n\nAdd one CNAME record:\n\n\n\nType\nHost\nValue\nTTL\n\n\n\n\nCNAME\nwww\nYOURUSERNAME.github.io.\nAutomatic\n\n\n\nNOTE: Include the trailing dot after .github.io — Namecheap requires it.\nClick the green checkmark to save each record.\n\n\n\n\nDNS propagation typically takes 5–60 minutes (occasionally up to 48 hours).\nTo check if it’s working without waiting, open Terminal and run:\ndig yourdomain.com +short\nWhen you see the four GitHub IP addresses returned, DNS has propagated.\nTo check from a browser: - Try https://yourdomain.com — should show your site - Try https://www.yourdomain.com — should redirect to the same site - The padlock (HTTPS) should be green — if not, wait 10 more minutes"
+  },
+  {
+    "objectID": "DEPLOY.html#part-4-ongoing-workflow",
+    "href": "DEPLOY.html#part-4-ongoing-workflow",
+    "title": "Deployment Guide",
+    "section": "",
+    "text": "Every time you edit content:\n# 1. Make your changes in RStudio\n# 2. Preview locally\nquarto preview\n\n# 3. When happy, publish\nquarto publish gh-pages\nThat’s the entire workflow. Quarto re-renders only changed files (because of freeze: auto in _quarto.yml) and pushes the update.\n\n\n\n\nCreate a new .qmd file anywhere in the site folder\nAdd a link to it in _quarto.yml navbar or in projects/index.qmd\nRun quarto publish gh-pages\n\n\n\n\n\nCreate a new subfolder: e.g. projects/project2/\nPut your .qmd file there\nAdd a card to projects/index.qmd linking to it\nPublish"
+  },
+  {
+    "objectID": "DEPLOY.html#troubleshooting",
+    "href": "DEPLOY.html#troubleshooting",
+    "title": "Deployment Guide",
+    "section": "",
+    "text": "“Site not found” after setting custom domain → DNS hasn’t propagated yet. Wait and run dig yourdomain.com +short\nHTTPS padlock missing / “Not secure” → Go to GitHub repo → Settings → Pages → check “Enforce HTTPS” → May take 10–30 mins after DNS propagates\nDashboard page shows wrong layout / missing styles → Make sure custom.scss is in the same folder as hiphop_dashboard.qmd → Check the dashboard YAML references custom.scss correctly\nquarto publish gh-pages asks for credentials repeatedly → Run gh auth login and authenticate — Quarto uses git credentials\nLocal preview works but published site has broken links → Check site-url in _quarto.yml matches your actual domain exactly\nNamecheap CNAME “already exists” error → You have an existing CNAME for www — delete it first, then add the new one"
+  },
+  {
+    "objectID": "DEPLOY.html#quick-reference-card",
+    "href": "DEPLOY.html#quick-reference-card",
+    "title": "Deployment Guide",
+    "section": "",
+    "text": "# Preview locally\nquarto preview\n\n# Full render (no preview)\nquarto render\n\n# Publish / update live site\nquarto publish gh-pages\n\n# Check DNS propagation\ndig yourdomain.com +short\n\n# GitHub CLI login (if needed)\ngh auth login\nGitHub IPs (for Namecheap A records): 185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Data with a Plot",
+    "section": "",
+    "text": "Data with a Plot\n      Lindsey E. Wylie, J.D., Ph.D.\n      \n        Applied Research\n        Program Evaluation\n         Measurement & Design\n        Data Storytelling\n      \n      See my work\n      About me"
+  },
+  {
+    "objectID": "index.html#featured-project",
+    "href": "index.html#featured-project",
+    "title": "Data with a Plot",
+    "section": "Featured project",
+    "text": "Featured project\n\n\nData Storytelling\n\nThe Hip-Hop Periodic Table\n\n\n139 artists. Five lyricism dimensions. A fully documented dataset built to teach measurement validity, sampling bias, uncertainty communication, and visualization design — using a subject matter executives actually argue about.\n\n\nR / Quarto Interactive Teaching module\n\n  Explore the dashboard →"
+  },
+  {
+    "objectID": "index.html#about",
+    "href": "index.html#about",
+    "title": "Data with a Plot",
+    "section": "About",
+    "text": "About\n\n\nLEW\n\n\nI work at the intersection of data, law, and organizational decision-making. My non-work work focuses on making rigorous analytical thinking accessible — through unexpected datasets, honest methodology, and visualizations that show their own uncertainty.\n\nPhD — [Social Psychology, certificate in Research Methods and Data Analysis] JD — [specialized in Health Law] [Senior Research Associate / National Center for State Courts]\n\nI’m particularly interested in the gap between how organizations say they make decisions and how they actually make decisions — and in the role that poorly designed measurement plays in that gap.\nWhen I’m not doing that, I’m building models of hip-hop artists."
+  },
+  {
+    "objectID": "index.html#what-i-do",
+    "href": "index.html#what-i-do",
+    "title": "Data with a Plot",
+    "section": "What I do",
+    "text": "What I do\n\n\nTeaching\nExecutive and graduate education in data storytelling, measurement design, and evidence-based decision-making. I use real datasets with documented flaws — because clean pedagogical data teaches the wrong lessons.\n\nResearch\nApplied work at the boundary of law, psychology, and data storytelling. Particular interest in construct validity, uncertainty quantification, and the politics of how metrics get built and used.\n\nProjects\nIndependent projects that translate methodological ideas into interactive, shareable artifacts. The hip-hop table is one. More in the projects gallery.\n\n\n\n\nBuilt with Quarto · Hosted on GitHub Pages"
+  },
+  {
+    "objectID": "teaching/index.html",
+    "href": "teaching/index.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Data Storytelling\n\nThe Hip-Hop Periodic Table\n\n\nA multidimensional dataset of 139 hip-hop artists scored across five independently defined lyricism dimensions with documented confidence flags, a formal data dictionary, and a source bibliography. Built as a teaching artifact for professional/executive education in measurement design and data storytelling.\n\n\nR · Quarto · Excel 139 artists · 6 eras\n\n  Open dashboard → \n\n\nComing Soon\n\nProject Two Title\n\n\nA short description of your next project. What question does it ask? What data does it use? What should a reader expect to learn?\n\n\nTools / methods\n\n\n\nComing Soon\n\nProject Three Title\n\n\nAnother project placeholder. Delete this card or replace it when ready.\n\n\nTools / methods\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nAll datasets, code, and methodology documents for completed projects are available on GitHub."
+  }
+]
