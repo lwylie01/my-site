@@ -88,14 +88,7 @@
     "href": "index.html#about",
     "title": "Data with a Plot",
     "section": "About",
-    "text": "About\n\n\nLEW\n\n\nI work at the intersection of data, law, and organizational decision-making. My non-work work focuses on making rigorous analytical thinking accessible — through unexpected datasets, honest methodology, and visualizations that show their own uncertainty.\n\nPhD — [Social Psychology, certificate in Research Methods and Data Analysis] JD — [specialized in Health Law] [Senior Research Associate / National Center for State Courts]\n\nI’m particularly interested in the gap between how organizations say they make decisions and how they actually make decisions — and in the role that poorly designed measurement plays in that gap.\nWhen I’m not doing that, I’m building models of hip-hop artists."
-  },
-  {
-    "objectID": "index.html#what-i-do",
-    "href": "index.html#what-i-do",
-    "title": "Data with a Plot",
-    "section": "What I do",
-    "text": "What I do\n\n\nTeaching\nExecutive and graduate education in data storytelling, measurement design, and evidence-based decision-making. I use real datasets with documented flaws — because clean pedagogical data teaches the wrong lessons.\n\nResearch\nApplied work at the boundary of law, psychology, and data storytelling. Particular interest in construct validity, uncertainty quantification, and the politics of how metrics get built and used.\n\nProjects\nIndependent projects that translate methodological ideas into interactive, shareable artifacts. The hip-hop table is one. More in the projects gallery.\n\n\n\n\nBuilt with Quarto · Hosted on GitHub Pages"
+    "text": "About\n\n\nLEW\n\n\nYou might find me at the intersection of Data, Law, and Psychological decision-making. My non-work work focuses on making rigorous analytical thinking accessible — through unexpected datasets, honest methodology, and visualizations that show their own uncertainty.\n\nPhD — [Social Psychology, certificate in Research Methods and Data Analysis] JD — [specialized in Health Law]\n\nWhen I’m not doing that, I’m building models of hip-hop artists.\n\n\n\n\nBuilt with Quarto · Hosted on GitHub Pages"
   },
   {
     "objectID": "teaching/index.html",
