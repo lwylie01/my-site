@@ -2,23 +2,51 @@
   {
     "objectID": "writing/index.html",
     "href": "writing/index.html",
-    "title": "Writing",
+    "title": "Teaching",
     "section": "",
-    "text": "What “Lyricism” Actually Means: A Measurement Problem\n\nComing soon · Data / Music\n\n\nWe started with a single number and ended up with five dimensions, a confidence flag system, and a 17-source bibliography. This is what the construct validity problem looks like in practice.\n\n\n\nThe Golden Age of Hip Hop: Sampling Bias\n\nComing soon · [Topic]\n\n\nTBD"
+    "text": "Good data teaching uses datasets with documented flaws, not cleaned-up pedagogical examples. Real data has sampling gaps, contested measurements, uncertain scores, and design choices someone made on a Thursday afternoon without writing them down. That’s what professionals actually encounter — and that’s what I build teaching materials around.\nThe six concepts I return to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
   },
   {
-    "objectID": "writing/index.html#essays",
-    "href": "writing/index.html#essays",
-    "title": "Writing",
+    "objectID": "writing/index.html#philosophy",
+    "href": "writing/index.html#philosophy",
+    "title": "Teaching",
     "section": "",
-    "text": "What “Lyricism” Actually Means: A Measurement Problem\n\nComing soon · Data / Music\n\n\nWe started with a single number and ended up with five dimensions, a confidence flag system, and a 17-source bibliography. This is what the construct validity problem looks like in practice.\n\n\n\nThe Golden Age of Hip Hop: Sampling Bias\n\nComing soon · [Topic]\n\n\nTBD"
+    "text": "Good data teaching uses datasets with documented flaws, not cleaned-up pedagogical examples. Real data has sampling gaps, contested measurements, uncertain scores, and design choices someone made on a Thursday afternoon without writing them down. That’s what professionals actually encounter — and that’s what I build teaching materials around.\nThe six concepts I return to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
+  },
+  {
+    "objectID": "writing/index.html#teaching-materials",
+    "href": "writing/index.html#teaching-materials",
+    "title": "Teaching",
+    "section": "Teaching materials",
+    "text": "Teaching materials\n\nThe Hip-Hop Periodic Table — Data Storytelling Module\nA complete 90-minute session built around a dataset of 139 hip-hop artists scored across five lyricism dimensions. Designed for professional and executive audiences. Includes an interactive Quarto dashboard, data dictionary, source bibliography, and facilitator guide.\nConcepts covered: All six above.\nDeliverables available:\n\nInteractive dashboard — live Quarto site\nData dictionary (Word) — variable definitions, rubrics, source bibliography\nExcel workbook — full dataset with scoring rubric and era analysis sheets\nFacilitator README — session structure, discussion questions by tab\n\n\n\n\n\n\n\nTipSession design note\n\n\n\nI open this module by asking executives to rate their favorite rapper on lyricism — 1 to 10, right now, no thinking. After they do, I ask what they just measured. That question takes 45 minutes to properly answer, and by the end the room is arguing about construct validity using their own KPIs."
+  },
+  {
+    "objectID": "writing/index.html#topics-available-for-custom-sessions",
+    "href": "writing/index.html#topics-available-for-custom-sessions",
+    "title": "Teaching",
+    "section": "Topics available for custom sessions",
+    "text": "Topics available for custom sessions\n\n\nMeasurement and metrics\n\nBuilding defensible KPIs from first principles\nWhen composite scores help and when they lie\nCommunicating confidence and uncertainty to non-technical stakeholders\nThe politics of how organizational metrics get designed\n\n\nData visualization\n\nChoosing chart types that match your argument\nDesigning for uncertainty, not false precision\nInteractive vs. static — when each is appropriate\nCommon visualization mistakes in executive reporting\n\n\n\n\n\nGet in touch about custom session design, keynotes, or workshop facilitation: your@email.com"
   },
   {
     "objectID": "projects/index.html",
     "href": "projects/index.html",
-    "title": "Projects",
+    "title": "Writing",
     "section": "",
-    "text": "Data Storytelling\n\nThe Hip-Hop Periodic Table\n\n\nA multidimensional dataset of 139 hip-hop artists scored across five independently defined lyricism dimensions with documented confidence flags, a formal data dictionary, and a source bibliography. Built as a teaching artifact for professional/executive education in measurement design and data storytelling.\n\n\nR · Quarto · Excel 139 artists · 6 eras\n\n  Open dashboard → \n\n\nComing Soon\n\nMean Age Ain’t Nothing but a Number\n\n\nAlthough age is used as a bright line threshold for designating someone a juvenile or an adult, no one wakes up on their 18th birthday as a mature adult. Plus, we all develop at different rates from each other, This project explores within person changes through emerging adulthood on constructs related to risky or illegal behavior.\n\n\nyoung people / data visuals\n\n\n\nComing Soon\n\nThe Art of Storytelling (Pt. 1)\n\n\nAudiences learn best when complicated findings are framed with narrative, evoke emotion, and presented visually for ease of understanding and remembering. This project illustrates infusing storytelling with court data.\n\n\nstorytelling / courts\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nAll datasets, code, and methodology documents for completed projects are available on GitHub."
+    "text": "Note\n\n\n\nThis section is a placeholder — add your essays and posts as .qmd files in the writing/ folder and list them here. Each file becomes a page at yourdomain.com/writing/filename.html."
+  },
+  {
+    "objectID": "projects/index.html#essays",
+    "href": "projects/index.html#essays",
+    "title": "Writing",
+    "section": "Essays",
+    "text": "Essays\n\n\nWhat “Lyricism” Actually Means: A Measurement Problem\n\nComing soon · Data / Music\n\n\nWe started with a single number and ended up with five dimensions, a confidence flag system, and a 17-source bibliography. This is what the construct validity problem looks like in practice.\n\n\n\nYour Second Essay Title\n\nComing soon · [Topic]\n\n\nA short preview sentence or two about what the essay covers. Replace this placeholder when ready."
+  },
+  {
+    "objectID": "projects/index.html#notes",
+    "href": "projects/index.html#notes",
+    "title": "Writing",
+    "section": "Notes",
+    "text": "Notes\nShort observations that don’t deserve a full essay but are worth writing down. Coming soon."
   },
   {
     "objectID": "DEPLOY.html",
@@ -88,27 +116,20 @@
     "href": "index.html#about",
     "title": "Data with a Plot",
     "section": "About",
-    "text": "About\n\n\nLEW\n\n\nYou might find me at the intersection of Data, Law, and Psychological decision-making. My non-work work focuses on making rigorous analytical thinking accessible — through unexpected datasets, honest methodology, and visualizations that show their own uncertainty.\n\nPhD — [Social Psychology, certificate in Research Methods and Data Analysis] JD — [specialized in Health Law]\n\nWhen I’m not doing that, I’m building models of hip-hop artists.\n\n\n\n\nBuilt with Quarto · Hosted on GitHub Pages"
+    "text": "About\n\n\nLEW\n\n\nI work at the intersection of data, law, and organizational decision-making. My non-work work focuses on making rigorous analytical thinking accessible — through unexpected datasets, honest methodology, and visualizations that show their own uncertainty.\n\nPhD — [Social Psychology, certificate in Research Methods and Data Analysis] JD — [specialized in Health Law] [Senior Research Associate / National Center for State Courts]\n\nI’m particularly interested in the gap between how organizations say they make decisions and how they actually make decisions — and in the role that poorly designed measurement plays in that gap.\nWhen I’m not doing that, I’m building models of hip-hop artists."
+  },
+  {
+    "objectID": "index.html#what-i-do",
+    "href": "index.html#what-i-do",
+    "title": "Data with a Plot",
+    "section": "What I do",
+    "text": "What I do\n\n\nTeaching\nExecutive and graduate education in data storytelling, measurement design, and evidence-based decision-making. I use real datasets with documented flaws — because clean pedagogical data teaches the wrong lessons.\n\nResearch\nApplied work at the boundary of law, psychology, and data storytelling. Particular interest in construct validity, uncertainty quantification, and the politics of how metrics get built and used.\n\nProjects\nIndependent projects that translate methodological ideas into interactive, shareable artifacts. The hip-hop table is one. More in the projects gallery.\n\n\n\n\nBuilt with Quarto · Hosted on GitHub Pages"
   },
   {
     "objectID": "teaching/index.html",
     "href": "teaching/index.html",
-    "title": "Teaching",
+    "title": "Projects",
     "section": "",
-    "text": "The six concepts I return to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
-  },
-  {
-    "objectID": "teaching/index.html#philosophy",
-    "href": "teaching/index.html#philosophy",
-    "title": "Teaching",
-    "section": "",
-    "text": "The six concepts I return to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
-  },
-  {
-    "objectID": "teaching/index.html#teaching-materials",
-    "href": "teaching/index.html#teaching-materials",
-    "title": "Teaching",
-    "section": "Teaching materials",
-    "text": "Teaching materials\n\nThe Hip-Hop Periodic Table — Data Storytelling Module\nA complete 90-minute session built around a dataset of 139 hip-hop artists scored across five lyricism dimensions. Designed for professional and executive audiences. Includes an interactive Quarto dashboard, data dictionary, source bibliography, and facilitator guide.\nConcepts covered: All six above.\nDeliverables available:\n\nInteractive dashboard — live Quarto site\nData dictionary (Word) — variable definitions, rubrics, source bibliography\nExcel workbook — full dataset with scoring rubric and era analysis sheets\n\n\n\n\n\n\n\nTipSession design note\n\n\n\nI open this module by asking stakeholders to rate their favorite rapper on lyricism — 1 to 10, right now, no thinking. After they do, I ask what they just measured. That question takes 45 minutes to properly answer, and by the end the room is arguing about construct validity using their own data elements."
+    "text": "Data Storytelling\n\nThe Hip-Hop Periodic Table\n\n\nA multidimensional dataset of 139 hip-hop artists scored across five independently defined lyricism dimensions with documented confidence flags, a formal data dictionary, and a source bibliography. Built as a teaching artifact for professional/executive education in measurement design and data storytelling.\n\n\nR · Quarto · Excel 139 artists · 6 eras\n\n  Open dashboard → \n\n\nComing Soon\n\nProject Two Title\n\n\nA short description of your next project. What question does it ask? What data does it use? What should a reader expect to learn?\n\n\nTools / methods\n\n\n\nComing Soon\n\nProject Three Title\n\n\nAnother project placeholder. Delete this card or replace it when ready.\n\n\nTools / methods\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nAll datasets, code, and methodology documents for completed projects are available on GitHub."
   }
 ]
