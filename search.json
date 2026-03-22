@@ -30,23 +30,44 @@
   {
     "objectID": "projects/index.html",
     "href": "projects/index.html",
-    "title": "Writing",
+    "title": "Projects",
     "section": "",
-    "text": "Note\n\n\n\nThis section is a placeholder — add your essays and posts as .qmd files in the writing/ folder and list them here. Each file becomes a page at yourdomain.com/writing/filename.html."
+    "text": "Work\n  Projects\n  \n    Applied research, teaching tools, and data storytelling experiments.\n    Each project is built around a real methodological question.\n  \n\n\n\n\nData Storytelling · Teaching Module\n\nHip-Hop Database\n\n\nA fully documented dataset of 138 hip-hop artists scored across five lyricism dimensions, enriched with Billboard chart data, award counts, career metrics, and a custom atomic weight formula. Built to teach measurement validity, sampling bias, composite scoring, and uncertainty communication — using a subject matter executives actually argue about. Includes an interactive periodic table and a multi-tab analytical dashboard.\n\n\nR / Quarto HTML / JS Excel / readxl Interactive\n\n  View project → \n\n\n\n\nMore projects coming soon."
   },
   {
-    "objectID": "projects/index.html#essays",
-    "href": "projects/index.html#essays",
-    "title": "Writing",
-    "section": "Essays",
-    "text": "Essays\n\n\nWhat “Lyricism” Actually Means: A Measurement Problem\n\nComing soon · Data / Music\n\n\nWe started with a single number and ended up with five dimensions, a confidence flag system, and a 17-source bibliography. This is what the construct validity problem looks like in practice.\n\n\n\nYour Second Essay Title\n\nComing soon · [Topic]\n\n\nA short preview sentence or two about what the essay covers. Replace this placeholder when ready."
+    "objectID": "hiphop/index.html",
+    "href": "hiphop/index.html",
+    "title": "\nThe Hip-HopDatabase\n",
+    "section": "",
+    "text": "Projects · Data Storytelling\n\n\n\n138 artists. 40 variables. A from-scratch dataset built to make measurement theory concrete — and to start arguments in the best possible way.\n\n\n&lt;div class=\"hh-stat\"&gt;\n  &lt;div class=\"hh-stat-num\"&gt;138&lt;/div&gt;\n  &lt;div class=\"hh-stat-label\"&gt;Artists&lt;/div&gt;\n&lt;/div&gt;\n&lt;div class=\"hh-stat\"&gt;\n  &lt;div class=\"hh-stat-num\"&gt;40&lt;/div&gt;\n  &lt;div class=\"hh-stat-label\"&gt;Variables&lt;/div&gt;\n&lt;/div&gt;\n&lt;div class=\"hh-stat\"&gt;\n  &lt;div class=\"hh-stat-num\"&gt;6&lt;/div&gt;\n  &lt;div class=\"hh-stat-label\"&gt;Eras&lt;/div&gt;\n&lt;/div&gt;\n&lt;div class=\"hh-stat\"&gt;\n  &lt;div class=\"hh-stat-num\"&gt;8&lt;/div&gt;\n  &lt;div class=\"hh-stat-label\"&gt;Lyrical Styles&lt;/div&gt;\n&lt;/div&gt;\n&lt;div class=\"hh-stat\"&gt;\n  &lt;div class=\"hh-stat-num\"&gt;19&lt;/div&gt;\n  &lt;div class=\"hh-stat-label\"&gt;Deceased&lt;/div&gt;\n&lt;/div&gt;\n\n\n&lt;a href=\"hiphop_periodic_table.html\" class=\"hh-btn-primary\"&gt;Open Periodic Table →&lt;/a&gt;\n&lt;a href=\"hiphop_dashboard.html\" class=\"hh-btn-secondary\"&gt;Open Dashboard →&lt;/a&gt;\nExplore"
   },
   {
-    "objectID": "projects/index.html#notes",
-    "href": "projects/index.html#notes",
-    "title": "Writing",
-    "section": "Notes",
-    "text": "Notes\nShort observations that don’t deserve a full essay but are worth writing down. Coming soon."
+    "objectID": "hiphop/index.html#whats-in-this-project",
+    "href": "hiphop/index.html#whats-in-this-project",
+    "title": "\nThe Hip-HopDatabase\n",
+    "section": "What’s in this project",
+    "text": "What’s in this project\n\n\n⬡\n\nThe Periodic Table\n\n\n138 artists arranged as chemical elements — grouped by lyrical style,\nordered by era, assigned a unique atomic weight. Click any element\nfor the full artist profile. Filter by region, era, or confidence tier.\n\nOpen →\n\n\n📊\n\nThe Analytical Dashboard\n\n\nSix interactive tabs walking through construct validity, sampling bias,\nthe aggregation problem, uncertainty communication, and visualization\ndesign — all using the same underlying dataset.\n\nOpen →\n\n\n📁\n\nThe Excel Database\n\n\nThe living source file: 40 columns including five lyricism dimension scores,\nBillboard chart data, Grammy and award counts, career span, platinum albums,\natomic weight formula, deceased status, and confidence flags.\n\nDownload .xlsx →\n\n\n\n\n\nMethodology"
+  },
+  {
+    "objectID": "hiphop/index.html#how-the-data-was-built",
+    "href": "hiphop/index.html#how-the-data-was-built",
+    "title": "\nThe Hip-HopDatabase\n",
+    "section": "How the data was built",
+    "text": "How the data was built\nThis dataset was built in three layers. The first layer is subjective: five lyricism dimensions scored 1–10 using published critical analysis, academic literature, and lyrical scholarship as source material. The second layer is objective: verifiable commercial and biographical data drawn from Billboard, RIAA, and award body records. The third layer is derived: composite scores, atomic weights, and confidence flags calculated from the first two.\n\n\n&lt;div class=\"method-block-title\"&gt;Rhyme Density&lt;/div&gt;\n&lt;div class=\"method-block-text\"&gt;Internal rhyme complexity, multisyllabic patterns, and technical flow construction.&lt;/div&gt;\n\n\n&lt;div class=\"method-block-title\"&gt;Vocab Breadth&lt;/div&gt;\n&lt;div class=\"method-block-text\"&gt;Lexical diversity, unique word usage, and linguistic range across recorded output.&lt;/div&gt;\n\n\n&lt;div class=\"method-block-title\"&gt;Storytelling&lt;/div&gt;\n&lt;div class=\"method-block-text\"&gt;Narrative coherence, character construction, and scene-building across tracks.&lt;/div&gt;\n\n\n&lt;div class=\"method-block-title\"&gt;Metaphor / Imagery&lt;/div&gt;\n&lt;div class=\"method-block-text\"&gt;Figurative language density, originality, and conceptual reach.&lt;/div&gt;\n\n\n&lt;div class=\"method-block-title\"&gt;Conceptual Depth&lt;/div&gt;\n&lt;div class=\"method-block-text\"&gt;Thematic ambition, philosophical weight, and consistency of ideas across a body of work.&lt;/div&gt;\n\n\n\n\nTeaching concept — Construct Validity\n\n\n\"Lyricism\" is a single-word construct that we decomposed into five measurable dimensions.\nThat choice is not neutral — it reflects assumptions about what counts as lyricism and\nwhose critical tradition we used to define it. This is the construct validity question\nthat underlies every KPI, survey instrument, and performance rating in your organization.\n\n\n\n\n\nFormula"
+  },
+  {
+    "objectID": "hiphop/index.html#the-atomic-weight",
+    "href": "hiphop/index.html#the-atomic-weight",
+    "title": "\nThe Hip-HopDatabase\n",
+    "section": "The atomic weight",
+    "text": "The atomic weight\nEvery artist has a unique atomic weight — a continuous value that works like an element’s atomic number, but is calculated rather than assigned. It can accommodate new artists without renumbering everyone else.\n\nAtomic Weight = (Career Span × Composite Score) + Total Awards                   + (Birth Year ÷ 100,000) + (Hot 100 Entries ÷ 10,000,000)  — The last two terms are tiebreakers only, invisible at 4 decimal places. — Career Span = Last album year − Debut year (minimum 1). — Total Awards = Grammy wins + BET Hip-Hop wins + MTV VMA wins + AMA wins.\n\nThe formula rewards sustained artistic output over raw peak performance. Rakim (#1 at 281.62) has no Grammys and modest chart presence — he ranks first because a 32-year career multiplied by an 8.8 composite accumulates more weight than a short brilliant run. Biggie, with a 9.0 composite and only a 4-year career, sits at 38.02. That tension is the point.\n\n\n\nTransparency"
+  },
+  {
+    "objectID": "hiphop/index.html#documented-uncertainty",
+    "href": "hiphop/index.html#documented-uncertainty",
+    "title": "\nThe Hip-HopDatabase\n",
+    "section": "Documented uncertainty",
+    "text": "Documented uncertainty\nEvery artist carries a confidence flag — High, Medium, or Low — reflecting the quality of critical documentation available when the lyricism scores were assigned.\n\n\n\n\nFlag\n\n\nMeaning\n\n\nExample artists\n\n\n\n\n\n\nH\n\n\nSubstantial academic and critical documentation. Scores are well-grounded.\n\n\nKendrick Lamar, Rakim, Nas, Eminem, OutKast\n\n\n\n\nM\n\n\nModerate documentation. Scores are reasonable but provisional.\n\n\nCam’ron, J.I.D, Doechii, Smino, Maxo Kream\n\n\n\n\nL\n\n\nThin critical record. Scores are estimates only — treat with caution.\n\n\nGloRilla, Mavi, Zach Fox, Yaya Bey, Dana Dane\n\n\n\n\n\n\nTeaching concept — Communicating Uncertainty\n\n\nMost dashboards present numbers without confidence levels. This one doesn't.\nWhere in your organization's reporting does uncertainty get hidden?\nWhat decisions are being made on L-confidence data presented as H-confidence?\n\n\n\n\nBuilt with R · Quarto · readxl · ggplot2 · plotly · reactable"
   },
   {
     "objectID": "DEPLOY.html",
@@ -102,28 +123,21 @@
     "href": "index.html",
     "title": "Data with a Plot",
     "section": "",
-    "text": "Data with a Plot\n      Lindsey E. Wylie, J.D., Ph.D.\n      \n        Applied Research\n        Program Evaluation\n         Measurement & Design\n        Data Storytelling\n      \n      See my work\n      About me"
+    "text": "Data with a Plot\n      Lindsey E. Wylie, J.D., Ph.D.\n      \n        Applied Research\n        Program Evaluation\n        Measurement & Design\n        Data Storytelling\n      \n      See my work\n      About me"
   },
   {
     "objectID": "index.html#featured-project",
     "href": "index.html#featured-project",
     "title": "Data with a Plot",
     "section": "Featured project",
-    "text": "Featured project\n\n\nData Storytelling\n\nThe Hip-Hop Periodic Table\n\n\n139 artists. Five lyricism dimensions. A fully documented dataset built to teach measurement validity, sampling bias, uncertainty communication, and visualization design — using a subject matter executives actually argue about.\n\n\nR / Quarto Interactive Teaching module\n\n  Explore the dashboard →"
+    "text": "Featured project\n\n\nData Storytelling · Interactive\n\nThe Hip-Hop Periodic Table\n\n\n138 artists arranged like elements — grouped by lyrical style, ordered by era, and assigned an atomic weight calculated from career span, composite lyricism score, and total awards. Click any element to explore the full profile. Built to make measurement theory feel inevitable.\n\n\nR / Quarto HTML / JS Teaching module\n\n  Open the periodic table →      About this project"
   },
   {
     "objectID": "index.html#about",
     "href": "index.html#about",
     "title": "Data with a Plot",
     "section": "About",
-    "text": "About\n\n\nLEW\n\n\nI work at the intersection of data, law, and organizational decision-making. My non-work work focuses on making rigorous analytical thinking accessible — through unexpected datasets, honest methodology, and visualizations that show their own uncertainty.\n\nPhD — [Social Psychology, certificate in Research Methods and Data Analysis] JD — [specialized in Health Law] [Senior Research Associate / National Center for State Courts]\n\nI’m particularly interested in the gap between how organizations say they make decisions and how they actually make decisions — and in the role that poorly designed measurement plays in that gap.\nWhen I’m not doing that, I’m building models of hip-hop artists."
-  },
-  {
-    "objectID": "index.html#what-i-do",
-    "href": "index.html#what-i-do",
-    "title": "Data with a Plot",
-    "section": "What I do",
-    "text": "What I do\n\n\nTeaching\nExecutive and graduate education in data storytelling, measurement design, and evidence-based decision-making. I use real datasets with documented flaws — because clean pedagogical data teaches the wrong lessons.\n\nResearch\nApplied work at the boundary of law, psychology, and data storytelling. Particular interest in construct validity, uncertainty quantification, and the politics of how metrics get built and used.\n\nProjects\nIndependent projects that translate methodological ideas into interactive, shareable artifacts. The hip-hop table is one. More in the projects gallery.\n\n\n\n\nBuilt with Quarto · Hosted on GitHub Pages"
+    "text": "About\n\n\nLEW\n\n\nYou might find me at the intersection of Data, Law, and Psychological decision-making. My non-work work focuses on making rigorous analytical thinking accessible — through unexpected datasets, honest methodology, and visualizations that show their own uncertainty.\n\nPhD — [Social Psychology, certificate in Research Methods and Data Analysis] JD — [specialized in Health Law]\n\nWhen I’m not doing that, I’m building models of hip-hop artists.\n\n\n\n\nBuilt with Quarto · Hosted on GitHub Pages"
   },
   {
     "objectID": "teaching/index.html",

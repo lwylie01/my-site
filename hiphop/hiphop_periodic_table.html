@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hip-Hop Periodic Table</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0a0a0f;
+    --surface:   #13131a;
+    --border:    #2a2a3a;
+    --text:      #e8e8f0;
+    --muted:     #666680;
+    --accent:    #f0c040;
+
+    /* Region colors */
+    --nyc:       #4a9eff;
+    --la:        #ff6b35;
+    --south:     #4ecb71;
+    --midwest:   #b06aff;
+    --bayarea:   #f0c040;
+    --uk:        #ff6eb4;
+    --intl:      #26d7d7;
+
+    /* Era accent strips */
+    --era-os:    #4292c6;
+    --era-ga:    #41ab5d;
+    --era-l90:   #f6c141;
+    --era-2000:  #e08214;
+    --era-2010:  #9970ab;
+    --era-2020:  #d73027;
+
+    /* Style row colors (subtle left border) */
+    --s-conscious: #4a9eff;
+    --s-gangsta:   #ff4444;
+    --s-political: #f0c040;
+    --s-party:     #ff9e2c;
+    --s-exp:       #b06aff;
+    --s-abstract:  #26d7d7;
+    --s-jazz:      #4ecb71;
+    --s-trap:      #ff6b35;
+
+    --card-w: 108px;
+    --card-h: 90px;
+    --gap:    6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: auto;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 32px 40px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-end;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .title-block h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .title-block p {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+
+  /* ── LEGEND ROW ── */
+  .legend-bar {
+    padding: 12px 40px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .legend-section { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .legend-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-right: 4px;
+  }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    display: inline-block;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 11px; color: var(--muted);
+  }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    padding: 10px 40px;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  }
+  .filter-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 4px 12px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+  .filter-sep {
+    width: 1px; height: 20px; background: var(--border); margin: 0 4px;
+  }
+
+  /* ── MAIN TABLE WRAPPER ── */
+  .table-wrapper {
+    padding: 24px 40px 40px;
+    overflow-x: auto;
+  }
+
+  /* ── GRID ── */
+  .pt-grid {
+    display: grid;
+    /* col 0 = style label, cols 1-6 = eras */
+    grid-template-columns: 130px repeat(6, 1fr);
+    gap: 0;
+    min-width: 900px;
+  }
+
+  /* Era header cells */
+  .era-header {
+    padding: 10px 8px;
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    border-bottom: 3px solid var(--era-color, #444);
+    border-right: 1px solid var(--border);
+    color: var(--era-color, #888);
+    position: relative;
+  }
+  .era-header span {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .era-corner { border-bottom: 3px solid var(--border); }
+
+  /* Style label cells */
+  .style-label {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    border-right: 3px solid var(--style-color, #444);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .style-label-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--style-color, #888);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    writing-mode: horizontal-tb;
+    word-break: break-word;
+    line-height: 1.4;
+  }
+
+  /* Cell that holds the stacked cards */
+  .cell {
+    padding: 5px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-height: 80px;
+  }
+  .cell.empty { background: rgba(0,0,0,0.2); }
+
+  /* ── ARTIST CARD ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--region-color, #555);
+    border-radius: 4px;
+    padding: 5px 6px 4px;
+    cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+    position: relative;
+    width: 100%;
+  }
+  .card:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    border-color: var(--region-color, #888);
+    z-index: 10;
+  }
+  .card.deceased {
+    opacity: 0.82;
+    background: #16121a;
+  }
+  .card.deceased::after {
+    content: '✦';
+    position: absolute;
+    top: 3px; right: 5px;
+    font-size: 7px;
+    color: #888;
+  }
+  .card.hidden { display: none; }
+
+  .card-aw {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .card-sym {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--region-color, #ccc);
+    line-height: 1;
+    margin: 1px 0;
+  }
+  .card-name {
+    font-size: 8.5px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2px;
+  }
+  .card-comp {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    color: var(--accent);
+  }
+  .card-conf {
+    font-family: 'Space Mono', monospace;
+    font-size: 7px;
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+  .conf-H { background: #1a3d1a; color: #4ecb71; }
+  .conf-M { background: #3d2e00; color: #f0c040; }
+  .conf-L { background: #3d1a00; color: #ff8040; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 32px;
+    max-width: 480px;
+    width: 90%;
+    position: relative;
+    animation: modalIn 0.2s ease-out;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.94) translateY(8px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-close {
+    position: absolute; top: 14px; right: 18px;
+    background: none; border: none; color: var(--muted);
+    font-size: 20px; cursor: pointer;
+    font-family: 'Space Mono', monospace;
+  }
+  .modal-close:hover { color: var(--text); }
+  .modal-sym {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .modal-aw {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .modal-name {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .modal-tags {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .modal-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: #1e1e2e;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .modal-tag.region-tag { border-color: var(--region-color); color: var(--region-color); }
+
+  .modal-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stat-block {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 12px;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 3px;
+  }
+  .stat-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .stat-value.accent { color: var(--accent); }
+
+  .modal-score-bar {
+    margin-bottom: 16px;
+  }
+  .score-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 5px;
+  }
+  .score-dim {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    width: 70px;
+    flex-shrink: 0;
+  }
+  .score-track {
+    flex: 1; height: 6px; background: #1e1e2e; border-radius: 3px; overflow: hidden;
+  }
+  .score-fill {
+    height: 100%; border-radius: 3px;
+    background: linear-gradient(90deg, #4a9eff, var(--accent));
+    transition: width 0.4s ease;
+  }
+  .score-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    width: 16px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .modal-death {
+    background: rgba(200,0,0,0.08);
+    border: 1px solid rgba(200,0,0,0.25);
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 11px;
+    color: #cc8888;
+    line-height: 1.5;
+  }
+  .modal-death strong { color: #ff8888; }
+
+  /* ── FOOTER FORMULA ── */
+  .formula-bar {
+    padding: 14px 40px;
+    border-top: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .formula-bar span { color: var(--accent); }
+
+  /* ── SCROLL HINT ── */
+  @media (max-width: 900px) {
+    .table-wrapper { padding: 12px; }
+    header { padding: 20px 16px 14px; }
+    .legend-bar, .filter-bar { padding: 10px 16px; }
+    .formula-bar { padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title-block">
+    <h1>Hip-Hop Periodic Table</h1>
+    <p>138 Artists · 8 Styles · 6 Eras · Atomic Weight = (Span × Composite) + Awards</p>
+  </div>
+</header>
+
+<div class="legend-bar">
+  <div class="legend-section">
+    <span class="legend-label">Region</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#4a9eff"></span>NYC</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#ff6b35"></span>LA</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#4ecb71"></span>South</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#b06aff"></span>Midwest</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#f0c040"></span>Bay Area</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#ff6eb4"></span>UK</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#26d7d7"></span>Intl</span>
+  </div>
+  <div class="filter-sep"></div>
+  <div class="legend-section">
+    <span class="legend-label">Confidence</span>
+    <span class="legend-item"><span style="font-family:monospace;font-size:10px;background:#1a3d1a;color:#4ecb71;padding:1px 5px;border-radius:2px;">H</span> High</span>
+    <span class="legend-item"><span style="font-family:monospace;font-size:10px;background:#3d2e00;color:#f0c040;padding:1px 5px;border-radius:2px;">M</span> Medium</span>
+    <span class="legend-item"><span style="font-family:monospace;font-size:10px;background:#3d1a00;color:#ff8040;padding:1px 5px;border-radius:2px;">L</span> Low</span>
+  </div>
+  <div class="filter-sep"></div>
+  <div class="legend-section">
+    <span class="legend-label">Status</span>
+    <span class="legend-item" style="font-size:11px;">✦ Deceased</span>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <span class="legend-label" style="margin-right:4px;">Filter:</span>
+  <button class="filter-btn active" onclick="filterCards('all', this)">All</button>
+  <div class="filter-sep"></div>
+  <button class="filter-btn" onclick="filterCards('region-NYC', this)">NYC</button>
+  <button class="filter-btn" onclick="filterCards('region-LA', this)">LA</button>
+  <button class="filter-btn" onclick="filterCards('region-South', this)">South</button>
+  <button class="filter-btn" onclick="filterCards('region-Midwest', this)">Midwest</button>
+  <button class="filter-btn" onclick="filterCards('region-Bay Area', this)">Bay Area</button>
+  <button class="filter-btn" onclick="filterCards('region-UK', this)">UK</button>
+  <button class="filter-btn" onclick="filterCards('region-International', this)">Intl</button>
+  <div class="filter-sep"></div>
+  <button class="filter-btn" onclick="filterCards('deceased', this)">Deceased</button>
+  <button class="filter-btn" onclick="filterCards('conf-H', this)">High Conf</button>
+</div>
+
+<div class="table-wrapper">
+  <div class="pt-grid" id="ptGrid"></div>
+</div>
+
+<div class="formula-bar">
+  Atomic Weight = <span>(Career Span × Composite Score)</span> + Total Awards + (Birth Year ÷ 100,000) + (Hot 100 Entries ÷ 10,000,000) &nbsp;·&nbsp;
+  Cards sorted high → low within each cell &nbsp;·&nbsp; Click any card for full profile
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div class="modal-sym" id="mSym"></div>
+    <div class="modal-aw" id="mAw"></div>
+    <div class="modal-name" id="mName"></div>
+    <div class="modal-tags" id="mTags"></div>
+    <div class="modal-stats" id="mStats"></div>
+    <div class="modal-score-bar" id="mScores"></div>
+    <div id="mDeath"></div>
+  </div>
+</div>
+
+<script>
+const GRID_DATA = {"Old School||Party/Pop": [{"sym": "DS2", "name": "Doug E. Fresh", "region": "NYC", "aw": 183.6197, "comp": 5.4, "conf": "M", "debut": 1984, "deceased": 0, "age_death": null, "grammy": 0, "span": 34, "hot100": 5, "plat": 0}, {"sym": "RD", "name": "Run-DMC", "region": "NYC", "aw": 173.6196, "comp": 5.2, "conf": "H", "debut": 1983, "deceased": 0, "age_death": null, "grammy": 1, "span": 33, "hot100": 12, "plat": 3}, {"sym": "AF", "name": "Afrika Bambaataa", "region": "NYC", "aw": 167.2196, "comp": 4.4, "conf": "H", "debut": 1982, "deceased": 0, "age_death": null, "grammy": 0, "span": 38, "hot100": 2, "plat": 0}, {"sym": "BB", "name": "Beastie Boys", "region": "NYC", "aw": 163.6196, "comp": 5.8, "conf": "H", "debut": 1984, "deceased": 1, "age_death": 47, "grammy": 4, "span": 27, "hot100": 18, "plat": 4}, {"sym": "LL", "name": "LL Cool J", "region": "NYC", "aw": 162.6197, "comp": 5.4, "conf": "H", "debut": 1984, "deceased": 0, "age_death": null, "grammy": 4, "span": 29, "hot100": 28, "plat": 4}, {"sym": "KH", "name": "Kool Herc", "region": "NYC", "aw": 153.0196, "comp": 3.0, "conf": "H", "debut": 1973, "deceased": 0, "age_death": null, "grammy": 0, "span": 51, "hot100": 0, "plat": 0}, {"sym": "DL", "name": "Dana Dane", "region": "NYC", "aw": 133.4196, "comp": 5.8, "conf": "L", "debut": 1987, "deceased": 0, "age_death": null, "grammy": 0, "span": 23, "hot100": 3, "plat": 0}, {"sym": "WR", "name": "Whodini", "region": "NYC", "aw": 124.2196, "comp": 4.6, "conf": "M", "debut": 1983, "deceased": 1, "age_death": 49, "grammy": 0, "span": 27, "hot100": 8, "plat": 1}, {"sym": "SC", "name": "Sugarhill Gang", "region": "NYC", "aw": 92.8196, "comp": 3.2, "conf": "H", "debut": 1979, "deceased": 0, "age_death": null, "grammy": 0, "span": 29, "hot100": 2, "plat": 1}, {"sym": "JJ", "name": "J.J. Fad", "region": "LA", "aw": 14.4197, "comp": 3.6, "conf": "L", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 3, "plat": 1}], "Old School||Political": [{"sym": "ML", "name": "Melle Mel", "region": "NYC", "aw": 267.0196, "comp": 7.6, "conf": "H", "debut": 1979, "deceased": 0, "age_death": null, "grammy": 1, "span": 35, "hot100": 4, "plat": 0}, {"sym": "PE", "name": "Public Enemy", "region": "NYC", "aw": 265.0196, "comp": 8.0, "conf": "H", "debut": 1987, "deceased": 0, "age_death": null, "grammy": 1, "span": 33, "hot100": 6, "plat": 2}, {"sym": "GA", "name": "Grandmaster Flash", "region": "NYC", "aw": 196.0196, "comp": 5.6, "conf": "H", "debut": 1977, "deceased": 0, "age_death": null, "grammy": 0, "span": 35, "hot100": 3, "plat": 0}], "Old School||Conscious/Lyrical": [{"sym": "KR", "name": "KRS-One", "region": "NYC", "aw": 280.8197, "comp": 7.8, "conf": "H", "debut": 1986, "deceased": 0, "age_death": null, "grammy": 0, "span": 36, "hot100": 5, "plat": 1}, {"sym": "SL", "name": "Slick Rick", "region": "NYC", "aw": 234.0197, "comp": 7.8, "conf": "H", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 0, "span": 30, "hot100": 12, "plat": 2}, {"sym": "RS", "name": "Roxanne Shant\u00e9", "region": "NYC", "aw": 217.0197, "comp": 6.2, "conf": "M", "debut": 1984, "deceased": 0, "age_death": null, "grammy": 0, "span": 35, "hot100": 3, "plat": 0}, {"sym": "MC", "name": "MC Lyte", "region": "NYC", "aw": 197.2197, "comp": 6.8, "conf": "M", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 0, "span": 29, "hot100": 4, "plat": 1}], "Old School||Gangsta/Street": [{"sym": "SB", "name": "Schoolly D", "region": "South", "aw": 183.6197, "comp": 5.4, "conf": "M", "debut": 1984, "deceased": 0, "age_death": null, "grammy": 0, "span": 34, "hot100": 2, "plat": 0}], "Golden Age||Conscious/Lyrical": [{"sym": "RA", "name": "Rakim", "region": "NYC", "aw": 281.6197, "comp": 8.8, "conf": "H", "debut": 1987, "deceased": 0, "age_death": null, "grammy": 0, "span": 32, "hot100": 5, "plat": 2}, {"sym": "BK", "name": "Big Daddy Kane", "region": "NYC", "aw": 265.2197, "comp": 7.8, "conf": "H", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 0, "span": 34, "hot100": 8, "plat": 1}, {"sym": "NA", "name": "Nas", "region": "NYC", "aw": 255.8197, "comp": 9.4, "conf": "H", "debut": 1994, "deceased": 0, "age_death": null, "grammy": 1, "span": 27, "hot100": 38, "plat": 8}, {"sym": "GG", "name": "Gang Starr", "region": "NYC", "aw": 241.0197, "comp": 8.0, "conf": "H", "debut": 1989, "deceased": 1, "age_death": 47, "grammy": 1, "span": 30, "hot100": 7, "plat": 2}, {"sym": "BR", "name": "Busta Rhymes", "region": "NYC", "aw": 215.6197, "comp": 7.8, "conf": "H", "debut": 1993, "deceased": 0, "age_death": null, "grammy": 1, "span": 27, "hot100": 30, "plat": 6}, {"sym": "BI", "name": "Big L", "region": "NYC", "aw": 57.4197, "comp": 8.2, "conf": "H", "debut": 1993, "deceased": 1, "age_death": 24, "grammy": 0, "span": 7, "hot100": 5, "plat": 1}, {"sym": "LA", "name": "Leaders New School", "region": "NYC", "aw": 22.2197, "comp": 7.4, "conf": "M", "debut": 1991, "deceased": 0, "age_death": null, "grammy": 0, "span": 3, "hot100": 4, "plat": 0}], "Golden Age||Political": [{"sym": "QL", "name": "Queen Latifah", "region": "NYC", "aw": 237.0197, "comp": 7.6, "conf": "H", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 3, "span": 30, "hot100": 22, "plat": 4}, {"sym": "BW", "name": "Brand Nubian", "region": "NYC", "aw": 194.4197, "comp": 7.2, "conf": "M", "debut": 1990, "deceased": 0, "age_death": null, "grammy": 0, "span": 27, "hot100": 4, "plat": 0}, {"sym": "XC", "name": "X-Clan", "region": "NYC", "aw": 168.0196, "comp": 7.0, "conf": "M", "debut": 1990, "deceased": 0, "age_death": null, "grammy": 0, "span": 24, "hot100": 2, "plat": 0}], "Golden Age||Gangsta/Street": [{"sym": "IC", "name": "Ice Cube", "region": "LA", "aw": 249.0197, "comp": 8.2, "conf": "H", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 1, "span": 30, "hot100": 32, "plat": 7}, {"sym": "GL", "name": "The Geto Boys", "region": "South", "aw": 237.8196, "comp": 7.4, "conf": "H", "debut": 1987, "deceased": 1, "age_death": 53, "grammy": 1, "span": 32, "hot100": 8, "plat": 2}, {"sym": "SN", "name": "Snoop Dogg", "region": "LA", "aw": 234.6197, "comp": 6.6, "conf": "H", "debut": 1992, "deceased": 0, "age_death": null, "grammy": 17, "span": 31, "hot100": 72, "plat": 21}, {"sym": "MD", "name": "Mobb Deep", "region": "NYC", "aw": 168.0197, "comp": 8.0, "conf": "H", "debut": 1993, "deceased": 1, "age_death": 42, "grammy": 0, "span": 21, "hot100": 8, "plat": 3}, {"sym": "DR", "name": "Dr. Dre", "region": "LA", "aw": 166.8197, "comp": 5.6, "conf": "H", "debut": 1987, "deceased": 0, "age_death": null, "grammy": 6, "span": 28, "hot100": 28, "plat": 15}, {"sym": "BN", "name": "Biggie", "region": "NYC", "aw": 38.0197, "comp": 9.0, "conf": "H", "debut": 1993, "deceased": 1, "age_death": 24, "grammy": 1, "span": 4, "hot100": 22, "plat": 6}, {"sym": "NW", "name": "N.W.A", "region": "LA", "aw": 30.8197, "comp": 7.2, "conf": "H", "debut": 1987, "deceased": 1, "age_death": 31, "grammy": 1, "span": 4, "hot100": 8, "plat": 5}], "Golden Age||Abstract": [{"sym": "DS", "name": "De La Soul", "region": "NYC", "aw": 260.4197, "comp": 7.6, "conf": "H", "debut": 1989, "deceased": 1, "age_death": 54, "grammy": 1, "span": 34, "hot100": 12, "plat": 2}, {"sym": "WU", "name": "Wu-Tang Clan", "region": "NYC", "aw": 246.6197, "comp": 8.4, "conf": "H", "debut": 1993, "deceased": 1, "age_death": 35, "grammy": 1, "span": 29, "hot100": 18, "plat": 5}, {"sym": "FK", "name": "Freestyle Fellowship", "region": "LA", "aw": 187.2197, "comp": 7.8, "conf": "M", "debut": 1991, "deceased": 0, "age_death": null, "grammy": 0, "span": 24, "hot100": 1, "plat": 0}, {"sym": "PH", "name": "Pharcyde", "region": "LA", "aw": 159.4197, "comp": 7.2, "conf": "H", "debut": 1992, "deceased": 0, "age_death": null, "grammy": 0, "span": 22, "hot100": 6, "plat": 1}], "Golden Age||Jazz-Rap": [{"sym": "AT", "name": "A Tribe Called Quest", "region": "NYC", "aw": 220.4197, "comp": 8.4, "conf": "H", "debut": 1990, "deceased": 1, "age_death": 45, "grammy": 1, "span": 26, "hot100": 14, "plat": 4}, {"sym": "PM", "name": "Pete Rock & CL Smooth", "region": "NYC", "aw": 172.2197, "comp": 7.4, "conf": "M", "debut": 1992, "deceased": 0, "age_death": null, "grammy": 2, "span": 23, "hot100": 6, "plat": 1}, {"sym": "DG", "name": "Digable Planets", "region": "NYC", "aw": 85.0197, "comp": 7.0, "conf": "M", "debut": 1993, "deceased": 0, "age_death": null, "grammy": 1, "span": 12, "hot100": 5, "plat": 1}], "Golden Age||Party/Pop": [{"sym": "E4", "name": "E-40", "region": "Bay Area", "aw": 217.6197, "comp": 6.8, "conf": "H", "debut": 1990, "deceased": 0, "age_death": null, "grammy": 0, "span": 32, "hot100": 18, "plat": 3}], "Late 90s||Political": [{"sym": "2P", "name": "2Pac", "region": "LA", "aw": 46.0197, "comp": 8.4, "conf": "H", "debut": 1991, "deceased": 1, "age_death": 25, "grammy": 0, "span": 5, "hot100": 25, "plat": 15}], "Late 90s||Gangsta/Street": [{"sym": "JZ", "name": "Jay-Z", "region": "NYC", "aw": 270.2197, "comp": 8.6, "conf": "H", "debut": 1996, "deceased": 0, "age_death": null, "grammy": 24, "span": 27, "hot100": 88, "plat": 30}, {"sym": "CW", "name": "Cam'ron", "region": "NYC", "aw": 176.0198, "comp": 7.0, "conf": "M", "debut": 1998, "deceased": 0, "age_death": null, "grammy": 0, "span": 25, "hot100": 18, "plat": 3}, {"sym": "LK", "name": "Lil' Kim", "region": "NYC", "aw": 166.0198, "comp": 7.0, "conf": "H", "debut": 1996, "deceased": 0, "age_death": null, "grammy": 1, "span": 23, "hot100": 20, "plat": 4}, {"sym": "FA", "name": "Foxy Brown", "region": "NYC", "aw": 157.4198, "comp": 6.8, "conf": "M", "debut": 1996, "deceased": 0, "age_death": null, "grammy": 0, "span": 23, "hot100": 12, "plat": 2}, {"sym": "DX", "name": "DMX", "region": "NYC", "aw": 89.8197, "comp": 6.2, "conf": "H", "debut": 1998, "deceased": 1, "age_death": 50, "grammy": 0, "span": 14, "hot100": 22, "plat": 7}], "Late 90s||Conscious/Lyrical": [{"sym": "EM", "name": "Eminem", "region": "Midwest", "aw": 272.4197, "comp": 9.2, "conf": "H", "debut": 1997, "deceased": 0, "age_death": null, "grammy": 15, "span": 27, "hot100": 57, "plat": 35}, {"sym": "LH", "name": "Lauryn Hill", "region": "NYC", "aw": 250.6198, "comp": 8.8, "conf": "H", "debut": 1996, "deceased": 0, "age_death": null, "grammy": 8, "span": 27, "hot100": 18, "plat": 8}, {"sym": "NR", "name": "Nas feat. AZ", "region": "NYC", "aw": 221.4197, "comp": 8.2, "conf": "M", "debut": 1995, "deceased": 0, "age_death": null, "grammy": 0, "span": 27, "hot100": 5, "plat": 2}, {"sym": "TK", "name": "Talib Kweli", "region": "NYC", "aw": 213.0198, "comp": 8.4, "conf": "H", "debut": 1998, "deceased": 0, "age_death": null, "grammy": 1, "span": 25, "hot100": 12, "plat": 2}, {"sym": "MB", "name": "Mos Def", "region": "NYC", "aw": 203.8197, "comp": 8.6, "conf": "H", "debut": 1999, "deceased": 0, "age_death": null, "grammy": 2, "span": 23, "hot100": 18, "plat": 3}, {"sym": "CM2", "name": "Canibus", "region": "NYC", "aw": 154.0197, "comp": 7.0, "conf": "M", "debut": 1998, "deceased": 0, "age_death": null, "grammy": 0, "span": 22, "hot100": 4, "plat": 0}, {"sym": "BT2", "name": "Big Pun", "region": "NYC", "aw": 16.4197, "comp": 8.2, "conf": "H", "debut": 1998, "deceased": 1, "age_death": 28, "grammy": 0, "span": 2, "hot100": 15, "plat": 3}], "Late 90s||Experimental": [{"sym": "OK", "name": "OutKast", "region": "South", "aw": 266.4198, "comp": 8.6, "conf": "H", "debut": 1994, "deceased": 0, "age_death": null, "grammy": 6, "span": 29, "hot100": 30, "plat": 8}, {"sym": "MS", "name": "Missy Elliott", "region": "South", "aw": 172.4197, "comp": 7.2, "conf": "H", "debut": 1997, "deceased": 0, "age_death": null, "grammy": 4, "span": 22, "hot100": 24, "plat": 6}], "Late 90s||Party/Pop": [{"sym": "JR", "name": "Juvenile", "region": "South", "aw": 157.6198, "comp": 5.8, "conf": "M", "debut": 1994, "deceased": 0, "age_death": null, "grammy": 0, "span": 27, "hot100": 22, "plat": 5}, {"sym": "MP", "name": "Master P", "region": "South", "aw": 106.4197, "comp": 3.8, "conf": "H", "debut": 1991, "deceased": 0, "age_death": null, "grammy": 0, "span": 28, "hot100": 20, "plat": 5}], "Late 90s||Abstract": [{"sym": "JD", "name": "Jedi Mind Tricks", "region": "NYC", "aw": 177.6198, "comp": 7.4, "conf": "L", "debut": 1997, "deceased": 0, "age_death": null, "grammy": 0, "span": 24, "hot100": 2, "plat": 0}], "2000s||Experimental": [{"sym": "KW", "name": "Kanye West", "region": "Midwest", "aw": 210.0198, "comp": 8.4, "conf": "H", "debut": 2004, "deceased": 0, "age_death": null, "grammy": 24, "span": 20, "hot100": 68, "plat": 24}, {"sym": "EL", "name": "El-P", "region": "NYC", "aw": 178.4198, "comp": 8.4, "conf": "H", "debut": 2002, "deceased": 0, "age_death": null, "grammy": 2, "span": 21, "hot100": 6, "plat": 1}], "2000s||Conscious/Lyrical": [{"sym": "CM", "name": "Common", "region": "Midwest", "aw": 246.0197, "comp": 8.0, "conf": "H", "debut": 1992, "deceased": 0, "age_death": null, "grammy": 2, "span": 30, "hot100": 28, "plat": 5}, {"sym": "GK", "name": "Ghostface Killah", "region": "NYC", "aw": 245.6197, "comp": 8.4, "conf": "H", "debut": 1994, "deceased": 0, "age_death": null, "grammy": 1, "span": 29, "hot100": 22, "plat": 4}, {"sym": "LW", "name": "Lil Wayne", "region": "South", "aw": 222.6198, "comp": 8.4, "conf": "H", "debut": 1999, "deceased": 0, "age_death": null, "grammy": 5, "span": 24, "hot100": 88, "plat": 28}, {"sym": "BU", "name": "Brother Ali", "region": "Midwest", "aw": 162.8198, "comp": 7.4, "conf": "M", "debut": 2000, "deceased": 0, "age_death": null, "grammy": 0, "span": 22, "hot100": 4, "plat": 1}, {"sym": "GH", "name": "Ghostface / Fishscale", "region": "NYC", "aw": 148.2197, "comp": 8.6, "conf": "M", "debut": 2006, "deceased": 0, "age_death": null, "grammy": 1, "span": 17, "hot100": 15, "plat": 4}, {"sym": "LF", "name": "Lupe Fiasco", "region": "Midwest", "aw": 143.8198, "comp": 8.8, "conf": "H", "debut": 2006, "deceased": 0, "age_death": null, "grammy": 0, "span": 16, "hot100": 22, "plat": 5}], "2000s||Gangsta/Street": [{"sym": "SF", "name": "Scarface", "region": "South", "aw": 264.4197, "comp": 8.2, "conf": "H", "debut": 1991, "deceased": 0, "age_death": null, "grammy": 0, "span": 32, "hot100": 18, "plat": 5}, {"sym": "RA2", "name": "Raekwon", "region": "NYC", "aw": 226.0197, "comp": 8.0, "conf": "H", "debut": 1995, "deceased": 0, "age_death": null, "grammy": 1, "span": 28, "hot100": 14, "plat": 4}, {"sym": "TI", "name": "T.I.", "region": "South", "aw": 154.8198, "comp": 7.2, "conf": "H", "debut": 2001, "deceased": 0, "age_death": null, "grammy": 7, "span": 19, "hot100": 48, "plat": 14}, {"sym": "TS", "name": "Three 6 Mafia", "region": "South", "aw": 153.2197, "comp": 5.6, "conf": "M", "debut": 1995, "deceased": 1, "age_death": 43, "grammy": 2, "span": 27, "hot100": 12, "plat": 3}, {"sym": "TL2", "name": "Trae Tha Truth", "region": "South", "aw": 129.0198, "comp": 6.4, "conf": "L", "debut": 2003, "deceased": 0, "age_death": null, "grammy": 0, "span": 20, "hot100": 6, "plat": 1}, {"sym": "FK2", "name": "50 Cent", "region": "NYC", "aw": 127.0198, "comp": 6.0, "conf": "H", "debut": 2003, "deceased": 0, "age_death": null, "grammy": 0, "span": 20, "hot100": 52, "plat": 15}, {"sym": "JE", "name": "Jadakiss", "region": "NYC", "aw": 123.4198, "comp": 6.8, "conf": "M", "debut": 2001, "deceased": 0, "age_death": null, "grammy": 0, "span": 18, "hot100": 18, "plat": 3}, {"sym": "UG", "name": "UGK", "region": "South", "aw": 113.0197, "comp": 7.4, "conf": "H", "debut": 1992, "deceased": 1, "age_death": 33, "grammy": 0, "span": 15, "hot100": 14, "plat": 3}, {"sym": "XP", "name": "Xzibit", "region": "LA", "aw": 108.8197, "comp": 6.8, "conf": "M", "debut": 1996, "deceased": 0, "age_death": null, "grammy": 0, "span": 16, "hot100": 12, "plat": 2}, {"sym": "YJ", "name": "Young Jeezy", "region": "South", "aw": 96.8198, "comp": 5.4, "conf": "H", "debut": 2005, "deceased": 0, "age_death": null, "grammy": 0, "span": 17, "hot100": 30, "plat": 8}], "2000s||Trap/Drill": [{"sym": "GM", "name": "Gucci Mane", "region": "South", "aw": 93.2198, "comp": 4.8, "conf": "H", "debut": 2005, "deceased": 0, "age_death": null, "grammy": 0, "span": 19, "hot100": 45, "plat": 8}], "2000s||Abstract": [{"sym": "MD2", "name": "MF DOOM", "region": "NYC", "aw": 220.8197, "comp": 9.2, "conf": "H", "debut": 1999, "deceased": 1, "age_death": 49, "grammy": 0, "span": 24, "hot100": 8, "plat": 1}, {"sym": "AC", "name": "Aceyalone", "region": "LA", "aw": 195.0197, "comp": 7.8, "conf": "M", "debut": 1993, "deceased": 0, "age_death": null, "grammy": 0, "span": 25, "hot100": 2, "plat": 0}, {"sym": "AE", "name": "Aesop Rock", "region": "NYC", "aw": 193.2198, "comp": 8.4, "conf": "H", "debut": 2000, "deceased": 0, "age_death": null, "grammy": 0, "span": 23, "hot100": 5, "plat": 1}], "2000s||Party/Pop": [{"sym": "LU", "name": "Ludacris", "region": "South", "aw": 163.8198, "comp": 6.6, "conf": "H", "debut": 2000, "deceased": 0, "age_death": null, "grammy": 4, "span": 23, "hot100": 42, "plat": 10}], "2000s||Political": [{"sym": "IL", "name": "Immortal Technique", "region": "NYC", "aw": 163.8198, "comp": 7.8, "conf": "M", "debut": 2001, "deceased": 0, "age_death": null, "grammy": 0, "span": 21, "hot100": 2, "plat": 0}], "2010s||Conscious/Lyrical": [{"sym": "KL", "name": "Kendrick Lamar", "region": "LA", "aw": 145.0199, "comp": 10.0, "conf": "H", "debut": 2011, "deceased": 0, "age_death": null, "grammy": 22, "span": 11, "hot100": 62, "plat": 15}, {"sym": "NM", "name": "Nicki Minaj", "region": "NYC", "aw": 131.0198, "comp": 8.0, "conf": "H", "debut": 2010, "deceased": 0, "age_death": null, "grammy": 4, "span": 13, "hot100": 88, "plat": 18}, {"sym": "JC", "name": "J. Cole", "region": "South", "aw": 106.8199, "comp": 8.4, "conf": "H", "debut": 2011, "deceased": 0, "age_death": null, "grammy": 1, "span": 12, "hot100": 58, "plat": 12}, {"sym": "BK2", "name": "Big K.R.I.T.", "region": "South", "aw": 99.0199, "comp": 8.0, "conf": "H", "debut": 2010, "deceased": 0, "age_death": null, "grammy": 0, "span": 12, "hot100": 18, "plat": 4}, {"sym": "SZ", "name": "Saba", "region": "Midwest", "aw": 74.8199, "comp": 8.2, "conf": "H", "debut": 2014, "deceased": 0, "age_death": null, "grammy": 0, "span": 9, "hot100": 8, "plat": 2}, {"sym": "MH", "name": "Mac Miller", "region": "Midwest", "aw": 74.0199, "comp": 7.4, "conf": "H", "debut": 2010, "deceased": 1, "age_death": 26, "grammy": 0, "span": 10, "hot100": 22, "plat": 4}, {"sym": "NL", "name": "Noname", "region": "Midwest", "aw": 58.8199, "comp": 8.4, "conf": "H", "debut": 2016, "deceased": 0, "age_death": null, "grammy": 0, "span": 7, "hot100": 6, "plat": 1}, {"sym": "CH", "name": "Chance the Rapper", "region": "Midwest", "aw": 56.2199, "comp": 8.2, "conf": "H", "debut": 2013, "deceased": 0, "age_death": null, "grammy": 3, "span": 6, "hot100": 28, "plat": 5}, {"sym": "JD2", "name": "J.I.D", "region": "South", "aw": 51.2199, "comp": 8.2, "conf": "M", "debut": 2017, "deceased": 0, "age_death": null, "grammy": 0, "span": 6, "hot100": 18, "plat": 3}], "2010s||Party/Pop": [{"sym": "DK", "name": "Drake", "region": "International", "aw": 130.8199, "comp": 6.4, "conf": "H", "debut": 2006, "deceased": 0, "age_death": null, "grammy": 4, "span": 17, "hot100": 262, "plat": 30}, {"sym": "BI2", "name": "Big Sean", "region": "Midwest", "aw": 66.8199, "comp": 5.8, "conf": "M", "debut": 2011, "deceased": 0, "age_death": null, "grammy": 0, "span": 11, "hot100": 48, "plat": 8}, {"sym": "CD", "name": "Cardi B", "region": "NYC", "aw": 53.6199, "comp": 5.6, "conf": "H", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 5, "span": 6, "hot100": 38, "plat": 10}, {"sym": "IA", "name": "Iggy Azalea", "region": "International", "aw": 29.6199, "comp": 3.8, "conf": "H", "debut": 2014, "deceased": 0, "age_death": null, "grammy": 0, "span": 7, "hot100": 18, "plat": 4}], "2010s||Experimental": [{"sym": "DC", "name": "Danny Brown", "region": "Midwest", "aw": 107.6198, "comp": 8.2, "conf": "H", "debut": 2010, "deceased": 0, "age_death": null, "grammy": 0, "span": 13, "hot100": 12, "plat": 2}, {"sym": "AR", "name": "A\$AP Rocky", "region": "NYC", "aw": 76.0199, "comp": 6.0, "conf": "H", "debut": 2011, "deceased": 0, "age_death": null, "grammy": 0, "span": 12, "hot100": 42, "plat": 8}, {"sym": "YT", "name": "Young Thug", "region": "South", "aw": 68.4199, "comp": 5.2, "conf": "H", "debut": 2011, "deceased": 0, "age_death": null, "grammy": 0, "span": 12, "hot100": 62, "plat": 10}, {"sym": "TR", "name": "Tierra Whack", "region": "NYC", "aw": 39.02, "comp": 7.6, "conf": "M", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 0, "span": 5, "hot100": 8, "plat": 1}], "2010s||Trap/Drill": [{"sym": "FT", "name": "Future", "region": "South", "aw": 57.0198, "comp": 5.2, "conf": "H", "debut": 2012, "deceased": 0, "age_death": null, "grammy": 0, "span": 10, "hot100": 68, "plat": 14}, {"sym": "MO", "name": "Migos", "region": "South", "aw": 40.0199, "comp": 4.0, "conf": "H", "debut": 2013, "deceased": 1, "age_death": 28, "grammy": 0, "span": 8, "hot100": 45, "plat": 8}], "2010s||Abstract": [{"sym": "ES", "name": "Earl Sweatshirt", "region": "LA", "aw": 111.2199, "comp": 8.4, "conf": "H", "debut": 2010, "deceased": 0, "age_death": null, "grammy": 1, "span": 13, "hot100": 18, "plat": 2}], "2010s||Gangsta/Street": [{"sym": "FS", "name": "Freddie Gibbs", "region": "Midwest", "aw": 150.2198, "comp": 7.8, "conf": "H", "debut": 2004, "deceased": 0, "age_death": null, "grammy": 0, "span": 19, "hot100": 22, "plat": 4}, {"sym": "MM", "name": "Meek Mill", "region": "South", "aw": 67.0199, "comp": 6.2, "conf": "H", "debut": 2012, "deceased": 0, "age_death": null, "grammy": 0, "span": 10, "hot100": 32, "plat": 8}], "2010s||Political": [{"sym": "KM", "name": "Killer Mike", "region": "South", "aw": 170.0198, "comp": 8.2, "conf": "H", "debut": 2003, "deceased": 0, "age_death": null, "grammy": 2, "span": 20, "hot100": 22, "plat": 4}, {"sym": "VS", "name": "Vince Staples", "region": "LA", "aw": 73.0199, "comp": 8.0, "conf": "H", "debut": 2012, "deceased": 0, "age_death": null, "grammy": 0, "span": 9, "hot100": 22, "plat": 3}, {"sym": "RL", "name": "Run The Jewels", "region": "Midwest", "aw": 62.8198, "comp": 8.4, "conf": "H", "debut": 2013, "deceased": 0, "age_death": null, "grammy": 2, "span": 7, "hot100": 14, "plat": 3}], "2020s||Gangsta/Street": [{"sym": "PZ", "name": "Pusha T", "region": "NYC", "aw": 151.0198, "comp": 7.4, "conf": "H", "debut": 2002, "deceased": 0, "age_death": null, "grammy": 0, "span": 20, "hot100": 28, "plat": 5}, {"sym": "BT", "name": "Benny the Butcher", "region": "NYC", "aw": 90.0198, "comp": 8.0, "conf": "H", "debut": 2012, "deceased": 0, "age_death": null, "grammy": 0, "span": 11, "hot100": 12, "plat": 2}, {"sym": "LI", "name": "Lil Durk", "region": "South", "aw": 56.0199, "comp": 5.2, "conf": "M", "debut": 2013, "deceased": 0, "age_death": null, "grammy": 0, "span": 10, "hot100": 48, "plat": 12}, {"sym": "MX", "name": "Maxo Kream", "region": "South", "aw": 45.4199, "comp": 7.4, "conf": "M", "debut": 2017, "deceased": 0, "age_death": null, "grammy": 0, "span": 6, "hot100": 8, "plat": 1}, {"sym": "KS2", "name": "Kodak Black", "region": "South", "aw": 40.02, "comp": 5.0, "conf": "M", "debut": 2014, "deceased": 0, "age_death": null, "grammy": 0, "span": 8, "hot100": 28, "plat": 7}, {"sym": "LB", "name": "Lil Baby", "region": "South", "aw": 30.0199, "comp": 5.2, "conf": "M", "debut": 2017, "deceased": 0, "age_death": null, "grammy": 0, "span": 5, "hot100": 52, "plat": 12}, {"sym": "PG", "name": "Polo G", "region": "Midwest", "aw": 29.82, "comp": 7.2, "conf": "M", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 28, "plat": 5}, {"sym": "LT", "name": "Latto", "region": "South", "aw": 26.22, "comp": 5.8, "conf": "M", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 22, "plat": 4}], "2020s||Experimental": [{"sym": "TY", "name": "Tyler the Creator", "region": "LA", "aw": 128.6199, "comp": 8.4, "conf": "H", "debut": 2009, "deceased": 0, "age_death": null, "grammy": 4, "span": 14, "hot100": 38, "plat": 8}, {"sym": "SR", "name": "Smino", "region": "Midwest", "aw": 45.4199, "comp": 7.4, "conf": "M", "debut": 2017, "deceased": 0, "age_death": null, "grammy": 0, "span": 6, "hot100": 8, "plat": 2}, {"sym": "LA2", "name": "Lana (Kali Uchis)", "region": "International", "aw": 33.0199, "comp": 6.6, "conf": "L", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 0, "span": 5, "hot100": 6, "plat": 1}, {"sym": "DO", "name": "Doechii", "region": "South", "aw": 31.62, "comp": 8.2, "conf": "M", "debut": 2021, "deceased": 0, "age_death": null, "grammy": 2, "span": 3, "hot100": 12, "plat": 2}, {"sym": "KD", "name": "Kenny Mason", "region": "South", "aw": 28.02, "comp": 7.0, "conf": "L", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 4, "plat": 0}, {"sym": "YN", "name": "Yvonne (Yaya Bey)", "region": "NYC", "aw": 22.8199, "comp": 7.6, "conf": "L", "debut": 2020, "deceased": 0, "age_death": null, "grammy": 0, "span": 3, "hot100": 2, "plat": 0}, {"sym": "RW", "name": "Rod Wave", "region": "South", "aw": 22.42, "comp": 5.6, "conf": "M", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 22, "plat": 4}], "2020s||Party/Pop": [{"sym": "JB", "name": "J Balvin", "region": "International", "aw": 70.4199, "comp": 4.4, "conf": "L", "debut": 2007, "deceased": 0, "age_death": null, "grammy": 0, "span": 16, "hot100": 12, "plat": 5}, {"sym": "BD", "name": "Bad Bunny", "region": "International", "aw": 40.6199, "comp": 5.8, "conf": "M", "debut": 2016, "deceased": 0, "age_death": null, "grammy": 0, "span": 7, "hot100": 28, "plat": 15}, {"sym": "SA", "name": "Saweetie", "region": "LA", "aw": 24.0199, "comp": 4.8, "conf": "M", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 0, "span": 5, "hot100": 12, "plat": 2}, {"sym": "CI", "name": "City Girls", "region": "South", "aw": 18.42, "comp": 4.6, "conf": "L", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 12, "plat": 1}, {"sym": "GG2", "name": "GloRilla", "region": "South", "aw": 10.62, "comp": 4.8, "conf": "L", "debut": 2022, "deceased": 0, "age_death": null, "grammy": 0, "span": 2, "hot100": 8, "plat": 1}], "2020s||Trap/Drill": [{"sym": "OM", "name": "Offset", "region": "South", "aw": 34.0199, "comp": 5.0, "conf": "M", "debut": 2017, "deceased": 0, "age_death": null, "grammy": 0, "span": 6, "hot100": 28, "plat": 6}, {"sym": "GN", "name": "Gunna", "region": "South", "aw": 17.82, "comp": 4.2, "conf": "M", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 35, "plat": 8}], "2020s||Political": [{"sym": "ST", "name": "Stormzy", "region": "UK", "aw": 50.4199, "comp": 7.2, "conf": "H", "debut": 2015, "deceased": 0, "age_death": null, "grammy": 0, "span": 7, "hot100": 8, "plat": 3}, {"sym": "NG", "name": "Noname (Ghetto Sage)", "region": "Midwest", "aw": 34.4199, "comp": 8.6, "conf": "M", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 4, "plat": 1}], "2020s||Abstract": [{"sym": "AB2", "name": "Armand Hammer", "region": "NYC", "aw": 90.2198, "comp": 8.2, "conf": "M", "debut": 2012, "deceased": 0, "age_death": null, "grammy": 0, "span": 11, "hot100": 2, "plat": 0}, {"sym": "MF2", "name": "Mavi", "region": "South", "aw": 28.82, "comp": 7.2, "conf": "L", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 2, "plat": 0}, {"sym": "ZE", "name": "Zach Fox", "region": "NYC", "aw": 19.2199, "comp": 6.4, "conf": "L", "debut": 2020, "deceased": 0, "age_death": null, "grammy": 0, "span": 3, "hot100": 2, "plat": 0}], "2020s||Conscious/Lyrical": [{"sym": "RC", "name": "Rapsody", "region": "South", "aw": 109.6198, "comp": 8.2, "conf": "H", "debut": 2010, "deceased": 0, "age_death": null, "grammy": 0, "span": 13, "hot100": 8, "plat": 1}]};
+
+const ERAS = ["Old School","Golden Age","Late 90s","2000s","2010s","2020s"];
+const STYLES = ["Conscious/Lyrical","Gangsta/Street","Political","Party/Pop","Experimental","Abstract","Jazz-Rap","Trap/Drill"];
+
+const ERA_COLORS  = {"Old School":"#4292c6","Golden Age":"#41ab5d","Late 90s":"#f6c141","2000s":"#e08214","2010s":"#9970ab","2020s":"#d73027"};
+const ERA_YEARS   = {"Old School":"1973–88","Golden Age":"1987–94","Late 90s":"1991–99","2000s":"1999–09","2010s":"2009–18","2020s":"2018–"};
+const STYLE_COLORS= {"Conscious/Lyrical":"#4a9eff","Gangsta/Street":"#ff4444","Political":"#f0c040","Party/Pop":"#ff9e2c","Experimental":"#b06aff","Abstract":"#26d7d7","Jazz-Rap":"#4ecb71","Trap/Drill":"#ff6b35"};
+const REGION_COLORS={"NYC":"#4a9eff","LA":"#ff6b35","South":"#4ecb71","Midwest":"#b06aff","Bay Area":"#f0c040","UK":"#ff6eb4","International":"#26d7d7"};
+
+// Score data lookup (we embed comp from grid data; dimensions from full data would need more)
+// For modal we show composite and metadata from what we have
+
+function buildGrid() {
+  const grid = document.getElementById('ptGrid');
+
+  // Row 0: corner + era headers
+  const corner = document.createElement('div');
+  corner.className = 'era-header era-corner';
+  grid.appendChild(corner);
+
+  ERAS.forEach(era => {
+    const h = document.createElement('div');
+    h.className = 'era-header';
+    h.style.setProperty('--era-color', ERA_COLORS[era]);
+    h.innerHTML = `${era}<span>${ERA_YEARS[era]}</span>`;
+    grid.appendChild(h);
+  });
+
+  // Rows 1-8: style label + cells
+  STYLES.forEach(style => {
+    // Style label
+    const lbl = document.createElement('div');
+    lbl.className = 'style-label';
+    lbl.style.setProperty('--style-color', STYLE_COLORS[style]);
+    lbl.innerHTML = `<span class="style-label-text">${style}</span>`;
+    grid.appendChild(lbl);
+
+    ERAS.forEach(era => {
+      const key = `${era}||${style}`;
+      const artists = GRID_DATA[key] || [];
+      const cell = document.createElement('div');
+      cell.className = 'cell' + (artists.length === 0 ? ' empty' : '');
+      artists.forEach(a => {
+        cell.appendChild(makeCard(a));
+      });
+      grid.appendChild(cell);
+    });
+  });
+}
+
+function makeCard(a) {
+  const rc = REGION_COLORS[a.region] || '#888';
+  const card = document.createElement('div');
+  card.className = 'card' + (a.deceased ? ' deceased' : '');
+  card.style.setProperty('--region-color', rc);
+  card.dataset.region = a.region;
+  card.dataset.deceased = a.deceased;
+  card.dataset.conf = a.conf;
+  card.innerHTML = `
+    <div class="card-aw">${a.aw.toFixed(2)}</div>
+    <div class="card-sym">${a.sym}</div>
+    <div class="card-name">${a.name}</div>
+    <div class="card-meta">
+      <span class="card-comp">${a.comp.toFixed(1)}</span>
+      <span class="card-conf conf-${a.conf}">${a.conf}</span>
+    </div>`;
+  card.addEventListener('click', () => openModal(a, rc));
+  return card;
+}
+
+function openModal(a, rc) {
+  document.getElementById('mSym').textContent = a.sym;
+  document.getElementById('mSym').style.color = rc;
+  document.getElementById('mAw').textContent = `Atomic Weight: ${a.aw.toFixed(4)}`;
+  document.getElementById('mName').textContent = a.name;
+
+  // Tags
+  const tags = document.getElementById('mTags');
+  tags.innerHTML = `
+    <span class="modal-tag region-tag" style="--region-color:${rc}">${a.region}</span>
+    <span class="modal-tag">${a.debut}</span>
+    <span class="modal-tag conf-${a.conf}">${a.conf === 'H' ? 'High Confidence' : a.conf === 'M' ? 'Medium Confidence' : 'Low Confidence'}</span>
+    ${a.deceased ? '<span class="modal-tag" style="color:#ff8888;border-color:#ff8888">Deceased</span>' : ''}
+  `;
+
+  // Stats
+  document.getElementById('mStats').innerHTML = `
+    <div class="stat-block">
+      <div class="stat-label">Composite Score</div>
+      <div class="stat-value accent">${a.comp.toFixed(3)}</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-label">Career Span</div>
+      <div class="stat-value">${a.span} yrs</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-label">Grammy Wins</div>
+      <div class="stat-value">${a.grammy}</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-label">Hot 100 Entries</div>
+      <div class="stat-value">${a.hot100}</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-label">Platinum Albums</div>
+      <div class="stat-value">${a.plat}</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-label">Atomic Weight</div>
+      <div class="stat-value accent" style="font-size:14px">${a.aw.toFixed(4)}</div>
+    </div>
+  `;
+
+  // Score bar — composite only (full 5-dim data not in this embed)
+  document.getElementById('mScores').innerHTML = `
+    <div class="score-row">
+      <span class="score-dim">Composite</span>
+      <div class="score-track"><div class="score-fill" style="width:${a.comp*10}%"></div></div>
+      <span class="score-val">${a.comp.toFixed(1)}</span>
+    </div>`;
+
+  // Death info
+  const dDiv = document.getElementById('mDeath');
+  if (a.deceased) {
+    dDiv.innerHTML = `<div class="modal-death">
+      <strong>✦ Deceased</strong> — Age ${a.age_death}
+    </div>`;
+  } else { dDiv.innerHTML = ''; }
+
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay'))
+    document.getElementById('modalOverlay').classList.remove('open');
+}
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+let activeFilter = 'all';
+function filterCards(filter, btn) {
+  activeFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.card').forEach(card => {
+    let show = true;
+    if (filter === 'all') show = true;
+    else if (filter.startsWith('region-')) show = card.dataset.region === filter.slice(7);
+    else if (filter === 'deceased') show = card.dataset.deceased === '1';
+    else if (filter === 'conf-H') show = card.dataset.conf === 'H';
+    card.classList.toggle('hidden', !show);
+  });
+}
+
+buildGrid();
+</script>
+</body>
+</html>
