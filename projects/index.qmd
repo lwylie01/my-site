@@ -1,0 +1,51 @@
+---
+title: "Projects"
+page-layout: full
+toc: false
+---
+
+```{=html}
+<div class="page-header container">
+  <p class="page-header-label">Work</p>
+  <h1 class="page-header-title">Projects</h1>
+  <p class="page-header-sub">
+    Applied research, teaching tools, and data storytelling experiments.
+    Each project is built around a real methodological question.
+  </p>
+</div>
+```
+
+---
+
+::: {.project-grid}
+
+::: {.project-card .project-card-featured}
+<span class="project-card-tag">Data Storytelling · Teaching Module</span>
+<p class="project-card-title">Hip-Hop Database</p>
+<p class="project-card-desc">
+  A fully documented dataset of 138 hip-hop artists scored across five lyricism
+  dimensions, enriched with Billboard chart data, award counts, career metrics,
+  and a custom atomic weight formula. Built to teach measurement validity,
+  sampling bias, composite scoring, and uncertainty communication — using a
+  subject matter executives actually argue about. Includes an interactive
+  periodic table and a multi-tab analytical dashboard.
+</p>
+<div class="project-card-meta">
+  <span><span class="project-card-accent" style="background:#4472C4;"></span>R / Quarto</span>
+  <span><span class="project-card-accent" style="background:#70AD47;"></span>HTML / JS</span>
+  <span><span class="project-card-accent" style="background:#ED7D31;"></span>Excel / readxl</span>
+  <span><span class="project-card-accent" style="background:#9B59B6;"></span>Interactive</span>
+</div>
+<br>
+<a href="hiphop/index.html" style="font-weight:600; color:#2B2D42;">
+  View project →
+</a>
+:::
+
+:::
+
+---
+
+::: {style="text-align: center; padding: 3rem 0 1rem; color: #6b7280; font-size: 0.9rem;"}
+More projects coming soon.
+:::
