@@ -1,0 +1,63 @@
+---
+title: ""
+page-layout: full
+toc: false
+---
+
+```{=html}
+<div class="page-header container">
+  <p class="page-header-label">Essays</p>
+  <h1 class="page-header-title">Writing</h1>
+  <p class="page-header-sub">
+    On measurement, evidence, and the gap between how decisions
+    are supposed to be made and how they actually are.
+  </p>
+</div>
+
+<hr style="border-color:#e5e7eb; margin: 2rem 0;">
+
+<div class="essay-grid container">
+
+  <a class="essay-card" href="#">
+    <div class="essay-meta">
+      <span class="essay-tag">Data Storytelling</span>
+      <span class="essay-read">8 min read</span>
+    </div>
+    <p class="essay-title">What Hip-Hop Taught Me About Construct Validity</p>
+    <p class="essay-desc">When you try to measure something as contested as
+    lyricism, every methodological flaw in organizational metrics shows up
+    in sharp relief.</p>
+    <span class="essay-status">Coming soon</span>
+  </a>
+
+  <a class="essay-card" href="#">
+    <div class="essay-meta">
+      <span class="essay-tag">Criminal Justice · Measurement</span>
+      <span class="essay-read">10 min read</span>
+    </div>
+    <p class="essay-title">Counted Wrong: Data, Young Adults, and the
+    Criminal Justice System</p>
+    <p class="essay-desc">The categories we use to count people in the
+    legal system were not designed with young adults in mind — and that
+    design failure has consequences.</p>
+    <span class="essay-status">Coming soon</span>
+  </a>
+
+  <a class="essay-card" href="#">
+    <div class="essay-meta">
+      <span class="essay-tag">Metrics · Policy</span>
+      <span class="essay-read">7 min read</span>
+    </div>
+    <p class="essay-title">When the Metric Becomes the Policy</p>
+    <p class="essay-desc">How measurement decisions quietly become legal
+    and organizational ones — and why that matters for anyone who builds
+    or uses KPIs.</p>
+    <span class="essay-status">Coming soon</span>
+  </a>
+
+</div>
+
+<p style="text-align: center; padding: 3rem 0 1rem; color: #6b7280; font-size: 0.9rem;">
+More essays in progress.
+</p>
+```
