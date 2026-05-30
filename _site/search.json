@@ -7,64 +7,36 @@
     "text": "Essays\n  Writing\n  \n    On measurement, evidence, and the gap between how decisions\n    are supposed to be made and how they actually are.\n  \n\n\n\n\n\n\n  \n    \n      Data Storytelling\n      8 min read\n    \n    What Hip-Hop Taught Me About Construct Validity\n    When you try to measure something as contested as\n    lyricism, every methodological flaw in organizational metrics shows up\n    in sharp relief.\n    Coming soon\n  \n\n  \n    \n      Criminal Justice · Measurement\n      10 min read\n    \n    Counted Wrong: Data, Young Adults, and the\n    Criminal Justice System\n    The categories we use to count people in the\n    legal system were not designed with young adults in mind — and that\n    design failure has consequences.\n    Coming soon\n  \n\n  \n    \n      Metrics · Policy\n      7 min read\n    \n    When the Metric Becomes the Policy\n    How measurement decisions quietly become legal\n    and organizational ones — and why that matters for anyone who builds\n    or uses KPIs.\n    Coming soon\n  \n\n\n\n\nMore essays in progress."
   },
   {
-    "objectID": "STRUCTURE_README.html",
-    "href": "STRUCTURE_README.html",
-    "title": "Corrected File Structure",
-    "section": "",
-    "text": "Place them in your project root exactly as organized here:\nyour-project/\n│\n├── _quarto.yml                  ← REPLACE with corrected version\n├── site-theme.scss              ← NEW — was missing, caused build error\n├── custom.scss                  ← keep as-is, used only by hiphop dashboard\n├── index.qmd                   ← unchanged (root homepage)\n│\n├── projects/\n│   └── index.qmd               ← RENAMED from projects_index.qmd\n│\n├── teaching/\n│   └── index.qmd               ← RENAMED from teaching_index.qmd\n│\n├── writing/\n│   └── index.qmd               ← RENAMED from writing_index.qmd\n│\n├── hiphop/\n│   ├── hiphop_dashboard.qmd    ← MOVE here from root (add custom.scss to its YAML)\n│   ├── hiphop_periodic_table.html\n│   └── data/\n│       └── hiphop_artists.xlsx\n│\n└── pics/\n    └── logoW.png\n\n\n\nAfter moving hiphop_dashboard.qmd into the hiphop/ subfolder, make sure its front matter references custom.scss with the correct path:\n---\nformat:\n  dashboard:\n    theme:\n      - cosmo\n      - ../custom.scss   # ← one level up from hiphop/\n---\n\n\n\n\n\n\n\n\n\n\nProblem\nFix\n\n\n\n\nsite-theme.scss missing → build error\nCreated with all site component styles\n\n\nNav links broken (projects/, teaching/, writing/)\nFiles moved into matching subfolders\n\n\ncustom.scss was site-wide theme candidate\nClarified: scoped to dashboard only\n\n\nhiphop_dashboard.html not listed in resources\nAdded to _quarto.yml resources"
-  },
-  {
-    "objectID": "STRUCTURE_README.html#what-to-do-with-these-files",
-    "href": "STRUCTURE_README.html#what-to-do-with-these-files",
-    "title": "Corrected File Structure",
-    "section": "",
-    "text": "Place them in your project root exactly as organized here:\nyour-project/\n│\n├── _quarto.yml                  ← REPLACE with corrected version\n├── site-theme.scss              ← NEW — was missing, caused build error\n├── custom.scss                  ← keep as-is, used only by hiphop dashboard\n├── index.qmd                   ← unchanged (root homepage)\n│\n├── projects/\n│   └── index.qmd               ← RENAMED from projects_index.qmd\n│\n├── teaching/\n│   └── index.qmd               ← RENAMED from teaching_index.qmd\n│\n├── writing/\n│   └── index.qmd               ← RENAMED from writing_index.qmd\n│\n├── hiphop/\n│   ├── hiphop_dashboard.qmd    ← MOVE here from root (add custom.scss to its YAML)\n│   ├── hiphop_periodic_table.html\n│   └── data/\n│       └── hiphop_artists.xlsx\n│\n└── pics/\n    └── logoW.png"
-  },
-  {
-    "objectID": "STRUCTURE_README.html#one-manual-step-hiphop_dashboard.qmd-yaml",
-    "href": "STRUCTURE_README.html#one-manual-step-hiphop_dashboard.qmd-yaml",
-    "title": "Corrected File Structure",
-    "section": "",
-    "text": "After moving hiphop_dashboard.qmd into the hiphop/ subfolder, make sure its front matter references custom.scss with the correct path:\n---\nformat:\n  dashboard:\n    theme:\n      - cosmo\n      - ../custom.scss   # ← one level up from hiphop/\n---"
-  },
-  {
-    "objectID": "STRUCTURE_README.html#what-was-fixed",
-    "href": "STRUCTURE_README.html#what-was-fixed",
-    "title": "Corrected File Structure",
-    "section": "",
-    "text": "Problem\nFix\n\n\n\n\nsite-theme.scss missing → build error\nCreated with all site component styles\n\n\nNav links broken (projects/, teaching/, writing/)\nFiles moved into matching subfolders\n\n\ncustom.scss was site-wide theme candidate\nClarified: scoped to dashboard only\n\n\nhiphop_dashboard.html not listed in resources\nAdded to _quarto.yml resources"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
+    "objectID": "projects/index.html",
+    "href": "projects/index.html",
     "title": "Projects",
     "section": "",
     "text": "Work\n  Projects\n  \n    Applied research, teaching tools, and data storytelling experiments.\n    Each project is built around a real methodological question.\n  \n\n\n\n\n  \n    Data Storytelling · Teaching Module\n    Hip-Hop Periodic Table\n    \n      A fully documented dataset of 139 hip-hop artists scored across five lyricism\n      dimensions, enriched with Billboard chart data, award counts, career metrics,\n      and a custom atomic weight formula. Built to teach measurement validity,\n      sampling bias, composite scoring, and uncertainty communication — using a\n      subject matter executives actually argue about.\n    \n    \n      R / Quarto\n      HTML / JS\n      Excel / readxl\n      Interactive\n    \n    \n    \n      Explore the dashboard →\n    \n  \n\n\n\n\nMore projects coming soon."
   },
   {
-    "objectID": "projects/index.html",
-    "href": "projects/index.html",
+    "objectID": "index.html",
+    "href": "index.html",
     "title": "Data with a Plot",
     "section": "",
-    "text": "Data with a Plot\n      Lindsey E. Wylie, J.D., Ph.D.\n      \n        Applied Research\n        Program Evaluation\n         Measurement & Design\n        Data Storytelling\n      \n      See my work\n      About me"
+    "text": "Data with a Plot\n      Lindsey E. Wylie, J.D., Ph.D.\n      \n        Applied Research\n        Program Evaluation\n        Measurement & Design\n        Data Storytelling\n      \n      See my work\n      About me"
   },
   {
-    "objectID": "projects/index.html#featured-project",
-    "href": "projects/index.html#featured-project",
+    "objectID": "index.html#featured-project",
+    "href": "index.html#featured-project",
     "title": "Data with a Plot",
     "section": "Featured project",
     "text": "Featured project\n\n\nData Storytelling\n\nThe Hip-Hop Periodic Table\n\n\n139 artists. Five lyricism dimensions. A fully documented dataset built to teach measurement validity, sampling bias, uncertainty communication, and visualization design — using a subject matter executives actually argue about.\n\n\nR / Quarto Interactive Teaching module\n\n  Explore the dashboard →"
   },
   {
-    "objectID": "projects/index.html#about",
-    "href": "projects/index.html#about",
+    "objectID": "index.html#about",
+    "href": "index.html#about",
     "title": "Data with a Plot",
     "section": "About",
     "text": "About\n\n\nLEW\n\n\nI work at the intersection of data, law, and organizational decision-making. My non-work work focuses on making rigorous analytical thinking accessible — through unexpected datasets, honest methodology, and visualizations that show their own uncertainty.\n\nPhD — [Social Psychology, certificate in Research Methods and Data Analysis] JD — [specialized in Health Law] [Senior Research Associate / National Center for State Courts]\n\nI’m particularly interested in the gap between how organizations say they make decisions and how they actually make decisions — and in the role that poorly designed measurement plays in that gap.\nWhen I’m not doing that, I’m building models of hip-hop artists."
   },
   {
-    "objectID": "projects/index.html#what-i-do",
-    "href": "projects/index.html#what-i-do",
+    "objectID": "index.html#what-i-do",
+    "href": "index.html#what-i-do",
     "title": "Data with a Plot",
     "section": "What I do",
     "text": "What I do\n\n\nTeaching\nExecutive and graduate education in data storytelling, measurement design, and evidence-based decision-making. I use real datasets with documented flaws — because clean pedagogical data teaches the wrong lessons.\n\nResearch\nApplied work at the boundary of law, psychology, and data storytelling. Particular interest in construct validity, uncertainty quantification, and the politics of how metrics get built and used.\n\nProjects\nIndependent projects that translate methodological ideas into interactive, shareable artifacts. The hip-hop table is one. More in the projects gallery.\n\n\n\n\nBuilt with Quarto · Hosted on GitHub Pages"
