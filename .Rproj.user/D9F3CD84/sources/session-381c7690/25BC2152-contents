@@ -1,0 +1,84 @@
+---
+title: "Teaching"
+subtitle: "Data storytelling and applied research methods for professionals"
+toc: false
+---
+
+## Philosophy {.section-heading}
+
+Good data teaching uses datasets with documented flaws, not cleaned-up
+pedagogical examples. Real data has sampling gaps, contested measurements,
+uncertain scores, and design choices someone made on a Thursday afternoon
+without writing them down. That's what professionals actually encounter —
+and that's what I build teaching materials around.
+
+The six concepts I return to most often:
+
+::: {.concept-list}
+<span class="concept-pill" style="background:#e8f0fe; border-color:#4472C4; color:#1F3864;">Construct validity</span>
+<span class="concept-pill" style="background:#e8f5e9; border-color:#70AD47; color:#1a4731;">Sampling and bias</span>
+<span class="concept-pill" style="background:#fff3e0; border-color:#ED7D31; color:#7B3800;">Multidimensional measurement</span>
+<span class="concept-pill" style="background:#f3e5f5; border-color:#9B59B6; color:#4a235a;">Uncertainty communication</span>
+<span class="concept-pill" style="background:#fce4ec; border-color:#C0392B; color:#641c1c;">Visualization design</span>
+<span class="concept-pill" style="background:#f8f9fb; border-color:#888; color:#333;">Narrative framing</span>
+:::
+
+---
+
+## Teaching materials {.section-heading}
+
+### The Hip-Hop Periodic Table — Data Storytelling Module
+
+A complete 90-minute session built around a dataset of 139 hip-hop artists
+scored across five lyricism dimensions. Designed for professional and executive
+audiences. Includes an interactive Quarto dashboard, data dictionary, source
+bibliography, and facilitator guide.
+
+**Concepts covered:** All six above.
+
+**Deliverables available:**
+
+- [Interactive dashboard](../hiphop/hiphop_dashboard.html) — live Quarto site
+- Data dictionary (Word) — variable definitions, rubrics, source bibliography
+- Excel workbook — full dataset with scoring rubric and era analysis sheets
+- Facilitator README — session structure, discussion questions by tab
+
+::: {.callout-tip title="Session design note"}
+I open this module by asking executives to rate their favorite rapper on
+lyricism — 1 to 10, right now, no thinking. After they do, I ask what they
+just measured. That question takes 45 minutes to properly answer, and by
+the end the room is arguing about construct validity using their own KPIs.
+:::
+
+---
+
+## Topics available for custom sessions {.section-heading}
+
+::: {.columns}
+
+::: {.column width="50%"}
+**Measurement and metrics**
+
+- Building defensible KPIs from first principles
+- When composite scores help and when they lie
+- Communicating confidence and uncertainty to non-technical stakeholders
+- The politics of how organizational metrics get designed
+:::
+
+::: {.column width="50%"}
+**Data visualization**
+
+- Choosing chart types that match your argument
+- Designing for uncertainty, not false precision
+- Interactive vs. static — when each is appropriate
+- Common visualization mistakes in executive reporting
+:::
+
+:::
+
+---
+
+::: {style="margin-top: 2rem;"}
+**Get in touch** about custom session design, keynotes, or workshop facilitation:
+[your@email.com](mailto:your@email.com)
+:::
