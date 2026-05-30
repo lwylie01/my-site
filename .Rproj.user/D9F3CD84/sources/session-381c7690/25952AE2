@@ -1,12 +1,12 @@
 {
-    "id": "B4F55509",
+    "id": "25952AE2",
     "path": "C:/Users/lwylie/Desktop/my-site/index.qmd",
     "project_path": "index.qmd",
     "type": "quarto_markdown",
-    "hash": "0",
+    "hash": "3265335914",
     "contents": "",
     "dirty": false,
-    "created": 1780115622071.0,
+    "created": 1780116823240.0,
     "source_on_save": true,
     "relative_order": 3,
     "properties": {
@@ -22,11 +22,11 @@
         "docOutlineSize": "21"
     },
     "folds": "",
-    "lastKnownWriteTime": 1780115629,
+    "lastKnownWriteTime": 1780117259,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1780115629980,
+    "last_content_update": 1780117259401,
     "read_only": false,
     "read_only_alternatives": []
 }
