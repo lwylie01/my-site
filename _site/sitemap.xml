@@ -1,35 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://datawithaplot.org/writing/writing_index.html</loc>
-    <lastmod>2026-05-30T03:46:23.464Z</lastmod>
+    <loc>https://datawithaplot.org/writing/index.html</loc>
+    <lastmod>2026-05-30T04:05:44.239Z</lastmod>
   </url>
   <url>
-    <loc>https://datawithaplot.org/teaching/index.html</loc>
-    <lastmod>2026-05-28T02:54:44.265Z</lastmod>
-  </url>
-  <url>
-    <loc>https://datawithaplot.org/projects/index.html</loc>
-    <lastmod>2026-05-28T02:54:53.404Z</lastmod>
-  </url>
-  <url>
-    <loc>https://datawithaplot.org/hiphop/index.html</loc>
-    <lastmod>2026-03-22T00:40:48.729Z</lastmod>
-  </url>
-  <url>
-    <loc>https://datawithaplot.org/hiphop/hiphop_dashboard.html</loc>
-    <lastmod>2026-05-28T02:24:31.570Z</lastmod>
+    <loc>https://datawithaplot.org/STRUCTURE_README.html</loc>
+    <lastmod>2026-05-30T04:05:44.255Z</lastmod>
   </url>
   <url>
     <loc>https://datawithaplot.org/index.html</loc>
-    <lastmod>2026-05-28T02:33:17.345Z</lastmod>
+    <lastmod>2026-05-30T04:05:44.192Z</lastmod>
   </url>
   <url>
-    <loc>https://datawithaplot.org/projects/projects_index.html</loc>
-    <lastmod>2026-05-30T03:52:53.240Z</lastmod>
+    <loc>https://datawithaplot.org/hiphop/hiphop_dashboard.html</loc>
+    <lastmod>2026-05-30T04:17:41.763Z</lastmod>
   </url>
   <url>
-    <loc>https://datawithaplot.org/teaching/teaching_index.html</loc>
-    <lastmod>2026-05-30T03:52:10.299Z</lastmod>
+    <loc>https://datawithaplot.org/projects/index.html</loc>
+    <lastmod>2026-05-30T04:05:44.208Z</lastmod>
+  </url>
+  <url>
+    <loc>https://datawithaplot.org/teaching/index.html</loc>
+    <lastmod>2026-05-30T04:05:44.229Z</lastmod>
   </url>
 </urlset>
