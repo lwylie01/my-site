@@ -1,5 +1,5 @@
 ---
-title: "Projects"
+title: "Writing"
 page-layout: full
 toc: false
 ---
