@@ -1,4 +1,0 @@
-quarto render
-git add .
-git commit -m "describe what you changed"
-quarto publish gh-pages

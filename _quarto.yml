@@ -1,15 +1,18 @@
 project:
   type: website
   output-dir: _site
+  # Regenerates hiphop/hiphop_periodic_table.html from the editable Excel file
+  # on every render/publish. Edit hiphop/data/hiphop_artists.xlsx to update it.
+  pre-render: hiphop/build_table.R
   resources:
     - hiphop/hiphop_periodic_table.html
     - hiphop/data/hiphop_artists.xlsx
-    - hiphop/hiphop_dashboard.html
+    - CNAME
 
 website:
   title: "Data with a Plot"
   description: "Lindsey E. Wylie, J.D., Ph.D."
-  favicon: favicon.ico
+  favicon: favicon.png
   site-url: https://datawithaplot.org
 
   navbar:
@@ -33,7 +36,7 @@ website:
         href: https://linkedin.com/in/lindsey-wylie-jd-phd-8a06342a/
         aria-label: LinkedIn
 
-  sidebar: false
+  sidebar: true
 
   page-footer:
     left: "© 2026 Wylie Insights"

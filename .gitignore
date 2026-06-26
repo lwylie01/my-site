@@ -1,2 +1,16 @@
+# Quarto / build output
 /.quarto/
+_site/
 **/*.quarto_ipynb
+
+# Generated periodic table (built from Excel by hiphop/build_table.R on render)
+hiphop/hiphop_periodic_table.html
+
+# RStudio / R session files
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# Note: _freeze/ is intentionally tracked so the R dashboard renders from cache
+# without needing R to re-execute on every publish.
