@@ -3,667 +3,993 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Hip-Hop Periodic Table</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Periodic Table of Hip-Hop Artists — datawithaplot.org</title>
 <style>
   :root {
-    --bg:        #0a0a0f;
-    --surface:   #13131a;
-    --border:    #2a2a3a;
-    --text:      #e8e8f0;
-    --muted:     #666680;
-    --accent:    #f0c040;
+    --primary: #8C6A8D;
+    --secondary: #E98973;
+    --accent: #D2B1A3;
+    --light-bg: #F8F7F4;
+    --dark: #2a1f2b;
+    --text: #3a2d3b;
+    --muted: #7a6a7b;
 
-    /* Region colors */
-    --nyc:       #4a9eff;
-    --la:        #ff6b35;
-    --south:     #4ecb71;
-    --midwest:   #b06aff;
-    --bayarea:   #f0c040;
-    --uk:        #ff6eb4;
-    --intl:      #26d7d7;
+    --nyc:     #8C6A8D;
+    --la:      #E98973;
+    --south:   #c0855a;
+    --midwest: #7aaa8a;
+    --bay:     #5a9abf;
+    --uk:      #a07ac0;
+    --intl:    #bf9a40;
 
-    /* Era accent strips */
-    --era-os:    #4292c6;
-    --era-ga:    #41ab5d;
-    --era-l90:   #f6c141;
-    --era-2000:  #e08214;
-    --era-2010:  #9970ab;
-    --era-2020:  #d73027;
-
-    /* Style row colors (subtle left border) */
-    --s-conscious: #4a9eff;
-    --s-gangsta:   #ff4444;
-    --s-political: #f0c040;
-    --s-party:     #ff9e2c;
-    --s-exp:       #b06aff;
-    --s-abstract:  #26d7d7;
-    --s-jazz:      #4ecb71;
-    --s-trap:      #ff6b35;
-
-    --card-w: 108px;
-    --card-h: 90px;
-    --gap:    6px;
+    --conf-h: #2ecc71;
+    --conf-m: #f39c12;
+    --conf-l: #e74c3c;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: var(--bg);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--light-bg);
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
-    overflow-x: auto;
   }
 
-  /* ── HEADER ── */
+  /* ── Header ─────────────────────────────────────────── */
   header {
-    padding: 32px 40px 20px;
-    border-bottom: 1px solid var(--border);
+    background: var(--dark);
+    color: #f0e8f0;
+    padding: 1.2rem 2rem;
     display: flex;
-    align-items: flex-end;
-    gap: 32px;
+    align-items: center;
+    justify-content: space-between;
     flex-wrap: wrap;
+    gap: 0.5rem;
   }
-  .title-block h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 52px;
-    letter-spacing: 3px;
-    color: var(--accent);
-    line-height: 1;
+  header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
   }
-  .title-block p {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    margin-top: 4px;
-    text-transform: uppercase;
-  }
+  header h1 span { color: var(--secondary); }
+  header p { font-size: 0.8rem; color: var(--accent); margin-top: 0.1rem; }
+  .header-right { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
 
-  /* ── LEGEND ROW ── */
-  .legend-bar {
-    padding: 12px 40px;
-    border-bottom: 1px solid var(--border);
+  /* ── Filters ─────────────────────────────────────────── */
+  #filters {
+    background: white;
+    border-bottom: 2px solid var(--accent);
+    padding: 0.75rem 1.5rem;
     display: flex;
-    gap: 28px;
     flex-wrap: wrap;
+    gap: 0.75rem;
     align-items: center;
   }
-  .legend-section { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .legend-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-right: 4px;
-  }
-  .legend-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    display: inline-block;
-  }
-  .legend-item {
-    display: flex; align-items: center; gap: 5px;
-    font-size: 11px; color: var(--muted);
-  }
-
-  /* ── FILTER BAR ── */
-  .filter-bar {
-    padding: 10px 40px;
-    border-bottom: 1px solid var(--border);
-    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
-  }
-  .filter-btn {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    padding: 4px 12px;
-    border-radius: 3px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
+  #filters label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  #filters select, #filters input[type="text"] {
+    border: 1.5px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.78rem;
+    background: var(--light-bg);
+    color: var(--text);
     cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.15s;
+    outline: none;
   }
-  .filter-btn:hover, .filter-btn.active {
-    background: var(--accent);
-    color: var(--bg);
-    border-color: var(--accent);
+  #filters select:focus, #filters input:focus { border-color: var(--primary); }
+
+  .filter-group { display: flex; align-items: center; gap: 0.4rem; }
+
+  #search-input { width: 160px; }
+
+  .btn {
+    padding: 0.35rem 0.9rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition: opacity 0.15s;
   }
-  .filter-sep {
-    width: 1px; height: 20px; background: var(--border); margin: 0 4px;
+  .btn:hover { opacity: 0.85; }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-secondary { background: var(--secondary); color: white; }
+  .btn-outline { background: white; color: var(--primary); border: 1.5px solid var(--primary); }
+  .btn-sm { padding: 0.25rem 0.6rem; font-size: 0.72rem; }
+
+  /* ── Legend ──────────────────────────────────────────── */
+  #legend {
+    padding: 0.5rem 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+    background: var(--light-bg);
+    border-bottom: 1px solid #e0d8e0;
+    font-size: 0.73rem;
+  }
+  #legend .legend-label { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0.2rem; }
+  .legend-item {
+    display: flex; align-items: center; gap: 0.3rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
   }
 
-  /* ── MAIN TABLE WRAPPER ── */
-  .table-wrapper {
-    padding: 24px 40px 40px;
+  /* ── Grid / Table ─────────────────────────────────────── */
+  #grid-container {
+    padding: 1rem 1rem 2rem;
     overflow-x: auto;
   }
 
-  /* ── GRID ── */
-  .pt-grid {
+  #table-area {
     display: grid;
-    /* col 0 = style label, cols 1-6 = eras */
-    grid-template-columns: 130px repeat(6, 1fr);
-    gap: 0;
-    min-width: 900px;
+    grid-template-columns: repeat(18, 72px);
+    grid-template-rows: auto;
+    gap: 4px;
+    min-width: fit-content;
+    margin: 0 auto;
   }
 
-  /* Era header cells */
-  .era-header {
-    padding: 10px 8px;
-    text-align: center;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 2px;
-    border-bottom: 3px solid var(--era-color, #444);
-    border-right: 1px solid var(--border);
-    color: var(--era-color, #888);
+  /* ── Tile ─────────────────────────────────────────────── */
+  .tile {
+    width: 72px;
+    height: 88px;
+    border-radius: 6px;
+    padding: 4px 5px 5px;
+    cursor: pointer;
     position: relative;
-  }
-  .era-header span {
-    display: block;
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    color: var(--muted);
-    letter-spacing: 1px;
-    margin-top: 2px;
-  }
-  .era-corner { border-bottom: 3px solid var(--border); }
-
-  /* Style label cells */
-  .style-label {
-    display: flex;
-    align-items: center;
-    padding: 8px 10px;
-    border-right: 3px solid var(--style-color, #444);
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-  }
-  .style-label-text {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    color: var(--style-color, #888);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    writing-mode: horizontal-tb;
-    word-break: break-word;
-    line-height: 1.4;
-  }
-
-  /* Cell that holds the stacked cards */
-  .cell {
-    padding: 5px;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
+    transition: transform 0.12s, box-shadow 0.12s;
+    border: 2px solid transparent;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    min-height: 80px;
+    justify-content: space-between;
+    user-select: none;
   }
-  .cell.empty { background: rgba(0,0,0,0.2); }
-
-  /* ── ARTIST CARD ── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--region-color, #555);
-    border-radius: 4px;
-    padding: 5px 6px 4px;
-    cursor: pointer;
-    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
-    position: relative;
-    width: 100%;
-  }
-  .card:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-    border-color: var(--region-color, #888);
+  .tile:hover {
+    transform: scale(1.12);
     z-index: 10;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
   }
-  .card.deceased {
-    opacity: 0.82;
-    background: #16121a;
-  }
-  .card.deceased::after {
-    content: '✦';
-    position: absolute;
-    top: 3px; right: 5px;
-    font-size: 7px;
-    color: #888;
-  }
-  .card.hidden { display: none; }
+  .tile.dragging { opacity: 0.55; transform: scale(1.1); z-index: 1000; }
+  .tile.drag-over { border-color: white; box-shadow: 0 0 0 3px white; }
+  .tile.filtered-out { opacity: 0.12; pointer-events: none; }
 
-  .card-aw {
-    font-family: 'Space Mono', monospace;
-    font-size: 8px;
-    color: var(--muted);
-    letter-spacing: 0.5px;
+  .tile-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .tile-num { font-size: 0.6rem; color: rgba(255,255,255,0.7); font-weight: 600; }
+  .tile-conf {
+    font-size: 0.55rem;
+    font-weight: 800;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
   }
-  .card-sym {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    color: var(--region-color, #ccc);
+  .conf-H { background: var(--conf-h); }
+  .conf-M { background: var(--conf-m); }
+  .conf-L { background: var(--conf-l); }
+
+  .tile-symbol {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: white;
     line-height: 1;
-    margin: 1px 0;
+    text-align: center;
+    letter-spacing: -0.02em;
   }
-  .card-name {
-    font-size: 8.5px;
-    font-weight: 500;
-    color: var(--text);
+  .tile-name {
+    font-size: 0.45rem;
+    color: rgba(255,255,255,0.9);
+    text-align: center;
     line-height: 1.2;
-    margin-bottom: 3px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .card-meta {
+  .tile-year {
+    font-size: 0.5rem;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+  }
+
+  .score-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 2px;
+  }
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.75);
+    transition: width 0.3s;
+  }
+
+  /* Row labels */
+  .row-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--muted);
+    width: 72px;
+    height: 88px;
+    border-radius: 6px;
+    background: rgba(140,106,141,0.08);
+    border: 1.5px dashed var(--accent);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .grid-spacer { width: 72px; height: 88px; }
+
+  /* ── Modal ───────────────────────────────────────────── */
+  #modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(30,20,30,0.7);
+    z-index: 9000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  #modal-overlay.active { display: flex; }
+
+  #modal {
+    background: white;
+    border-radius: 14px;
+    max-width: 560px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    overflow: hidden;
+    animation: pop-in 0.18s ease;
+  }
+  @keyframes pop-in { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  #modal-header {
+    padding: 1.2rem 1.4rem 1rem;
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+  .modal-symbol-box {
+    width: 80px; height: 80px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+  }
+  .modal-title h2 { font-size: 1.25rem; font-weight: 700; color: var(--dark); }
+  .modal-title .modal-meta {
+    font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; line-height: 1.5;
+  }
+  .modal-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; }
+  .modal-tag {
+    font-size: 0.68rem; font-weight: 600; padding: 0.15rem 0.5rem;
+    border-radius: 10px; background: var(--light-bg); color: var(--muted);
+    border: 1px solid var(--accent);
+  }
+
+  #modal-body { padding: 0 1.4rem 1.2rem; }
+
+  .modal-desc {
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.55;
+    padding: 0.7rem 0;
+    border-top: 1px solid #f0e8f0;
+    border-bottom: 1px solid #f0e8f0;
+    margin-bottom: 0.8rem;
+    font-style: italic;
+  }
+
+  .scores-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+
+  .score-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 28px;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.45rem;
+  }
+  .score-row-label { font-size: 0.78rem; font-weight: 600; color: var(--text); }
+  .score-track {
+    height: 8px;
+    background: #f0e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s;
+  }
+  .score-val { font-size: 0.78rem; font-weight: 700; color: var(--primary); text-align: right; }
+
+  .modal-composite {
+    margin-top: 0.8rem;
+    padding: 0.6rem 0.9rem;
+    background: var(--light-bg);
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 2px;
   }
-  .card-comp {
-    font-family: 'Space Mono', monospace;
-    font-size: 8px;
-    color: var(--accent);
-  }
-  .card-conf {
-    font-family: 'Space Mono', monospace;
-    font-size: 7px;
-    padding: 1px 4px;
-    border-radius: 2px;
-  }
-  .conf-H { background: #1a3d1a; color: #4ecb71; }
-  .conf-M { background: #3d2e00; color: #f0c040; }
-  .conf-L { background: #3d1a00; color: #ff8040; }
+  .modal-composite span:first-child { font-size: 0.78rem; font-weight: 600; color: var(--muted); }
+  .modal-composite .composite-val { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
 
-  /* ── MODAL ── */
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.85);
-    z-index: 100;
+  #modal-footer {
+    padding: 0.8rem 1.4rem;
+    background: var(--light-bg);
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
+    border-top: 1px solid #e8dce8;
   }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-top: 4px solid var(--accent);
-    border-radius: 8px;
-    padding: 32px;
-    max-width: 480px;
-    width: 90%;
-    position: relative;
-    animation: modalIn 0.2s ease-out;
-  }
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.94) translateY(8px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
-  }
-  .modal-close {
-    position: absolute; top: 14px; right: 18px;
-    background: none; border: none; color: var(--muted);
-    font-size: 20px; cursor: pointer;
-    font-family: 'Space Mono', monospace;
-  }
-  .modal-close:hover { color: var(--text); }
-  .modal-sym {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 64px;
-    color: var(--accent);
-    line-height: 1;
-  }
-  .modal-aw {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .modal-name {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-  .modal-tags {
-    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;
-  }
-  .modal-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    padding: 3px 8px;
-    border-radius: 3px;
-    background: #1e1e2e;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .modal-tag.region-tag { border-color: var(--region-color); color: var(--region-color); }
+  #modal-footer .conf-note { font-size: 0.7rem; color: var(--muted); max-width: 300px; line-height: 1.4; }
 
-  .modal-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  .stat-block {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 10px 12px;
-  }
-  .stat-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 8px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 3px;
-  }
-  .stat-value {
-    font-family: 'Space Mono', monospace;
-    font-size: 18px;
-    font-weight: 700;
+  /* Edit mode modal */
+  .edit-field { display: grid; grid-template-columns: 110px 1fr; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; }
+  .edit-field label { font-size: 0.75rem; font-weight: 600; color: var(--muted); }
+  .edit-field input, .edit-field select, .edit-field textarea {
+    border: 1.5px solid var(--accent);
+    border-radius: 5px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.78rem;
+    outline: none;
     color: var(--text);
+    background: white;
+    width: 100%;
   }
-  .stat-value.accent { color: var(--accent); }
+  .edit-field input:focus, .edit-field select:focus, .edit-field textarea:focus { border-color: var(--primary); }
+  .edit-field textarea { resize: vertical; min-height: 52px; }
 
-  .modal-score-bar {
-    margin-bottom: 16px;
+  /* ── Add Artist Panel ─────────────────────────────────── */
+  #add-panel {
+    position: fixed; top: 0; right: -400px;
+    width: 380px; height: 100vh;
+    background: white;
+    box-shadow: -4px 0 30px rgba(0,0,0,0.15);
+    z-index: 8000;
+    transition: right 0.25s ease;
+    overflow-y: auto;
+    padding: 1.5rem;
   }
-  .score-row {
-    display: flex; align-items: center; gap: 8px; margin-bottom: 5px;
+  #add-panel.open { right: 0; }
+  #add-panel h3 { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem; }
+  .panel-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 7999;
+    display: none;
   }
-  .score-dim {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    color: var(--muted);
-    width: 70px;
-    flex-shrink: 0;
-  }
-  .score-track {
-    flex: 1; height: 6px; background: #1e1e2e; border-radius: 3px; overflow: hidden;
-  }
-  .score-fill {
-    height: 100%; border-radius: 3px;
-    background: linear-gradient(90deg, #4a9eff, var(--accent));
-    transition: width 0.4s ease;
-  }
-  .score-val {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
+  .panel-overlay.active { display: block; }
+
+  /* ── Stats Bar ────────────────────────────────────────── */
+  #stats-bar {
+    background: var(--dark);
     color: var(--accent);
-    width: 16px;
-    text-align: right;
-    flex-shrink: 0;
+    padding: 0.4rem 1.5rem;
+    font-size: 0.72rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  #stats-bar span { opacity: 0.8; }
+  #stats-bar strong { color: white; opacity: 1; }
+
+  /* Confidence badge in legend */
+  .conf-badge {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    font-size: 0.7rem; font-weight: 600; color: var(--muted);
+  }
+  .conf-dot { width: 9px; height: 9px; border-radius: 50%; }
+
+  /* Print / export styles */
+  @media print {
+    header, #filters, #legend, #stats-bar, #add-panel { display: none; }
+    #grid-container { padding: 0; }
   }
 
-  .modal-death {
-    background: rgba(200,0,0,0.08);
-    border: 1px solid rgba(200,0,0,0.25);
-    border-radius: 4px;
-    padding: 10px 12px;
-    font-size: 11px;
-    color: #cc8888;
-    line-height: 1.5;
+  /* Responsive */
+  @media (max-width: 1400px) {
+    #table-area { grid-template-columns: repeat(18, 64px); }
+    .tile, .grid-spacer, .row-label { width: 64px; height: 80px; }
   }
-  .modal-death strong { color: #ff8888; }
-
-  /* ── FOOTER FORMULA ── */
-  .formula-bar {
-    padding: 14px 40px;
-    border-top: 1px solid var(--border);
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.5px;
-  }
-  .formula-bar span { color: var(--accent); }
-
-  /* ── SCROLL HINT ── */
-  @media (max-width: 900px) {
-    .table-wrapper { padding: 12px; }
-    header { padding: 20px 16px 14px; }
-    .legend-bar, .filter-bar { padding: 10px 16px; }
-    .formula-bar { padding: 12px 16px; }
+  @media (max-width: 1200px) {
+    #table-area { grid-template-columns: repeat(18, 58px); }
+    .tile, .grid-spacer, .row-label { width: 58px; height: 74px; }
+    .tile-symbol { font-size: 1.15rem; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="title-block">
-    <h1>Hip-Hop Periodic Table</h1>
-    <p>138 Artists · 8 Styles · 6 Eras · Atomic Weight = (Span × Composite) + Awards</p>
+  <div>
+    <h1>Periodic Table of <span>Hip-Hop Artists</span></h1>
+    <p>datawithaplot.org — 139 Artists · Five-Dimension Lyrical Profiles · Drag to Rearrange</p>
+  </div>
+  <div class="header-right">
+    <button class="btn btn-outline btn-sm" onclick="toggleEditMode()">✏️ Edit Mode: <span id="edit-mode-label">Off</span></button>
+    <button class="btn btn-secondary btn-sm" onclick="openAddPanel()">＋ Add Artist</button>
+    <button class="btn btn-primary btn-sm" onclick="exportData()">⬇ Export JSON</button>
+    <button class="btn btn-outline btn-sm" onclick="resetLayout()">↺ Reset</button>
   </div>
 </header>
 
-<div class="legend-bar">
-  <div class="legend-section">
-    <span class="legend-label">Region</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#4a9eff"></span>NYC</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#ff6b35"></span>LA</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#4ecb71"></span>South</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#b06aff"></span>Midwest</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#f0c040"></span>Bay Area</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#ff6eb4"></span>UK</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#26d7d7"></span>Intl</span>
+<div id="filters">
+  <div class="filter-group">
+    <label>Era</label>
+    <select id="filter-era" onchange="applyFilters()">
+      <option value="">All Eras</option>
+      <option>Old School</option>
+      <option>Golden Age</option>
+      <option>Late 90s</option>
+      <option>2000s</option>
+      <option>2010s</option>
+      <option>2020s</option>
+    </select>
   </div>
-  <div class="filter-sep"></div>
-  <div class="legend-section">
-    <span class="legend-label">Confidence</span>
-    <span class="legend-item"><span style="font-family:monospace;font-size:10px;background:#1a3d1a;color:#4ecb71;padding:1px 5px;border-radius:2px;">H</span> High</span>
-    <span class="legend-item"><span style="font-family:monospace;font-size:10px;background:#3d2e00;color:#f0c040;padding:1px 5px;border-radius:2px;">M</span> Medium</span>
-    <span class="legend-item"><span style="font-family:monospace;font-size:10px;background:#3d1a00;color:#ff8040;padding:1px 5px;border-radius:2px;">L</span> Low</span>
+  <div class="filter-group">
+    <label>Region</label>
+    <select id="filter-region" onchange="applyFilters()">
+      <option value="">All Regions</option>
+      <option>NYC</option>
+      <option>LA</option>
+      <option>South</option>
+      <option>Midwest</option>
+      <option>Bay Area</option>
+      <option>UK</option>
+      <option>International</option>
+    </select>
   </div>
-  <div class="filter-sep"></div>
-  <div class="legend-section">
-    <span class="legend-label">Status</span>
-    <span class="legend-item" style="font-size:11px;">✦ Deceased</span>
+  <div class="filter-group">
+    <label>Style</label>
+    <select id="filter-style" onchange="applyFilters()">
+      <option value="">All Styles</option>
+      <option>Party/Pop</option>
+      <option>Political</option>
+      <option>Conscious/Lyrical</option>
+      <option>Gangsta/Street</option>
+      <option>Abstract</option>
+      <option>Jazz-Rap</option>
+      <option>Experimental</option>
+      <option>Trap/Drill</option>
+    </select>
   </div>
+  <div class="filter-group">
+    <label>Confidence</label>
+    <select id="filter-conf" onchange="applyFilters()">
+      <option value="">All Tiers</option>
+      <option value="H">High (H)</option>
+      <option value="M">Medium (M)</option>
+      <option value="L">Low (L)</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Search</label>
+    <input type="text" id="search-input" placeholder="Artist name…" oninput="applyFilters()">
+  </div>
+  <button class="btn btn-outline btn-sm" onclick="clearFilters()">Clear</button>
 </div>
 
-<div class="filter-bar">
-  <span class="legend-label" style="margin-right:4px;">Filter:</span>
-  <button class="filter-btn active" onclick="filterCards('all', this)">All</button>
-  <div class="filter-sep"></div>
-  <button class="filter-btn" onclick="filterCards('region-NYC', this)">NYC</button>
-  <button class="filter-btn" onclick="filterCards('region-LA', this)">LA</button>
-  <button class="filter-btn" onclick="filterCards('region-South', this)">South</button>
-  <button class="filter-btn" onclick="filterCards('region-Midwest', this)">Midwest</button>
-  <button class="filter-btn" onclick="filterCards('region-Bay Area', this)">Bay Area</button>
-  <button class="filter-btn" onclick="filterCards('region-UK', this)">UK</button>
-  <button class="filter-btn" onclick="filterCards('region-International', this)">Intl</button>
-  <div class="filter-sep"></div>
-  <button class="filter-btn" onclick="filterCards('deceased', this)">Deceased</button>
-  <button class="filter-btn" onclick="filterCards('conf-H', this)">High Conf</button>
+<div id="legend">
+  <span class="legend-label">Region:</span>
+  <span class="legend-item" style="background:var(--nyc)">NYC</span>
+  <span class="legend-item" style="background:var(--la)">LA</span>
+  <span class="legend-item" style="background:var(--south)">South</span>
+  <span class="legend-item" style="background:var(--midwest)">Midwest</span>
+  <span class="legend-item" style="background:var(--bay)">Bay Area</span>
+  <span class="legend-item" style="background:var(--uk)">UK</span>
+  <span class="legend-item" style="background:var(--intl)">International</span>
+  <span style="margin-left:0.8rem" class="legend-label">Confidence:</span>
+  <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-h)"></span> High</span>
+  <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-m)"></span> Medium</span>
+  <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-l)"></span> Low</span>
+  <span style="margin-left:0.8rem; color:var(--muted); font-size:0.7rem;">Score bar = Composite (1–10) · Click tile for full profile</span>
 </div>
 
-<div class="table-wrapper">
-  <div class="pt-grid" id="ptGrid"></div>
+<div id="stats-bar">
+  <span>Showing <strong id="stat-visible">139</strong> of <strong>139</strong> artists</span>
+  <span>Avg composite: <strong id="stat-avg">—</strong></span>
+  <span>Top scorer: <strong id="stat-top">—</strong></span>
 </div>
 
-<div class="formula-bar">
-  Atomic Weight = <span>(Career Span × Composite Score)</span> + Total Awards + (Birth Year ÷ 100,000) + (Hot 100 Entries ÷ 10,000,000) &nbsp;·&nbsp;
-  Cards sorted high → low within each cell &nbsp;·&nbsp; Click any card for full profile
+<div id="grid-container">
+  <div id="table-area"></div>
 </div>
 
 <!-- Modal -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal" id="modal">
-    <button class="modal-close" onclick="closeModalBtn()">✕</button>
-    <div class="modal-sym" id="mSym"></div>
-    <div class="modal-aw" id="mAw"></div>
-    <div class="modal-name" id="mName"></div>
-    <div class="modal-tags" id="mTags"></div>
-    <div class="modal-stats" id="mStats"></div>
-    <div class="modal-score-bar" id="mScores"></div>
-    <div id="mDeath"></div>
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal">
+    <div id="modal-header">
+      <div class="modal-symbol-box" id="modal-symbol-box"></div>
+      <div class="modal-title">
+        <h2 id="modal-name"></h2>
+        <div class="modal-meta" id="modal-meta"></div>
+        <div class="modal-tags" id="modal-tags"></div>
+      </div>
+    </div>
+    <div id="modal-body">
+      <div class="modal-desc" id="modal-desc"></div>
+      <div id="modal-view-scores">
+        <div class="scores-label">Five-Dimension Profile</div>
+        <div id="modal-scores"></div>
+        <div class="modal-composite">
+          <span>Composite Score</span>
+          <span class="composite-val" id="modal-composite"></span>
+        </div>
+      </div>
+      <div id="modal-edit-form" style="display:none"></div>
+    </div>
+    <div id="modal-footer">
+      <div class="conf-note" id="modal-conf-note"></div>
+      <div style="display:flex;gap:0.5rem">
+        <button class="btn btn-outline btn-sm" id="modal-edit-btn" onclick="toggleModalEdit()">✏️ Edit</button>
+        <button class="btn btn-primary btn-sm" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add panel -->
+<div class="panel-overlay" id="panel-overlay" onclick="closeAddPanel()"></div>
+<div id="add-panel">
+  <h3>＋ Add New Artist</h3>
+  <div id="add-form"></div>
+  <div style="display:flex;gap:0.5rem;margin-top:1rem">
+    <button class="btn btn-primary" onclick="saveNewArtist()">Add Artist</button>
+    <button class="btn btn-outline" onclick="closeAddPanel()">Cancel</button>
   </div>
 </div>
 
 <script>
-const GRID_DATA = {"Old School||Party/Pop": [{"sym": "DS2", "name": "Doug E. Fresh", "region": "NYC", "aw": 183.6197, "comp": 5.4, "conf": "M", "debut": 1984, "deceased": 0, "age_death": null, "grammy": 0, "span": 34, "hot100": 5, "plat": 0}, {"sym": "RD", "name": "Run-DMC", "region": "NYC", "aw": 173.6196, "comp": 5.2, "conf": "H", "debut": 1983, "deceased": 0, "age_death": null, "grammy": 1, "span": 33, "hot100": 12, "plat": 3}, {"sym": "AF", "name": "Afrika Bambaataa", "region": "NYC", "aw": 167.2196, "comp": 4.4, "conf": "H", "debut": 1982, "deceased": 0, "age_death": null, "grammy": 0, "span": 38, "hot100": 2, "plat": 0}, {"sym": "BB", "name": "Beastie Boys", "region": "NYC", "aw": 163.6196, "comp": 5.8, "conf": "H", "debut": 1984, "deceased": 1, "age_death": 47, "grammy": 4, "span": 27, "hot100": 18, "plat": 4}, {"sym": "LL", "name": "LL Cool J", "region": "NYC", "aw": 162.6197, "comp": 5.4, "conf": "H", "debut": 1984, "deceased": 0, "age_death": null, "grammy": 4, "span": 29, "hot100": 28, "plat": 4}, {"sym": "KH", "name": "Kool Herc", "region": "NYC", "aw": 153.0196, "comp": 3.0, "conf": "H", "debut": 1973, "deceased": 0, "age_death": null, "grammy": 0, "span": 51, "hot100": 0, "plat": 0}, {"sym": "DL", "name": "Dana Dane", "region": "NYC", "aw": 133.4196, "comp": 5.8, "conf": "L", "debut": 1987, "deceased": 0, "age_death": null, "grammy": 0, "span": 23, "hot100": 3, "plat": 0}, {"sym": "WR", "name": "Whodini", "region": "NYC", "aw": 124.2196, "comp": 4.6, "conf": "M", "debut": 1983, "deceased": 1, "age_death": 49, "grammy": 0, "span": 27, "hot100": 8, "plat": 1}, {"sym": "SC", "name": "Sugarhill Gang", "region": "NYC", "aw": 92.8196, "comp": 3.2, "conf": "H", "debut": 1979, "deceased": 0, "age_death": null, "grammy": 0, "span": 29, "hot100": 2, "plat": 1}, {"sym": "JJ", "name": "J.J. Fad", "region": "LA", "aw": 14.4197, "comp": 3.6, "conf": "L", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 3, "plat": 1}], "Old School||Political": [{"sym": "ML", "name": "Melle Mel", "region": "NYC", "aw": 267.0196, "comp": 7.6, "conf": "H", "debut": 1979, "deceased": 0, "age_death": null, "grammy": 1, "span": 35, "hot100": 4, "plat": 0}, {"sym": "PE", "name": "Public Enemy", "region": "NYC", "aw": 265.0196, "comp": 8.0, "conf": "H", "debut": 1987, "deceased": 0, "age_death": null, "grammy": 1, "span": 33, "hot100": 6, "plat": 2}, {"sym": "GA", "name": "Grandmaster Flash", "region": "NYC", "aw": 196.0196, "comp": 5.6, "conf": "H", "debut": 1977, "deceased": 0, "age_death": null, "grammy": 0, "span": 35, "hot100": 3, "plat": 0}], "Old School||Conscious/Lyrical": [{"sym": "KR", "name": "KRS-One", "region": "NYC", "aw": 280.8197, "comp": 7.8, "conf": "H", "debut": 1986, "deceased": 0, "age_death": null, "grammy": 0, "span": 36, "hot100": 5, "plat": 1}, {"sym": "SL", "name": "Slick Rick", "region": "NYC", "aw": 234.0197, "comp": 7.8, "conf": "H", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 0, "span": 30, "hot100": 12, "plat": 2}, {"sym": "RS", "name": "Roxanne Shant\u00e9", "region": "NYC", "aw": 217.0197, "comp": 6.2, "conf": "M", "debut": 1984, "deceased": 0, "age_death": null, "grammy": 0, "span": 35, "hot100": 3, "plat": 0}, {"sym": "MC", "name": "MC Lyte", "region": "NYC", "aw": 197.2197, "comp": 6.8, "conf": "M", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 0, "span": 29, "hot100": 4, "plat": 1}], "Old School||Gangsta/Street": [{"sym": "SB", "name": "Schoolly D", "region": "South", "aw": 183.6197, "comp": 5.4, "conf": "M", "debut": 1984, "deceased": 0, "age_death": null, "grammy": 0, "span": 34, "hot100": 2, "plat": 0}], "Golden Age||Conscious/Lyrical": [{"sym": "RA", "name": "Rakim", "region": "NYC", "aw": 281.6197, "comp": 8.8, "conf": "H", "debut": 1987, "deceased": 0, "age_death": null, "grammy": 0, "span": 32, "hot100": 5, "plat": 2}, {"sym": "BK", "name": "Big Daddy Kane", "region": "NYC", "aw": 265.2197, "comp": 7.8, "conf": "H", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 0, "span": 34, "hot100": 8, "plat": 1}, {"sym": "NA", "name": "Nas", "region": "NYC", "aw": 255.8197, "comp": 9.4, "conf": "H", "debut": 1994, "deceased": 0, "age_death": null, "grammy": 1, "span": 27, "hot100": 38, "plat": 8}, {"sym": "GG", "name": "Gang Starr", "region": "NYC", "aw": 241.0197, "comp": 8.0, "conf": "H", "debut": 1989, "deceased": 1, "age_death": 47, "grammy": 1, "span": 30, "hot100": 7, "plat": 2}, {"sym": "BR", "name": "Busta Rhymes", "region": "NYC", "aw": 215.6197, "comp": 7.8, "conf": "H", "debut": 1993, "deceased": 0, "age_death": null, "grammy": 1, "span": 27, "hot100": 30, "plat": 6}, {"sym": "BI", "name": "Big L", "region": "NYC", "aw": 57.4197, "comp": 8.2, "conf": "H", "debut": 1993, "deceased": 1, "age_death": 24, "grammy": 0, "span": 7, "hot100": 5, "plat": 1}, {"sym": "LA", "name": "Leaders New School", "region": "NYC", "aw": 22.2197, "comp": 7.4, "conf": "M", "debut": 1991, "deceased": 0, "age_death": null, "grammy": 0, "span": 3, "hot100": 4, "plat": 0}], "Golden Age||Political": [{"sym": "QL", "name": "Queen Latifah", "region": "NYC", "aw": 237.0197, "comp": 7.6, "conf": "H", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 3, "span": 30, "hot100": 22, "plat": 4}, {"sym": "BW", "name": "Brand Nubian", "region": "NYC", "aw": 194.4197, "comp": 7.2, "conf": "M", "debut": 1990, "deceased": 0, "age_death": null, "grammy": 0, "span": 27, "hot100": 4, "plat": 0}, {"sym": "XC", "name": "X-Clan", "region": "NYC", "aw": 168.0196, "comp": 7.0, "conf": "M", "debut": 1990, "deceased": 0, "age_death": null, "grammy": 0, "span": 24, "hot100": 2, "plat": 0}], "Golden Age||Gangsta/Street": [{"sym": "IC", "name": "Ice Cube", "region": "LA", "aw": 249.0197, "comp": 8.2, "conf": "H", "debut": 1988, "deceased": 0, "age_death": null, "grammy": 1, "span": 30, "hot100": 32, "plat": 7}, {"sym": "GL", "name": "The Geto Boys", "region": "South", "aw": 237.8196, "comp": 7.4, "conf": "H", "debut": 1987, "deceased": 1, "age_death": 53, "grammy": 1, "span": 32, "hot100": 8, "plat": 2}, {"sym": "SN", "name": "Snoop Dogg", "region": "LA", "aw": 234.6197, "comp": 6.6, "conf": "H", "debut": 1992, "deceased": 0, "age_death": null, "grammy": 17, "span": 31, "hot100": 72, "plat": 21}, {"sym": "MD", "name": "Mobb Deep", "region": "NYC", "aw": 168.0197, "comp": 8.0, "conf": "H", "debut": 1993, "deceased": 1, "age_death": 42, "grammy": 0, "span": 21, "hot100": 8, "plat": 3}, {"sym": "DR", "name": "Dr. Dre", "region": "LA", "aw": 166.8197, "comp": 5.6, "conf": "H", "debut": 1987, "deceased": 0, "age_death": null, "grammy": 6, "span": 28, "hot100": 28, "plat": 15}, {"sym": "BN", "name": "Biggie", "region": "NYC", "aw": 38.0197, "comp": 9.0, "conf": "H", "debut": 1993, "deceased": 1, "age_death": 24, "grammy": 1, "span": 4, "hot100": 22, "plat": 6}, {"sym": "NW", "name": "N.W.A", "region": "LA", "aw": 30.8197, "comp": 7.2, "conf": "H", "debut": 1987, "deceased": 1, "age_death": 31, "grammy": 1, "span": 4, "hot100": 8, "plat": 5}], "Golden Age||Abstract": [{"sym": "DS", "name": "De La Soul", "region": "NYC", "aw": 260.4197, "comp": 7.6, "conf": "H", "debut": 1989, "deceased": 1, "age_death": 54, "grammy": 1, "span": 34, "hot100": 12, "plat": 2}, {"sym": "WU", "name": "Wu-Tang Clan", "region": "NYC", "aw": 246.6197, "comp": 8.4, "conf": "H", "debut": 1993, "deceased": 1, "age_death": 35, "grammy": 1, "span": 29, "hot100": 18, "plat": 5}, {"sym": "FK", "name": "Freestyle Fellowship", "region": "LA", "aw": 187.2197, "comp": 7.8, "conf": "M", "debut": 1991, "deceased": 0, "age_death": null, "grammy": 0, "span": 24, "hot100": 1, "plat": 0}, {"sym": "PH", "name": "Pharcyde", "region": "LA", "aw": 159.4197, "comp": 7.2, "conf": "H", "debut": 1992, "deceased": 0, "age_death": null, "grammy": 0, "span": 22, "hot100": 6, "plat": 1}], "Golden Age||Jazz-Rap": [{"sym": "AT", "name": "A Tribe Called Quest", "region": "NYC", "aw": 220.4197, "comp": 8.4, "conf": "H", "debut": 1990, "deceased": 1, "age_death": 45, "grammy": 1, "span": 26, "hot100": 14, "plat": 4}, {"sym": "PM", "name": "Pete Rock & CL Smooth", "region": "NYC", "aw": 172.2197, "comp": 7.4, "conf": "M", "debut": 1992, "deceased": 0, "age_death": null, "grammy": 2, "span": 23, "hot100": 6, "plat": 1}, {"sym": "DG", "name": "Digable Planets", "region": "NYC", "aw": 85.0197, "comp": 7.0, "conf": "M", "debut": 1993, "deceased": 0, "age_death": null, "grammy": 1, "span": 12, "hot100": 5, "plat": 1}], "Golden Age||Party/Pop": [{"sym": "E4", "name": "E-40", "region": "Bay Area", "aw": 217.6197, "comp": 6.8, "conf": "H", "debut": 1990, "deceased": 0, "age_death": null, "grammy": 0, "span": 32, "hot100": 18, "plat": 3}], "Late 90s||Political": [{"sym": "2P", "name": "2Pac", "region": "LA", "aw": 46.0197, "comp": 8.4, "conf": "H", "debut": 1991, "deceased": 1, "age_death": 25, "grammy": 0, "span": 5, "hot100": 25, "plat": 15}], "Late 90s||Gangsta/Street": [{"sym": "JZ", "name": "Jay-Z", "region": "NYC", "aw": 270.2197, "comp": 8.6, "conf": "H", "debut": 1996, "deceased": 0, "age_death": null, "grammy": 24, "span": 27, "hot100": 88, "plat": 30}, {"sym": "CW", "name": "Cam'ron", "region": "NYC", "aw": 176.0198, "comp": 7.0, "conf": "M", "debut": 1998, "deceased": 0, "age_death": null, "grammy": 0, "span": 25, "hot100": 18, "plat": 3}, {"sym": "LK", "name": "Lil' Kim", "region": "NYC", "aw": 166.0198, "comp": 7.0, "conf": "H", "debut": 1996, "deceased": 0, "age_death": null, "grammy": 1, "span": 23, "hot100": 20, "plat": 4}, {"sym": "FA", "name": "Foxy Brown", "region": "NYC", "aw": 157.4198, "comp": 6.8, "conf": "M", "debut": 1996, "deceased": 0, "age_death": null, "grammy": 0, "span": 23, "hot100": 12, "plat": 2}, {"sym": "DX", "name": "DMX", "region": "NYC", "aw": 89.8197, "comp": 6.2, "conf": "H", "debut": 1998, "deceased": 1, "age_death": 50, "grammy": 0, "span": 14, "hot100": 22, "plat": 7}], "Late 90s||Conscious/Lyrical": [{"sym": "EM", "name": "Eminem", "region": "Midwest", "aw": 272.4197, "comp": 9.2, "conf": "H", "debut": 1997, "deceased": 0, "age_death": null, "grammy": 15, "span": 27, "hot100": 57, "plat": 35}, {"sym": "LH", "name": "Lauryn Hill", "region": "NYC", "aw": 250.6198, "comp": 8.8, "conf": "H", "debut": 1996, "deceased": 0, "age_death": null, "grammy": 8, "span": 27, "hot100": 18, "plat": 8}, {"sym": "NR", "name": "Nas feat. AZ", "region": "NYC", "aw": 221.4197, "comp": 8.2, "conf": "M", "debut": 1995, "deceased": 0, "age_death": null, "grammy": 0, "span": 27, "hot100": 5, "plat": 2}, {"sym": "TK", "name": "Talib Kweli", "region": "NYC", "aw": 213.0198, "comp": 8.4, "conf": "H", "debut": 1998, "deceased": 0, "age_death": null, "grammy": 1, "span": 25, "hot100": 12, "plat": 2}, {"sym": "MB", "name": "Mos Def", "region": "NYC", "aw": 203.8197, "comp": 8.6, "conf": "H", "debut": 1999, "deceased": 0, "age_death": null, "grammy": 2, "span": 23, "hot100": 18, "plat": 3}, {"sym": "CM2", "name": "Canibus", "region": "NYC", "aw": 154.0197, "comp": 7.0, "conf": "M", "debut": 1998, "deceased": 0, "age_death": null, "grammy": 0, "span": 22, "hot100": 4, "plat": 0}, {"sym": "BT2", "name": "Big Pun", "region": "NYC", "aw": 16.4197, "comp": 8.2, "conf": "H", "debut": 1998, "deceased": 1, "age_death": 28, "grammy": 0, "span": 2, "hot100": 15, "plat": 3}], "Late 90s||Experimental": [{"sym": "OK", "name": "OutKast", "region": "South", "aw": 266.4198, "comp": 8.6, "conf": "H", "debut": 1994, "deceased": 0, "age_death": null, "grammy": 6, "span": 29, "hot100": 30, "plat": 8}, {"sym": "MS", "name": "Missy Elliott", "region": "South", "aw": 172.4197, "comp": 7.2, "conf": "H", "debut": 1997, "deceased": 0, "age_death": null, "grammy": 4, "span": 22, "hot100": 24, "plat": 6}], "Late 90s||Party/Pop": [{"sym": "JR", "name": "Juvenile", "region": "South", "aw": 157.6198, "comp": 5.8, "conf": "M", "debut": 1994, "deceased": 0, "age_death": null, "grammy": 0, "span": 27, "hot100": 22, "plat": 5}, {"sym": "MP", "name": "Master P", "region": "South", "aw": 106.4197, "comp": 3.8, "conf": "H", "debut": 1991, "deceased": 0, "age_death": null, "grammy": 0, "span": 28, "hot100": 20, "plat": 5}], "Late 90s||Abstract": [{"sym": "JD", "name": "Jedi Mind Tricks", "region": "NYC", "aw": 177.6198, "comp": 7.4, "conf": "L", "debut": 1997, "deceased": 0, "age_death": null, "grammy": 0, "span": 24, "hot100": 2, "plat": 0}], "2000s||Experimental": [{"sym": "KW", "name": "Kanye West", "region": "Midwest", "aw": 210.0198, "comp": 8.4, "conf": "H", "debut": 2004, "deceased": 0, "age_death": null, "grammy": 24, "span": 20, "hot100": 68, "plat": 24}, {"sym": "EL", "name": "El-P", "region": "NYC", "aw": 178.4198, "comp": 8.4, "conf": "H", "debut": 2002, "deceased": 0, "age_death": null, "grammy": 2, "span": 21, "hot100": 6, "plat": 1}], "2000s||Conscious/Lyrical": [{"sym": "CM", "name": "Common", "region": "Midwest", "aw": 246.0197, "comp": 8.0, "conf": "H", "debut": 1992, "deceased": 0, "age_death": null, "grammy": 2, "span": 30, "hot100": 28, "plat": 5}, {"sym": "GK", "name": "Ghostface Killah", "region": "NYC", "aw": 245.6197, "comp": 8.4, "conf": "H", "debut": 1994, "deceased": 0, "age_death": null, "grammy": 1, "span": 29, "hot100": 22, "plat": 4}, {"sym": "LW", "name": "Lil Wayne", "region": "South", "aw": 222.6198, "comp": 8.4, "conf": "H", "debut": 1999, "deceased": 0, "age_death": null, "grammy": 5, "span": 24, "hot100": 88, "plat": 28}, {"sym": "BU", "name": "Brother Ali", "region": "Midwest", "aw": 162.8198, "comp": 7.4, "conf": "M", "debut": 2000, "deceased": 0, "age_death": null, "grammy": 0, "span": 22, "hot100": 4, "plat": 1}, {"sym": "GH", "name": "Ghostface / Fishscale", "region": "NYC", "aw": 148.2197, "comp": 8.6, "conf": "M", "debut": 2006, "deceased": 0, "age_death": null, "grammy": 1, "span": 17, "hot100": 15, "plat": 4}, {"sym": "LF", "name": "Lupe Fiasco", "region": "Midwest", "aw": 143.8198, "comp": 8.8, "conf": "H", "debut": 2006, "deceased": 0, "age_death": null, "grammy": 0, "span": 16, "hot100": 22, "plat": 5}], "2000s||Gangsta/Street": [{"sym": "SF", "name": "Scarface", "region": "South", "aw": 264.4197, "comp": 8.2, "conf": "H", "debut": 1991, "deceased": 0, "age_death": null, "grammy": 0, "span": 32, "hot100": 18, "plat": 5}, {"sym": "RA2", "name": "Raekwon", "region": "NYC", "aw": 226.0197, "comp": 8.0, "conf": "H", "debut": 1995, "deceased": 0, "age_death": null, "grammy": 1, "span": 28, "hot100": 14, "plat": 4}, {"sym": "TI", "name": "T.I.", "region": "South", "aw": 154.8198, "comp": 7.2, "conf": "H", "debut": 2001, "deceased": 0, "age_death": null, "grammy": 7, "span": 19, "hot100": 48, "plat": 14}, {"sym": "TS", "name": "Three 6 Mafia", "region": "South", "aw": 153.2197, "comp": 5.6, "conf": "M", "debut": 1995, "deceased": 1, "age_death": 43, "grammy": 2, "span": 27, "hot100": 12, "plat": 3}, {"sym": "TL2", "name": "Trae Tha Truth", "region": "South", "aw": 129.0198, "comp": 6.4, "conf": "L", "debut": 2003, "deceased": 0, "age_death": null, "grammy": 0, "span": 20, "hot100": 6, "plat": 1}, {"sym": "FK2", "name": "50 Cent", "region": "NYC", "aw": 127.0198, "comp": 6.0, "conf": "H", "debut": 2003, "deceased": 0, "age_death": null, "grammy": 0, "span": 20, "hot100": 52, "plat": 15}, {"sym": "JE", "name": "Jadakiss", "region": "NYC", "aw": 123.4198, "comp": 6.8, "conf": "M", "debut": 2001, "deceased": 0, "age_death": null, "grammy": 0, "span": 18, "hot100": 18, "plat": 3}, {"sym": "UG", "name": "UGK", "region": "South", "aw": 113.0197, "comp": 7.4, "conf": "H", "debut": 1992, "deceased": 1, "age_death": 33, "grammy": 0, "span": 15, "hot100": 14, "plat": 3}, {"sym": "XP", "name": "Xzibit", "region": "LA", "aw": 108.8197, "comp": 6.8, "conf": "M", "debut": 1996, "deceased": 0, "age_death": null, "grammy": 0, "span": 16, "hot100": 12, "plat": 2}, {"sym": "YJ", "name": "Young Jeezy", "region": "South", "aw": 96.8198, "comp": 5.4, "conf": "H", "debut": 2005, "deceased": 0, "age_death": null, "grammy": 0, "span": 17, "hot100": 30, "plat": 8}], "2000s||Trap/Drill": [{"sym": "GM", "name": "Gucci Mane", "region": "South", "aw": 93.2198, "comp": 4.8, "conf": "H", "debut": 2005, "deceased": 0, "age_death": null, "grammy": 0, "span": 19, "hot100": 45, "plat": 8}], "2000s||Abstract": [{"sym": "MD2", "name": "MF DOOM", "region": "NYC", "aw": 220.8197, "comp": 9.2, "conf": "H", "debut": 1999, "deceased": 1, "age_death": 49, "grammy": 0, "span": 24, "hot100": 8, "plat": 1}, {"sym": "AC", "name": "Aceyalone", "region": "LA", "aw": 195.0197, "comp": 7.8, "conf": "M", "debut": 1993, "deceased": 0, "age_death": null, "grammy": 0, "span": 25, "hot100": 2, "plat": 0}, {"sym": "AE", "name": "Aesop Rock", "region": "NYC", "aw": 193.2198, "comp": 8.4, "conf": "H", "debut": 2000, "deceased": 0, "age_death": null, "grammy": 0, "span": 23, "hot100": 5, "plat": 1}], "2000s||Party/Pop": [{"sym": "LU", "name": "Ludacris", "region": "South", "aw": 163.8198, "comp": 6.6, "conf": "H", "debut": 2000, "deceased": 0, "age_death": null, "grammy": 4, "span": 23, "hot100": 42, "plat": 10}], "2000s||Political": [{"sym": "IL", "name": "Immortal Technique", "region": "NYC", "aw": 163.8198, "comp": 7.8, "conf": "M", "debut": 2001, "deceased": 0, "age_death": null, "grammy": 0, "span": 21, "hot100": 2, "plat": 0}], "2010s||Conscious/Lyrical": [{"sym": "KL", "name": "Kendrick Lamar", "region": "LA", "aw": 145.0199, "comp": 10.0, "conf": "H", "debut": 2011, "deceased": 0, "age_death": null, "grammy": 22, "span": 11, "hot100": 62, "plat": 15}, {"sym": "NM", "name": "Nicki Minaj", "region": "NYC", "aw": 131.0198, "comp": 8.0, "conf": "H", "debut": 2010, "deceased": 0, "age_death": null, "grammy": 4, "span": 13, "hot100": 88, "plat": 18}, {"sym": "JC", "name": "J. Cole", "region": "South", "aw": 106.8199, "comp": 8.4, "conf": "H", "debut": 2011, "deceased": 0, "age_death": null, "grammy": 1, "span": 12, "hot100": 58, "plat": 12}, {"sym": "BK2", "name": "Big K.R.I.T.", "region": "South", "aw": 99.0199, "comp": 8.0, "conf": "H", "debut": 2010, "deceased": 0, "age_death": null, "grammy": 0, "span": 12, "hot100": 18, "plat": 4}, {"sym": "SZ", "name": "Saba", "region": "Midwest", "aw": 74.8199, "comp": 8.2, "conf": "H", "debut": 2014, "deceased": 0, "age_death": null, "grammy": 0, "span": 9, "hot100": 8, "plat": 2}, {"sym": "MH", "name": "Mac Miller", "region": "Midwest", "aw": 74.0199, "comp": 7.4, "conf": "H", "debut": 2010, "deceased": 1, "age_death": 26, "grammy": 0, "span": 10, "hot100": 22, "plat": 4}, {"sym": "NL", "name": "Noname", "region": "Midwest", "aw": 58.8199, "comp": 8.4, "conf": "H", "debut": 2016, "deceased": 0, "age_death": null, "grammy": 0, "span": 7, "hot100": 6, "plat": 1}, {"sym": "CH", "name": "Chance the Rapper", "region": "Midwest", "aw": 56.2199, "comp": 8.2, "conf": "H", "debut": 2013, "deceased": 0, "age_death": null, "grammy": 3, "span": 6, "hot100": 28, "plat": 5}, {"sym": "JD2", "name": "J.I.D", "region": "South", "aw": 51.2199, "comp": 8.2, "conf": "M", "debut": 2017, "deceased": 0, "age_death": null, "grammy": 0, "span": 6, "hot100": 18, "plat": 3}], "2010s||Party/Pop": [{"sym": "DK", "name": "Drake", "region": "International", "aw": 130.8199, "comp": 6.4, "conf": "H", "debut": 2006, "deceased": 0, "age_death": null, "grammy": 4, "span": 17, "hot100": 262, "plat": 30}, {"sym": "BI2", "name": "Big Sean", "region": "Midwest", "aw": 66.8199, "comp": 5.8, "conf": "M", "debut": 2011, "deceased": 0, "age_death": null, "grammy": 0, "span": 11, "hot100": 48, "plat": 8}, {"sym": "CD", "name": "Cardi B", "region": "NYC", "aw": 53.6199, "comp": 5.6, "conf": "H", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 5, "span": 6, "hot100": 38, "plat": 10}, {"sym": "IA", "name": "Iggy Azalea", "region": "International", "aw": 29.6199, "comp": 3.8, "conf": "H", "debut": 2014, "deceased": 0, "age_death": null, "grammy": 0, "span": 7, "hot100": 18, "plat": 4}], "2010s||Experimental": [{"sym": "DC", "name": "Danny Brown", "region": "Midwest", "aw": 107.6198, "comp": 8.2, "conf": "H", "debut": 2010, "deceased": 0, "age_death": null, "grammy": 0, "span": 13, "hot100": 12, "plat": 2}, {"sym": "AR", "name": "A\$AP Rocky", "region": "NYC", "aw": 76.0199, "comp": 6.0, "conf": "H", "debut": 2011, "deceased": 0, "age_death": null, "grammy": 0, "span": 12, "hot100": 42, "plat": 8}, {"sym": "YT", "name": "Young Thug", "region": "South", "aw": 68.4199, "comp": 5.2, "conf": "H", "debut": 2011, "deceased": 0, "age_death": null, "grammy": 0, "span": 12, "hot100": 62, "plat": 10}, {"sym": "TR", "name": "Tierra Whack", "region": "NYC", "aw": 39.02, "comp": 7.6, "conf": "M", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 0, "span": 5, "hot100": 8, "plat": 1}], "2010s||Trap/Drill": [{"sym": "FT", "name": "Future", "region": "South", "aw": 57.0198, "comp": 5.2, "conf": "H", "debut": 2012, "deceased": 0, "age_death": null, "grammy": 0, "span": 10, "hot100": 68, "plat": 14}, {"sym": "MO", "name": "Migos", "region": "South", "aw": 40.0199, "comp": 4.0, "conf": "H", "debut": 2013, "deceased": 1, "age_death": 28, "grammy": 0, "span": 8, "hot100": 45, "plat": 8}], "2010s||Abstract": [{"sym": "ES", "name": "Earl Sweatshirt", "region": "LA", "aw": 111.2199, "comp": 8.4, "conf": "H", "debut": 2010, "deceased": 0, "age_death": null, "grammy": 1, "span": 13, "hot100": 18, "plat": 2}], "2010s||Gangsta/Street": [{"sym": "FS", "name": "Freddie Gibbs", "region": "Midwest", "aw": 150.2198, "comp": 7.8, "conf": "H", "debut": 2004, "deceased": 0, "age_death": null, "grammy": 0, "span": 19, "hot100": 22, "plat": 4}, {"sym": "MM", "name": "Meek Mill", "region": "South", "aw": 67.0199, "comp": 6.2, "conf": "H", "debut": 2012, "deceased": 0, "age_death": null, "grammy": 0, "span": 10, "hot100": 32, "plat": 8}], "2010s||Political": [{"sym": "KM", "name": "Killer Mike", "region": "South", "aw": 170.0198, "comp": 8.2, "conf": "H", "debut": 2003, "deceased": 0, "age_death": null, "grammy": 2, "span": 20, "hot100": 22, "plat": 4}, {"sym": "VS", "name": "Vince Staples", "region": "LA", "aw": 73.0199, "comp": 8.0, "conf": "H", "debut": 2012, "deceased": 0, "age_death": null, "grammy": 0, "span": 9, "hot100": 22, "plat": 3}, {"sym": "RL", "name": "Run The Jewels", "region": "Midwest", "aw": 62.8198, "comp": 8.4, "conf": "H", "debut": 2013, "deceased": 0, "age_death": null, "grammy": 2, "span": 7, "hot100": 14, "plat": 3}], "2020s||Gangsta/Street": [{"sym": "PZ", "name": "Pusha T", "region": "NYC", "aw": 151.0198, "comp": 7.4, "conf": "H", "debut": 2002, "deceased": 0, "age_death": null, "grammy": 0, "span": 20, "hot100": 28, "plat": 5}, {"sym": "BT", "name": "Benny the Butcher", "region": "NYC", "aw": 90.0198, "comp": 8.0, "conf": "H", "debut": 2012, "deceased": 0, "age_death": null, "grammy": 0, "span": 11, "hot100": 12, "plat": 2}, {"sym": "LI", "name": "Lil Durk", "region": "South", "aw": 56.0199, "comp": 5.2, "conf": "M", "debut": 2013, "deceased": 0, "age_death": null, "grammy": 0, "span": 10, "hot100": 48, "plat": 12}, {"sym": "MX", "name": "Maxo Kream", "region": "South", "aw": 45.4199, "comp": 7.4, "conf": "M", "debut": 2017, "deceased": 0, "age_death": null, "grammy": 0, "span": 6, "hot100": 8, "plat": 1}, {"sym": "KS2", "name": "Kodak Black", "region": "South", "aw": 40.02, "comp": 5.0, "conf": "M", "debut": 2014, "deceased": 0, "age_death": null, "grammy": 0, "span": 8, "hot100": 28, "plat": 7}, {"sym": "LB", "name": "Lil Baby", "region": "South", "aw": 30.0199, "comp": 5.2, "conf": "M", "debut": 2017, "deceased": 0, "age_death": null, "grammy": 0, "span": 5, "hot100": 52, "plat": 12}, {"sym": "PG", "name": "Polo G", "region": "Midwest", "aw": 29.82, "comp": 7.2, "conf": "M", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 28, "plat": 5}, {"sym": "LT", "name": "Latto", "region": "South", "aw": 26.22, "comp": 5.8, "conf": "M", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 22, "plat": 4}], "2020s||Experimental": [{"sym": "TY", "name": "Tyler the Creator", "region": "LA", "aw": 128.6199, "comp": 8.4, "conf": "H", "debut": 2009, "deceased": 0, "age_death": null, "grammy": 4, "span": 14, "hot100": 38, "plat": 8}, {"sym": "SR", "name": "Smino", "region": "Midwest", "aw": 45.4199, "comp": 7.4, "conf": "M", "debut": 2017, "deceased": 0, "age_death": null, "grammy": 0, "span": 6, "hot100": 8, "plat": 2}, {"sym": "LA2", "name": "Lana (Kali Uchis)", "region": "International", "aw": 33.0199, "comp": 6.6, "conf": "L", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 0, "span": 5, "hot100": 6, "plat": 1}, {"sym": "DO", "name": "Doechii", "region": "South", "aw": 31.62, "comp": 8.2, "conf": "M", "debut": 2021, "deceased": 0, "age_death": null, "grammy": 2, "span": 3, "hot100": 12, "plat": 2}, {"sym": "KD", "name": "Kenny Mason", "region": "South", "aw": 28.02, "comp": 7.0, "conf": "L", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 4, "plat": 0}, {"sym": "YN", "name": "Yvonne (Yaya Bey)", "region": "NYC", "aw": 22.8199, "comp": 7.6, "conf": "L", "debut": 2020, "deceased": 0, "age_death": null, "grammy": 0, "span": 3, "hot100": 2, "plat": 0}, {"sym": "RW", "name": "Rod Wave", "region": "South", "aw": 22.42, "comp": 5.6, "conf": "M", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 22, "plat": 4}], "2020s||Party/Pop": [{"sym": "JB", "name": "J Balvin", "region": "International", "aw": 70.4199, "comp": 4.4, "conf": "L", "debut": 2007, "deceased": 0, "age_death": null, "grammy": 0, "span": 16, "hot100": 12, "plat": 5}, {"sym": "BD", "name": "Bad Bunny", "region": "International", "aw": 40.6199, "comp": 5.8, "conf": "M", "debut": 2016, "deceased": 0, "age_death": null, "grammy": 0, "span": 7, "hot100": 28, "plat": 15}, {"sym": "SA", "name": "Saweetie", "region": "LA", "aw": 24.0199, "comp": 4.8, "conf": "M", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 0, "span": 5, "hot100": 12, "plat": 2}, {"sym": "CI", "name": "City Girls", "region": "South", "aw": 18.42, "comp": 4.6, "conf": "L", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 12, "plat": 1}, {"sym": "GG2", "name": "GloRilla", "region": "South", "aw": 10.62, "comp": 4.8, "conf": "L", "debut": 2022, "deceased": 0, "age_death": null, "grammy": 0, "span": 2, "hot100": 8, "plat": 1}], "2020s||Trap/Drill": [{"sym": "OM", "name": "Offset", "region": "South", "aw": 34.0199, "comp": 5.0, "conf": "M", "debut": 2017, "deceased": 0, "age_death": null, "grammy": 0, "span": 6, "hot100": 28, "plat": 6}, {"sym": "GN", "name": "Gunna", "region": "South", "aw": 17.82, "comp": 4.2, "conf": "M", "debut": 2018, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 35, "plat": 8}], "2020s||Political": [{"sym": "ST", "name": "Stormzy", "region": "UK", "aw": 50.4199, "comp": 7.2, "conf": "H", "debut": 2015, "deceased": 0, "age_death": null, "grammy": 0, "span": 7, "hot100": 8, "plat": 3}, {"sym": "NG", "name": "Noname (Ghetto Sage)", "region": "Midwest", "aw": 34.4199, "comp": 8.6, "conf": "M", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 4, "plat": 1}], "2020s||Abstract": [{"sym": "AB2", "name": "Armand Hammer", "region": "NYC", "aw": 90.2198, "comp": 8.2, "conf": "M", "debut": 2012, "deceased": 0, "age_death": null, "grammy": 0, "span": 11, "hot100": 2, "plat": 0}, {"sym": "MF2", "name": "Mavi", "region": "South", "aw": 28.82, "comp": 7.2, "conf": "L", "debut": 2019, "deceased": 0, "age_death": null, "grammy": 0, "span": 4, "hot100": 2, "plat": 0}, {"sym": "ZE", "name": "Zach Fox", "region": "NYC", "aw": 19.2199, "comp": 6.4, "conf": "L", "debut": 2020, "deceased": 0, "age_death": null, "grammy": 0, "span": 3, "hot100": 2, "plat": 0}], "2020s||Conscious/Lyrical": [{"sym": "RC", "name": "Rapsody", "region": "South", "aw": 109.6198, "comp": 8.2, "conf": "H", "debut": 2010, "deceased": 0, "age_death": null, "grammy": 0, "span": 13, "hot100": 8, "plat": 1}]};
+// ─── DATA ──────────────────────────────────────────────────────────────────
+const RAW_DATA = [{"#":1,"Symbol":"KH","Artist Name":"Kool Herc","Region":"NYC","Era":"Old School","Style":"Party/Pop","Production Style":"Breakbeat/DJ","Label":"Independent","Debut Year":1973,"Rhyme Density":3,"Vocab Breadth":3,"Storytelling":3,"Metaphor/Imagery":2,"Conceptual Depth":4,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Father of hip-hop. Innovated breakbeat DJing. His voice was the party, not the page."},{"#":2,"Symbol":"GA","Artist Name":"Grandmaster Flash","Region":"NYC","Era":"Old School","Style":"Political","Production Style":"Scratch/DJ","Label":"Sugar Hill","Debut Year":1977,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":6,"Metaphor/Imagery":5,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Turntablism pioneer. Set template for social commentary rap."},{"#":3,"Symbol":"ML","Artist Name":"Melle Mel","Region":"NYC","Era":"Old School","Style":"Political","Production Style":"Funk/Soul","Label":"Sugar Hill","Debut Year":1979,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":8,"Metaphor/Imagery":7,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"'The Message' redefined what rap could say."},{"#":4,"Symbol":"SC","Artist Name":"Sugarhill Gang","Region":"NYC","Era":"Old School","Style":"Party/Pop","Production Style":"Funk/Disco","Label":"Sugar Hill","Debut Year":1979,"Rhyme Density":4,"Vocab Breadth":4,"Storytelling":3,"Metaphor/Imagery":3,"Conceptual Depth":2,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"First commercial rap hit."},{"#":5,"Symbol":"AF","Artist Name":"Afrika Bambaataa","Region":"NYC","Era":"Old School","Style":"Party/Pop","Production Style":"Electro","Label":"Tommy Boy","Debut Year":1982,"Rhyme Density":4,"Vocab Breadth":5,"Storytelling":3,"Metaphor/Imagery":4,"Conceptual Depth":6,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Zulu Nation founder. Bridged hip-hop to electronic music."},{"#":6,"Symbol":"LL","Artist Name":"LL Cool J","Region":"NYC","Era":"Old School","Style":"Party/Pop","Production Style":"Hard Rap/Pop","Label":"Def Jam","Debut Year":1984,"Rhyme Density":6,"Vocab Breadth":6,"Storytelling":5,"Metaphor/Imagery":6,"Conceptual Depth":4,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Defied rock and roll skeptics. First major Def Jam artist."},{"#":7,"Symbol":"RD","Artist Name":"Run-DMC","Region":"NYC","Era":"Old School","Style":"Party/Pop","Production Style":"Rock-Rap","Label":"Profile","Debut Year":1983,"Rhyme Density":6,"Vocab Breadth":5,"Storytelling":5,"Metaphor/Imagery":5,"Conceptual Depth":5,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Integrated rock into rap. Made Adidas iconic."},{"#":8,"Symbol":"BB","Artist Name":"Beastie Boys","Region":"NYC","Era":"Old School","Style":"Party/Pop","Production Style":"Punk-Rap/Funk","Label":"Def Jam","Debut Year":1984,"Rhyme Density":6,"Vocab Breadth":7,"Storytelling":5,"Metaphor/Imagery":6,"Conceptual Depth":5,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Crossover kings. Made rap acceptable to white rock audiences."},{"#":9,"Symbol":"KR","Artist Name":"KRS-One","Region":"NYC","Era":"Old School","Style":"Conscious/Lyrical","Production Style":"Hard Rap","Label":"Jive","Debut Year":1986,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"The Teacha. 'South Bronx' battle classic."},{"#":10,"Symbol":"PE","Artist Name":"Public Enemy","Region":"NYC","Era":"Old School","Style":"Political","Production Style":"Noise Collage","Label":"Def Jam","Debut Year":1987,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":10,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Most politically explosive group in rap history."},{"#":11,"Symbol":"RS","Artist Name":"Roxanne Shanté","Region":"NYC","Era":"Old School","Style":"Conscious/Lyrical","Production Style":"Hard Rap","Label":"Pop Art","Debut Year":1984,"Rhyme Density":7,"Vocab Breadth":6,"Storytelling":6,"Metaphor/Imagery":6,"Conceptual Depth":6,"Composite Score":null,"Confidence":"M","Confidence Note":"Fewer academic sources; mostly cited in battle rap history","Description":"First female voice in a rap beef. Battle rap pioneer."},{"#":12,"Symbol":"MC","Artist Name":"MC Lyte","Region":"NYC","Era":"Old School","Style":"Conscious/Lyrical","Production Style":"Hard Rap","Label":"First Priority","Debut Year":1988,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":7,"Metaphor/Imagery":6,"Conceptual Depth":7,"Composite Score":null,"Confidence":"M","Confidence Note":"Well-documented but less scholarly attention than male peers","Description":"First female rapper to release a full solo album."},{"#":13,"Symbol":"SB","Artist Name":"Schoolly D","Region":"South","Era":"Old School","Style":"Gangsta/Street","Production Style":"Hard Rap","Label":"Schoolly-D","Debut Year":1984,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":6,"Metaphor/Imagery":5,"Conceptual Depth":6,"Composite Score":null,"Confidence":"M","Confidence Note":"Historically significant but thinly analyzed","Description":"Godfather of gangsta rap. Influence often unacknowledged."},{"#":14,"Symbol":"JJ","Artist Name":"J.J. Fad","Region":"LA","Era":"Old School","Style":"Party/Pop","Production Style":"West Coast Pop","Label":"Ruthless/Atlantic","Debut Year":1988,"Rhyme Density":4,"Vocab Breadth":4,"Storytelling":3,"Metaphor/Imagery":4,"Conceptual Depth":3,"Composite Score":null,"Confidence":"L","Confidence Note":"Limited critical documentation beyond chart performance","Description":"Supersonic. Early Ruthless Records female act."},{"#":15,"Symbol":"WR","Artist Name":"Whodini","Region":"NYC","Era":"Old School","Style":"Party/Pop","Production Style":"Electro/R&B","Label":"Jive","Debut Year":1983,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":4,"Metaphor/Imagery":5,"Conceptual Depth":4,"Composite Score":null,"Confidence":"M","Confidence Note":"Cited in electro-rap histories but limited close analysis","Description":"Crossover R&B-rap. Smooth sophistication in Old School era."},{"#":16,"Symbol":"DS2","Artist Name":"Doug E. Fresh","Region":"NYC","Era":"Old School","Style":"Party/Pop","Production Style":"Beatbox/Party","Label":"Reality","Debut Year":1984,"Rhyme Density":6,"Vocab Breadth":6,"Storytelling":5,"Metaphor/Imagery":6,"Conceptual Depth":4,"Composite Score":null,"Confidence":"M","Confidence Note":"Celebrated in DJ/beatbox literature; sparse lyrical analysis","Description":"Human beatbox originator. 'La Di Da Di' with Slick Rick."},{"#":17,"Symbol":"SL","Artist Name":"Slick Rick","Region":"NYC","Era":"Old School","Style":"Conscious/Lyrical","Production Style":"Storytelling","Label":"Def Jam","Debut Year":1988,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":9,"Metaphor/Imagery":8,"Conceptual Depth":6,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Master storyteller. 'Children's Story' is a narrative benchmark."},{"#":18,"Symbol":"DL","Artist Name":"Dana Dane","Region":"NYC","Era":"Old School","Style":"Party/Pop","Production Style":"Storytelling","Label":"Profile","Debut Year":1987,"Rhyme Density":6,"Vocab Breadth":6,"Storytelling":7,"Metaphor/Imagery":6,"Conceptual Depth":4,"Composite Score":null,"Confidence":"L","Confidence Note":"Minimal scholarly attention; regional cult following","Description":"Slick Rick adjacent storyteller. Underrated narrative voice."},{"#":19,"Symbol":"BK","Artist Name":"Big Daddy Kane","Region":"NYC","Era":"Golden Age","Style":"Conscious/Lyrical","Production Style":"Smooth/Hard Rap","Label":"Cold Chillin'","Debut Year":1988,"Rhyme Density":9,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Smoothed battle rap into an art form. Influenced Jay-Z directly."},{"#":20,"Symbol":"RA","Artist Name":"Rakim","Region":"NYC","Era":"Golden Age","Style":"Conscious/Lyrical","Production Style":"Jazz/Soul Rap","Label":"4th & Broadway","Debut Year":1987,"Rhyme Density":10,"Vocab Breadth":9,"Storytelling":8,"Metaphor/Imagery":9,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Rewired how MCs thought about flow. The God MC."},{"#":21,"Symbol":"QL","Artist Name":"Queen Latifah","Region":"NYC","Era":"Golden Age","Style":"Political","Production Style":"Afrocentric Jazz","Label":"Tommy Boy","Debut Year":1988,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"U.N.I.T.Y. feminist anthem. First lady of hip-hop royalty."},{"#":22,"Symbol":"NW","Artist Name":"N.W.A","Region":"LA","Era":"Golden Age","Style":"Gangsta/Street","Production Style":"G-Funk/Hard West","Label":"Ruthless","Debut Year":1987,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":8,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Straight Outta Compton. Made the coasts speak different languages."},{"#":23,"Symbol":"IC","Artist Name":"Ice Cube","Region":"LA","Era":"Golden Age","Style":"Gangsta/Street","Production Style":"G-Funk/Boom Bap","Label":"Priority","Debut Year":1988,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":9,"Metaphor/Imagery":8,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"N.W.A pen. AmeriKKKa's Most Wanted is a lyrical high-water mark."},{"#":24,"Symbol":"DS","Artist Name":"De La Soul","Region":"NYC","Era":"Golden Age","Style":"Abstract","Production Style":"Sample Collage","Label":"Tommy Boy","Debut Year":1989,"Rhyme Density":7,"Vocab Breadth":9,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"3 Feet High and Rising. Made sampling feel like art."},{"#":25,"Symbol":"AT","Artist Name":"A Tribe Called Quest","Region":"NYC","Era":"Golden Age","Style":"Jazz-Rap","Production Style":"Jazz Sample","Label":"Jive","Debut Year":1990,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":8,"Metaphor/Imagery":9,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Married jazz and hip-hop elegantly. The Low End Theory is essential."},{"#":26,"Symbol":"NA","Artist Name":"Nas","Region":"NYC","Era":"Golden Age","Style":"Conscious/Lyrical","Production Style":"Boom Bap","Label":"Columbia","Debut Year":1994,"Rhyme Density":9,"Vocab Breadth":10,"Storytelling":10,"Metaphor/Imagery":9,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Illmatic remains the most critically studied debut in rap."},{"#":27,"Symbol":"BN","Artist Name":"Biggie","Region":"NYC","Era":"Golden Age","Style":"Gangsta/Street","Production Style":"Boom Bap","Label":"Bad Boy","Debut Year":1993,"Rhyme Density":9,"Vocab Breadth":9,"Storytelling":10,"Metaphor/Imagery":9,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Lyrical density and narrative gift in equal measure."},{"#":28,"Symbol":"WU","Artist Name":"Wu-Tang Clan","Region":"NYC","Era":"Golden Age","Style":"Abstract","Production Style":"Raw East Coast","Label":"Loud","Debut Year":1993,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":8,"Metaphor/Imagery":9,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Enter the 36 Chambers. Martial arts mythology meets Shaolin New York."},{"#":29,"Symbol":"SN","Artist Name":"Snoop Dogg","Region":"LA","Era":"Golden Age","Style":"Gangsta/Street","Production Style":"G-Funk","Label":"Death Row","Debut Year":1992,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":5,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Iconic delivery over Dre's G-Funk. Doggystyle defined an era."},{"#":30,"Symbol":"DR","Artist Name":"Dr. Dre","Region":"LA","Era":"Golden Age","Style":"Gangsta/Street","Production Style":"G-Funk/Producer Rap","Label":"Death Row","Debut Year":1987,"Rhyme Density":6,"Vocab Breadth":6,"Storytelling":6,"Metaphor/Imagery":5,"Conceptual Depth":5,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"G-Funk architect. The Chronic changed West Coast sound globally."},{"#":31,"Symbol":"PH","Artist Name":"Pharcyde","Region":"LA","Era":"Golden Age","Style":"Abstract","Production Style":"Jazz/Alternative","Label":"Delicious Vinyl","Debut Year":1992,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":6,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Bizarre Ride II. Quirky alternative to gangsta dominance."},{"#":32,"Symbol":"MD","Artist Name":"Mobb Deep","Region":"NYC","Era":"Golden Age","Style":"Gangsta/Street","Production Style":"Grimy Boom Bap","Label":"Loud","Debut Year":1993,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":9,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"The Infamous is peak Queens gothic menace."},{"#":33,"Symbol":"E4","Artist Name":"E-40","Region":"Bay Area","Era":"Golden Age","Style":"Party/Pop","Production Style":"Bay Slang/Hyphy","Label":"Jive","Debut Year":1990,"Rhyme Density":7,"Vocab Breadth":9,"Storytelling":6,"Metaphor/Imagery":7,"Conceptual Depth":5,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Dictionary of Bay slang. Slanguistics pioneer."},{"#":34,"Symbol":"PM","Artist Name":"Pete Rock & CL Smooth","Region":"NYC","Era":"Golden Age","Style":"Jazz-Rap","Production Style":"Soul/Jazz Sample","Label":"Elektra","Debut Year":1992,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"M","Confidence Note":"Well-cited in production history; lyrical analysis thinner","Description":"Mecca and the Soul Brother. CL Smooth's introspection over Pete's soul."},{"#":35,"Symbol":"GG","Artist Name":"Gang Starr","Region":"NYC","Era":"Golden Age","Style":"Conscious/Lyrical","Production Style":"Jazz-Rap","Label":"Chrysalis","Debut Year":1989,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Guru's flat-affect wisdom over Primo's chopped jazz. Step In the Arena."},{"#":36,"Symbol":"BW","Artist Name":"Brand Nubian","Region":"NYC","Era":"Golden Age","Style":"Political","Production Style":"Afrocentric","Label":"Elektra","Debut Year":1990,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":6,"Metaphor/Imagery":7,"Conceptual Depth":8,"Composite Score":null,"Confidence":"M","Confidence Note":"Cited in 5% Nation scholarship; limited broader analysis","Description":"5% Nation theology in hip-hop. One for All is a conscious landmark."},{"#":37,"Symbol":"XC","Artist Name":"X-Clan","Region":"NYC","Era":"Golden Age","Style":"Political","Production Style":"Afrocentric","Label":"Island","Debut Year":1990,"Rhyme Density":6,"Vocab Breadth":7,"Storytelling":6,"Metaphor/Imagery":7,"Conceptual Depth":9,"Composite Score":null,"Confidence":"M","Confidence Note":"Significant in Afrocentric rap history; limited lyrical scholarship","Description":"To the East Blackwards. Black nationalist aesthetics in full bloom."},{"#":38,"Symbol":"BI","Artist Name":"Big L","Region":"NYC","Era":"Golden Age","Style":"Conscious/Lyrical","Production Style":"Boom Bap","Label":"Columbia","Debut Year":1993,"Rhyme Density":9,"Vocab Breadth":9,"Storytelling":7,"Metaphor/Imagery":9,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Punchline king. Lifestylez ov da Poor & Dangerous is criminally slept on."},{"#":39,"Symbol":"GL","Artist Name":"The Geto Boys","Region":"South","Era":"Golden Age","Style":"Gangsta/Street","Production Style":"Southern Horrorcore","Label":"Rap-A-Lot","Debut Year":1987,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"My Mind Playing Tricks on Me. Southern rap's dark psychological turn."},{"#":40,"Symbol":"FK","Artist Name":"Freestyle Fellowship","Region":"LA","Era":"Golden Age","Style":"Abstract","Production Style":"Free Jazz Rap","Label":"Acacia","Debut Year":1991,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"M","Confidence Note":"Significant in underground/academic circles; limited mainstream documentation","Description":"Innercity Griots. Improvised lyricism from the Good Life Café scene."},{"#":41,"Symbol":"DG","Artist Name":"Digable Planets","Region":"NYC","Era":"Golden Age","Style":"Jazz-Rap","Production Style":"Cool Jazz Rap","Label":"Pendulum","Debut Year":1993,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":6,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"M","Confidence Note":"Grammy win but limited sustained scholarly attention","Description":"Reachin' (A New Refutation of Time and Space). Bohemian cool jazz."},{"#":42,"Symbol":"LA","Artist Name":"Leaders of the New School","Region":"NYC","Era":"Golden Age","Style":"Conscious/Lyrical","Production Style":"Afrocentric Boom Bap","Label":"Elektra","Debut Year":1991,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"M","Confidence Note":"Notable for Busta's emergence; group less studied than solo careers","Description":"A Future Without a Past. Busta Rhymes's stage before his solo explosions."},{"#":43,"Symbol":"BR","Artist Name":"Busta Rhymes","Region":"NYC","Era":"Golden Age","Style":"Conscious/Lyrical","Production Style":"High-Energy Boom Bap","Label":"Elektra","Debut Year":1993,"Rhyme Density":9,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Hyperkinetic flow and energy. The Coming announced a superstar."},{"#":44,"Symbol":"2P","Artist Name":"2Pac","Region":"LA","Era":"Late 90s","Style":"Political","Production Style":"Thug Soul","Label":"Death Row","Debut Year":1991,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":9,"Metaphor/Imagery":8,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Me Against the World / All Eyez on Me. Embodied generational pain."},{"#":45,"Symbol":"JZ","Artist Name":"Jay-Z","Region":"NYC","Era":"Late 90s","Style":"Gangsta/Street","Production Style":"Boom Bap/Pop","Label":"Roc-A-Fella","Debut Year":1996,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":9,"Metaphor/Imagery":9,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Reasonable Doubt to Blueprint. Business and artistry in concert."},{"#":46,"Symbol":"EM","Artist Name":"Eminem","Region":"Midwest","Era":"Late 90s","Style":"Conscious/Lyrical","Production Style":"Detroit Boom Bap","Label":"Aftermath","Debut Year":1997,"Rhyme Density":10,"Vocab Breadth":10,"Storytelling":9,"Metaphor/Imagery":9,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Slim Shady LP. Technical rhyme density unchallenged in any era."},{"#":47,"Symbol":"DX","Artist Name":"DMX","Region":"NYC","Era":"Late 90s","Style":"Gangsta/Street","Production Style":"Dark/Spiritual Rap","Label":"Def Jam","Debut Year":1998,"Rhyme Density":6,"Vocab Breadth":6,"Storytelling":7,"Metaphor/Imagery":6,"Conceptual Depth":6,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Barking aggression as spiritual crisis. It's Dark and Hell Is Hot."},{"#":48,"Symbol":"LH","Artist Name":"Lauryn Hill","Region":"NYC","Era":"Late 90s","Style":"Conscious/Lyrical","Production Style":"Neo-Soul Rap","Label":"Ruffhouse","Debut Year":1996,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":9,"Metaphor/Imagery":9,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Miseducation is the high point of rap-soul fusion."},{"#":49,"Symbol":"MS","Artist Name":"Missy Elliott","Region":"South","Era":"Late 90s","Style":"Experimental","Production Style":"Timbaland Production","Label":"The Goldmind","Debut Year":1997,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":6,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Supa Dupa Fly. Avant-garde Southern vision over Timbaland."},{"#":50,"Symbol":"MB","Artist Name":"Mos Def","Region":"NYC","Era":"Late 90s","Style":"Conscious/Lyrical","Production Style":"Jazz/Blues Rap","Label":"Rawkus","Debut Year":1999,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":8,"Metaphor/Imagery":9,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Black on Both Sides. Renaissance man MC."},{"#":51,"Symbol":"TK","Artist Name":"Talib Kweli","Region":"NYC","Era":"Late 90s","Style":"Conscious/Lyrical","Production Style":"Alternative Boom Bap","Label":"Rawkus","Debut Year":1998,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Reflection Eternal. Wordy, dense, deeply political."},{"#":52,"Symbol":"OK","Artist Name":"OutKast","Region":"South","Era":"Late 90s","Style":"Experimental","Production Style":"Atlanta Funk","Label":"LaFace","Debut Year":1994,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":8,"Metaphor/Imagery":9,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Aquemini. Andre 3000 is a singular artistic voice."},{"#":53,"Symbol":"MP","Artist Name":"Master P","Region":"South","Era":"Late 90s","Style":"Party/Pop","Production Style":"Southern Bounce","Label":"No Limit","Debut Year":1991,"Rhyme Density":4,"Vocab Breadth":4,"Storytelling":4,"Metaphor/Imagery":3,"Conceptual Depth":4,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Ghetto D. Cash Money architect. Business over lyricism."},{"#":54,"Symbol":"CW","Artist Name":"Cam'ron","Region":"NYC","Era":"Late 90s","Style":"Gangsta/Street","Production Style":"Dipset Boom Bap","Label":"Epic","Debut Year":1998,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":6,"Composite Score":null,"Confidence":"M","Confidence Note":"Cult critical reassessment ongoing; initial reception dismissive","Description":"Come Home with Me. Pink fur and oblique rap logic."},{"#":55,"Symbol":"FA","Artist Name":"Foxy Brown","Region":"NYC","Era":"Late 90s","Style":"Gangsta/Street","Production Style":"Mafioso Rap","Label":"Def Jam","Debut Year":1996,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":6,"Composite Score":null,"Confidence":"M","Confidence Note":"Significant historically; less scholarly attention than Lil Kim","Description":"Ill Na Na. Mafioso rap via the female gaze."},{"#":56,"Symbol":"LK","Artist Name":"Lil' Kim","Region":"NYC","Era":"Late 90s","Style":"Gangsta/Street","Production Style":"Mafioso Rap","Label":"Big Beat/Atlantic","Debut Year":1996,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":6,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Hard Core. Explicit female sexuality as power and disruption."},{"#":57,"Symbol":"JR","Artist Name":"Juvenile","Region":"South","Era":"Late 99s","Style":"Party/Pop","Production Style":"Cash Money Bounce","Label":"Cash Money","Debut Year":1994,"Rhyme Density":6,"Vocab Breadth":6,"Storytelling":6,"Metaphor/Imagery":6,"Conceptual Depth":5,"Composite Score":null,"Confidence":"M","Confidence Note":"Significant in bounce/Cash Money history; modest critical depth","Description":"400 Degreez. Cash Money's breakout moment."},{"#":58,"Symbol":"CM2","Artist Name":"Canibus","Region":"NYC","Era":"Late 90s","Style":"Conscious/Lyrical","Production Style":"Technical Boom Bap","Label":"Universal","Debut Year":1998,"Rhyme Density":8,"Vocab Breadth":7,"Storytelling":6,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"M","Confidence Note":"Cult lyricism reputation; contested against actual consistency","Description":"Syllable count obsessive. Battle loss to LL never fully recovered from."},{"#":59,"Symbol":"JD","Artist Name":"Jedi Mind Tricks","Region":"NYC","Era":"Late 90s","Style":"Abstract","Production Style":"Underground Dark","Label":"Babygrande","Debut Year":1997,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":8,"Composite Score":null,"Confidence":"L","Confidence Note":"Underground; limited documentation outside specialist press","Description":"Violent by Design. Horror-core meets political paranoia underground."},{"#":60,"Symbol":"BT2","Artist Name":"Big Pun","Region":"NYC","Era":"Late 90s","Style":"Conscious/Lyrical","Production Style":"Latin Boom Bap","Label":"Loud","Debut Year":1998,"Rhyme Density":9,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":9,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Capital Punishment. First Latino rapper to go platinum solo."},{"#":61,"Symbol":"NR","Artist Name":"Nas feat. AZ","Region":"NYC","Era":"Late 90s","Style":"Conscious/Lyrical","Production Style":"Boom Bap","Label":"Columbia","Debut Year":1995,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":8,"Composite Score":null,"Confidence":"M","Confidence Note":"AZ's solo career less documented than Nas; scored as AZ","Description":"Life's a Bitch collab. AZ's verse is among the finest in rap history."},{"#":62,"Symbol":"KW","Artist Name":"Kanye West","Region":"Midwest","Era":"2000s","Style":"Experimental","Production Style":"Soul Sample/Art Rap","Label":"Roc-A-Fella","Debut Year":2004,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":9,"Conceptual Depth":10,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"College Dropout to 808s. Artistic ambition reshapes each era."},{"#":63,"Symbol":"LW","Artist Name":"Lil Wayne","Region":"South","Era":"2000s","Style":"Conscious/Lyrical","Production Style":"Hot Boys Trap/Mixtape","Label":"Cash Money","Debut Year":1999,"Rhyme Density":9,"Vocab Breadth":9,"Storytelling":7,"Metaphor/Imagery":10,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Tha Carter III. Mixtape era Wayne is the definition of peak lyricism."},{"#":64,"Symbol":"TI","Artist Name":"T.I.","Region":"South","Era":"2000s","Style":"Gangsta/Street","Production Style":"Atlanta Trap","Label":"Grand Hustle","Debut Year":2001,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":8,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"King. Claimed the ATL throne and the trap blueprint."},{"#":65,"Symbol":"GM","Artist Name":"Gucci Mane","Region":"South","Era":"2000s","Style":"Trap/Drill","Production Style":"Atlanta Trap","Label":"Atlantic","Debut Year":2005,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":5,"Metaphor/Imagery":5,"Conceptual Depth":4,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Trap God. Prolific mixtape movement godfather."},{"#":66,"Symbol":"GK","Artist Name":"Ghostface Killah","Region":"NYC","Era":"2000s","Style":"Conscious/Lyrical","Production Style":"Wu-Tang/Soul Rap","Label":"Def Jam","Debut Year":1994,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":9,"Metaphor/Imagery":9,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Supreme Clientele. Dense, dazzling, associative."},{"#":67,"Symbol":"MD2","Artist Name":"MF DOOM","Region":"NYC","Era":"2000s","Style":"Abstract","Production Style":"Underground Boom Bap","Label":"Rhymesayers","Debut Year":1999,"Rhyme Density":10,"Vocab Breadth":10,"Storytelling":8,"Metaphor/Imagery":10,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Madvillainy. The mask, the myth, the syllable wizardry."},{"#":68,"Symbol":"CM","Artist Name":"Common","Region":"Midwest","Era":"2000s","Style":"Conscious/Lyrical","Production Style":"Neo-Soul/Boom Bap","Label":"MCA","Debut Year":1992,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Be. Elevated conscious rap into mainstream Grammy territory."},{"#":69,"Symbol":"LU","Artist Name":"Ludacris","Region":"South","Era":"2000s","Style":"Party/Pop","Production Style":"Atlanta Bounce/Rap","Label":"Disturbing tha Peace","Debut Year":2000,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":6,"Metaphor/Imagery":8,"Conceptual Depth":5,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Word of Mouf. Playful Southern rapping with genuine lyrical edge."},{"#":70,"Symbol":"YJ","Artist Name":"Young Jeezy","Region":"South","Era":"2000s","Style":"Gangsta/Street","Production Style":"Trap/Motivational","Label":"CTE","Debut Year":2005,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":6,"Metaphor/Imagery":5,"Conceptual Depth":6,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Let's Get It: Thug Motivation 101. Trap's motivational speaker."},{"#":71,"Symbol":"LF","Artist Name":"Lupe Fiasco","Region":"Midwest","Era":"2000s","Style":"Conscious/Lyrical","Production Style":"Art Boom Bap","Label":"1st & 15th","Debut Year":2006,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":8,"Metaphor/Imagery":9,"Conceptual Depth":10,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Food & Liquor. Skate kid from Chicago with dictionary flow."},{"#":72,"Symbol":"SF","Artist Name":"Scarface","Region":"South","Era":"2000s","Style":"Gangsta/Street","Production Style":"Houston Narrative","Label":"Rap-A-Lot","Debut Year":1991,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":10,"Metaphor/Imagery":8,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"The World Is Yours. Southern rap's great novelist."},{"#":73,"Symbol":"AE","Artist Name":"Aesop Rock","Region":"NYC","Era":"2000s","Style":"Abstract","Production Style":"Underground Art Rap","Label":"Def Jux","Debut Year":2000,"Rhyme Density":8,"Vocab Breadth":10,"Storytelling":7,"Metaphor/Imagery":9,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"None Shall Pass. Largest vocabulary in measured rap."},{"#":74,"Symbol":"GH","Artist Name":"Ghostface / Fishscale era","Region":"NYC","Era":"2000s","Style":"Conscious/Lyrical","Production Style":"Wu-Tang/Soul","Label":"Def Jam","Debut Year":2006,"Rhyme Density":9,"Vocab Breadth":9,"Storytelling":9,"Metaphor/Imagery":9,"Conceptual Depth":7,"Composite Score":null,"Confidence":"M","Confidence Note":"Scored specifically for Fishscale-era peak; earlier work variable","Description":"Fishscale is Ghostface at peak: cinematic, dense, unmatched."},{"#":75,"Symbol":"JE","Artist Name":"Jadakiss","Region":"NYC","Era":"2000s","Style":"Gangsta/Street","Production Style":"East Coast Grit","Label":"Ruff Ryders","Debut Year":2001,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":6,"Composite Score":null,"Confidence":"M","Confidence Note":"Well-regarded but limited scholarly analysis","Description":"Why? punchline king. LOX member whose grimace became iconic."},{"#":76,"Symbol":"FK2","Artist Name":"50 Cent","Region":"NYC","Era":"2000s","Style":"Gangsta/Street","Production Style":"G-Unit Boom Bap","Label":"Shady/Aftermath","Debut Year":2003,"Rhyme Density":6,"Vocab Breadth":6,"Storytelling":7,"Metaphor/Imagery":6,"Conceptual Depth":5,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Get Rich or Die Tryin'. Commercial domination built on street cred."},{"#":77,"Symbol":"TS","Artist Name":"Three 6 Mafia","Region":"South","Era":"2000s","Style":"Gangsta/Street","Production Style":"Memphis Horrorcore","Label":"Sony","Debut Year":1995,"Rhyme Density":5,"Vocab Breadth":6,"Storytelling":6,"Metaphor/Imagery":6,"Conceptual Depth":5,"Composite Score":null,"Confidence":"M","Confidence Note":"Oscar win elevated profile; lyrical analysis limited","Description":"Tear da Club Up. Memphis horrorcore before trap existed."},{"#":78,"Symbol":"UG","Artist Name":"UGK","Region":"South","Era":"2000s","Style":"Gangsta/Street","Production Style":"Texas Funk Rap","Label":"Jive","Debut Year":1992,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Ridin' Dirty. Bun B and Pimp C: Southern rap's purist duo."},{"#":79,"Symbol":"TL2","Artist Name":"Trae Tha Truth","Region":"South","Era":"2000s","Style":"Gangsta/Street","Production Style":"Houston Chopped","Label":"Asylum","Debut Year":2003,"Rhyme Density":6,"Vocab Breadth":7,"Storytelling":7,"Metaphor/Imagery":6,"Conceptual Depth":6,"Composite Score":null,"Confidence":"L","Confidence Note":"Regional significance; limited national critical record","Description":"Restless. Houston street reporting with slow, heavy flow."},{"#":80,"Symbol":"AC","Artist Name":"Aceyalone","Region":"LA","Era":"2000s","Style":"Abstract","Production Style":"LA Free Jazz Rap","Label":"Project Blowed","Debut Year":1993,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"M","Confidence Note":"Highly regarded in underground circles; thin mainstream documentation","Description":"All Balls Don't Bounce. Project Blowed's academic underground MC."},{"#":81,"Symbol":"RA2","Artist Name":"Raekwon","Region":"NYC","Era":"2000s","Style":"Gangsta/Street","Production Style":"Wu-Tang/Mafioso","Label":"Loud","Debut Year":1995,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":9,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Only Built 4 Cuban Linx. Mafioso rap as cinematic epic."},{"#":82,"Symbol":"EL","Artist Name":"El-P","Region":"NYC","Era":"2000s","Style":"Experimental","Production Style":"Industrial Boom Bap","Label":"Def Jux","Debut Year":2002,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":7,"Metaphor/Imagery":9,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Fantastic Damage. Dystopian industrial rap from the Def Jux era."},{"#":83,"Symbol":"BU","Artist Name":"Brother Ali","Region":"Midwest","Era":"2000s","Style":"Conscious/Lyrical","Production Style":"Boom Bap/Soul","Label":"Rhymesayers","Debut Year":2000,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":8,"Composite Score":null,"Confidence":"M","Confidence Note":"Well-regarded in conscious rap; limited broader academic attention","Description":"Shadows on the Sun. Minneapolis underground social conscience."},{"#":84,"Symbol":"IL","Artist Name":"Immortal Technique","Region":"NYC","Era":"2000s","Style":"Political","Production Style":"Underground Agit-Rap","Label":"Viper","Debut Year":2001,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":10,"Composite Score":null,"Confidence":"M","Confidence Note":"Heavy political reputation; thin formal lyrical analysis","Description":"Revolutionary Vol. 2. Conspiracy rap with genuine rhetorical force."},{"#":85,"Symbol":"KL","Artist Name":"Kendrick Lamar","Region":"LA","Era":"2010s","Style":"Conscious/Lyrical","Production Style":"Compton Concept","Label":"Top Dawg","Debut Year":2011,"Rhyme Density":10,"Vocab Breadth":10,"Storytelling":10,"Metaphor/Imagery":10,"Conceptual Depth":10,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"good kid m.A.A.d city / TPAB. The most complete MC since Nas."},{"#":86,"Symbol":"DK","Artist Name":"Drake","Region":"International","Era":"2010s","Style":"Party/Pop","Production Style":"Melodic Rap","Label":"OVO/Young Money","Debut Year":2006,"Rhyme Density":6,"Vocab Breadth":7,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":5,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Take Care. Emotional rap at massive commercial scale."},{"#":87,"Symbol":"JC","Artist Name":"J. Cole","Region":"South","Era":"2010s","Style":"Conscious/Lyrical","Production Style":"Soulful Boom Bap","Label":"Dreamville","Debut Year":2011,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":9,"Metaphor/Imagery":8,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"2014 Forest Hills Drive. Self-produced introspection at scale."},{"#":88,"Symbol":"YT","Artist Name":"Young Thug","Region":"South","Era":"2010s","Style":"Experimental","Production Style":"Melodic Trap","Label":"300 Entertainment","Debut Year":2011,"Rhyme Density":5,"Vocab Breadth":6,"Storytelling":4,"Metaphor/Imagery":6,"Conceptual Depth":5,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Barter 6. Recontextualized flow as melodic instrument."},{"#":89,"Symbol":"FT","Artist Name":"Future","Region":"South","Era":"2010s","Style":"Trap/Drill","Production Style":"Auto-Tune Trap","Label":"A1/Epic","Debut Year":2012,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":5,"Metaphor/Imagery":6,"Conceptual Depth":5,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"DS2. Emotional ambivalence as trap subgenre."},{"#":90,"Symbol":"CH","Artist Name":"Chance the Rapper","Region":"Midwest","Era":"2010s","Style":"Conscious/Lyrical","Production Style":"Chicago Gospel Rap","Label":"Independent","Debut Year":2013,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Coloring Book. Gospel rap from Chicago's south side."},{"#":91,"Symbol":"ES","Artist Name":"Earl Sweatshirt","Region":"LA","Era":"2010s","Style":"Abstract","Production Style":"Odd Future/Boom Bap","Label":"Tan Cressida","Debut Year":2010,"Rhyme Density":9,"Vocab Breadth":9,"Storytelling":7,"Metaphor/Imagery":9,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"I Don't Like Shit. Dense, interior, self-lacerating."},{"#":92,"Symbol":"MM","Artist Name":"Meek Mill","Region":"South","Era":"2010s","Style":"Gangsta/Street","Production Style":"Philly Trap","Label":"Maybach Music","Debut Year":2012,"Rhyme Density":6,"Vocab Breadth":6,"Storytelling":7,"Metaphor/Imagery":6,"Conceptual Depth":6,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Dreams and Nightmares. Philly grit at arena scale."},{"#":93,"Symbol":"AR","Artist Name":"A$AP Rocky","Region":"NYC","Era":"2010s","Style":"Experimental","Production Style":"Cloud Rap/Fashion","Label":"A$AP/RCA","Debut Year":2011,"Rhyme Density":6,"Vocab Breadth":7,"Storytelling":5,"Metaphor/Imagery":7,"Conceptual Depth":5,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Long.Live.ASAP. Harlem avant-garde aesthetics in rap form."},{"#":94,"Symbol":"NM","Artist Name":"Nicki Minaj","Region":"NYC","Era":"2010s","Style":"Conscious/Lyrical","Production Style":"Pop Rap/Dancehall","Label":"Young Money","Debut Year":2010,"Rhyme Density":9,"Vocab Breadth":9,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Pink Friday. Technical bars meet pop domination."},{"#":95,"Symbol":"VS","Artist Name":"Vince Staples","Region":"LA","Era":"2010s","Style":"Political","Production Style":"West Coast Minimalism","Label":"Def Jam","Debut Year":2012,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Summertime '06. Long Beach noir, economical and bleak."},{"#":96,"Symbol":"BK2","Artist Name":"Big K.R.I.T.","Region":"South","Era":"2010s","Style":"Conscious/Lyrical","Production Style":"Mississippi Soul Rap","Label":"Def Jam","Debut Year":2010,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Live from the Underground. Southern rap's self-produced soul heir."},{"#":97,"Symbol":"RL","Artist Name":"Run The Jewels","Region":"Midwest","Era":"2010s","Style":"Political","Production Style":"Industrial Boom Bap","Label":"Mass Appeal","Debut Year":2013,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":7,"Metaphor/Imagery":9,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"RTJ2. El-P + Killer Mike = relentless political rap."},{"#":98,"Symbol":"KM","Artist Name":"Killer Mike","Region":"South","Era":"2010s","Style":"Political","Production Style":"Atlanta Boom Bap","Label":"SMC Recordings","Debut Year":2003,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"R.A.P. Music. Atlanta social critique at its angriest best."},{"#":99,"Symbol":"IA","Artist Name":"Iggy Azalea","Region":"International","Era":"2010s","Style":"Party/Pop","Production Style":"Southern Trap Pop","Label":"Grand Hustle","Debut Year":2014,"Rhyme Density":4,"Vocab Breadth":4,"Storytelling":4,"Metaphor/Imagery":4,"Conceptual Depth":3,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Fancy. Commercial peak; authenticity debates dominated reception."},{"#":100,"Symbol":"FS","Artist Name":"Freddie Gibbs","Region":"Midwest","Era":"2010s","Style":"Gangsta/Street","Production Style":"Gangsta Boom Bap","Label":"ESGN","Debut Year":2004,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":9,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Piñata. Madlib collab reinvented his career and the genre."},{"#":101,"Symbol":"MO","Artist Name":"Migos","Region":"South","Era":"2010s","Style":"Trap/Drill","Production Style":"Atlanta Triplet Trap","Label":"Quality Control","Debut Year":2013,"Rhyme Density":4,"Vocab Breadth":4,"Storytelling":4,"Metaphor/Imagery":5,"Conceptual Depth":3,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Culture. Triplet flow codified an era; lyricism secondary."},{"#":102,"Symbol":"BI2","Artist Name":"Big Sean","Region":"Midwest","Era":"2010s","Style":"Party/Pop","Production Style":"Detroit Pop Rap","Label":"G.O.O.D.","Debut Year":2011,"Rhyme Density":6,"Vocab Breadth":6,"Storytelling":6,"Metaphor/Imagery":6,"Conceptual Depth":5,"Composite Score":null,"Confidence":"M","Confidence Note":"Commercial success; critical reception mixed; thin formal analysis","Description":"I Decided. Catchy rap with occasional lyrical ambition."},{"#":103,"Symbol":"TR","Artist Name":"Tierra Whack","Region":"NYC","Era":"2010s","Style":"Experimental","Production Style":"Experimental Pop Rap","Label":"Interscope","Debut Year":2018,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":8,"Composite Score":null,"Confidence":"M","Confidence Note":"Breakout 2018; critical buzz high but career short; scoring may shift","Description":"Whack World. 15 one-minute songs as conceptual art project."},{"#":104,"Symbol":"NL","Artist Name":"Noname","Region":"Midwest","Era":"2010s","Style":"Conscious/Lyrical","Production Style":"Chicago Jazz Rap","Label":"Independent","Debut Year":2016,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Room 25. Quiet devastation over jazz loops."},{"#":105,"Symbol":"SZ","Artist Name":"Saba","Region":"Midwest","Era":"2010s","Style":"Conscious/Lyrical","Production Style":"Chicago Boom Bap","Label":"Pivot Gang","Debut Year":2014,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":9,"Metaphor/Imagery":8,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"CARE FOR ME. Grief album as Chicago hip-hop masterpiece."},{"#":106,"Symbol":"DC","Artist Name":"Danny Brown","Region":"Midwest","Era":"2010s","Style":"Experimental","Production Style":"Detroit Noise Rap","Label":"Fool's Gold","Debut Year":2010,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":7,"Metaphor/Imagery":9,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Atrocity Exhibition. Detroit's answer to post-punk sonic chaos."},{"#":107,"Symbol":"MH","Artist Name":"Mac Miller","Region":"Midwest","Era":"2010s","Style":"Conscious/Lyrical","Production Style":"Pittsburgh Soul Rap","Label":"Rostrum","Debut Year":2010,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Swimming. Self-medication turned into heartbreaking art."},{"#":108,"Symbol":"JD2","Artist Name":"J.I.D","Region":"South","Era":"2010s","Style":"Conscious/Lyrical","Production Style":"Atlanta Jazz Rap","Label":"Dreamville","Debut Year":2017,"Rhyme Density":9,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":8,"Composite Score":null,"Confidence":"M","Confidence Note":"Late-decade emergence; critical acclaim building; may rescore upward","Description":"DiCaprio 2. Switchable flow at a pace few can match."},{"#":109,"Symbol":"CD","Artist Name":"Cardi B","Region":"NYC","Era":"2010s","Style":"Party/Pop","Production Style":"Bronx Trap Pop","Label":"Atlantic","Debut Year":2018,"Rhyme Density":6,"Vocab Breadth":6,"Storytelling":6,"Metaphor/Imagery":6,"Conceptual Depth":4,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Invasion of Privacy. Bronx bravado at Grammys level."},{"#":110,"Symbol":"PG","Artist Name":"Polo G","Region":"Midwest","Era":"2020s","Style":"Gangsta/Street","Production Style":"Chicago Melodic Trap","Label":"Columbia","Debut Year":2019,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":8,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"M","Confidence Note":"Recent emergence; trajectory still forming","Description":"Pop Out. Melancholy Chicago trap with genuine lyrical care."},{"#":111,"Symbol":"RW","Artist Name":"Rod Wave","Region":"South","Era":"2020s","Style":"Experimental","Production Style":"Florida Soul Trap","Label":"Alamo","Debut Year":2019,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":7,"Metaphor/Imagery":6,"Conceptual Depth":5,"Composite Score":null,"Confidence":"M","Confidence Note":"Recent; critical consensus not yet settled","Description":"SoulFly. Florida's emotional trap meets gospel music."},{"#":112,"Symbol":"DO","Artist Name":"Doechii","Region":"South","Era":"2020s","Style":"Experimental","Production Style":"Tampa Art Rap","Label":"Capitol","Debut Year":2021,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":9,"Composite Score":null,"Confidence":"M","Confidence Note":"Breakout recent; scoring may shift upward as body of work grows","Description":"Alligator Bites Never Heal. Tampa avant-garde challenging rap norms."},{"#":113,"Symbol":"GG2","Artist Name":"GloRilla","Region":"South","Era":"2020s","Style":"Party/Pop","Production Style":"Memphis Trap","Label":"CMG","Debut Year":2022,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":5,"Metaphor/Imagery":5,"Conceptual Depth":4,"Composite Score":null,"Confidence":"L","Confidence Note":"Very recent; limited critical record; commercial impact clear","Description":"FNF. Memphis energy with instant cultural resonance."},{"#":114,"Symbol":"GN","Artist Name":"Gunna","Region":"South","Era":"2020s","Style":"Trap/Drill","Production Style":"Atlanta Melodic Trap","Label":"Young Stoner Life","Debut Year":2018,"Rhyme Density":4,"Vocab Breadth":5,"Storytelling":4,"Metaphor/Imagery":5,"Conceptual Depth":3,"Composite Score":null,"Confidence":"M","Confidence Note":"Significant commercial presence; thin critical analysis","Description":"DS4EVER. Melodic trap comfort zone never pushed."},{"#":115,"Symbol":"LB","Artist Name":"Lil Baby","Region":"South","Era":"2020s","Style":"Gangsta/Street","Production Style":"Atlanta Slime Trap","Label":"Quality Control","Debut Year":2017,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":6,"Metaphor/Imagery":5,"Conceptual Depth":5,"Composite Score":null,"Confidence":"M","Confidence Note":"Recent; commercial dominance clear; critical depth forming","Description":"My Turn. Effortless commercial dominance; artistry developing."},{"#":116,"Symbol":"BT","Artist Name":"Benny the Butcher","Region":"NYC","Era":"2020s","Style":"Gangsta/Street","Production Style":"Buffalo Boom Bap","Label":"Griselda","Debut Year":2012,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":9,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Burden of Proof. Griselda's street pulpit."},{"#":117,"Symbol":"ST","Artist Name":"Stormzy","Region":"UK","Era":"2020s","Style":"Political","Production Style":"UK Grime/Gospel","Label":"#Merky","Debut Year":2015,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":8,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Heavy Is the Head. UK grime at Glastonbury scale."},{"#":118,"Symbol":"BD","Artist Name":"Bad Bunny","Region":"International","Era":"2020s","Style":"Party/Pop","Production Style":"Reggaeton/Latin Trap","Label":"Rimas","Debut Year":2016,"Rhyme Density":5,"Vocab Breadth":6,"Storytelling":6,"Metaphor/Imagery":6,"Conceptual Depth":6,"Composite Score":null,"Confidence":"M","Confidence Note":"Massive influence on global rap; Spanish-language scoring requires different critical frame","Description":"Un Verano Sin Ti. Latin trap global domination."},{"#":119,"Symbol":"JB","Artist Name":"J Balvin","Region":"International","Era":"2020s","Style":"Party/Pop","Production Style":"Reggaeton","Label":"Capitol","Debut Year":2007,"Rhyme Density":4,"Vocab Breadth":5,"Storytelling":4,"Metaphor/Imagery":5,"Conceptual Depth":4,"Composite Score":null,"Confidence":"L","Confidence Note":"Minimal lyrical critical record; scored on available Spanish-language criticism","Description":"Colores. Reggaeton popstar with rap adjacency."},{"#":120,"Symbol":"OM","Artist Name":"Offset","Region":"South","Era":"2020s","Style":"Trap/Drill","Production Style":"Migos Solo Trap","Label":"Quality Control","Debut Year":2017,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":5,"Metaphor/Imagery":6,"Conceptual Depth":4,"Composite Score":null,"Confidence":"M","Confidence Note":"Solo career emerging post-Migos; scoring tentative","Description":"Set It Off. Post-Migos identity search ongoing."},{"#":121,"Symbol":"KD","Artist Name":"Kenny Mason","Region":"South","Era":"2020s","Style":"Experimental","Production Style":"Atlanta Punk Rap","Label":"Independent","Debut Year":2019,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"L","Confidence Note":"Limited documentation; critical buzz building in underground circles","Description":"Angelic Hoodrat. Atlanta experimental underground at its weirdest."},{"#":122,"Symbol":"LT","Artist Name":"Latto","Region":"South","Era":"2020s","Style":"Gangsta/Street","Production Style":"Atlanta Female Trap","Label":"RCA","Debut Year":2019,"Rhyme Density":6,"Vocab Breadth":6,"Storytelling":6,"Metaphor/Imagery":6,"Conceptual Depth":5,"Composite Score":null,"Confidence":"M","Confidence Note":"Recent; commercial trajectory clearer than critical consensus","Description":"777. Southern female rap following Cardi and Nicki's path."},{"#":123,"Symbol":"SR","Artist Name":"Smino","Region":"Midwest","Era":"2020s","Style":"Experimental","Production Style":"St. Louis Jazz Rap","Label":"Zero Fatigue","Debut Year":2017,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"M","Confidence Note":"Critical darling in jazz-rap circles; broader recognition still forming","Description":"blkswn. Jazz-rap from St. Louis with melodic depth."},{"#":124,"Symbol":"PZ","Artist Name":"Pusha T","Region":"NYC","Era":"2020s","Style":"Gangsta/Street","Production Style":"Coke Rap Boom Bap","Label":"G.O.O.D.","Debut Year":2002,"Rhyme Density":8,"Vocab Breadth":7,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":7,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"It's Almost Dry. Coke rap as high art. Pharrell and Kanye dual production."},{"#":125,"Symbol":"JS","Artist Name":"JID","Region":"South","Era":"2020s","Style":"Conscious/Lyrical","Production Style":"Atlanta Technical Rap","Label":"Dreamville","Debut Year":2017,"Rhyme Density":9,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":8,"Composite Score":null,"Confidence":"M","Confidence Note":"Recent; scoring likely conservative; upward trajectory clear","Description":"The Never Story / Pandemonium!. Technical rapper escaping Atlanta tropes."},{"#":126,"Symbol":"TY","Artist Name":"Tyler the Creator","Region":"LA","Era":"2020s","Style":"Experimental","Production Style":"Odd Future/Orchestral","Label":"Columbia","Debut Year":2009,"Rhyme Density":7,"Vocab Breadth":9,"Storytelling":8,"Metaphor/Imagery":9,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Igor / Call Me If You Get Lost. Conceptual album art as rap."},{"#":127,"Symbol":"AB2","Artist Name":"Armand Hammer","Region":"NYC","Era":"2020s","Style":"Abstract","Production Style":"Abstract Boom Bap","Label":"Backwoodz","Debut Year":2012,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":7,"Metaphor/Imagery":9,"Conceptual Depth":8,"Composite Score":null,"Confidence":"M","Confidence Note":"Critical underground darling; thin mainstream documentation","Description":"Haram. billy woods + ELUCID: dense, allusive, uncompromising."},{"#":128,"Symbol":"ZE","Artist Name":"Zach Fox","Region":"NYC","Era":"2020s","Style":"Abstract","Production Style":"Comedy-Abstract Rap","Label":"Independent","Debut Year":2020,"Rhyme Density":6,"Vocab Breadth":7,"Storytelling":6,"Metaphor/Imagery":7,"Conceptual Depth":6,"Composite Score":null,"Confidence":"L","Confidence Note":"Very recent; extremely limited critical record","Description":"Bussin. Internet-native absurdist rapper with genuine lyrical wit."},{"#":129,"Symbol":"LI","Artist Name":"Lil Durk","Region":"South","Era":"2020s","Style":"Gangsta/Street","Production Style":"Chicago Melodic Trap","Label":"Only the Family","Debut Year":2013,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":6,"Metaphor/Imagery":5,"Conceptual Depth":5,"Composite Score":null,"Confidence":"M","Confidence Note":"Commercial dominance clear; critical depth limited","Description":"The Voice. Chicago melodic trap emotional authenticity at scale."},{"#":130,"Symbol":"KS2","Artist Name":"Kodak Black","Region":"South","Era":"2020s","Style":"Gangsta/Street","Production Style":"Florida Trap","Label":"Atlantic","Debut Year":2014,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":6,"Metaphor/Imagery":5,"Conceptual Depth":4,"Composite Score":null,"Confidence":"M","Confidence Note":"Commercial success; thin critical framework; behavior clouds reception","Description":"Project Baby. Florida trap originality clouded by off-mic controversies."},{"#":131,"Symbol":"LA2","Artist Name":"Lana (Kali Uchis rap)","Region":"International","Era":"2020s","Style":"Experimental","Production Style":"R&B/Latin Rap Hybrid","Label":"Virgin","Debut Year":2018,"Rhyme Density":6,"Vocab Breadth":7,"Storytelling":6,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"L","Confidence Note":"Primarily R&B artist; rap output limited and under-analyzed","Description":"Por Vida. Colombian-American bilingual artistry; rap adjacent."},{"#":132,"Symbol":"RC","Artist Name":"Rapsody","Region":"South","Era":"2020s","Style":"Conscious/Lyrical","Production Style":"North Carolina Soul Rap","Label":"Jamla","Debut Year":2010,"Rhyme Density":8,"Vocab Breadth":8,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":9,"Composite Score":null,"Confidence":"H","Confidence Note":"","Description":"Eve. Named every track after a Black woman. Precision and purpose."},{"#":133,"Symbol":"NG","Artist Name":"Noname (Ghetto Sage)","Region":"Midwest","Era":"2020s","Style":"Political","Production Style":"Political Jazz Rap","Label":"Independent","Debut Year":2019,"Rhyme Density":8,"Vocab Breadth":9,"Storytelling":8,"Metaphor/Imagery":8,"Conceptual Depth":10,"Composite Score":null,"Confidence":"M","Confidence Note":"Political evolution post-Room 25; scoring for this phase specifically","Description":"Factory Baby. Post-Room 25 political radicalization era."},{"#":134,"Symbol":"MF2","Artist Name":"Mavi","Region":"South","Era":"2020s","Style":"Abstract","Production Style":"Underground Abstract","Label":"Mutant Academy","Debut Year":2019,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"L","Confidence Note":"Very limited critical documentation; underground following only","Description":"Let the Sun Talk. Introspective underground debut with cultish following."},{"#":135,"Symbol":"XP","Artist Name":"Xzibit","Region":"LA","Era":"2000s","Style":"Gangsta/Street","Production Style":"Hard West Coast","Label":"Loud/Columbia","Debut Year":1996,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":7,"Metaphor/Imagery":7,"Conceptual Depth":6,"Composite Score":null,"Confidence":"M","Confidence Note":"Well-known but limited formal critical analysis","Description":"At the Speed of Life. West Coast boom bap craftsman."},{"#":136,"Symbol":"SA","Artist Name":"Saweetie","Region":"LA","Era":"2020s","Style":"Party/Pop","Production Style":"Trap Pop","Label":"Warner","Debut Year":2018,"Rhyme Density":5,"Vocab Breadth":5,"Storytelling":5,"Metaphor/Imagery":5,"Conceptual Depth":4,"Composite Score":null,"Confidence":"M","Confidence Note":"Recent commercial success; limited critical depth","Description":"Pretty Summer Playlist. Bay Area trap-pop aesthetic."},{"#":137,"Symbol":"CI","Artist Name":"City Girls","Region":"South","Era":"2020s","Style":"Party/Pop","Production Style":"Miami Trap","Label":"Quality Control/Motown","Debut Year":2018,"Rhyme Density":4,"Vocab Breadth":5,"Storytelling":5,"Metaphor/Imagery":5,"Conceptual Depth":4,"Composite Score":null,"Confidence":"L","Confidence Note":"Limited critical record; cultural impact clearer than lyrical analysis","Description":"Period. Miami hedonistic party rap duo."},{"#":138,"Symbol":"MX","Artist Name":"Maxo Kream","Region":"South","Era":"2020s","Style":"Gangsta/Street","Production Style":"Houston Narrative Trap","Label":"EMPIRE","Debut Year":2017,"Rhyme Density":7,"Vocab Breadth":7,"Storytelling":9,"Metaphor/Imagery":7,"Conceptual Depth":7,"Composite Score":null,"Confidence":"M","Confidence Note":"Critical acclaim in narrative rap circles; limited mainstream documentation","Description":"Weight of the World. Houston storytelling tradition continued."},{"#":139,"Symbol":"YN","Artist Name":"Yvonne (Yaya Bey)","Region":"NYC","Era":"2020s","Style":"Experimental","Production Style":"Neo-Soul Jazz Rap","Label":"Independent","Debut Year":2020,"Rhyme Density":7,"Vocab Breadth":8,"Storytelling":7,"Metaphor/Imagery":8,"Conceptual Depth":8,"Composite Score":null,"Confidence":"L","Confidence Note":"Very recent and limited documentation; genre straddles rap and R&B","Description":"Brooklyn experimental R&B-rap hybrid. Underrecognized artistic depth."}];
 
-const ERAS = ["Old School","Golden Age","Late 90s","2000s","2010s","2020s"];
-const STYLES = ["Conscious/Lyrical","Gangsta/Street","Political","Party/Pop","Experimental","Abstract","Jazz-Rap","Trap/Drill"];
+// ─── STATE ─────────────────────────────────────────────────────────────────
+let artists = JSON.parse(JSON.stringify(RAW_DATA));
+let layout = []; // array of artist IDs or null (empty cells), 18 cols
+let editMode = false;
+let dragSrcIdx = null;
+let currentModalId = null;
+let modalIsEditing = false;
 
-const ERA_COLORS  = {"Old School":"#4292c6","Golden Age":"#41ab5d","Late 90s":"#f6c141","2000s":"#e08214","2010s":"#9970ab","2020s":"#d73027"};
-const ERA_YEARS   = {"Old School":"1973–88","Golden Age":"1987–94","Late 90s":"1991–99","2000s":"1999–09","2010s":"2009–18","2020s":"2018–"};
-const STYLE_COLORS= {"Conscious/Lyrical":"#4a9eff","Gangsta/Street":"#ff4444","Political":"#f0c040","Party/Pop":"#ff9e2c","Experimental":"#b06aff","Abstract":"#26d7d7","Jazz-Rap":"#4ecb71","Trap/Drill":"#ff6b35"};
-const REGION_COLORS={"NYC":"#4a9eff","LA":"#ff6b35","South":"#4ecb71","Midwest":"#b06aff","Bay Area":"#f0c040","UK":"#ff6eb4","International":"#26d7d7"};
+const REGION_COLORS = {
+  'NYC': '#8C6A8D', 'LA': '#E98973', 'South': '#c0855a',
+  'Midwest': '#7aaa8a', 'Bay Area': '#5a9abf', 'UK': '#a07ac0', 'International': '#bf9a40'
+};
+const SCORE_COLORS = ['Rhyme Density','Vocab Breadth','Storytelling','Metaphor/Imagery','Conceptual Depth'];
+const SCORE_HUES = ['#E98973','#8C6A8D','#7aaa8a','#5a9abf','#bf9a40'];
 
-// Score data lookup (we embed comp from grid data; dimensions from full data would need more)
-// For modal we show composite and metadata from what we have
+// ─── LAYOUT BUILDER ────────────────────────────────────────────────────────
+function buildDefaultLayout() {
+  // Periodic-table-inspired 18-column layout
+  // We'll arrange by era rows, grouped loosely
+  // Row 1: Old School (18 artists ids 1-18, pad if needed)
+  // Row 2: Golden Age (25 artists ids 19-43)
+  // Row 3: Late 90s (19 artists ids 44-62)
+  // Row 4: 2000s (23 artists ids 62-84)
+  // Row 5: 2010s (26 artists ids 85-109)
+  // Row 6: 2020s (30 artists ids 110-139)
+  // Each row is 18 wide; label col 1 + 17 tiles
+  const COLS = 18;
+  const rows = [];
 
-function buildGrid() {
-  const grid = document.getElementById('ptGrid');
+  const byEra = {
+    'Old School': artists.filter(a=>a['Era']==='Old School').map(a=>a['#']),
+    'Golden Age': artists.filter(a=>a['Era']==='Golden Age').map(a=>a['#']),
+    'Late 90s': artists.filter(a=>a['Era']==='Late 90s'||a['Era']==='Late 99s').map(a=>a['#']),
+    '2000s': artists.filter(a=>a['Era']==='2000s').map(a=>a['#']),
+    '2010s': artists.filter(a=>a['Era']==='2010s').map(a=>a['#']),
+    '2020s': artists.filter(a=>a['Era']==='2020s').map(a=>a['#']),
+  };
 
-  // Row 0: corner + era headers
-  const corner = document.createElement('div');
-  corner.className = 'era-header era-corner';
-  grid.appendChild(corner);
+  for(const [era, ids] of Object.entries(byEra)) {
+    // label cell + 17 tile slots per row; multi-row if > 17
+    let row = ['__label__' + era];
+    for(let i=0; i<17; i++) row.push(ids[i] !== undefined ? ids[i] : null);
+    rows.push(row);
+    let remaining = ids.slice(17);
+    while(remaining.length > 0) {
+      let r = [null];
+      for(let i=0; i<17; i++) r.push(remaining[i] !== undefined ? remaining[i] : null);
+      rows.push(r);
+      remaining = remaining.slice(17);
+    }
+  }
 
-  ERAS.forEach(era => {
-    const h = document.createElement('div');
-    h.className = 'era-header';
-    h.style.setProperty('--era-color', ERA_COLORS[era]);
-    h.innerHTML = `${era}<span>${ERA_YEARS[era]}</span>`;
-    grid.appendChild(h);
-  });
+  return rows.flat();
+}
 
-  // Rows 1-8: style label + cells
-  STYLES.forEach(style => {
-    // Style label
-    const lbl = document.createElement('div');
-    lbl.className = 'style-label';
-    lbl.style.setProperty('--style-color', STYLE_COLORS[style]);
-    lbl.innerHTML = `<span class="style-label-text">${style}</span>`;
-    grid.appendChild(lbl);
+// ─── RENDER ─────────────────────────────────────────────────────────────────
+function render() {
+  const area = document.getElementById('table-area');
+  area.innerHTML = '';
 
-    ERAS.forEach(era => {
-      const key = `${era}||${style}`;
-      const artists = GRID_DATA[key] || [];
-      const cell = document.createElement('div');
-      cell.className = 'cell' + (artists.length === 0 ? ' empty' : '');
-      artists.forEach(a => {
-        cell.appendChild(makeCard(a));
+  if(layout.length === 0) layout = buildDefaultLayout();
+
+  const filters = getFilters();
+
+  layout.forEach((cell, idx) => {
+    if(typeof cell === 'string' && cell.startsWith('__label__')) {
+      const era = cell.replace('__label__','');
+      const lbl = document.createElement('div');
+      lbl.className = 'row-label';
+      lbl.textContent = era;
+      area.appendChild(lbl);
+      return;
+    }
+
+    if(cell === null) {
+      const sp = document.createElement('div');
+      sp.className = 'grid-spacer';
+      if(editMode) {
+        sp.style.border = '1.5px dashed #d0c0d0';
+        sp.style.borderRadius = '6px';
+        sp.style.cursor = 'pointer';
+        sp.title = 'Empty slot';
+        sp.addEventListener('dragover', e => { e.preventDefault(); sp.classList.add('drag-over'); });
+        sp.addEventListener('dragleave', () => sp.classList.remove('drag-over'));
+        sp.addEventListener('drop', e => { e.preventDefault(); sp.classList.remove('drag-over'); handleDrop(idx); });
+      }
+      area.appendChild(sp);
+      return;
+    }
+
+    const artist = artists.find(a => a['#'] === cell);
+    if(!artist) return;
+
+    const tile = document.createElement('div');
+    tile.className = 'tile';
+    tile.dataset.id = artist['#'];
+    tile.dataset.idx = idx;
+
+    const color = REGION_COLORS[artist['Region']] || '#888';
+    tile.style.background = color;
+
+    const visible = passesFilter(artist, filters);
+    if(!visible) tile.classList.add('filtered-out');
+
+    const score = artist['Composite Score'] || 0;
+    const scorePct = (score / 10) * 100;
+
+    tile.innerHTML = `
+      <div class="tile-top">
+        <span class="tile-num">${artist['#']}</span>
+        <span class="tile-conf conf-${artist['Confidence']}" title="Confidence: ${artist['Confidence']}">${artist['Confidence']}</span>
+      </div>
+      <div class="tile-symbol">${artist['Symbol']}</div>
+      <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
+      <div class="tile-year">${artist['Debut Year']}</div>
+      <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${scorePct}%"></div></div>
+    `;
+
+    tile.addEventListener('click', () => openModal(artist['#']));
+
+    if(editMode) {
+      tile.draggable = true;
+      tile.addEventListener('dragstart', e => {
+        dragSrcIdx = idx;
+        tile.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
       });
-      grid.appendChild(cell);
-    });
+      tile.addEventListener('dragend', () => tile.classList.remove('dragging'));
+      tile.addEventListener('dragover', e => { e.preventDefault(); tile.classList.add('drag-over'); });
+      tile.addEventListener('dragleave', () => tile.classList.remove('drag-over'));
+      tile.addEventListener('drop', e => { e.preventDefault(); tile.classList.remove('drag-over'); handleDrop(idx); });
+    }
+
+    area.appendChild(tile);
   });
+
+  updateStats(filters);
 }
 
-function makeCard(a) {
-  const rc = REGION_COLORS[a.region] || '#888';
-  const card = document.createElement('div');
-  card.className = 'card' + (a.deceased ? ' deceased' : '');
-  card.style.setProperty('--region-color', rc);
-  card.dataset.region = a.region;
-  card.dataset.deceased = a.deceased;
-  card.dataset.conf = a.conf;
-  card.innerHTML = `
-    <div class="card-aw">${a.aw.toFixed(2)}</div>
-    <div class="card-sym">${a.sym}</div>
-    <div class="card-name">${a.name}</div>
-    <div class="card-meta">
-      <span class="card-comp">${a.comp.toFixed(1)}</span>
-      <span class="card-conf conf-${a.conf}">${a.conf}</span>
-    </div>`;
-  card.addEventListener('click', () => openModal(a, rc));
-  return card;
+// ─── DRAG & DROP ─────────────────────────────────────────────────────────────
+function handleDrop(targetIdx) {
+  if(dragSrcIdx === null || dragSrcIdx === targetIdx) return;
+  const tmp = layout[dragSrcIdx];
+  layout[dragSrcIdx] = layout[targetIdx];
+  layout[targetIdx] = tmp;
+  dragSrcIdx = null;
+  render();
 }
 
-function openModal(a, rc) {
-  document.getElementById('mSym').textContent = a.sym;
-  document.getElementById('mSym').style.color = rc;
-  document.getElementById('mAw').textContent = `Atomic Weight: ${a.aw.toFixed(4)}`;
-  document.getElementById('mName').textContent = a.name;
+// ─── FILTERS ─────────────────────────────────────────────────────────────────
+function getFilters() {
+  return {
+    era: document.getElementById('filter-era').value,
+    region: document.getElementById('filter-region').value,
+    style: document.getElementById('filter-style').value,
+    conf: document.getElementById('filter-conf').value,
+    search: document.getElementById('search-input').value.toLowerCase().trim()
+  };
+}
 
-  // Tags
-  const tags = document.getElementById('mTags');
-  tags.innerHTML = `
-    <span class="modal-tag region-tag" style="--region-color:${rc}">${a.region}</span>
-    <span class="modal-tag">${a.debut}</span>
-    <span class="modal-tag conf-${a.conf}">${a.conf === 'H' ? 'High Confidence' : a.conf === 'M' ? 'Medium Confidence' : 'Low Confidence'}</span>
-    ${a.deceased ? '<span class="modal-tag" style="color:#ff8888;border-color:#ff8888">Deceased</span>' : ''}
-  `;
+function passesFilter(a, f) {
+  if(f.era && a['Era'] !== f.era && !(f.era === 'Late 90s' && a['Era']==='Late 99s')) return false;
+  if(f.region && a['Region'] !== f.region) return false;
+  if(f.style && a['Style'] !== f.style) return false;
+  if(f.conf && a['Confidence'] !== f.conf) return false;
+  if(f.search && !a['Artist Name'].toLowerCase().includes(f.search)) return false;
+  return true;
+}
 
-  // Stats
-  document.getElementById('mStats').innerHTML = `
-    <div class="stat-block">
-      <div class="stat-label">Composite Score</div>
-      <div class="stat-value accent">${a.comp.toFixed(3)}</div>
-    </div>
-    <div class="stat-block">
-      <div class="stat-label">Career Span</div>
-      <div class="stat-value">${a.span} yrs</div>
-    </div>
-    <div class="stat-block">
-      <div class="stat-label">Grammy Wins</div>
-      <div class="stat-value">${a.grammy}</div>
-    </div>
-    <div class="stat-block">
-      <div class="stat-label">Hot 100 Entries</div>
-      <div class="stat-value">${a.hot100}</div>
-    </div>
-    <div class="stat-block">
-      <div class="stat-label">Platinum Albums</div>
-      <div class="stat-value">${a.plat}</div>
-    </div>
-    <div class="stat-block">
-      <div class="stat-label">Atomic Weight</div>
-      <div class="stat-value accent" style="font-size:14px">${a.aw.toFixed(4)}</div>
-    </div>
-  `;
+function applyFilters() { render(); }
 
-  // Score bar — composite only (full 5-dim data not in this embed)
-  document.getElementById('mScores').innerHTML = `
-    <div class="score-row">
-      <span class="score-dim">Composite</span>
-      <div class="score-track"><div class="score-fill" style="width:${a.comp*10}%"></div></div>
-      <span class="score-val">${a.comp.toFixed(1)}</span>
+function clearFilters() {
+  document.getElementById('filter-era').value = '';
+  document.getElementById('filter-region').value = '';
+  document.getElementById('filter-style').value = '';
+  document.getElementById('filter-conf').value = '';
+  document.getElementById('search-input').value = '';
+  render();
+}
+
+function updateStats(filters) {
+  const visible = artists.filter(a => passesFilter(a, filters));
+  document.getElementById('stat-visible').textContent = visible.length;
+  if(visible.length > 0) {
+    const avg = (visible.reduce((s,a)=>s+(a['Composite Score']||0),0)/visible.length).toFixed(1);
+    document.getElementById('stat-avg').textContent = avg;
+    const top = visible.reduce((best,a)=>(a['Composite Score']||0)>(best['Composite Score']||0)?a:best, visible[0]);
+    document.getElementById('stat-top').textContent = `${top['Artist Name']} (${top['Composite Score']})`;
+  } else {
+    document.getElementById('stat-avg').textContent = '—';
+    document.getElementById('stat-top').textContent = '—';
+  }
+}
+
+// ─── MODAL ───────────────────────────────────────────────────────────────────
+function openModal(id) {
+  currentModalId = id;
+  modalIsEditing = false;
+  populateModal(id);
+  document.getElementById('modal-overlay').classList.add('active');
+}
+
+function populateModal(id) {
+  const a = artists.find(x=>x['#']===id);
+  if(!a) return;
+  const color = REGION_COLORS[a['Region']] || '#888';
+
+  document.getElementById('modal-symbol-box').textContent = a['Symbol'];
+  document.getElementById('modal-symbol-box').style.background = color;
+  document.getElementById('modal-name').textContent = a['Artist Name'];
+  document.getElementById('modal-meta').innerHTML = `<b>${a['Region']}</b> · ${a['Era']} · Debut ${a['Debut Year']}<br>${a['Production Style']} · ${a['Label']}`;
+  document.getElementById('modal-tags').innerHTML = `<span class="modal-tag">${a['Style']}</span><span class="modal-tag">${a['Region']}</span><span class="modal-tag">${a['Era']}</span>`;
+  document.getElementById('modal-desc').textContent = a['Description'];
+
+  const scoresHtml = SCORE_COLORS.map((dim, i) => {
+    const val = a[dim] || 0;
+    const pct = (val/10)*100;
+    return `<div class="score-row">
+      <span class="score-row-label">${dim}</span>
+      <div class="score-track"><div class="score-fill" style="width:${pct}%;background:${SCORE_HUES[i]}"></div></div>
+      <span class="score-val">${val}</span>
     </div>`;
+  }).join('');
+  document.getElementById('modal-scores').innerHTML = scoresHtml;
+  document.getElementById('modal-composite').textContent = a['Composite Score'];
 
-  // Death info
-  const dDiv = document.getElementById('mDeath');
-  if (a.deceased) {
-    dDiv.innerHTML = `<div class="modal-death">
-      <strong>✦ Deceased</strong> — Age ${a.age_death}
-    </div>`;
-  } else { dDiv.innerHTML = ''; }
+  const confLabels = {H:'High confidence (well-documented)',M:'Medium confidence (some gaps)',L:'Low confidence (limited sources)'};
+  const confNote = a['Confidence Note'] ? `${confLabels[a['Confidence']]} — ${a['Confidence Note']}` : confLabels[a['Confidence']];
+  document.getElementById('modal-conf-note').textContent = confNote;
 
-  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('modal-view-scores').style.display = '';
+  document.getElementById('modal-edit-form').style.display = 'none';
+  document.getElementById('modal-edit-btn').style.display = editMode ? '' : 'none';
+  document.getElementById('modal-edit-btn').textContent = '✏️ Edit';
 }
 
 function closeModal(e) {
-  if (e.target === document.getElementById('modalOverlay'))
-    document.getElementById('modalOverlay').classList.remove('open');
+  if(e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('active');
+  currentModalId = null;
+  modalIsEditing = false;
 }
-function closeModalBtn() {
-  document.getElementById('modalOverlay').classList.remove('open');
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('active');
 }
 
-let activeFilter = 'all';
-function filterCards(filter, btn) {
-  activeFilter = filter;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.card').forEach(card => {
-    let show = true;
-    if (filter === 'all') show = true;
-    else if (filter.startsWith('region-')) show = card.dataset.region === filter.slice(7);
-    else if (filter === 'deceased') show = card.dataset.deceased === '1';
-    else if (filter === 'conf-H') show = card.dataset.conf === 'H';
-    card.classList.toggle('hidden', !show);
+function toggleModalEdit() {
+  if(!modalIsEditing) {
+    showEditForm();
+  } else {
+    saveEditForm();
+  }
+}
+
+function showEditForm() {
+  modalIsEditing = true;
+  const a = artists.find(x=>x['#']===currentModalId);
+  document.getElementById('modal-view-scores').style.display = 'none';
+  document.getElementById('modal-edit-btn').textContent = '💾 Save';
+
+  const scoreInputs = SCORE_COLORS.map(dim => `
+    <div class="edit-field">
+      <label>${dim}</label>
+      <input type="number" min="1" max="10" step="0.5" id="edit-${dim.replace(/[^a-z]/gi,'_')}" value="${a[dim]||5}">
+    </div>`).join('');
+
+  const regionOpts = ['NYC','LA','South','Midwest','Bay Area','UK','International'].map(r=>`<option${r===a['Region']?' selected':''}>${r}</option>`).join('');
+  const eraOpts = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'].map(e=>`<option${e===a['Era']?' selected':''}>${e}</option>`).join('');
+  const styleOpts = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'].map(s=>`<option${s===a['Style']?' selected':''}>${s}</option>`).join('');
+  const confOpts = ['H','M','L'].map(c=>`<option${c===a['Confidence']?' selected':''}>${c}</option>`).join('');
+
+  document.getElementById('modal-edit-form').style.display = '';
+  document.getElementById('modal-edit-form').innerHTML = `
+    <div class="edit-field"><label>Name</label><input id="edit-name" value="${a['Artist Name']}"></div>
+    <div class="edit-field"><label>Symbol</label><input id="edit-symbol" value="${a['Symbol']}" maxlength="4"></div>
+    <div class="edit-field"><label>Debut Year</label><input type="number" id="edit-year" value="${a['Debut Year']}"></div>
+    <div class="edit-field"><label>Region</label><select id="edit-region">${regionOpts}</select></div>
+    <div class="edit-field"><label>Era</label><select id="edit-era">${eraOpts}</select></div>
+    <div class="edit-field"><label>Style</label><select id="edit-style">${styleOpts}</select></div>
+    <div class="edit-field"><label>Confidence</label><select id="edit-conf">${confOpts}</select></div>
+    <div class="edit-field"><label>Label</label><input id="edit-label" value="${a['Label']}"></div>
+    <div class="edit-field"><label>Prod. Style</label><input id="edit-prod" value="${a['Production Style']}"></div>
+    ${scoreInputs}
+    <div class="edit-field"><label>Description</label><textarea id="edit-desc">${a['Description']}</textarea></div>
+  `;
+}
+
+function saveEditForm() {
+  const a = artists.find(x=>x['#']===currentModalId);
+  if(!a) return;
+  a['Artist Name'] = document.getElementById('edit-name').value;
+  a['Symbol'] = document.getElementById('edit-symbol').value;
+  a['Debut Year'] = parseInt(document.getElementById('edit-year').value);
+  a['Region'] = document.getElementById('edit-region').value;
+  a['Era'] = document.getElementById('edit-era').value;
+  a['Style'] = document.getElementById('edit-style').value;
+  a['Confidence'] = document.getElementById('edit-conf').value;
+  a['Label'] = document.getElementById('edit-label').value;
+  a['Production Style'] = document.getElementById('edit-prod').value;
+  a['Description'] = document.getElementById('edit-desc').value;
+  SCORE_COLORS.forEach(dim => {
+    const key = dim.replace(/[^a-z]/gi,'_');
+    a[dim] = parseFloat(document.getElementById('edit-'+key).value)||0;
   });
+  a['Composite Score'] = parseFloat((SCORE_COLORS.reduce((s,d)=>s+(a[d]||0),0)/5).toFixed(1));
+  modalIsEditing = false;
+  populateModal(currentModalId);
+  render();
 }
 
-buildGrid();
+// ─── EDIT MODE ───────────────────────────────────────────────────────────────
+function toggleEditMode() {
+  editMode = !editMode;
+  document.getElementById('edit-mode-label').textContent = editMode ? 'On' : 'Off';
+  render();
+}
+
+// ─── ADD ARTIST ───────────────────────────────────────────────────────────────
+function openAddPanel() {
+  const regionOpts = ['NYC','LA','South','Midwest','Bay Area','UK','International'].map(r=>`<option>${r}</option>`).join('');
+  const eraOpts = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'].map(e=>`<option>${e}</option>`).join('');
+  const styleOpts = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'].map(s=>`<option>${s}</option>`).join('');
+
+  const scoreInputs = SCORE_COLORS.map(dim => `
+    <div class="edit-field">
+      <label>${dim}</label>
+      <input type="number" min="1" max="10" step="0.5" id="new-${dim.replace(/[^a-z]/gi,'_')}" value="5">
+    </div>`).join('');
+
+  document.getElementById('add-form').innerHTML = `
+    <div class="edit-field"><label>Name *</label><input id="new-name" placeholder="Artist name"></div>
+    <div class="edit-field"><label>Symbol *</label><input id="new-symbol" placeholder="e.g. KL" maxlength="4"></div>
+    <div class="edit-field"><label>Debut Year</label><input type="number" id="new-year" value="2020"></div>
+    <div class="edit-field"><label>Region</label><select id="new-region">${regionOpts}</select></div>
+    <div class="edit-field"><label>Era</label><select id="new-era">${eraOpts}</select></div>
+    <div class="edit-field"><label>Style</label><select id="new-style">${styleOpts}</select></div>
+    <div class="edit-field"><label>Label</label><input id="new-label" placeholder="Label name"></div>
+    <div class="edit-field"><label>Prod. Style</label><input id="new-prod" placeholder="Production style"></div>
+    ${scoreInputs}
+    <div class="edit-field"><label>Description</label><textarea id="new-desc" placeholder="Brief description…"></textarea></div>
+  `;
+  document.getElementById('add-panel').classList.add('open');
+  document.getElementById('panel-overlay').classList.add('active');
+}
+
+function closeAddPanel() {
+  document.getElementById('add-panel').classList.remove('open');
+  document.getElementById('panel-overlay').classList.remove('active');
+}
+
+function saveNewArtist() {
+  const name = document.getElementById('new-name').value.trim();
+  const symbol = document.getElementById('new-symbol').value.trim();
+  if(!name || !symbol) { alert('Name and Symbol are required.'); return; }
+
+  const newId = Math.max(...artists.map(a=>a['#'])) + 1;
+  const scores = {};
+  SCORE_COLORS.forEach(dim => {
+    scores[dim] = parseFloat(document.getElementById('new-'+dim.replace(/[^a-z]/gi,'_')).value)||5;
+  });
+  const composite = parseFloat((SCORE_COLORS.reduce((s,d)=>s+scores[d],0)/5).toFixed(1));
+
+  const newArtist = {
+    '#': newId,
+    Symbol: symbol,
+    'Artist Name': name,
+    Region: document.getElementById('new-region').value,
+    Era: document.getElementById('new-era').value,
+    Style: document.getElementById('new-style').value,
+    'Production Style': document.getElementById('new-prod').value,
+    Label: document.getElementById('new-label').value,
+    'Debut Year': parseInt(document.getElementById('new-year').value)||2020,
+    ...scores,
+    'Composite Score': composite,
+    Confidence: 'M',
+    'Confidence Note': 'User-added artist',
+    Description: document.getElementById('new-desc').value
+  };
+
+  artists.push(newArtist);
+  layout.push(newId); // append at end
+  closeAddPanel();
+  render();
+}
+
+// ─── EXPORT ──────────────────────────────────────────────────────────────────
+function exportData() {
+  const blob = new Blob([JSON.stringify(artists, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'hiphop_artists.json';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function resetLayout() {
+  if(!confirm('Reset layout to default order?')) return;
+  layout = buildDefaultLayout();
+  render();
+}
+
+// ─── ADD FORM BUILD ───────────────────────────────────────────────────────────
+function buildAddForm() {
+  const regions = ['NYC','LA','South','Midwest','Bay Area','UK','International'];
+  const eras = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'];
+  const styles = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'];
+
+  const form = document.getElementById('add-form');
+  if(!form.innerHTML) {
+    const rOpts = regions.map(r=>`<option>${r}</option>`).join('');
+    const eOpts = eras.map(e=>`<option>${e}</option>`).join('');
+    const sOpts = styles.map(s=>`<option>${s}</option>`).join('');
+    const scoreInputs = SCORE_COLORS.map(dim => `
+      <div class="edit-field">
+        <label>${dim}</label>
+        <input type="number" min="1" max="10" step="0.5" id="new-${dim.replace(/[^a-z]/gi,'_')}" value="5">
+      </div>`).join('');
+    form.innerHTML = `
+      <div class="edit-field"><label>Name *</label><input id="new-name" placeholder="Artist name"></div>
+      <div class="edit-field"><label>Symbol *</label><input id="new-symbol" maxlength="4" placeholder="e.g. KL"></div>
+      <div class="edit-field"><label>Debut Year</label><input type="number" id="new-year" value="2020"></div>
+      <div class="edit-field"><label>Region</label><select id="new-region">${rOpts}</select></div>
+      <div class="edit-field"><label>Era</label><select id="new-era">${eOpts}</select></div>
+      <div class="edit-field"><label>Style</label><select id="new-style">${sOpts}</select></div>
+      <div class="edit-field"><label>Label</label><input id="new-label" placeholder="Label"></div>
+      <div class="edit-field"><label>Prod. Style</label><input id="new-prod" placeholder="Production style"></div>
+      ${scoreInputs}
+      <div class="edit-field"><label>Description</label><textarea id="new-desc" placeholder="Brief description…"></textarea></div>
+    `;
+  }
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+layout = buildDefaultLayout();
+render();
 </script>
 </body>
 </html>
