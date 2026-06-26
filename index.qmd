@@ -1,7 +1,7 @@
 ---
 title: ""
 page-layout: full
-toc: false
+toc: true
 editor: 
   markdown: 
     wrap: 72
@@ -17,18 +17,15 @@ editor:
         <span class="hero-pill">Applied Research</span>
         <span class="hero-pill">Program Evaluation</span>
         <span class="hero-pill">Measurement & Design</span>
-        <span class="hero-pill">Data Storytelling</span>
+        <span class="hero-pill">Storytelling with Data</span>
       </div>
-      <a href="projects/index.html" class="hero-cta">See my work</a>
-      <a href="#about" class="hero-cta-outline">About me</a>
-    </div>
   </div>
 </div>
 ```
 
 ------------------------------------------------------------------------
 
-## Featured project {.section-heading}
+## Featured Project {.section-heading}
 
 ::::: project-grid
 :::: project-card
@@ -36,16 +33,15 @@ editor:
 
 <p class="project-card-title">
 
-The Hip-Hop Periodic Table
+[A Periodic Table of Hip Hop Artists]{.project-card-title}
 
 </p>
 
 <p class="project-card-desc">
 
-139 artists. Five lyricism dimensions. A fully documented dataset built
-to teach measurement validity, sampling bias, uncertainty communication,
-and visualization design — using a subject matter executives actually
-argue about.
+[A dataset built to teach measurement validity, sampling bias,
+uncertainty communication, and visualization design — using a subject
+matter executives actually argue about.]{.project-card-desc}
 
 </p>
 
@@ -54,8 +50,8 @@ R / Quarto Interactive Teaching module
 :::
 
 <br>
-<a href="hiphop/hiphop_dashboard.html" style="font-weight:600; color:#2B2D42;">
-Explore the dashboard → </a>
+<a href="hiphop/hiphop_periodic_table.html" style="font-weight:600; color:#E98973;">
+Explore the periodic table → </a>
 ::::
 :::::
 
@@ -69,57 +65,52 @@ LEW
 :::
 
 :::: {}
-I work at the intersection of data, law, and organizational
-decision-making. My non-work work focuses on making rigorous analytical
-thinking accessible — through unexpected datasets, honest methodology,
-and visualizations that show their own uncertainty.
+My work explores intersection of law, data, and decision-making. My
+non-work work focuses on making rigorous analytic thinking accessible —
+through unexpected data sets, practical methodology,and data
+visualizations that tell stories.
 
 ::: credential-badges
-[PhD — \[Social Psychology, certificate in Research Methods and Data
-Analysis\]]{.badge-item} [JD — \[specialized in Health
-Law\]]{.badge-item} [\[Senior Research Associate / National Center for
-State Courts\]]{.badge-item}
+[PhD, Social Psychology, certificate in Research Methods and Data
+Analysis]{.badge-item} [JD, concentration in Health Law]{.badge-item}
+[Senior Research Associate / National Center for State
+Courts]{.badge-item}
 :::
 
-I'm particularly interested in the gap between how organizations say
-they make decisions and how they actually make decisions — and in the
-role that poorly designed measurement plays in that gap.
-
-When I'm not doing that, I'm building models of hip-hop artists.
+I am particularly interested in the unintended consequences of legal
+decisions and legal interventions.
 ::::
 ::::::
 
 ------------------------------------------------------------------------
 
-## What I do {.section-heading}
+## What I Do {#whatIdo .section-heading}
 
 :::::: columns
-::: {.column width="33%"}
-**Teaching**
-
+:::::: {.columns-title}
+Teaching
+::::::
 Executive and graduate education in data storytelling, measurement
-design, and evidence-based decision-making. I use real datasets with
-documented flaws — because clean pedagogical data teaches the wrong
+design, and evidence-based decision-making. I teach using datasets with documented flaws — because clean pedagogical data teaches the wrong
 lessons.
-:::
-
-::: {.column width="33%"}
-**Research**
-
-Applied work at the boundary of law, psychology, and data storytelling.
-Particular interest in construct validity, uncertainty quantification,
-and the politics of how metrics get built and used.
-:::
-
-::: {.column width="33%"}
-**Projects**
-
-Independent projects that translate methodological ideas into
-interactive, shareable artifacts. The hip-hop table is one. More in [the
-projects gallery](projects/index.html).
-:::
 ::::::
 
+:::::: columns
+::: {.columns-title}
+Research
+:::
+Applied work within law, psychology, and data storytelling. Particular
+interest in construct validity, uncertainty quantification, and the
+politics of how metrics get built and used.
+::::::
+
+:::::: columns
+::: {.columns-title}
+Projects
+:::
+Independent projects that translate methodological ideas into
+interactive, shareable artifacts. The hip-hop table is one.
+::::::
 ------------------------------------------------------------------------
 
 ::: {style="text-align: center; padding: 3rem 0 1rem; color: #6b7280; font-size: 0.9rem;"}

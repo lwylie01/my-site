@@ -141,7 +141,7 @@ hr {
 .hero-pill {
   display: inline-block;
   background: $light;
-  border: 1px solid $primary;
+  border: 1px solid $secondary;
   border-radius: 100px;
   padding: 0.3rem 0.9rem;
   font-size: 0.8rem;
@@ -222,7 +222,7 @@ hr {
 }
 
 .project-card-desc {
-  font-size: 0.88rem;
+  font-size: 0.75rem;
   color: #5a5a6e;
   line-height: 1.6;
   margin-bottom: 1rem;
@@ -286,6 +286,33 @@ hr {
   padding: 0.25rem 0.6rem;
   font-size: 0.78rem;
   color: #5a5a6e;
+}
+
+/* COLUMNS */
+.columns {
+  display: column;
+  column-width: 33%;
+  background: #ffffff;
+  border: 2px solid $secondary;
+  border-radius: 1px;
+  padding: 1.0rem;
+  color: $dark;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  &:hover {
+    box-shadow: 0 4px 20px rgba(#3C3C3C, 0.08);
+    transform: translateY(-2px);
+    color: $dark;
+  }
+}
+
+.columns-title {
+  font-size: 1rem;
+  font-weight: 400;
+  color: $dark;
+  max-width: 520px;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* PAGE HEADER */

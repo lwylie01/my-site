@@ -33,8 +33,8 @@ toc: false
       <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
     </div>
     <br>
-    <a href="../hiphop/hiphop_dashboard.html" style="font-weight:600; color:#8C6A8D;">
-      Explore the dashboard →
+    <a href="../hiphop/hiphop_periodic_table.html" style="font-weight:600; color:#8C6A8D;">
+      Explore the periodic table →
     </a>
   </div>
 

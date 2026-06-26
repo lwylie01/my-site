@@ -48,7 +48,8 @@ bibliography, and facilitator guide.
 
 **Deliverables available:**
 
-- [Interactive dashboard](../hiphop/hiphop_dashboard.html) — live Quarto site
+- [Interactive periodic table](../hiphop/hiphop_periodic_table.html) — the branded, filterable artist table
+- [Analytics dashboard](../hiphop/hiphop_dashboard.html) — companion Quarto dashboard with charts
 - Data dictionary — variable definitions, rubrics, source bibliography
 - Excel workbook — full dataset with scoring rubric and era analysis sheets
 - Facilitator README — session structure, discussion questions by tab

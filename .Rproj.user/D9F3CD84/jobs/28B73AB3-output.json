@@ -1,7 +1,0 @@
-[1,"==> quarto preview index.qmd --to html --no-watch-inputs --no-browse\n\n"]
-[1,"pandoc \n  to: html\n  output-file: index.html\n  standalone: true\n  title-prefix: Data with a Plot\n  section-divs: true\n  html-math-method: mathjax\n  wrap: none\n  default-image-extension: png\n  toc: false\n  variables: {}\n  \nmetadata\n  pagetitle: Data with a Plot\n  document-css: false\n  link-citations: true\n  date-format: long\n  lang: en\n  theme:\n    - cosmo\n    - site-theme.scss\n  smooth-scroll: true\n  title: ''\n  page-layout: full\n  editor:\n    markdown:\n      wrap: 72\n  \n"]
-[1,"Output created: _site\\index.html\n\nPreparing to preview\n\nWatching files for changes\nBrowse at http://localhost:6874/\nListening on http://127.0.0.1:6874/\n"]
-[1,"GET: /\n"]
-[1,"GET: /\n"]
-[1,"pandoc \n  to: html\n  output-file: index.html\n  standalone: true\n  title-prefix: Data with a Plot\n  section-divs: true\n  html-math-method: mathjax\n  wrap: none\n  default-image-extension: png\n  toc: false\n  variables: {}\n  \nmetadata\n  pagetitle: Data with a Plot\n  document-css: false\n  link-citations: true\n  date-format: long\n  lang: en\n  theme:\n    - cosmo\n    - site-theme.scss\n  smooth-scroll: true\n  title: ''\n  page-layout: full\n  editor:\n    markdown:\n      wrap: 72\n  \n"]
-[1,"Output created: _site\\index.html\n\nWatching files for changes\nGET: /\n"]
