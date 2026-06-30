@@ -15,6 +15,7 @@
     --muted: #7a6a7b;
 
     --nyc:     #8C6A8D;
+    --philly:  #4e9e94;
     --la:      #E98973;
     --south:   #c0855a;
     --midwest: #7aaa8a;
@@ -119,12 +120,20 @@
   }
 
   /* ── Grid / Table ─────────────────────────────────────── */
-  #grid-container {
+  #grid-container, #compounds-wrap {
     padding: 1rem 1rem 2rem;
     overflow-x: auto;
   }
 
-  #table-area {
+  .section-divider {
+    margin: 1.2rem 1rem 0;
+    padding-top: 0.7rem;
+    border-top: 2px solid #e6d8e6;
+  }
+  .section-divider h2 { margin: 0; font-size: 1.15rem; color: #6a4a6a; }
+  .section-divider h2 span { color: var(--muted); font-weight: 400; font-size: 0.8rem; }
+
+  #table-area, #compounds-area {
     display: grid;
     grid-template-columns: repeat(18, 72px);
     grid-template-rows: auto;
@@ -170,6 +179,12 @@
   .conf-H { background: var(--conf-h); }
   .conf-M { background: var(--conf-m); }
   .conf-L { background: var(--conf-l); }
+
+  .tile-shape {
+    font-size: 0.8rem; line-height: 1;
+    text-shadow: 0 0 2px rgba(0,0,0,0.45);
+  }
+  .legend-shape { font-size: 0.72rem; color: var(--text); font-weight: 600; }
 
   .tile-symbol {
     font-size: 1.35rem;
@@ -396,16 +411,17 @@
   /* Print / export styles */
   @media print {
     header, #filters, #legend, #stats-bar, #add-panel { display: none; }
+    #compounds-wrap { padding: 0; }
     #grid-container { padding: 0; }
   }
 
   /* Responsive */
   @media (max-width: 1400px) {
-    #table-area { grid-template-columns: repeat(18, 64px); }
+    #table-area, #compounds-area { grid-template-columns: repeat(18, 64px); }
     .tile, .grid-spacer, .row-label { width: 64px; height: 80px; }
   }
   @media (max-width: 1200px) {
-    #table-area { grid-template-columns: repeat(18, 58px); }
+    #table-area, #compounds-area { grid-template-columns: repeat(18, 58px); }
     .tile, .grid-spacer, .row-label { width: 58px; height: 74px; }
     .tile-symbol { font-size: 1.15rem; }
   }
@@ -416,7 +432,7 @@
 <header>
   <div>
     <h1>Periodic Table of <span>Hip-Hop Artists</span></h1>
-    <p>datawithaplot.org — 139 Artists · Five-Dimension Lyrical Profiles · Drag to Rearrange</p>
+    <p>datawithaplot.org — <span id="subtitle-count">139</span> Artists · Five-Dimension Lyrical Profiles · Drag to Rearrange</p>
   </div>
   <div class="header-right">
     <button class="btn btn-outline btn-sm" onclick="toggleEditMode()">✏️ Edit Mode: <span id="edit-mode-label">Off</span></button>
@@ -444,12 +460,11 @@
     <select id="filter-region" onchange="applyFilters()">
       <option value="">All Regions</option>
       <option>NYC</option>
+      <option>Philly</option>
       <option>LA</option>
       <option>South</option>
       <option>Midwest</option>
       <option>Bay Area</option>
-      <option>UK</option>
-      <option>International</option>
     </select>
   </div>
   <div class="filter-group">
@@ -483,29 +498,44 @@
 </div>
 
 <div id="legend">
-  <span class="legend-label">Region:</span>
-  <span class="legend-item" style="background:var(--nyc)">NYC</span>
-  <span class="legend-item" style="background:var(--la)">LA</span>
-  <span class="legend-item" style="background:var(--south)">South</span>
-  <span class="legend-item" style="background:var(--midwest)">Midwest</span>
-  <span class="legend-item" style="background:var(--bay)">Bay Area</span>
-  <span class="legend-item" style="background:var(--uk)">UK</span>
-  <span class="legend-item" style="background:var(--intl)">International</span>
-  <span style="margin-left:0.8rem" class="legend-label">Confidence:</span>
+  <span class="legend-label">Style:</span>
+  <span class="legend-item" style="background:#cf8079">Gangsta/Street</span>
+  <span class="legend-item" style="background:#6f9ec2">Conscious/Lyrical</span>
+  <span class="legend-item" style="background:#d4b15a">Party/Pop</span>
+  <span class="legend-item" style="background:#a085bd">Experimental</span>
+  <span class="legend-item" style="background:#5cab9c">Abstract</span>
+  <span class="legend-item" style="background:#86a866">Political</span>
+  <span class="legend-item" style="background:#dd9a5e">Trap/Drill</span>
+  <span class="legend-item" style="background:#c180a2">Jazz-Rap</span>
+  <span style="margin-left:0.8rem" class="legend-label">Region:</span>
+  <span class="legend-shape">● NYC</span>
+  <span class="legend-shape">◆ Philly</span>
+  <span class="legend-shape">★ LA</span>
+  <span class="legend-shape">▲ South</span>
+  <span class="legend-shape">■ Midwest</span>
+  <span class="legend-shape">⬢ Bay Area</span>
+  <span style="margin-left:0.8rem" class="legend-label">Confidence (icon color):</span>
   <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-h)"></span> High</span>
   <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-m)"></span> Medium</span>
   <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-l)"></span> Low</span>
-  <span style="margin-left:0.8rem; color:var(--muted); font-size:0.7rem;">Score bar = Composite (1–10) · Click tile for full profile</span>
+  <span style="margin-left:0.8rem; color:var(--muted); font-size:0.7rem;">Color = style · Shape = region · Icon color = confidence · Click tile for profile</span>
 </div>
 
 <div id="stats-bar">
-  <span>Showing <strong id="stat-visible">139</strong> of <strong>139</strong> artists</span>
+  <span>Showing <strong id="stat-visible">139</strong> of <strong id="stat-total">139</strong> artists</span>
   <span>Avg composite: <strong id="stat-avg">—</strong></span>
   <span>Top scorer: <strong id="stat-top">—</strong></span>
 </div>
 
 <div id="grid-container">
   <div id="table-area"></div>
+</div>
+
+<div class="section-divider">
+  <h2>⚛️ Compounds <span>— groups &amp; crews (<span id="compound-count">0</span>)</span></h2>
+</div>
+<div id="compounds-wrap">
+  <div id="compounds-area"></div>
 </div>
 
 <!-- Modal -->
@@ -558,6 +588,8 @@ const RAW_DATA = __RAW_DATA__;
 
 // ─── STATE ─────────────────────────────────────────────────────────────────
 let artists = JSON.parse(JSON.stringify(RAW_DATA));
+let elements = artists.filter(a => a['Type'] !== 'Compound');   // solo artists
+let compounds = artists.filter(a => a['Type'] === 'Compound');  // groups & crews
 let layout = []; // array of artist IDs or null (empty cells), 18 cols
 let editMode = false;
 let dragSrcIdx = null;
@@ -565,14 +597,25 @@ let currentModalId = null;
 let modalIsEditing = false;
 
 const REGION_COLORS = {
-  'NYC': '#8C6A8D', 'LA': '#E98973', 'South': '#c0855a',
+  'NYC': '#8C6A8D', 'Philly': '#4e9e94', 'LA': '#E98973', 'South': '#c0855a',
   'Midwest': '#7aaa8a', 'Bay Area': '#5a9abf', 'UK': '#a07ac0', 'International': '#bf9a40'
 };
 const SCORE_COLORS = ['Rhyme Density','Vocab Breadth','Storytelling','Metaphor/Imagery','Conceptual Depth'];
 const SCORE_HUES = ['#E98973','#8C6A8D','#7aaa8a','#5a9abf','#bf9a40'];
 
+// Color = style (semantic, muted to match the light palette); shape = region; shape tint = confidence.
+const STYLE_COLORS = {
+  'Gangsta/Street': '#cf8079', 'Conscious/Lyrical': '#6f9ec2', 'Party/Pop': '#d4b15a',
+  'Experimental': '#a085bd', 'Abstract': '#5cab9c', 'Political': '#86a866',
+  'Trap/Drill': '#dd9a5e', 'Jazz-Rap': '#c180a2', 'Conscious/Street': '#6f9ec2'
+};
+const REGION_SHAPE = {
+  'NYC': '●', 'Philly': '◆', 'LA': '★', 'South': '▲', 'Midwest': '■', 'Bay Area': '⬢'
+};
+const CONF_COLOR = { 'H': '#2ecc71', 'M': '#f39c12', 'L': '#e74c3c' };
+
 // ─── LAYOUT BUILDER ────────────────────────────────────────────────────────
-function buildDefaultLayout() {
+function buildEraLayout(list) {
   // Periodic-table-inspired 18-column layout
   // We'll arrange by era rows, grouped loosely
   // Row 1: Old School (18 artists ids 1-18, pad if needed)
@@ -586,12 +629,12 @@ function buildDefaultLayout() {
   const rows = [];
 
   const byEra = {
-    'Old School': artists.filter(a=>a['Era']==='Old School').map(a=>a['#']),
-    'Golden Age': artists.filter(a=>a['Era']==='Golden Age').map(a=>a['#']),
-    'Late 90s': artists.filter(a=>a['Era']==='Late 90s'||a['Era']==='Late 99s').map(a=>a['#']),
-    '2000s': artists.filter(a=>a['Era']==='2000s').map(a=>a['#']),
-    '2010s': artists.filter(a=>a['Era']==='2010s').map(a=>a['#']),
-    '2020s': artists.filter(a=>a['Era']==='2020s').map(a=>a['#']),
+    'Old School': list.filter(a=>a['Era']==='Old School').map(a=>a['#']),
+    'Golden Age': list.filter(a=>a['Era']==='Golden Age').map(a=>a['#']),
+    'Late 90s': list.filter(a=>a['Era']==='Late 90s'||a['Era']==='Late 99s').map(a=>a['#']),
+    '2000s': list.filter(a=>a['Era']==='2000s').map(a=>a['#']),
+    '2010s': list.filter(a=>a['Era']==='2010s').map(a=>a['#']),
+    '2020s': list.filter(a=>a['Era']==='2020s').map(a=>a['#']),
   };
 
   for(const [era, ids] of Object.entries(byEra)) {
@@ -611,8 +654,15 @@ function buildDefaultLayout() {
   return rows.flat();
 }
 
+function buildDefaultLayout() { return buildEraLayout(elements); }
+function buildCompoundLayout() { return buildEraLayout(compounds); }
+
 // ─── RENDER ─────────────────────────────────────────────────────────────────
 function render() {
+  // refresh partitions (covers artists added/edited in-page)
+  elements = artists.filter(a => a['Type'] !== 'Compound');
+  compounds = artists.filter(a => a['Type'] === 'Compound');
+
   const area = document.getElementById('table-area');
   area.innerHTML = '';
 
@@ -654,7 +704,7 @@ function render() {
     tile.dataset.id = artist['#'];
     tile.dataset.idx = idx;
 
-    const color = REGION_COLORS[artist['Region']] || '#888';
+    const color = STYLE_COLORS[artist['Style']] || '#888';
     tile.style.background = color;
 
     const visible = passesFilter(artist, filters);
@@ -666,7 +716,7 @@ function render() {
     tile.innerHTML = `
       <div class="tile-top">
         <span class="tile-num">${artist['#']}</span>
-        <span class="tile-conf conf-${artist['Confidence']}" title="Confidence: ${artist['Confidence']}">${artist['Confidence']}</span>
+        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${artist['Region']} · ${artist['Style']} · ${artist['Confidence']}-confidence">${REGION_SHAPE[artist['Region']]||'•'}</span>
       </div>
       <div class="tile-symbol">${artist['Symbol']}</div>
       <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
@@ -693,6 +743,56 @@ function render() {
   });
 
   updateStats(filters);
+  renderCompounds();
+}
+
+// ─── COMPOUNDS (groups & crews) ──────────────────────────────────────────────
+function renderCompounds() {
+  const area = document.getElementById('compounds-area');
+  if(!area) return;
+  area.innerHTML = '';
+  const filters = getFilters();
+
+  buildCompoundLayout().forEach((cell) => {
+    if(typeof cell === 'string' && cell.startsWith('__label__')) {
+      const lbl = document.createElement('div');
+      lbl.className = 'row-label';
+      lbl.textContent = cell.replace('__label__','');
+      area.appendChild(lbl);
+      return;
+    }
+    if(cell === null) {
+      const sp = document.createElement('div');
+      sp.className = 'grid-spacer';
+      area.appendChild(sp);
+      return;
+    }
+    const artist = artists.find(a => a['#'] === cell);
+    if(!artist) return;
+
+    const tile = document.createElement('div');
+    tile.className = 'tile';
+    tile.dataset.id = artist['#'];
+    tile.style.background = STYLE_COLORS[artist['Style']] || '#888';
+    if(!passesFilter(artist, filters)) tile.classList.add('filtered-out');
+
+    const score = artist['Composite Score'] || 0;
+    tile.innerHTML = `
+      <div class="tile-top">
+        <span class="tile-num">${artist['#']}</span>
+        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${artist['Region']} · ${artist['Style']} · ${artist['Confidence']}-confidence">${REGION_SHAPE[artist['Region']]||'•'}</span>
+      </div>
+      <div class="tile-symbol">${artist['Symbol']}</div>
+      <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
+      <div class="tile-year">${artist['Debut Year']}</div>
+      <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${(score/10)*100}%"></div></div>
+    `;
+    tile.addEventListener('click', () => openModal(artist['#']));
+    area.appendChild(tile);
+  });
+
+  const cc = document.getElementById('compound-count');
+  if(cc) cc.textContent = compounds.length;
 }
 
 // ─── DRAG & DROP ─────────────────────────────────────────────────────────────
@@ -737,8 +837,10 @@ function clearFilters() {
 }
 
 function updateStats(filters) {
-  const visible = artists.filter(a => passesFilter(a, filters));
+  const visible = elements.filter(a => passesFilter(a, filters));
   document.getElementById('stat-visible').textContent = visible.length;
+  document.getElementById('stat-total').textContent = elements.length;
+  document.getElementById('subtitle-count').textContent = elements.length;
   if(visible.length > 0) {
     const avg = (visible.reduce((s,a)=>s+(a['Composite Score']||0),0)/visible.length).toFixed(1);
     document.getElementById('stat-avg').textContent = avg;
@@ -761,7 +863,7 @@ function openModal(id) {
 function populateModal(id) {
   const a = artists.find(x=>x['#']===id);
   if(!a) return;
-  const color = REGION_COLORS[a['Region']] || '#888';
+  const color = STYLE_COLORS[a['Style']] || '#888';
 
   document.getElementById('modal-symbol-box').textContent = a['Symbol'];
   document.getElementById('modal-symbol-box').style.background = color;
@@ -822,7 +924,7 @@ function showEditForm() {
       <input type="number" min="1" max="10" step="0.5" id="edit-${dim.replace(/[^a-z]/gi,'_')}" value="${a[dim]||5}">
     </div>`).join('');
 
-  const regionOpts = ['NYC','LA','South','Midwest','Bay Area','UK','International'].map(r=>`<option${r===a['Region']?' selected':''}>${r}</option>`).join('');
+  const regionOpts = ['NYC','Philly','LA','South','Midwest','Bay Area'].map(r=>`<option${r===a['Region']?' selected':''}>${r}</option>`).join('');
   const eraOpts = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'].map(e=>`<option${e===a['Era']?' selected':''}>${e}</option>`).join('');
   const styleOpts = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'].map(s=>`<option${s===a['Style']?' selected':''}>${s}</option>`).join('');
   const confOpts = ['H','M','L'].map(c=>`<option${c===a['Confidence']?' selected':''}>${c}</option>`).join('');
@@ -875,7 +977,7 @@ function toggleEditMode() {
 
 // ─── ADD ARTIST ───────────────────────────────────────────────────────────────
 function openAddPanel() {
-  const regionOpts = ['NYC','LA','South','Midwest','Bay Area','UK','International'].map(r=>`<option>${r}</option>`).join('');
+  const regionOpts = ['NYC','Philly','LA','South','Midwest','Bay Area'].map(r=>`<option>${r}</option>`).join('');
   const eraOpts = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'].map(e=>`<option>${e}</option>`).join('');
   const styleOpts = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'].map(s=>`<option>${s}</option>`).join('');
 
@@ -958,7 +1060,7 @@ function resetLayout() {
 
 // ─── ADD FORM BUILD ───────────────────────────────────────────────────────────
 function buildAddForm() {
-  const regions = ['NYC','LA','South','Midwest','Bay Area','UK','International'];
+  const regions = ['NYC','Philly','LA','South','Midwest','Bay Area'];
   const eras = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'];
   const styles = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'];
 
