@@ -11,7 +11,7 @@ editor:
 <div class="hero-section container">
   <div class="row align-items-center">
     <div class="col-md-9">
-      <p class="hero-name">Data with a Plot</p>
+      <img class="hero-logo" src="pics/logoW.png" alt="Data with a Plot — Lindsey E. Wylie, J.D., Ph.D." />
       <p class="hero-tagline">Lindsey E. Wylie, J.D., Ph.D.</p>
       <p class="hero-intro">
         Rigorous analytic thinking, made accessible — through unexpected
@@ -28,7 +28,7 @@ editor:
 
 ```{=html}
 <div class="bio-block">
-  <div class="bio-avatar-placeholder">LEW</div>
+  <img class="bio-avatar" src="pics/Headshot1.jpg" alt="Lindsey E. Wylie" />
   <div class="bio-body">
     <p>My work explores the intersection of law, data, and decision-making —
     with a throughline of measurement: how we decide to count people and
