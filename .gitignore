@@ -12,6 +12,9 @@ barnum/barnum_test.html
 # Internal/private working files — keep off the public site repo
 CV/Wylie_Capacity_Dashboard.qmd
 
+# Local-only preview helper (machine-specific R path)
+.claude/launch.json
+
 # RStudio / R session files
 .Rproj.user/
 .Rhistory
