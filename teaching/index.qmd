@@ -39,7 +39,7 @@ The six concepts I return to most often:
 
 ### The Hip-Hop Periodic Table — Data Storytelling Module
 
-A complete 90-minute session built around a dataset of 139 hip-hop artists
+A complete 90-minute session built around a dataset of 147 hip-hop artists
 scored across five lyricism dimensions. Designed for professional and executive
 audiences. Includes an interactive Quarto dashboard, data dictionary, source
 bibliography, and facilitator guide.
