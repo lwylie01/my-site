@@ -39,6 +39,10 @@ artists_raw <- read_excel(
   "data/hiphop_artists.xlsx",
   sheet = "Artist Database"
 ) |>
+  # The dataset mixes individual artists ("Element") with groups ("Compound",
+  # e.g. Wu-Tang Clan). This dashboard analyses individuals only; groups are
+  # shown separately in the periodic table.
+  filter(Type == "Element") |>
   rename(
     sym            = Symbol,
     name           = `Artist Name`,
@@ -62,7 +66,7 @@ artists <- artists_raw |>
     composite = round((rhyme + vocab + story + metaphor + concept) / 5, 1),
     era = factor(era, levels = c("Old School","Golden Age","Late 90s","2000s","2010s","2020s")),
     confidence = factor(confidence, levels = c("H","M","L")),
-    region = factor(region, levels = c("NYC","LA","South","Midwest","Bay Area","UK","International")),
+    region = factor(region, levels = c("NYC","Philly","LA","South","Midwest","Bay Area")),
     style = factor(style),
     confidence_note = if_else(is.na(confidence_note), "", confidence_note),
     strongest_dim = case_when(
@@ -76,13 +80,12 @@ artists <- artists_raw |>
 
 # ── Colour palettes ──────────────────────────────────────────────────────────
 region_pal <- c(
-  "NYC"           = "#3182bd",
-  "LA"            = "#e6550d",
-  "South"         = "#31a354",
-  "Midwest"       = "#756bb1",
-  "Bay Area"      = "#d0a400",
-  "UK"            = "#e377c2",
-  "International" = "#17becf"
+  "NYC"      = "#3182bd",
+  "Philly"   = "#4e9e94",
+  "LA"       = "#e6550d",
+  "South"    = "#31a354",
+  "Midwest"  = "#756bb1",
+  "Bay Area" = "#d0a400"
 )
 
 era_pal <- c(
@@ -289,14 +292,17 @@ female_artists <- c(
   "Roxanne Shanté","MC Lyte","Queen Latifah","J.J. Fad",
   "Lauryn Hill","Missy Elliott","Lil' Kim","Foxy Brown",
   "Nicki Minaj","Rapsody","Noname","Tierra Whack",
-  "Doechii","GloRilla","Cardi B","Rapsody (Eve era)",
-  "Saweetie","City Girls","Latto","Yvonne (Yaya Bey)",
-  "Noname (Ghetto Sage)","Iggy Azalea","Lana (Kali Uchis rap)"
+  "Doechii","GloRilla","Cardi B",
+  "Saweetie","City Girls","Latto"
 )
 
 gender_data <- artists |>
   mutate(gender_group = if_else(name %in% female_artists, "Female / non-binary", "Male")) |>
   count(era, gender_group)
+
+# Count from the data (not length(female_artists)) so the headline figure
+# always matches what the chart actually plots.
+n_female <- sum(artists$name %in% female_artists)
 
 p_gender <- gender_data |>
   ggplot(aes(x = era, y = n, fill = gender_group,
@@ -307,8 +313,8 @@ p_gender <- gender_data |>
   labs(
     title = "Gender representation by era",
     subtitle = paste0(
-      length(female_artists), " female/non-binary artists of ", nrow(artists), " total (",
-      round(length(female_artists)/nrow(artists)*100), "%)"
+      n_female, " female/non-binary artists of ", nrow(artists), " total (",
+      round(n_female/nrow(artists)*100), "%)"
     ),
     x = NULL, y = "Share of era", fill = NULL
   ) +
@@ -354,7 +360,7 @@ plot_ly(conf_counts,
 bias_df <- tribble(
   ~"Bias type",        ~"Direction",                              ~"Practical implication",
   "Prestige",         "Over-represents critically acclaimed artists", "Commercial artists scored lower; vibe-first artists may be underrated",
-  "Gender",           "~16% female/non-binary vs. ~50% of rap audience", "Female artists face different critical frameworks; scores may not be comparable",
+  "Gender",           "~14% female/non-binary vs. ~50% of rap audience", "Female artists face different critical frameworks; scores may not be comparable",
   "Geography",        "NYC + Golden Age disproportionate",        "Southern and international artists underrepresented in critical canon used for scoring",
   "Language",         "English-language criticism only",          "Latin, African, French rap scored through an inadequate lens; L-flag applied",
   "Survivorship",     "Only artists who entered critical canon",  "Regionally significant artists without national coverage are absent",
@@ -380,7 +386,7 @@ reactable(
 ## Row {height="15%"}
 
 ::: {.callout-note title="Teaching Prompt — The Aggregation Problem"}
-**What does averaging destroy?** Rakim (Rhyme Density 10) and Scarface (Storytelling 10) both score around 8.8 composite. Is that meaningful equivalence — or does the composite erase the most important information? When does aggregation help, and when does it lie?
+**What does averaging destroy?** Rakim (Rhyme Density 10, composite 8.8) and Scarface (Storytelling 10, composite 8.2) land within half a point of each other on the composite — yet their dimension profiles look nothing alike. Is that near-equivalence meaningful, or does the composite erase the most important information? When does aggregation help, and when does it lie?
 :::
 
 ## Row {height="45%"}
