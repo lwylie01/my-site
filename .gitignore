@@ -6,6 +6,9 @@ _site/
 # Generated periodic table (built from Excel by hiphop/build_table.R on render)
 hiphop/hiphop_periodic_table.html
 
+# Generated Barnum Test page (built from Excel by barnum/build_barnum.R on render)
+barnum/barnum_test.html
+
 # RStudio / R session files
 .Rproj.user/
 .Rhistory

@@ -1,0 +1,57 @@
+# build_barnum.R ──────────────────────────────────────────────────────────────
+# Generates barnum/barnum_test.html from the editable Excel file.
+#
+# To update the Barnum Test: edit barnum/data/barnum_statements.xlsx — the
+# "Statements", "Research", and "Distribution" sheets — then re-publish. This
+# script is wired into _quarto.yml as a pre-render step, so `quarto render` /
+# `quarto publish` regenerates the page automatically. The branded look/feel and
+# the interaction logic live in barnum/app/_template.html; only the data comes
+# from Excel.
+
+suppressMessages({
+  library(readxl)
+  library(jsonlite)
+})
+
+# Quarto runs pre-render scripts from the project root; allow running from the
+# barnum/ directory too. Anchor every path on where the data file is found.
+base <- if (file.exists("barnum/data/barnum_statements.xlsx")) "barnum" else "."
+xlsx_path     <- file.path(base, "data", "barnum_statements.xlsx")
+template_path <- file.path(base, "app", "_template.html")
+out_path      <- file.path(base, "barnum_test.html")
+
+read_sheet <- function(sheet) {
+  df <- read_excel(xlsx_path, sheet = sheet)
+  # Match a clean snapshot: blank (not null) for empty text fields.
+  for (col in names(df)) {
+    if (is.character(df[[col]])) df[[col]][is.na(df[[col]])] <- ""
+  }
+  df
+}
+
+statements   <- read_sheet("Statements")
+research      <- read_sheet("Research")
+distribution  <- read_sheet("Distribution")
+
+as_json <- function(df) toJSON(df, dataframe = "rows", auto_unbox = TRUE, na = "null")
+
+template <- paste(readLines(template_path, warn = FALSE, encoding = "UTF-8"),
+                  collapse = "\n")
+
+inject <- function(tpl, placeholder, json) {
+  parts <- strsplit(tpl, placeholder, fixed = TRUE)[[1]]
+  if (length(parts) != 2L) {
+    stop("Expected exactly one ", placeholder, " placeholder in ", template_path)
+  }
+  paste0(parts[1], json, parts[2])
+}
+
+template <- inject(template, "__STATEMENTS_DATA__",   as_json(statements))
+template <- inject(template, "__RESEARCH_DATA__",     as_json(research))
+template <- inject(template, "__DISTRIBUTION_DATA__", as_json(distribution))
+
+con <- file(out_path, open = "w", encoding = "UTF-8")
+writeLines(template, con, useBytes = FALSE)
+close(con)
+
+cat("build_barnum.R: wrote", out_path, "with", nrow(statements), "statements\n")
