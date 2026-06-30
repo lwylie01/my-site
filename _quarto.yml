@@ -1,12 +1,18 @@
 project:
   type: website
   output-dir: _site
-  # Regenerates hiphop/hiphop_periodic_table.html from the editable Excel file
-  # on every render/publish. Edit hiphop/data/hiphop_artists.xlsx to update it.
-  pre-render: hiphop/build_table.R
+  # Regenerates the interactive HTML pages from their editable Excel files on
+  # every render/publish. Edit the .xlsx files to update them.
+  #   hiphop/data/hiphop_artists.xlsx   -> hiphop/hiphop_periodic_table.html
+  #   barnum/data/barnum_statements.xlsx -> barnum/barnum_test.html
+  pre-render:
+    - hiphop/build_table.R
+    - barnum/build_barnum.R
   resources:
     - hiphop/hiphop_periodic_table.html
     - hiphop/data/hiphop_artists.xlsx
+    - barnum/barnum_test.html
+    - barnum/data/barnum_statements.xlsx
     - CNAME
 
 website:
