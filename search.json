@@ -4,28 +4,28 @@
     "href": "index.html",
     "title": "Data with a Plot",
     "section": "",
-    "text": "Data with a Plot\n      Lindsey E. Wylie, J.D., Ph.D.\n      \n        Applied Research\n        Program Evaluation\n        Measurement & Design\n        Storytelling with Data\n      \n  \n\n\n\n\n\n\nData Storytelling\n\nA Periodic Table of Hip Hop Artists\n\n\nA dataset built to teach measurement validity, sampling bias, uncertainty communication, and visualization design — using a subject matter executives actually argue about.\n\n\nR / Quarto Interactive Teaching module\n\n  Explore the periodic table → \n\n\n\n\n\n\n\n\nLEW\n\n\nMy work explores intersection of law, data, and decision-making. My non-work work focuses on making rigorous analytic thinking accessible — through unexpected data sets, practical methodology,and data visualizations that tell stories.\n\nPhD, Social Psychology, certificate in Research Methods and Data Analysis JD, concentration in Health Law Senior Research Associate / National Center for State Courts\n\nI am particularly interested in the unintended consequences of legal decisions and legal interventions.\n\n\n\n\n\n\n\n\nTeaching\nExecutive and graduate education in data storytelling, measurement design, and evidence-based decision-making. I teach using datasets with documented flaws — because clean pedagogical data teaches the wrong lessons.\n\n\n\nResearch\nApplied work within law, psychology, and data storytelling. Particular interest in construct validity, uncertainty quantification, and the politics of how metrics get built and used.\n\n\n\nProjects\nIndependent projects that translate methodological ideas into interactive, shareable artifacts. The hip-hop table is one.\n\n\n\nBuilt with Quarto · Hosted on GitHub Pages"
-  },
-  {
-    "objectID": "index.html#featured-project",
-    "href": "index.html#featured-project",
-    "title": "Data with a Plot",
-    "section": "",
-    "text": "Data Storytelling\n\nA Periodic Table of Hip Hop Artists\n\n\nA dataset built to teach measurement validity, sampling bias, uncertainty communication, and visualization design — using a subject matter executives actually argue about.\n\n\nR / Quarto Interactive Teaching module\n\n  Explore the periodic table →"
+    "text": "Data with a Plot\n      Lindsey E. Wylie, J.D., Ph.D.\n      \n        Rigorous analytic thinking, made accessible — through unexpected\n        datasets, practical methodology, and visualizations that actually stick."
   },
   {
     "objectID": "index.html#about",
     "href": "index.html#about",
     "title": "Data with a Plot",
-    "section": "",
-    "text": "LEW\n\n\nMy work explores intersection of law, data, and decision-making. My non-work work focuses on making rigorous analytic thinking accessible — through unexpected data sets, practical methodology,and data visualizations that tell stories.\n\nPhD, Social Psychology, certificate in Research Methods and Data Analysis JD, concentration in Health Law Senior Research Associate / National Center for State Courts\n\nI am particularly interested in the unintended consequences of legal decisions and legal interventions."
+    "section": "About",
+    "text": "About\n\n  LEW\n  \n    My work explores the intersection of law, data, and decision-making —\n    with a throughline of measurement: how we decide to count people and\n    outcomes, and what happens downstream when those choices get treated as\n    facts.\n\n    \n      PhD, Social Psychology · certificate in Research Methods & Data Analysis\n      JD · concentration in Health Law\n      Senior Research Associate · National Center for State Courts\n    \n\n    I'm particularly interested in the unintended consequences of legal\n    decisions and interventions — the places where a well-meaning rule meets a\n    messy world.\n\n    \n      ↓ Download CV PDF"
   },
   {
     "objectID": "index.html#whatIdo",
     "href": "index.html#whatIdo",
     "title": "Data with a Plot",
-    "section": "",
-    "text": "Teaching\nExecutive and graduate education in data storytelling, measurement design, and evidence-based decision-making. I teach using datasets with documented flaws — because clean pedagogical data teaches the wrong lessons.\n\n\n\nResearch\nApplied work within law, psychology, and data storytelling. Particular interest in construct validity, uncertainty quantification, and the politics of how metrics get built and used.\n\n\n\nProjects\nIndependent projects that translate methodological ideas into interactive, shareable artifacts. The hip-hop table is one.\n\n\n\nBuilt with Quarto · Hosted on GitHub Pages"
+    "section": "What I Do",
+    "text": "What I Do\n\n\n  \n    Applied Research\n    \n      Work across law, psychology, and public policy — with a standing interest\n      in construct validity, uncertainty, and the politics of how metrics get\n      built and used.\n    \n  \n\n  \n    Program Evaluation\n    \n      Process and outcome evaluations of courts, diversion, and pretrial\n      programs — measuring whether an intervention actually does what it\n      promises.\n    \n  \n\n  \n    Measurement & Design\n    \n      Building and validating screening tools and latent-trait measures, and the\n      research designs that make a finding trustworthy in the first place.\n    \n  \n\n  \n    Storytelling with Data\n    \n      Executive and graduate teaching that turns rigorous analysis into\n      something a judge, funder, or community will actually read and remember —\n      taught on datasets with documented flaws."
+  },
+  {
+    "objectID": "index.html#featured",
+    "href": "index.html#featured",
+    "title": "Data with a Plot",
+    "section": "Featured Project",
+    "text": "Featured Project\n\n  \n    Data Storytelling\n    A Periodic Table of Hip-Hop Artists\n    \n      A dataset built to teach measurement validity, sampling bias, uncertainty\n      communication, and visualization design — using a subject matter\n      executives actually argue about.\n    \n    \n      R / Quarto\n      Interactive\n      Teaching module\n    \n    \n    \n      Explore the periodic table →\n    \n  \n\n\n\nBuilt with Quarto · Hosted on GitHub Pages"
   },
   {
     "objectID": "writing/index.html",
