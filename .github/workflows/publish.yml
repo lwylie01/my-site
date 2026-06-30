@@ -21,7 +21,7 @@ jobs:
           use-public-rspm: true   # binary packages — much faster installs
 
       - name: Install R packages
-        run: Rscript -e 'install.packages(c("readxl", "jsonlite"), repos = "https://cran.r-project.org")'
+        run: Rscript -e 'install.packages(c("readxl", "jsonlite", "knitr", "rmarkdown"), repos = "https://cran.r-project.org")'
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
