@@ -62,7 +62,7 @@ artists <- artists_raw |>
     composite = round((rhyme + vocab + story + metaphor + concept) / 5, 1),
     era = factor(era, levels = c("Old School","Golden Age","Late 90s","2000s","2010s","2020s")),
     confidence = factor(confidence, levels = c("H","M","L")),
-    region = factor(region, levels = c("NYC","LA","South","Midwest","Bay Area","UK","International")),
+    region = factor(region, levels = c("NYC","Philly","LA","South","Midwest","Bay Area")),
     style = factor(style),
     confidence_note = if_else(is.na(confidence_note), "", confidence_note),
     strongest_dim = case_when(
@@ -76,13 +76,12 @@ artists <- artists_raw |>
 
 # ── Colour palettes ──────────────────────────────────────────────────────────
 region_pal <- c(
-  "NYC"           = "#3182bd",
-  "LA"            = "#e6550d",
-  "South"         = "#31a354",
-  "Midwest"       = "#756bb1",
-  "Bay Area"      = "#d0a400",
-  "UK"            = "#e377c2",
-  "International" = "#17becf"
+  "NYC"      = "#3182bd",
+  "Philly"   = "#4e9e94",
+  "LA"       = "#e6550d",
+  "South"    = "#31a354",
+  "Midwest"  = "#756bb1",
+  "Bay Area" = "#d0a400"
 )
 
 era_pal <- c(
