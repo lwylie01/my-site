@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Barnum Test — datawithaplot.org</title>
+<style>
+  :root {
+    --primary: #8C6A8D;
+    --secondary: #E98973;
+    --accent: #D2B1A3;
+    --light-bg: #F8F7F4;
+    --dark: #2a1f2b;
+    --text: #3a2d3b;
+    --muted: #7a6a7b;
+    --card: #ffffff;
+    --line: #e8e0e8;
+    --good: #2ecc71;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── Header ─────────────────────────────────────────── */
+  header {
+    background: var(--dark);
+    color: #f0e8f0;
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.03em; }
+  header h1 span { color: var(--secondary); }
+  header p { font-size: 0.8rem; color: var(--accent); margin-top: 0.1rem; }
+  header a { color: var(--accent); font-size: 0.8rem; text-decoration: none; font-weight: 600; }
+  header a:hover { color: #fff; }
+
+  /* ── Progress ───────────────────────────────────────── */
+  #progress {
+    display: flex; gap: 0; background: #fff;
+    border-bottom: 2px solid var(--accent);
+    font-size: 0.72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .step {
+    flex: 1; text-align: center; padding: 0.7rem 0.5rem;
+    color: var(--muted); position: relative; transition: all 0.2s;
+  }
+  .step.active { color: #fff; background: var(--primary); }
+  .step.done { color: var(--primary); }
+  .step .num {
+    display: inline-flex; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--line); color: var(--muted);
+    align-items: center; justify-content: center; margin-right: 0.4rem;
+    font-size: 0.65rem;
+  }
+  .step.active .num { background: #fff; color: var(--primary); }
+  .step.done .num { background: var(--primary); color: #fff; }
+
+  /* ── Layout ─────────────────────────────────────────── */
+  .wrap { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  .screen { display: none; animation: fade 0.4s ease; }
+  .screen.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .eyebrow {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--secondary); margin-bottom: 0.6rem;
+  }
+  h2 { font-size: 1.85rem; line-height: 1.2; color: var(--dark); margin-bottom: 0.9rem; font-weight: 700; }
+  h3 { font-size: 1.25rem; color: var(--dark); margin: 2rem 0 0.8rem; font-weight: 700; }
+  .lead { font-size: 1.02rem; color: var(--text); margin-bottom: 1.5rem; }
+  p { margin-bottom: 1rem; }
+  .muted { color: var(--muted); }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1.6rem 1.5rem; margin-bottom: 1.5rem;
+  }
+
+  /* ── Buttons ────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.7rem 1.4rem; border-radius: 8px; border: none;
+    font-size: 0.92rem; font-weight: 700; cursor: pointer;
+    font-family: inherit; transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-secondary { background: var(--secondary); color: #fff; }
+  .btn-outline { background: #fff; color: var(--primary); border: 1.5px solid var(--primary); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ── Calibration inputs (the theater) ──────────────── */
+  .field { margin-bottom: 1.4rem; }
+  .field > label {
+    display: block; font-size: 0.78rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;
+  }
+  select {
+    width: 100%; max-width: 280px; padding: 0.55rem 0.7rem;
+    border: 1.5px solid var(--accent); border-radius: 8px;
+    background: #fff; font-size: 0.92rem; color: var(--text); font-family: inherit;
+  }
+  select:focus { outline: none; border-color: var(--primary); }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .chip {
+    padding: 0.5rem 1rem; border-radius: 20px; border: 1.5px solid var(--accent);
+    background: #fff; color: var(--text); font-size: 0.88rem; cursor: pointer;
+    font-family: inherit; transition: all 0.15s;
+  }
+  .chip:hover { border-color: var(--primary); }
+  .chip.selected { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  /* ── Profile ────────────────────────────────────────── */
+  #analyzing { text-align: center; padding: 2.5rem 0; }
+  .spinner {
+    width: 38px; height: 38px; border: 4px solid var(--line);
+    border-top-color: var(--primary); border-radius: 50%;
+    margin: 0 auto 1rem; animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #analyzing .status { font-size: 0.85rem; color: var(--muted); min-height: 1.2em; }
+
+  .profile-card {
+    background: linear-gradient(135deg, #fff 0%, #faf6fa 100%);
+    border: 1px solid var(--primary); border-radius: 12px;
+    padding: 1.8rem 1.7rem; margin-bottom: 1.6rem;
+    box-shadow: 0 6px 24px rgba(140,106,141,0.10);
+  }
+  .profile-card .seal {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--primary); margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .profile-card .seal::before { content: "❖"; font-size: 1rem; }
+  .profile-card p { font-size: 1.03rem; color: #43354a; }
+  .profile-card p:last-child { margin-bottom: 0; }
+
+  /* ── Rating slider ──────────────────────────────────── */
+  .rating-box { text-align: center; }
+  .rating-val { font-size: 3rem; font-weight: 800; color: var(--primary); line-height: 1; }
+  .rating-val span { font-size: 1.1rem; color: var(--muted); font-weight: 600; }
+  input[type=range] { width: 100%; max-width: 420px; margin: 1rem 0 0.3rem; accent-color: var(--primary); height: 6px; }
+  .scale-ends { display: flex; justify-content: space-between; max-width: 420px; margin: 0 auto;
+    font-size: 0.74rem; color: var(--muted); }
+
+  /* ── Reveal ─────────────────────────────────────────── */
+  .punch {
+    font-size: 1.5rem; font-weight: 800; color: var(--dark);
+    line-height: 1.25; margin-bottom: 1.2rem;
+  }
+  .punch b { color: var(--secondary); }
+
+  .statrow { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.2rem 0; }
+  .stat {
+    flex: 1; min-width: 150px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 1.1rem 1rem; text-align: center;
+  }
+  .stat .big { font-size: 2.1rem; font-weight: 800; color: var(--primary); line-height: 1; }
+  .stat .lab { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .stat.you .big { color: var(--secondary); }
+
+  /* histogram */
+  .hist { display: flex; align-items: flex-end; gap: 4px; height: 150px; margin: 0.5rem 0 0.3rem; position: relative; }
+  .hist .forer-line { position: absolute; top: 0; bottom: 18px; width: 2px; background: var(--dark); z-index: 5; }
+  .hist .forer-line::after {
+    content: "Forer 4.26"; position: absolute; top: -2px; left: 5px;
+    font-size: 0.62rem; font-weight: 700; color: var(--dark); white-space: nowrap;
+  }
+  .hist .bar-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; }
+  .hist .bar {
+    width: 100%; background: var(--accent); border-radius: 3px 3px 0 0;
+    transition: height 0.6s ease; min-height: 2px;
+  }
+  .hist .bar.you-bucket { background: var(--secondary); }
+  .hist .xlab { font-size: 0.6rem; color: var(--muted); margin-top: 3px; }
+  .hist-legend { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.74rem; color: var(--muted); margin-top: 0.6rem; }
+  .hist-legend span::before { content: "■ "; }
+  .lg-dist::before { color: var(--accent); }
+  .lg-you::before { color: var(--secondary); }
+  .lg-forer { font-weight: 700; }
+  .lg-forer::before { content: "▏"; color: var(--dark); font-weight: 700; }
+
+  /* annotated statements */
+  .ann { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-top: 0.5rem; }
+  .ann-item { padding: 1rem 1.1rem; border-bottom: 1px solid var(--line); }
+  .ann-item:last-child { border-bottom: none; }
+  .ann-item .s-text { font-size: 0.95rem; color: var(--dark); font-weight: 600; margin-bottom: 0.45rem; }
+  .ann-item .s-cat {
+    display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; padding: 0.15rem 0.55rem; border-radius: 12px;
+    background: #f3ecf3; color: var(--primary); margin-bottom: 0.45rem;
+  }
+  .ann-item .s-why { font-size: 0.85rem; color: var(--muted); margin-bottom: 0; }
+
+  .callout {
+    border-left: 4px solid var(--secondary); background: #fdf3ef;
+    padding: 1.1rem 1.3rem; border-radius: 0 10px 10px 0; margin: 1.5rem 0;
+  }
+  .callout .ct { font-weight: 800; color: var(--dark); margin-bottom: 0.4rem; }
+  .callout p { margin-bottom: 0; font-size: 0.95rem; }
+
+  .sources { font-size: 0.82rem; color: var(--muted); }
+  .sources li { margin-bottom: 0.6rem; list-style: none; padding-left: 1rem; text-indent: -1rem; }
+  .note {
+    font-size: 0.8rem; color: var(--muted); background: #f4eff4;
+    border-radius: 8px; padding: 0.9rem 1.1rem; margin-top: 1rem;
+  }
+
+  footer {
+    text-align: center; padding: 2.5rem 1.5rem; color: var(--muted);
+    font-size: 0.82rem; border-top: 1px solid var(--line); margin-top: 2rem;
+  }
+  footer a { color: var(--primary); font-weight: 600; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    h2 { font-size: 1.5rem; }
+    .punch { font-size: 1.25rem; }
+    .step span.txt { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>The Barnum <span>Test</span></h1>
+    <p>datawithaplot.org · a demonstration of construct validity</p>
+  </div>
+  <a href="../index.html">← datawithaplot.org</a>
+</header>
+
+<div id="progress">
+  <div class="step active" data-step="0"><span class="num">1</span><span class="txt">Calibrate</span></div>
+  <div class="step" data-step="1"><span class="num">2</span><span class="txt">Your profile</span></div>
+  <div class="step" data-step="2"><span class="num">3</span><span class="txt">The reveal</span></div>
+</div>
+
+<div class="wrap">
+
+  <!-- ── SCREEN 0: Calibrate ─────────────────────────── -->
+  <section class="screen active" id="screen-0">
+    <div class="eyebrow">A 90-second experiment</div>
+    <h2>Let's build your personality profile.</h2>
+    <p class="lead">Answer a few quick questions and our model will generate a profile
+      tailored to you. Then you'll tell us how accurate it is. Be honest — no one
+      is grading you, and there are no wrong answers.</p>
+
+    <div class="card">
+      <div class="field">
+        <label>The month you were born</label>
+        <select id="in-month">
+          <option value="" selected disabled>Choose a month…</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Pick the word you're drawn to right now</label>
+        <div class="chips" id="in-word"></div>
+      </div>
+
+      <div class="field">
+        <label>In a room full of strangers, you're more likely to…</label>
+        <div class="chips" id="in-social"></div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="go-profile" disabled>Generate my profile →</button>
+    <p class="muted" style="font-size:0.8rem;margin-top:0.8rem;">Takes about a minute. Nothing you enter leaves your browser.</p>
+  </section>
+
+  <!-- ── SCREEN 1: Profile + rating ──────────────────── -->
+  <section class="screen" id="screen-1">
+    <div id="analyzing">
+      <div class="spinner"></div>
+      <div class="status" id="analyze-status">Analyzing your responses…</div>
+    </div>
+
+    <div id="profile-reveal" style="display:none;">
+      <div class="eyebrow">Your personalized profile</div>
+      <h2>Here's what we found.</h2>
+      <div class="profile-card">
+        <div class="seal">Profile generated for you</div>
+        <div id="profile-text"></div>
+      </div>
+
+      <div class="card rating-box">
+        <p style="font-weight:700;color:var(--dark);margin-bottom:0.2rem;">How accurate is this profile, for you?</p>
+        <div class="rating-val" id="rating-display">2.5<span>/5</span></div>
+        <input type="range" id="rating" min="0" max="5" step="0.5" value="2.5">
+        <div class="scale-ends"><span>0 — not me at all</span><span>5 — uncannily accurate</span></div>
+      </div>
+
+      <button class="btn btn-primary" id="go-reveal">See how accurate it really was →</button>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 2: Reveal ────────────────────────────── -->
+  <section class="screen" id="screen-2">
+    <div class="eyebrow">The reveal</div>
+    <div class="punch" id="reveal-punch"></div>
+
+    <p>Here's the twist: <b>every visitor to this page sees the exact same profile.</b>
+      It's a fixed set of statements, identical for everyone, written to feel personal.
+      And <span id="ignored-line"></span></p>
+
+    <div class="statrow">
+      <div class="stat you">
+        <div class="big" id="stat-you">–</div>
+        <div class="lab">Your accuracy rating</div>
+      </div>
+      <div class="stat">
+        <div class="big">4.26</div>
+        <div class="lab">Forer's students, 1949 (n=39)</div>
+      </div>
+    </div>
+
+    <h3>You're in good company</h3>
+    <p class="muted" style="font-size:0.9rem;">An illustrative distribution of accuracy ratings on a 0–5 scale.
+      Your rating is highlighted; the dark line marks Forer's 1949 average of 4.26.</p>
+    <div class="hist" id="hist"></div>
+    <div class="hist-legend">
+      <span class="lg-dist">Typical ratings (illustrative)</span>
+      <span class="lg-you">You</span>
+      <span class="lg-forer">Forer 1949 average</span>
+    </div>
+
+    <h3>Why this works — and why it matters</h3>
+    <p>This is the <b>Barnum effect</b> (or Forer effect): people rate vague, generic
+      descriptions as highly accurate when they believe the descriptions were made
+      just for them. In 1949 the psychologist Bertram Forer gave his students a
+      personality "test," then handed every single one of them the <em>same</em>
+      profile. They rated it 4.26 out of 5 for accuracy.</p>
+
+    <p>The profile you read is built from five quiet tricks. Here's the whole thing,
+      with the machinery exposed:</p>
+    <div class="ann" id="annotations"></div>
+
+    <div class="callout">
+      <div class="ct">This is a lesson about measurement, not horoscopes.</div>
+      <p>A profile that fits everyone equally well distinguishes no one — and a
+        measurement that can't tell people apart isn't measuring anything. That's
+        <b>construct validity</b>: the question of whether your instrument captures
+        the real thing it claims to. The next time a dashboard, an engagement score,
+        or a "data-driven" personality assessment feels impressively on-the-nose,
+        ask the Barnum question: <em>would it feel just as true if it were about
+        someone else?</em></p>
+    </div>
+
+    <h3>Sources &amp; honest notes</h3>
+    <ul class="sources" id="sources"></ul>
+    <div class="note" id="method-note"></div>
+
+    <div style="margin-top:2rem;display:flex;gap:0.8rem;flex-wrap:wrap;">
+      <button class="btn btn-outline" id="restart">↻ Take it again</button>
+      <a class="btn btn-secondary" href="../projects/index.html">See more projects →</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Part of <a href="../index.html">Data with a Plot</a> · built by Lindsey E. Wylie, J.D., Ph.D.<br>
+  Data and statements are editable in <code>barnum/data/barnum_statements.xlsx</code>.
+</footer>
+
+<script>
+// ── Data injected at build time from barnum/data/barnum_statements.xlsx ──────
+const STATEMENTS   = __STATEMENTS_DATA__;
+const RESEARCH     = __RESEARCH_DATA__;
+const DISTRIBUTION = __DISTRIBUTION_DATA__;
+
+const state = { month: "", word: "", social: "", rating: 2.5 };
+
+// ── Calibration inputs (pure theater — used by nothing) ─────────────────────
+const MONTHS = ["January","February","March","April","May","June","July",
+  "August","September","October","November","December"];
+const WORDS = ["Ocean","Mountain","Ember","Compass","Velvet","Static"];
+const SOCIAL = ["Find one person to talk to", "Work the whole room", "Hang back and observe"];
+
+const monthSel = document.getElementById("in-month");
+MONTHS.forEach(m => {
+  const o = document.createElement("option"); o.value = m; o.textContent = m;
+  monthSel.appendChild(o);
+});
+
+function buildChips(containerId, values, key) {
+  const c = document.getElementById(containerId);
+  values.forEach(v => {
+    const b = document.createElement("button");
+    b.className = "chip"; b.type = "button"; b.textContent = v;
+    b.onclick = () => {
+      [...c.children].forEach(x => x.classList.remove("selected"));
+      b.classList.add("selected");
+      state[key] = v;
+      checkReady();
+    };
+    c.appendChild(b);
+  });
+}
+buildChips("in-word", WORDS, "word");
+buildChips("in-social", SOCIAL, "social");
+
+monthSel.onchange = () => { state.month = monthSel.value; checkReady(); };
+
+function checkReady() {
+  document.getElementById("go-profile").disabled =
+    !(state.month && state.word && state.social);
+}
+
+// ── Screen navigation ───────────────────────────────────────────────────────
+function showScreen(n) {
+  document.querySelectorAll(".screen").forEach((s, i) => s.classList.toggle("active", i === n));
+  document.querySelectorAll(".step").forEach((s, i) => {
+    s.classList.toggle("active", i === n);
+    s.classList.toggle("done", i < n);
+  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ── Build the (identical-for-everyone) profile ──────────────────────────────
+function renderProfile() {
+  const sentences = STATEMENTS.map(s => s.statement);
+  const mid = Math.ceil(sentences.length / 2);
+  const p1 = sentences.slice(0, mid).join(" ");
+  const p2 = sentences.slice(mid).join(" ");
+  document.getElementById("profile-text").innerHTML =
+    `<p>${p1}</p><p>${p2}</p>`;
+}
+
+const ANALYZE_MSGS = [
+  "Analyzing your responses…",
+  "Cross-referencing personality dimensions…",
+  "Calibrating to your birth month…",
+  "Finalizing your unique profile…"
+];
+
+document.getElementById("go-profile").onclick = () => {
+  showScreen(1);
+  document.getElementById("analyzing").style.display = "";
+  document.getElementById("profile-reveal").style.display = "none";
+  const statusEl = document.getElementById("analyze-status");
+  let i = 0;
+  statusEl.textContent = ANALYZE_MSGS[0];
+  const iv = setInterval(() => {
+    i++;
+    if (i < ANALYZE_MSGS.length) statusEl.textContent = ANALYZE_MSGS[i];
+  }, 600);
+  setTimeout(() => {
+    clearInterval(iv);
+    document.getElementById("analyzing").style.display = "none";
+    document.getElementById("profile-reveal").style.display = "";
+    renderProfile();
+  }, 2500);
+};
+
+// ── Rating slider ───────────────────────────────────────────────────────────
+const ratingEl = document.getElementById("rating");
+ratingEl.oninput = () => {
+  state.rating = parseFloat(ratingEl.value);
+  document.getElementById("rating-display").innerHTML = state.rating + "<span>/5</span>";
+};
+
+// ── Reveal ──────────────────────────────────────────────────────────────────
+document.getElementById("go-reveal").onclick = () => {
+  buildReveal();
+  showScreen(2);
+};
+
+function buildReveal() {
+  const r = state.rating;
+  document.getElementById("stat-you").textContent = r.toFixed(1);
+
+  // Punch line keyed to how high they rated it
+  let punch;
+  if (r >= 4) punch = `You rated your profile <b>${r.toFixed(1)} out of 5</b>. It felt like it was written about you.`;
+  else if (r >= 2.5) punch = `You rated your profile <b>${r.toFixed(1)} out of 5</b> — a fair amount of it rang true.`;
+  else punch = `You rated your profile <b>${r.toFixed(1)} out of 5</b>. You were more skeptical than most — good instinct.`;
+  document.getElementById("reveal-punch").innerHTML = punch;
+
+  document.getElementById("ignored-line").innerHTML =
+    `your profile used your birth month (<b>${state.month}</b>), your word (<b>${state.word}</b>), ` +
+    `and your answer about the room for <b>exactly nothing.</b>`;
+
+  // Histogram
+  const maxCount = Math.max(...DISTRIBUTION.map(d => d.count));
+  const ratings = DISTRIBUTION.map(d => d.rating);
+  const minR = Math.min(...ratings), maxR = Math.max(...ratings);
+  const nB = DISTRIBUTION.length;
+  const hist = document.getElementById("hist");
+  hist.innerHTML = "";
+  DISTRIBUTION.forEach(d => {
+    const col = document.createElement("div");
+    col.className = "bar-col";
+    const bar = document.createElement("div");
+    bar.className = "bar";
+    // round the user's rating to the nearest 0.5 bucket to highlight it
+    if (Math.abs(d.rating - r) < 0.25) bar.classList.add("you-bucket");
+    bar.style.height = (d.count / maxCount * 100) + "%";
+    bar.title = `${d.rating}/5 — ${d.count}`;
+    const lab = document.createElement("div");
+    lab.className = "xlab";
+    lab.textContent = Number.isInteger(d.rating) ? d.rating : "";
+    col.appendChild(bar);
+    col.appendChild(lab);
+    hist.appendChild(col);
+  });
+
+  // Vertical marker at Forer's documented 1949 average
+  const forer = (RESEARCH.find(x => /original/i.test(x.study)) || {}).mean_accuracy;
+  if (forer != null && forer !== "") {
+    // each bucket occupies an equal slice; place the line at the bucket centre
+    const idx = (forer - minR) / ((maxR - minR) / (nB - 1));
+    const line = document.createElement("div");
+    line.className = "forer-line";
+    line.style.left = ((idx + 0.5) / nB * 100) + "%";
+    hist.appendChild(line);
+  }
+
+  // Annotated statements
+  const ann = document.getElementById("annotations");
+  ann.innerHTML = "";
+  STATEMENTS.forEach(s => {
+    const item = document.createElement("div");
+    item.className = "ann-item";
+    item.innerHTML =
+      `<div class="s-text">"${s.statement}"</div>` +
+      `<span class="s-cat">${s.category}</span>` +
+      `<p class="s-why">${s.why_it_works}</p>`;
+    ann.appendChild(item);
+  });
+
+  // Sources
+  const src = document.getElementById("sources");
+  src.innerHTML = "";
+  RESEARCH.forEach(rr => {
+    if (!rr.citation) return;
+    const li = document.createElement("li");
+    li.textContent = rr.citation;
+    src.appendChild(li);
+  });
+
+  document.getElementById("method-note").innerHTML =
+    "<b>Honest note:</b> the distribution above is <em>illustrative</em> — it shows the " +
+    "shape Forer-effect studies reliably report (a mean around 4.2 / 5), not ratings " +
+    "collected live from this page. The one hard number here is Forer's documented 1949 " +
+    "result. Nothing you enter is stored or sent anywhere.";
+}
+
+document.getElementById("restart").onclick = () => {
+  state.month = ""; state.word = ""; state.social = ""; state.rating = 2.5;
+  monthSel.selectedIndex = 0;
+  document.querySelectorAll(".chip").forEach(c => c.classList.remove("selected"));
+  ratingEl.value = 2.5;
+  document.getElementById("rating-display").innerHTML = "2.5<span>/5</span>";
+  checkReady();
+  showScreen(0);
+};
+</script>
+</body>
+</html>
