@@ -180,6 +180,12 @@
   .conf-M { background: var(--conf-m); }
   .conf-L { background: var(--conf-l); }
 
+  .tile-shape {
+    font-size: 0.8rem; line-height: 1;
+    text-shadow: 0 0 2px rgba(0,0,0,0.45);
+  }
+  .legend-shape { font-size: 0.72rem; color: var(--text); font-weight: 600; }
+
   .tile-symbol {
     font-size: 1.35rem;
     font-weight: 800;
@@ -499,11 +505,20 @@
   <span class="legend-item" style="background:var(--south)">South</span>
   <span class="legend-item" style="background:var(--midwest)">Midwest</span>
   <span class="legend-item" style="background:var(--bay)">Bay Area</span>
-  <span style="margin-left:0.8rem" class="legend-label">Confidence:</span>
+  <span style="margin-left:0.8rem" class="legend-label">Style:</span>
+  <span class="legend-shape">▲ Gangsta</span>
+  <span class="legend-shape">● Conscious</span>
+  <span class="legend-shape">★ Party/Pop</span>
+  <span class="legend-shape">◆ Experimental</span>
+  <span class="legend-shape">⬢ Abstract</span>
+  <span class="legend-shape">■ Political</span>
+  <span class="legend-shape">▼ Trap/Drill</span>
+  <span class="legend-shape">✚ Jazz-Rap</span>
+  <span style="margin-left:0.8rem" class="legend-label">Confidence (icon color):</span>
   <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-h)"></span> High</span>
   <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-m)"></span> Medium</span>
   <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-l)"></span> Low</span>
-  <span style="margin-left:0.8rem; color:var(--muted); font-size:0.7rem;">Score bar = Composite (1–10) · Click tile for full profile</span>
+  <span style="margin-left:0.8rem; color:var(--muted); font-size:0.7rem;">Color = region · Shape = style · Icon color = confidence · Click tile for profile</span>
 </div>
 
 <div id="stats-bar">
@@ -587,6 +602,13 @@ const REGION_COLORS = {
 };
 const SCORE_COLORS = ['Rhyme Density','Vocab Breadth','Storytelling','Metaphor/Imagery','Conceptual Depth'];
 const SCORE_HUES = ['#E98973','#8C6A8D','#7aaa8a','#5a9abf','#bf9a40'];
+
+// Style -> shape glyph (the added 4th dimension); shape is tinted by confidence.
+const STYLE_SHAPE = {
+  'Gangsta/Street': '▲', 'Conscious/Lyrical': '●', 'Party/Pop': '★', 'Experimental': '◆',
+  'Abstract': '⬢', 'Political': '■', 'Trap/Drill': '▼', 'Jazz-Rap': '✚', 'Conscious/Street': '●'
+};
+const CONF_COLOR = { 'H': '#2ecc71', 'M': '#f39c12', 'L': '#e74c3c' };
 
 // ─── LAYOUT BUILDER ────────────────────────────────────────────────────────
 function buildEraLayout(list) {
@@ -690,7 +712,7 @@ function render() {
     tile.innerHTML = `
       <div class="tile-top">
         <span class="tile-num">${artist['#']}</span>
-        <span class="tile-conf conf-${artist['Confidence']}" title="Confidence: ${artist['Confidence']}">${artist['Confidence']}</span>
+        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${artist['Style']} · ${artist['Confidence']}-confidence">${STYLE_SHAPE[artist['Style']]||'•'}</span>
       </div>
       <div class="tile-symbol">${artist['Symbol']}</div>
       <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
@@ -754,7 +776,7 @@ function renderCompounds() {
     tile.innerHTML = `
       <div class="tile-top">
         <span class="tile-num">${artist['#']}</span>
-        <span class="tile-conf conf-${artist['Confidence']}" title="Confidence: ${artist['Confidence']}">${artist['Confidence']}</span>
+        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${artist['Style']} · ${artist['Confidence']}-confidence">${STYLE_SHAPE[artist['Style']]||'•'}</span>
       </div>
       <div class="tile-symbol">${artist['Symbol']}</div>
       <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
