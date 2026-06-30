@@ -38,9 +38,90 @@ toc: false
     </a>
   </div>
 
+  <div class="project-card">
+    <span class="project-card-tag">Applied Research · Criminal Justice</span>
+    <p class="project-card-title">Counted Wrong: Emerging Adults &amp; the Crossroads Study</p>
+    <p class="project-card-desc">
+      A deep dive into longitudinal data from the Crossroads Study — following
+      young people through their first contact with the justice system — to ask a
+      question the categories were never built to answer: where does adolescence
+      end and adulthood begin? The legal system draws a hard line at 18; the
+      developmental data draws nothing of the kind. A project about what happens
+      when a measurement boundary gets treated as a biological one.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>Longitudinal data</span>
+      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Developmental measurement</span>
+      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Law &amp; policy</span>
+    </div>
+    <br>
+    <span class="essay-status">Coming soon</span>
+  </div>
+
+  <div class="project-card">
+    <span class="project-card-tag">Data Storytelling · Teaching Module</span>
+    <p class="project-card-title">The Barnum Test</p>
+    <p class="project-card-desc">
+      Does your personality type actually measure anything? An interactive look
+      at horoscopes, Myers-Briggs, and the quizzes that promise to explain you in
+      four letters — and a test of whether they capture a real construct or just
+      your willingness to agree with something flattering and vague. The cleanest
+      possible lesson in construct validity, disguised as a party trick.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>HTML / JS</span>
+      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Construct validity</span>
+      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
+    </div>
+    <br>
+    <span class="essay-status">Coming soon</span>
+  </div>
+
+  <div class="project-card">
+    <span class="project-card-tag">Data Storytelling · Teaching Module</span>
+    <p class="project-card-title">Five Stars and Nothing Else</p>
+    <p class="project-card-desc">
+      Everything online is rated 4.7. An investigation into ratings inflation
+      across the platforms we trust to tell us what's good — where a five-point
+      scale quietly collapses into a two-point one, and a number that looks
+      precise tells you almost nothing. It's your KPIs in disguise, which is
+      exactly why it lands with an executive audience.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>Measurement design</span>
+      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Uncertainty</span>
+      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
+    </div>
+    <br>
+    <span class="essay-status">Coming soon</span>
+  </div>
+
+  <div class="project-card">
+    <span class="project-card-tag">Data Storytelling · Teaching Module</span>
+    <p class="project-card-title">Whose Barbecue Wins? A Map of a Rigged Question</p>
+    <p class="project-card-desc">
+      Regional food rivalries are the most honest argument in America — and the
+      most statistically rigged. A map-driven look at how every "best of" ranking
+      is really an artifact of who you asked and where you stood when you asked
+      them. Sampling bias you can taste, built around a fight nobody stays neutral
+      in.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>Mapping</span>
+      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Sampling &amp; bias</span>
+      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
+    </div>
+    <br>
+    <span class="essay-status">Coming soon</span>
+  </div>
+
 </div>
 
 <p style="text-align: center; padding: 3rem 0 1rem; color: #6b7280; font-size: 0.9rem;">
-More projects coming soon.
+More projects in progress.
 </p>
 ```
