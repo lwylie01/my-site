@@ -8,10 +8,7 @@
 # the interaction logic live in barnum/app/_template.html; only the data comes
 # from Excel.
 
-suppressMessages({
-  library(readxl)
-  library(jsonlite)
-})
+suppressMessages(library(readxl))
 
 # Quarto runs pre-render scripts from the project root; allow running from the
 # barnum/ directory too. Anchor every path on where the data file is found.
@@ -29,11 +26,35 @@ read_sheet <- function(sheet) {
   df
 }
 
-statements   <- read_sheet("Statements")
-research      <- read_sheet("Research")
-distribution  <- read_sheet("Distribution")
+# Base-R JSON serialiser — no jsonlite dependency needed.
+# Produces an array of row objects matching jsonlite's dataframe="rows" output.
+as_json <- function(df) {
+  encode_val <- function(x) {
+    if (is.na(x))                           return("null")
+    if (is.numeric(x) || is.logical(x))    return(as.character(x))
+    s <- as.character(x)
+    s <- gsub("\\\\", "\\\\\\\\", s)
+    s <- gsub('"',    '\\\\"',    s)
+    s <- gsub("\n",   "\\\\n",    s)
+    s <- gsub("\r",   "\\\\r",    s)
+    paste0('"', s, '"')
+  }
+  row_obj <- function(i) {
+    pairs <- mapply(
+      function(nm, val) paste0('"', nm, '":', encode_val(val)),
+      names(df),
+      lapply(df, `[[`, i),
+      SIMPLIFY = TRUE
+    )
+    paste0("{", paste(pairs, collapse = ","), "}")
+  }
+  rows <- vapply(seq_len(nrow(df)), row_obj, character(1))
+  paste0("[", paste(rows, collapse = ","), "]")
+}
 
-as_json <- function(df) toJSON(df, dataframe = "rows", auto_unbox = TRUE, na = "null")
+statements   <- read_sheet("Statements")
+research     <- read_sheet("Research")
+distribution <- read_sheet("Distribution")
 
 template <- paste(readLines(template_path, warn = FALSE, encoding = "UTF-8"),
                   collapse = "\n")
