@@ -498,27 +498,27 @@
 </div>
 
 <div id="legend">
-  <span class="legend-label">Region:</span>
-  <span class="legend-item" style="background:var(--nyc)">NYC</span>
-  <span class="legend-item" style="background:var(--philly)">Philly</span>
-  <span class="legend-item" style="background:var(--la)">LA</span>
-  <span class="legend-item" style="background:var(--south)">South</span>
-  <span class="legend-item" style="background:var(--midwest)">Midwest</span>
-  <span class="legend-item" style="background:var(--bay)">Bay Area</span>
-  <span style="margin-left:0.8rem" class="legend-label">Style:</span>
-  <span class="legend-shape">▲ Gangsta</span>
-  <span class="legend-shape">● Conscious</span>
-  <span class="legend-shape">★ Party/Pop</span>
-  <span class="legend-shape">◆ Experimental</span>
-  <span class="legend-shape">⬢ Abstract</span>
-  <span class="legend-shape">■ Political</span>
-  <span class="legend-shape">▼ Trap/Drill</span>
-  <span class="legend-shape">✚ Jazz-Rap</span>
+  <span class="legend-label">Style:</span>
+  <span class="legend-item" style="background:#cf8079">Gangsta/Street</span>
+  <span class="legend-item" style="background:#6f9ec2">Conscious/Lyrical</span>
+  <span class="legend-item" style="background:#d4b15a">Party/Pop</span>
+  <span class="legend-item" style="background:#a085bd">Experimental</span>
+  <span class="legend-item" style="background:#5cab9c">Abstract</span>
+  <span class="legend-item" style="background:#86a866">Political</span>
+  <span class="legend-item" style="background:#dd9a5e">Trap/Drill</span>
+  <span class="legend-item" style="background:#c180a2">Jazz-Rap</span>
+  <span style="margin-left:0.8rem" class="legend-label">Region:</span>
+  <span class="legend-shape">● NYC</span>
+  <span class="legend-shape">◆ Philly</span>
+  <span class="legend-shape">★ LA</span>
+  <span class="legend-shape">▲ South</span>
+  <span class="legend-shape">■ Midwest</span>
+  <span class="legend-shape">⬢ Bay Area</span>
   <span style="margin-left:0.8rem" class="legend-label">Confidence (icon color):</span>
   <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-h)"></span> High</span>
   <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-m)"></span> Medium</span>
   <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-l)"></span> Low</span>
-  <span style="margin-left:0.8rem; color:var(--muted); font-size:0.7rem;">Color = region · Shape = style · Icon color = confidence · Click tile for profile</span>
+  <span style="margin-left:0.8rem; color:var(--muted); font-size:0.7rem;">Color = style · Shape = region · Icon color = confidence · Click tile for profile</span>
 </div>
 
 <div id="stats-bar">
@@ -603,10 +603,14 @@ const REGION_COLORS = {
 const SCORE_COLORS = ['Rhyme Density','Vocab Breadth','Storytelling','Metaphor/Imagery','Conceptual Depth'];
 const SCORE_HUES = ['#E98973','#8C6A8D','#7aaa8a','#5a9abf','#bf9a40'];
 
-// Style -> shape glyph (the added 4th dimension); shape is tinted by confidence.
-const STYLE_SHAPE = {
-  'Gangsta/Street': '▲', 'Conscious/Lyrical': '●', 'Party/Pop': '★', 'Experimental': '◆',
-  'Abstract': '⬢', 'Political': '■', 'Trap/Drill': '▼', 'Jazz-Rap': '✚', 'Conscious/Street': '●'
+// Color = style (semantic, muted to match the light palette); shape = region; shape tint = confidence.
+const STYLE_COLORS = {
+  'Gangsta/Street': '#cf8079', 'Conscious/Lyrical': '#6f9ec2', 'Party/Pop': '#d4b15a',
+  'Experimental': '#a085bd', 'Abstract': '#5cab9c', 'Political': '#86a866',
+  'Trap/Drill': '#dd9a5e', 'Jazz-Rap': '#c180a2', 'Conscious/Street': '#6f9ec2'
+};
+const REGION_SHAPE = {
+  'NYC': '●', 'Philly': '◆', 'LA': '★', 'South': '▲', 'Midwest': '■', 'Bay Area': '⬢'
 };
 const CONF_COLOR = { 'H': '#2ecc71', 'M': '#f39c12', 'L': '#e74c3c' };
 
@@ -700,7 +704,7 @@ function render() {
     tile.dataset.id = artist['#'];
     tile.dataset.idx = idx;
 
-    const color = REGION_COLORS[artist['Region']] || '#888';
+    const color = STYLE_COLORS[artist['Style']] || '#888';
     tile.style.background = color;
 
     const visible = passesFilter(artist, filters);
@@ -712,7 +716,7 @@ function render() {
     tile.innerHTML = `
       <div class="tile-top">
         <span class="tile-num">${artist['#']}</span>
-        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${artist['Style']} · ${artist['Confidence']}-confidence">${STYLE_SHAPE[artist['Style']]||'•'}</span>
+        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${artist['Region']} · ${artist['Style']} · ${artist['Confidence']}-confidence">${REGION_SHAPE[artist['Region']]||'•'}</span>
       </div>
       <div class="tile-symbol">${artist['Symbol']}</div>
       <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
@@ -769,14 +773,14 @@ function renderCompounds() {
     const tile = document.createElement('div');
     tile.className = 'tile';
     tile.dataset.id = artist['#'];
-    tile.style.background = REGION_COLORS[artist['Region']] || '#888';
+    tile.style.background = STYLE_COLORS[artist['Style']] || '#888';
     if(!passesFilter(artist, filters)) tile.classList.add('filtered-out');
 
     const score = artist['Composite Score'] || 0;
     tile.innerHTML = `
       <div class="tile-top">
         <span class="tile-num">${artist['#']}</span>
-        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${artist['Style']} · ${artist['Confidence']}-confidence">${STYLE_SHAPE[artist['Style']]||'•'}</span>
+        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${artist['Region']} · ${artist['Style']} · ${artist['Confidence']}-confidence">${REGION_SHAPE[artist['Region']]||'•'}</span>
       </div>
       <div class="tile-symbol">${artist['Symbol']}</div>
       <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
@@ -859,7 +863,7 @@ function openModal(id) {
 function populateModal(id) {
   const a = artists.find(x=>x['#']===id);
   if(!a) return;
-  const color = REGION_COLORS[a['Region']] || '#888';
+  const color = STYLE_COLORS[a['Style']] || '#888';
 
   document.getElementById('modal-symbol-box').textContent = a['Symbol'];
   document.getElementById('modal-symbol-box').style.background = color;
