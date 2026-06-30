@@ -19,7 +19,6 @@ out_path      <- file.path(base, "barnum_test.html")
 
 read_sheet <- function(sheet) {
   df <- read_excel(xlsx_path, sheet = sheet)
-  # Match a clean snapshot: blank (not null) for empty text fields.
   for (col in names(df)) {
     if (is.character(df[[col]])) df[[col]][is.na(df[[col]])] <- ""
   }
@@ -27,7 +26,6 @@ read_sheet <- function(sheet) {
 }
 
 # Base-R JSON serialiser — no jsonlite dependency needed.
-# Produces an array of row objects matching jsonlite's dataframe="rows" output.
 as_json <- function(df) {
   encode_val <- function(x) {
     if (is.na(x))                           return("null")
