@@ -1,32 +1,32 @@
 # Hip-Hop Periodic Table — Worklist
 
-`hiphop/data/hiphop_artists.xlsx`. **150 artists** (H 87 / M 51 / L 12).
+`hiphop/data/hiphop_artists.xlsx`. **147 acts** = 121 Elements (solo) + 26 Compounds (groups).
 
-## Accuracy phase — DONE
+## Scope rule
 
-- [x] Structural: composites, era typo, dedup (JID/Noname/Ghostface), scope cuts, renumber, dynamic counts
-- [x] Added Philly region
-- [x] L+M factual audit (regions/labels/eras/debuts web-verified)
-- [x] Score nits: Jadakiss 6.8→7.2, Immortal Technique concept 10→9
-- [x] Region rule adopted: follow label/scene base, not birthplace (e.g. Da Brat→South)
+- US scene + US label. Removed Drake/Stormzy/Iggy (foreign scenes).
+- Foreign-BORN but US-scene legends KEPT: Slick Rick, MF DOOM, Doug E. Fresh, Immortal Technique.
 
-## Expansion — batch 1 DONE (+18 → 150)
+## Done
 
-- [x] Philly: Black Thought, Beanie Sigel, Lil Uzi Vert, Freeway, Eve
-- [x] Bay Area: Too $hort, Del the Funky Homosapien, Mac Dre
-- [x] NYC legends: Kool G Rap, Redman, Method Man, EPMD
-- [x] LA: The Game, Ice-T, Nipsey Hussle, DJ Quik
-- [x] Midwest/South: Royce da 5'9", Da Brat
+- [x] Accuracy phase (all L/M factual + score nits, web-verified)
+- [x] Dedup (JID/Noname/Ghostface), Philly region, region=label/scene rule
+- [x] Expansion batch 1 (+18)
+- [x] Removed International/UK artists + empty legend/filter chips
+- [x] Compounds feature: `Type` column (Element/Compound); template renders a
+      second 'Compounds' periodic table below the main one (26 groups)
 
-## Region distribution
+## Element region distribution
 
 | Region | Count |
 |---|---|
-| NYC | 62 |
-| South | 36 |
-| LA | 18 |
-| Midwest | 17 |
-| Philly | 9 |
+| NYC | 47 |
+| South | 30 |
+| Midwest | 16 |
+| LA | 15 |
+| Philly | 8 |
 | Bay Area | 5 |
-| International | 2 |
-| UK | 1 |
+
+## Compounds (26)
+
+A Tribe Called Quest, Beastie Boys, Brand Nubian, City Girls, De La Soul, Digable Planets, EPMD, Freestyle Fellowship, Gang Starr, Leaders of the New School, Migos, Mobb Deep, N.W.A, OutKast, Pete Rock & CL Smooth, Pharcyde, Public Enemy, Run The Jewels, Run-DMC, Sugarhill Gang, The Geto Boys, The Roots, Three 6 Mafia, UGK, Wu-Tang Clan, X-Clan
