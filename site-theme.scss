@@ -61,7 +61,7 @@ hr {
 }
 
 .navbar .navbar-brand img {
-  height: 36px;
+  height: 50px;
   width: auto;
 }
 
@@ -161,22 +161,18 @@ hr {
   z-index: 1;
 }
 
-.hero-name {
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 0.4rem;
-  color: $secondary;
-  background: linear-gradient(90deg, #8C6A8D 0%, #E98973 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.hero-logo {
+  display: block;
+  width: clamp(260px, 40vw, 400px);
+  height: auto;
+  margin: 0 0 1rem -0.5rem;
+  filter: drop-shadow(0 6px 18px rgba(140, 106, 141, 0.18));
 }
 
 .hero-tagline {
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: lighten($dark, 12%);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: $secondary;
   margin-bottom: 1rem;
 }
 
@@ -327,6 +323,18 @@ hr {
   font-size: 0.85rem;
   color: $secondary;
   letter-spacing: 0.04em;
+}
+
+.bio-avatar {
+  width: 140px;
+  height: 140px;
+  min-width: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 52% 16%;
+  border: 4px solid #ffffff;
+  box-shadow: 0 0 0 2px color-mix(in srgb, #8C6A8D 35%, #ffffff),
+              0 8px 22px rgba(60, 60, 60, 0.18);
 }
 
 .credential-badges {

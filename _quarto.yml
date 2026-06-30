@@ -19,7 +19,7 @@ project:
 website:
   title: "Data with a Plot"
   description: "Lindsey E. Wylie, J.D., Ph.D."
-  favicon: favicon.png
+  favicon: favicon.svg
   site-url: https://datawithaplot.org
 
   navbar:
