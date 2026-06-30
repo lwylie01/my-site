@@ -15,7 +15,8 @@ editor:
       <p class="hero-tagline">Lindsey E. Wylie, J.D., Ph.D.</p>
       <p class="hero-intro">
         Rigorous analytic thinking, made accessible — through unexpected
-        datasets, practical methodology, and visualizations that actually stick.
+        datasets, practical methodology, and visualizations built to be
+        understood and remembered.
       </p>
     </div>
   </div>
@@ -42,8 +43,8 @@ editor:
     </div>
 
     <p>I'm particularly interested in the unintended consequences of legal
-    decisions and interventions — the places where a well-meaning rule meets a
-    messy world.</p>
+    decisions and interventions — the places where a well-intentioned rule
+    meets a complicated reality.</p>
 
     <a class="cv-download" href="CV/Wylie%20CV%208.2025.pdf" target="_blank" rel="noopener">
       <span class="cv-download-icon">↓</span> Download CV <span class="cv-download-ext">PDF</span>
@@ -72,8 +73,7 @@ editor:
     <p class="focus-card-label">Program Evaluation</p>
     <p class="focus-card-text">
       Process and outcome evaluations of courts, diversion, and pretrial
-      programs — measuring whether an intervention actually does what it
-      promises.
+      programs — measuring whether an intervention performs as intended.
     </p>
   </div>
 
@@ -89,7 +89,7 @@ editor:
     <p class="focus-card-label">Storytelling with Data</p>
     <p class="focus-card-text">
       Executive and graduate teaching that turns rigorous analysis into
-      something a judge, funder, or community will actually read and remember —
+      something a judge, funder, or community will read and remember —
       taught on datasets with documented flaws.
     </p>
   </div>
@@ -108,8 +108,8 @@ editor:
     <p class="project-card-title">A Periodic Table of Hip-Hop Artists</p>
     <p class="project-card-desc">
       A dataset built to teach measurement validity, sampling bias, uncertainty
-      communication, and visualization design — using a subject matter
-      executives actually argue about.
+      communication, and visualization design — using a subject that provokes
+      genuine debate.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>

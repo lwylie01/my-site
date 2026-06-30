@@ -386,7 +386,7 @@ reactable(
 ## Row {height="15%"}
 
 ::: {.callout-note title="Teaching Prompt — The Aggregation Problem"}
-**What does averaging destroy?** Rakim (Rhyme Density 10, composite 8.8) and Scarface (Storytelling 10, composite 8.2) land within half a point of each other on the composite — yet their dimension profiles look nothing alike. Is that near-equivalence meaningful, or does the composite erase the most important information? When does aggregation help, and when does it lie?
+**What does averaging destroy?** Rakim (Rhyme Density 10, composite 8.8) and Scarface (Storytelling 10, composite 8.2) land within half a point of each other on the composite — yet their dimension profiles look nothing alike. Is that near-equivalence meaningful, or does the composite erase the most important information? When does aggregation help, and when does it mislead?
 :::
 
 ## Row {height="45%"}
