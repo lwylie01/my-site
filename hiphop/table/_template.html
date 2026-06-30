@@ -571,24 +571,29 @@ const REGION_COLORS = {
 const SCORE_COLORS = ['Rhyme Density','Vocab Breadth','Storytelling','Metaphor/Imagery','Conceptual Depth'];
 const SCORE_HUES = ['#E98973','#8C6A8D','#7aaa8a','#5a9abf','#bf9a40'];
 
+// Backfill Composite Score from the five dimensions for any rows where it is
+// missing (the source spreadsheet leaves this column blank — it is derived).
+artists.forEach(a => {
+  if (a['Composite Score'] === null || a['Composite Score'] === undefined || a['Composite Score'] === '') {
+    a['Composite Score'] = parseFloat(
+      (SCORE_COLORS.reduce((s, d) => s + (parseFloat(a[d]) || 0), 0) / SCORE_COLORS.length).toFixed(1)
+    );
+  }
+});
+
 // ─── LAYOUT BUILDER ────────────────────────────────────────────────────────
 function buildDefaultLayout() {
-  // Periodic-table-inspired 18-column layout
-  // We'll arrange by era rows, grouped loosely
-  // Row 1: Old School (18 artists ids 1-18, pad if needed)
-  // Row 2: Golden Age (25 artists ids 19-43)
-  // Row 3: Late 90s (19 artists ids 44-62)
-  // Row 4: 2000s (23 artists ids 62-84)
-  // Row 5: 2010s (26 artists ids 85-109)
-  // Row 6: 2020s (30 artists ids 110-139)
-  // Each row is 18 wide; label col 1 + 17 tiles
+  // Periodic-table-inspired layout, grouped into era rows sized dynamically
+  // from the data:
+  //   Old School 18 · Golden Age 25 · Late 90s 18 · 2000s 24 · 2010s 25 · 2020s 29
+  // Each row is 18 wide (1 label col + 17 tiles); eras with >17 artists wrap.
   const COLS = 18;
   const rows = [];
 
   const byEra = {
     'Old School': artists.filter(a=>a['Era']==='Old School').map(a=>a['#']),
     'Golden Age': artists.filter(a=>a['Era']==='Golden Age').map(a=>a['#']),
-    'Late 90s': artists.filter(a=>a['Era']==='Late 90s'||a['Era']==='Late 99s').map(a=>a['#']),
+    'Late 90s': artists.filter(a=>a['Era']==='Late 90s').map(a=>a['#']),
     '2000s': artists.filter(a=>a['Era']==='2000s').map(a=>a['#']),
     '2010s': artists.filter(a=>a['Era']==='2010s').map(a=>a['#']),
     '2020s': artists.filter(a=>a['Era']==='2020s').map(a=>a['#']),
