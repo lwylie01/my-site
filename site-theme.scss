@@ -106,29 +106,87 @@ hr {
   font-weight: 600;
   color: $dark;
   margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid $light;
+  padding-bottom: 0.6rem;
+  position: relative;
+}
+
+.section-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 64px;
+  height: 3px;
+  background: linear-gradient(90deg, #8C6A8D 0%, #E98973 100%);
+  border-radius: 3px;
 }
 
 /* HERO */
 
 .hero-section {
   padding: 5rem 1rem 4rem;
+  background: linear-gradient(135deg, #FBF5F3 0%, #F3ECF3 55%, #F8F7F4 100%);
+  border-radius: 0 0 28px 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft accent glows for warmth */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: -90px;
+  right: -70px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(233, 137, 115, 0.30), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  bottom: -110px;
+  left: -50px;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(140, 106, 141, 0.22), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-section .row {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-name {
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
   font-weight: 700;
   line-height: 1.1;
-  color: $dark;
   margin-bottom: 0.4rem;
+  color: $secondary;
+  background: linear-gradient(90deg, #8C6A8D 0%, #E98973 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-tagline {
   font-size: 1.05rem;
+  font-weight: 500;
+  color: lighten($dark, 12%);
+  margin-bottom: 1rem;
+}
+
+.hero-intro {
+  font-size: 1.1rem;
   font-weight: 400;
-  color: lighten($dark, 20%);
-  margin-bottom: 1.75rem;
+  color: lighten($dark, 15%);
+  max-width: 560px;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
 }
 
 .hero-pills {
@@ -288,32 +346,83 @@ hr {
   color: #5a5a6e;
 }
 
-/* COLUMNS */
-.columns {
-  display: column;
-  column-width: 33%;
-  background: #ffffff;
-  border: 2px solid $secondary;
-  border-radius: 1px;
-  padding: 1.0rem;
-  color: $dark;
-  text-decoration: none;
+/* WHAT I DO — FOCUS CARDS */
+
+.focus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.focus-card {
+  position: relative;
+  background: color-mix(in srgb, var(--accent, #8C6A8D) 6%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--accent, #8C6A8D) 22%, #ffffff);
+  border-top: 4px solid var(--accent, #8C6A8D);
+  border-radius: 12px;
+  padding: 1.4rem 1.35rem;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
   &:hover {
-    box-shadow: 0 4px 20px rgba(#3C3C3C, 0.08);
-    transform: translateY(-2px);
-    color: $dark;
+    box-shadow: 0 6px 22px color-mix(in srgb, var(--accent, #8C6A8D) 22%, transparent);
+    transform: translateY(-3px);
   }
 }
 
-.columns-title {
-  font-size: 1rem;
-  font-weight: 400;
-  color: $dark;
-  max-width: 520px;
-  line-height: 1.6;
+.focus-card-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--accent, #8C6A8D);
+  margin-bottom: 0.55rem;
+}
+
+.focus-card-text {
+  font-size: 0.9rem;
+  color: #4f4f5e;
+  line-height: 1.55;
   margin: 0;
 }
+
+/* CV DOWNLOAD BUTTON */
+
+.cv-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  background: $secondary;
+  color: #ffffff !important;
+  border-radius: 100px;
+  padding: 0.5rem 1.15rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  &:hover {
+    background: darken($secondary, 8%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(140, 106, 141, 0.35);
+    color: #ffffff !important;
+  }
+}
+
+.cv-download-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.cv-download-ext {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+}
+
+.bio-body { flex: 1; }
 
 /* PAGE HEADER */
 

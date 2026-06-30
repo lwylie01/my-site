@@ -13,6 +13,7 @@ project:
     - hiphop/data/hiphop_artists.xlsx
     - barnum/barnum_test.html
     - barnum/data/barnum_statements.xlsx
+    - "CV/Wylie CV 8.2025.pdf"
     - CNAME
 
 website:
