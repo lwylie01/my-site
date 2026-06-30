@@ -9,6 +9,9 @@ hiphop/hiphop_periodic_table.html
 # Generated Barnum Test page (built from Excel by barnum/build_barnum.R on render)
 barnum/barnum_test.html
 
+# Internal/private working files — keep off the public site repo
+CV/Wylie_Capacity_Dashboard.qmd
+
 # RStudio / R session files
 .Rproj.user/
 .Rhistory
