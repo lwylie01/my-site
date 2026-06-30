@@ -416,7 +416,7 @@
 <header>
   <div>
     <h1>Periodic Table of <span>Hip-Hop Artists</span></h1>
-    <p>datawithaplot.org — 139 Artists · Five-Dimension Lyrical Profiles · Drag to Rearrange</p>
+    <p>datawithaplot.org — <span id="subtitle-count">139</span> Artists · Five-Dimension Lyrical Profiles · Drag to Rearrange</p>
   </div>
   <div class="header-right">
     <button class="btn btn-outline btn-sm" onclick="toggleEditMode()">✏️ Edit Mode: <span id="edit-mode-label">Off</span></button>
@@ -499,7 +499,7 @@
 </div>
 
 <div id="stats-bar">
-  <span>Showing <strong id="stat-visible">139</strong> of <strong>139</strong> artists</span>
+  <span>Showing <strong id="stat-visible">139</strong> of <strong id="stat-total">139</strong> artists</span>
   <span>Avg composite: <strong id="stat-avg">—</strong></span>
   <span>Top scorer: <strong id="stat-top">—</strong></span>
 </div>
@@ -739,6 +739,8 @@ function clearFilters() {
 function updateStats(filters) {
   const visible = artists.filter(a => passesFilter(a, filters));
   document.getElementById('stat-visible').textContent = visible.length;
+  document.getElementById('stat-total').textContent = artists.length;
+  document.getElementById('subtitle-count').textContent = artists.length;
   if(visible.length > 0) {
     const avg = (visible.reduce((s,a)=>s+(a['Composite Score']||0),0)/visible.length).toFixed(1);
     document.getElementById('stat-avg').textContent = avg;
