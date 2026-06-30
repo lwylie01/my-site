@@ -23,7 +23,7 @@ website:
   site-url: https://datawithaplot.org
 
   navbar:
-    logo: pics/logoW.png     
+    logo: pics/logoW-clear.png
     logo-alt: "Data with a Plot"
     title: false
     left:
