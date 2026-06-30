@@ -28,7 +28,7 @@ editor:
 
 ```{=html}
 <div class="bio-block">
-  <img class="bio-avatar" src="pics/Headshot1.jpg" alt="Lindsey E. Wylie" />
+  <span class="bio-avatar"><img src="pics/Headshot1.jpg" alt="Lindsey E. Wylie" /></span>
   <div class="bio-body">
     <p>My work explores the intersection of law, data, and decision-making —
     with a throughline of measurement: how we decide to count people and

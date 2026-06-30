@@ -21,8 +21,8 @@ $link-color:       $secondary;
 $link-hover-color: darken($secondary, 12%);
 $border-radius:    6px;
 
-$navbar-bg: $dark;
-$navbar-fg: #ffffff;
+$navbar-bg: #ffffff;
+$navbar-fg: $dark;
 $navbar-hl: $secondary;
 
 /*-- scss:rules --*/
@@ -55,33 +55,47 @@ hr {
 /* NAVBAR */
 
 .navbar {
-  background-color: $dark !important;
-  border-bottom: 3px solid $secondary;
-  padding: 0.65rem 1.5rem;
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #ece7e3;
+  box-shadow: 0 4px 16px rgba(140, 106, 141, 0.06);
+  padding: 0.4rem 1.5rem;
+  position: relative;
+}
+
+/* gradient accent line under the navbar (echoes the section headings) */
+.navbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #8C6A8D 0%, #E98973 100%);
 }
 
 .navbar .navbar-brand img {
-  height: 50px;
+  height: 46px;
   width: auto;
 }
 
 .navbar-brand {
   font-weight: 700;
   font-size: 1.1rem;
-  color: #ffffff !important;
+  color: $dark !important;
 }
 
 .navbar-nav .nav-link {
   font-weight: 500;
-  font-size: 0.9rem;
-  color: rgba(#ffffff, 0.85) !important;
-  padding: 0.4rem 0.75rem;
+  font-size: 0.92rem;
+  color: rgba($dark, 0.78) !important;
+  padding: 0.4rem 0.8rem;
   transition: color 0.2s ease;
-  &:hover, &.active { color: #ffffff !important; }
+  &:hover, &.active { color: $secondary !important; }
 }
 
 .navbar-nav .nav-link i.bi {
-  font-size: 1rem;
+  font-size: 1.05rem;
+  color: rgba($dark, 0.7);
 }
 
 /* FOOTER */
@@ -124,7 +138,7 @@ hr {
 /* HERO */
 
 .hero-section {
-  padding: 5rem 1rem 4rem;
+  padding: 3.25rem 1rem 3rem;
   background: linear-gradient(135deg, #FBF5F3 0%, #F3ECF3 55%, #F8F7F4 100%);
   border-radius: 0 0 28px 28px;
   position: relative;
@@ -163,16 +177,17 @@ hr {
 
 .hero-logo {
   display: block;
-  width: clamp(180px, 24vw, 260px);
+  width: clamp(150px, 19vw, 190px);
   height: auto;
-  margin: 0 0 0.75rem -0.4rem;
+  margin: 0 0 0.6rem -0.2rem;
 }
 
 .hero-tagline {
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-size: clamp(1.6rem, 3.4vw, 2.1rem);
+  font-weight: 700;
   color: $secondary;
-  margin-bottom: 1rem;
+  line-height: 1.15;
+  margin-bottom: 0.85rem;
 }
 
 .hero-intro {
@@ -329,11 +344,18 @@ hr {
   height: 140px;
   min-width: 140px;
   border-radius: 50%;
-  object-fit: cover;
-  object-position: 52% 16%;
+  overflow: hidden;
   border: 4px solid #ffffff;
   box-shadow: 0 0 0 2px color-mix(in srgb, #8C6A8D 35%, #ffffff),
               0 8px 22px rgba(60, 60, 60, 0.18);
+}
+
+.bio-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 16%;
+  transform: scale(1.06) translateX(-4px);
 }
 
 .credential-badges {
