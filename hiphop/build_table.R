@@ -1,11 +1,8 @@
 # build_table.R ───────────────────────────────────────────────────────────────
 # Generates hiphop/hiphop_periodic_table.html from the editable Excel file.
 #
-# hiphop/data/hiphop_artists.xlsx is the single source of truth. It has two
-# sheets: "Artist Database" (the data this script reads) and "Confidence Guide"
-# (reference-only: scoring methodology, known biases, verification sources).
-# To update the periodic table: edit the "Artist Database" sheet, then
-# re-publish. This script is wired into
+# To update the periodic table: edit hiphop/data/hiphop_artists.xlsx (the
+# "Artist Database" sheet), then re-publish. This script is wired into
 # _quarto.yml as a pre-render step, so `quarto render` / `quarto publish`
 # regenerates the table automatically. The branded look/feel lives in
 # hiphop/table/_template.html; only the data comes from Excel.
