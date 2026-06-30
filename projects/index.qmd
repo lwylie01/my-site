@@ -20,7 +20,7 @@ toc: false
     <span class="project-card-tag">Data Storytelling · Teaching Module</span>
     <p class="project-card-title">Hip-Hop Periodic Table</p>
     <p class="project-card-desc">
-      A fully documented dataset of 139 hip-hop artists scored across five lyricism
+      A fully documented dataset of 147 hip-hop artists scored across five lyricism
       dimensions, enriched with Billboard chart data, award counts, career metrics,
       and a custom atomic weight formula. Built to teach measurement validity,
       sampling bias, composite scoring, and uncertainty communication — using a
