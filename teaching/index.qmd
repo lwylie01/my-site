@@ -18,9 +18,9 @@ toc: false
 
 Good data teaching uses datasets with documented flaws, not cleaned-up
 pedagogical examples. Real data has sampling gaps, contested measurements,
-uncertain scores, and design choices someone made on a Thursday afternoon
-without writing them down. That's what professionals actually encounter —
-and that's what I build teaching materials around.
+uncertain scores, and design choices that someone made and never documented.
+That is what professionals encounter in practice — and what I build teaching
+materials around.
 
 The six concepts I return to most often:
 
@@ -55,10 +55,11 @@ bibliography, and facilitator guide.
 - Facilitator README — session structure, discussion questions by tab
 
 ::: {.callout-tip title="Session design note"}
-I open this module by asking executives to rate their favorite rapper on
-lyricism — 1 to 10, right now, no thinking. After they do, I ask what they
-just measured. That question takes 45 minutes to properly answer, and by
-the end the room is arguing about construct validity using their own KPIs.
+I open this module by asking executives to rate a favorite artist's
+lyricism on a 1–10 scale — immediately, without deliberation. I then ask
+what, precisely, they just measured. Answering that properly takes 45
+minutes, and by the end the room is debating construct validity in terms of
+its own KPIs.
 :::
 
 ---
@@ -70,7 +71,7 @@ the end the room is arguing about construct validity using their own KPIs.
 **Measurement and metrics**
 
 - Building defensible KPIs from first principles
-- When composite scores help and when they lie
+- When composite scores help and when they mislead
 - Communicating confidence and uncertainty to non-technical stakeholders
 - The politics of how organizational metrics get designed
 :::

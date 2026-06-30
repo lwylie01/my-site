@@ -24,7 +24,7 @@ toc: false
       dimensions, enriched with Billboard chart data, award counts, career metrics,
       and a custom atomic weight formula. Built to teach measurement validity,
       sampling bias, composite scoring, and uncertainty communication — using a
-      subject matter executives actually argue about.
+      subject that provokes genuine debate.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
@@ -42,11 +42,10 @@ toc: false
     <span class="project-card-tag">Data Storytelling · Teaching Module</span>
     <p class="project-card-title">The Barnum Test</p>
     <p class="project-card-desc">
-      Does your personality type actually measure anything? A 90-second interactive
-      experiment that builds you a "personalized" profile, asks how accurate it
-      feels — then reveals that everyone gets the identical profile, and that your
-      answers were used for nothing. The cleanest possible lesson in construct
-      validity, disguised as a party trick.
+      Does your personality type measure anything at all? A 90-second interactive
+      exercise builds a "personalized" profile, asks how accurate it feels, then
+      reveals that every participant receives the identical profile — and that the
+      answers were never used. A clear, memorable lesson in construct validity.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
@@ -64,7 +63,7 @@ toc: false
     <span class="project-card-tag">Applied Research · Criminal Justice</span>
     <p class="project-card-title">Counted Wrong: Emerging Adults &amp; the Crossroads Study</p>
     <p class="project-card-desc">
-      A deep dive into longitudinal data from the Crossroads Study — following
+      A close analysis of longitudinal data from the Crossroads Study — following
       young people through their first contact with the justice system — to ask a
       question the categories were never built to answer: where does adolescence
       end and adulthood begin? The legal system draws a hard line at 18; the
@@ -87,7 +86,7 @@ toc: false
     <p class="project-card-desc">
       Nearly every state and the federal system has a compassionate or medical
       release law on the books — a legal mechanism to release people who are dying,
-      gravely ill, or simply too old to pose a risk. Almost none of them get used.
+      gravely ill, or simply too old to pose a risk. Almost none are used.
       Drawing on a fifty-state review and the data behind <em>Aging and the Criminal
       Legal System</em> (APA, 2025), this project measures the distance between a
       law's <em>presence</em> and its <em>utilization</em> — and asks what an unused
@@ -107,11 +106,12 @@ toc: false
     <span class="project-card-tag">Data Storytelling · Teaching Module</span>
     <p class="project-card-title">How Old Is Old?</p>
     <p class="project-card-desc">
-      A 60-second experiment: drag a slider to mark the age where someone becomes
-      "old," "a senior," "too old to drive," "too old to start over." Then watch how
-      little anyone agrees — and how the law quietly fixes hard numbers (65, 50, 18)
-      onto a boundary that doesn't exist in nature. Operationalization made personal.
-      It's <em>Counted Wrong</em> at the other end of the lifespan.
+      A 60-second exercise: set a slider to the age at which someone becomes
+      "old," "a senior," "too old to drive," or "too old to start over." The
+      responses reveal how little consensus exists — and how the law fixes hard
+      numbers (18, 50, 65) onto a boundary with no basis in nature. A study in
+      operationalization, and a companion to <em>Counted Wrong</em> at the other
+      end of the lifespan.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
@@ -127,11 +127,11 @@ toc: false
     <span class="project-card-tag">Data Storytelling · Teaching Module</span>
     <p class="project-card-title">Trust Your Gut?</p>
     <p class="project-card-desc">
-      Read a handful of real-looking case files and predict who comes back to court
-      and who doesn't. Then get scored against a dead-simple statistical rule that
-      uses two variables and beats you anyway. The most uncomfortable lesson in
-      applied prediction — that expert intuition reliably loses to a checklist —
-      delivered as a game you'll want to replay.
+      Review a set of realistic case files and predict who returns to court and
+      who does not. Your accuracy is then scored against a simple two-variable
+      statistical rule that consistently outperforms the reader — a pointed
+      demonstration in applied prediction that expert intuition routinely loses
+      to a checklist.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
