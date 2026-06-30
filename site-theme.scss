@@ -163,10 +163,9 @@ hr {
 
 .hero-logo {
   display: block;
-  width: clamp(260px, 40vw, 400px);
+  width: clamp(180px, 24vw, 260px);
   height: auto;
-  margin: 0 0 1rem -0.5rem;
-  filter: drop-shadow(0 6px 18px rgba(140, 106, 141, 0.18));
+  margin: 0 0 0.75rem -0.4rem;
 }
 
 .hero-tagline {

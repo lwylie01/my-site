@@ -11,7 +11,7 @@ editor:
 <div class="hero-section container">
   <div class="row align-items-center">
     <div class="col-md-9">
-      <img class="hero-logo" src="pics/logoW.png" alt="Data with a Plot — Lindsey E. Wylie, J.D., Ph.D." />
+      <img class="hero-logo" src="pics/logoW-clear.png" alt="Data with a Plot — Lindsey E. Wylie, J.D., Ph.D." />
       <p class="hero-tagline">Lindsey E. Wylie, J.D., Ph.D.</p>
       <p class="hero-intro">
         Rigorous analytic thinking, made accessible — through unexpected
