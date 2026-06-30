@@ -4,7 +4,7 @@
 
 ## Visual encoding (current)
 
-- Color = region · Row = era · **Shape = style** · Shape color = confidence · Number+bar = composite
+- **Color = style** (soft semantic hues) · Row = era · **Shape = region** · Shape color = confidence · Number+bar = composite
 
 ## Done
 
@@ -14,9 +14,9 @@
 - [x] Compounds table (26 groups) vs Elements (121 solo)
 - [x] Style-as-shape glyph (8 shapes), merged Conscious/Street into Conscious/Lyrical
 
-## Style shapes
+## Region shapes
 
-▲ Gangsta/Street · ● Conscious/Lyrical · ★ Party/Pop · ◆ Experimental · ⬢ Abstract · ■ Political · ▼ Trap/Drill · ✚ Jazz-Rap
+● NYC · ◆ Philly · ★ LA · ▲ South · ■ Midwest · ⬢ Bay Area
 
 ## Style distribution
 
