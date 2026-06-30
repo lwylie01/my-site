@@ -1,39 +1,31 @@
 # Hip-Hop Periodic Table — Accuracy Worklist
 
-Working checklist for `hiphop/data/hiphop_artists.xlsx` (Artist Database). Scores are Rhyme/Vocab/Story/Metaphor/Concept. **134 artists.**
+`hiphop/data/hiphop_artists.xlsx` (Artist Database). Scores R/V/S/M/C. **133 artists.**
 
-## Structural fixes — DONE
+## Structural & L-flagged factual — DONE
 
-- [x] Composite scores, era typo, AZ/Ghostface/Yaya Bey relabels
-- [x] Merge JID & Noname duplicates; remove Kali Uchis / J Balvin / Bad Bunny
-- [x] Renumber 1..N; dynamic artist counts in template
+- [x] Composites, era typo, dedup (JID/Noname), scope cuts, renumber, dynamic counts
+- [x] L-flagged factual fixes (Schoolly D, Kenny Mason, Zack Fox, Mavi)
+- [x] Added **Philly** region → Schoolly D, Jedi Mind Tricks
+- [x] Dropped Yaya Bey (R&B-leaning, scope)
 
-## L-flagged audit — factual pass DONE
-
-- [x] Schoolly D region South→NYC (Philadelphia/East Coast)
-- [x] Kenny Mason label →RCA; Zack Fox name+region (Atlanta); Mavi label →Secretly Canadian; Yaya Bey label →Big Dada
-- [x] Verified accurate (no change): J.J. Fad, Dana Dane, Jedi Mind Tricks, Trae Tha Truth, GloRilla, City Girls
-- [ ] OPEN: 'Philly problem' (Schoolly D, Jedi Mind Tricks lumped into NYC) — add region or keep?
-- [ ] OPEN: Yaya Bey 7.6 may be generous (R&B-leaning) — trim/keep?
-
-## L-flagged (10) — remaining score-confidence review
+## L-flagged (9) — score-confidence review (factual done)
 
 - [ ] **Dana Dane** (DL, #18) — NYC · Old School · comp 5.8 · 6/6/7/6/4
 - [ ] **J.J. Fad** (JJ, #14) — LA · Old School · comp 3.6 · 4/4/3/4/3
-- [ ] **Jedi Mind Tricks** (JD, #59) — NYC · Late 90s · comp 7.4 · 7/8/7/7/8
+- [ ] **Jedi Mind Tricks** (JD, #59) — Philly · Late 90s · comp 7.4 · 7/8/7/7/8
 - [ ] **Trae Tha Truth** (TL2, #79) — South · 2000s · comp 6.4 · 6/7/7/6/6
-- [ ] **Yaya Bey** (YN, #134) — NYC · 2020s · comp 7.6 · 7/8/7/8/8
 - [ ] **Mavi** (MF2, #129) — South · 2020s · comp 7.2 · 7/8/7/7/7
 - [ ] **Kenny Mason** (KD, #119) — South · 2020s · comp 7 · 7/7/7/7/7
 - [ ] **Zack Fox** (ZE, #125) — South · 2020s · comp 6.4 · 6/7/6/7/6
 - [ ] **GloRilla** (GG2, #113) — South · 2020s · comp 4.8 · 5/5/5/5/4
 - [ ] **City Girls** (CI, #132) — South · 2020s · comp 4.6 · 4/5/5/5/4
 
-## M-flagged (39) — provisional scores
+## M-flagged (39) — IN PROGRESS (verify region/era/label/debut + score outliers)
 
 - [ ] **MC Lyte** (MC, #12) — NYC · Old School · comp 6.8 · 7/7/7/6/7
 - [ ] **Roxanne Shanté** (RS, #11) — NYC · Old School · comp 6.2 · 7/6/6/6/6
-- [ ] **Schoolly D** (SB, #13) — NYC · Old School · comp 5.4 · 5/5/6/5/6
+- [ ] **Schoolly D** (SB, #13) — Philly · Old School · comp 5.4 · 5/5/6/5/6
 - [ ] **Doug E. Fresh** (DS2, #16) — NYC · Old School · comp 5.4 · 6/6/5/6/4
 - [ ] **Whodini** (WR, #15) — NYC · Old School · comp 4.6 · 5/5/4/5/4
 - [ ] **Freestyle Fellowship** (FK, #40) — LA · Golden Age · comp 7.8 · 8/9/7/8/7

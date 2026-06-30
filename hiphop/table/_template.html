@@ -15,6 +15,7 @@
     --muted: #7a6a7b;
 
     --nyc:     #8C6A8D;
+    --philly:  #4e9e94;
     --la:      #E98973;
     --south:   #c0855a;
     --midwest: #7aaa8a;
@@ -444,6 +445,7 @@
     <select id="filter-region" onchange="applyFilters()">
       <option value="">All Regions</option>
       <option>NYC</option>
+      <option>Philly</option>
       <option>LA</option>
       <option>South</option>
       <option>Midwest</option>
@@ -485,6 +487,7 @@
 <div id="legend">
   <span class="legend-label">Region:</span>
   <span class="legend-item" style="background:var(--nyc)">NYC</span>
+  <span class="legend-item" style="background:var(--philly)">Philly</span>
   <span class="legend-item" style="background:var(--la)">LA</span>
   <span class="legend-item" style="background:var(--south)">South</span>
   <span class="legend-item" style="background:var(--midwest)">Midwest</span>
@@ -565,7 +568,7 @@ let currentModalId = null;
 let modalIsEditing = false;
 
 const REGION_COLORS = {
-  'NYC': '#8C6A8D', 'LA': '#E98973', 'South': '#c0855a',
+  'NYC': '#8C6A8D', 'Philly': '#4e9e94', 'LA': '#E98973', 'South': '#c0855a',
   'Midwest': '#7aaa8a', 'Bay Area': '#5a9abf', 'UK': '#a07ac0', 'International': '#bf9a40'
 };
 const SCORE_COLORS = ['Rhyme Density','Vocab Breadth','Storytelling','Metaphor/Imagery','Conceptual Depth'];
@@ -824,7 +827,7 @@ function showEditForm() {
       <input type="number" min="1" max="10" step="0.5" id="edit-${dim.replace(/[^a-z]/gi,'_')}" value="${a[dim]||5}">
     </div>`).join('');
 
-  const regionOpts = ['NYC','LA','South','Midwest','Bay Area','UK','International'].map(r=>`<option${r===a['Region']?' selected':''}>${r}</option>`).join('');
+  const regionOpts = ['NYC','Philly','LA','South','Midwest','Bay Area','UK','International'].map(r=>`<option${r===a['Region']?' selected':''}>${r}</option>`).join('');
   const eraOpts = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'].map(e=>`<option${e===a['Era']?' selected':''}>${e}</option>`).join('');
   const styleOpts = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'].map(s=>`<option${s===a['Style']?' selected':''}>${s}</option>`).join('');
   const confOpts = ['H','M','L'].map(c=>`<option${c===a['Confidence']?' selected':''}>${c}</option>`).join('');
@@ -877,7 +880,7 @@ function toggleEditMode() {
 
 // ─── ADD ARTIST ───────────────────────────────────────────────────────────────
 function openAddPanel() {
-  const regionOpts = ['NYC','LA','South','Midwest','Bay Area','UK','International'].map(r=>`<option>${r}</option>`).join('');
+  const regionOpts = ['NYC','Philly','LA','South','Midwest','Bay Area','UK','International'].map(r=>`<option>${r}</option>`).join('');
   const eraOpts = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'].map(e=>`<option>${e}</option>`).join('');
   const styleOpts = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'].map(s=>`<option>${s}</option>`).join('');
 
@@ -960,7 +963,7 @@ function resetLayout() {
 
 // ─── ADD FORM BUILD ───────────────────────────────────────────────────────────
 function buildAddForm() {
-  const regions = ['NYC','LA','South','Midwest','Bay Area','UK','International'];
+  const regions = ['NYC','Philly','LA','South','Midwest','Bay Area','UK','International'];
   const eras = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'];
   const styles = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'];
 
