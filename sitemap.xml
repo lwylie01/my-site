@@ -2,30 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://datawithaplot.org/index.html</loc>
-    <lastmod>2026-07-01T03:22:39.810Z</lastmod>
+    <lastmod>2026-07-01T22:47:21.225Z</lastmod>
   </url>
   <url>
     <loc>https://datawithaplot.org/writing/index.html</loc>
-    <lastmod>2026-07-01T03:22:39.815Z</lastmod>
+    <lastmod>2026-07-01T22:47:21.230Z</lastmod>
   </url>
   <url>
     <loc>https://datawithaplot.org/teaching/index.html</loc>
-    <lastmod>2026-07-01T03:22:39.815Z</lastmod>
+    <lastmod>2026-07-01T22:47:21.230Z</lastmod>
+  </url>
+  <url>
+    <loc>https://datawithaplot.org/hiphop/data_dictionary.html</loc>
+    <lastmod>2026-07-01T22:47:21.225Z</lastmod>
   </url>
   <url>
     <loc>https://datawithaplot.org/hiphop/hiphop_dashboard.html</loc>
-    <lastmod>2026-07-01T03:22:39.810Z</lastmod>
-  </url>
-  <url>
-    <loc>https://datawithaplot.org/hiphop/data/accuracy_worklist.html</loc>
-    <lastmod>2026-07-01T03:22:39.810Z</lastmod>
+    <lastmod>2026-07-01T22:47:21.225Z</lastmod>
   </url>
   <url>
     <loc>https://datawithaplot.org/selected-work/index.html</loc>
-    <lastmod>2026-07-01T03:22:39.814Z</lastmod>
+    <lastmod>2026-07-01T22:47:21.229Z</lastmod>
   </url>
   <url>
     <loc>https://datawithaplot.org/projects/index.html</loc>
-    <lastmod>2026-07-01T03:22:39.814Z</lastmod>
+    <lastmod>2026-07-01T22:47:21.229Z</lastmod>
   </url>
 </urlset>
