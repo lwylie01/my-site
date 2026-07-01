@@ -35,6 +35,8 @@ website:
         text: Teaching
       - href: writing/index.qmd
         text: Writing
+      - href: selected-work/index.qmd
+        text: Selected Work
     right:
       - icon: github
         href: https://github.com/lwylie01

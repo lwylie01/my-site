@@ -11,6 +11,10 @@ toc: false
   <p class="page-header-sub">
     Data storytelling and applied research methods for professionals.
   </p>
+  <p style="color:#6b7280; font-size:0.95rem; margin-top:0.75rem;">
+    Recently presented <em>Telling Your Court's Data Story</em> at the
+    National Association for Court Management (2025).
+  </p>
 </div>
 ```
 

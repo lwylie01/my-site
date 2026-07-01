@@ -37,18 +37,24 @@ editor:
     facts.</p>
 
     <div class="credential-badges">
-      <span class="badge-item">PhD, Social Psychology · certificate in Research Methods &amp; Data Analysis</span>
+      <span class="badge-item">PhD, Social Psychology · concentration in Research Design &amp; Data Analysis</span>
       <span class="badge-item">JD · concentration in Health Law</span>
-      <span class="badge-item">Senior Research Associate · National Center for State Courts</span>
+      <span class="badge-item">Senior Court Research Associate · National Center for State Courts</span>
     </div>
 
     <p>I'm particularly interested in the unintended consequences of legal
     decisions and interventions — the places where a well-intentioned rule
-    meets a complicated reality.</p>
+    meets a complicated reality. That interest isn't purely academic: it's
+    shaped in part by my own experience with the legal system as a young
+    person.</p>
 
-    <a class="cv-download" href="CV/Wylie%20CV%208.2025.pdf" target="_blank" rel="noopener">
-      <span class="cv-download-icon">↓</span> Download CV <span class="cv-download-ext">PDF</span>
-    </a>
+    <p>Before joining the National Center for State Courts, I directed
+    research at the University of Nebraska Omaha's Juvenile Justice
+    Institute. I've led federally funded research and multi-state
+    evaluations across diversion, pretrial, and therapeutic courts. In
+    2025, I received the INSPIRE Lincoln Award.</p>
+
+    <p><a href="selected-work/">See selected work &amp; CV →</a></p>
   </div>
 </div>
 ```

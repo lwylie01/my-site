@@ -1,0 +1,125 @@
+---
+title: ""
+page-layout: full
+toc: false
+---
+
+```{=html}
+<div class="page-header container">
+  <p class="page-header-label">Publications</p>
+  <h1 class="page-header-title">Selected Work</h1>
+  <p class="page-header-sub">
+    A curated selection of published research. A full list is available on
+    Google Scholar; the complete CV is below.
+  </p>
+</div>
+
+<div class="project-grid container">
+  <div class="project-card">
+    <span class="project-card-tag">Book · APA, 2025</span>
+    <p class="project-card-title">Aging and the Criminal Legal System</p>
+    <p class="project-card-desc">
+      <em>Community Services, Courts, Corrections, and Policy.</em>
+      With E.M. Brank. Division 41 American Psychology-Law book series,
+      American Psychological Association. Brings behavioral science research
+      to bear on the legal and psychological challenges facing older adults
+      across the criminal legal system.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>Aging &amp; the law</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>Corrections</span>
+      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Policy</span>
+    </div>
+    <br>
+    <a href="https://www.apa.org" target="_blank" rel="noopener"
+       style="font-weight:600; color:#8C6A8D;">
+      View at APA →
+    </a>
+  </div>
+</div>
+```
+
+## Selected peer-reviewed articles {.section-heading}
+
+```{=html}
+<div class="container" style="max-width: 820px;">
+<ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.6;">
+
+  <li style="margin-bottom:1.1rem;">
+    <strong>Wylie, L.E.</strong> (2025). Cultivating a court's data STORY:
+    A guide for court leaders to develop storytelling skills and effective
+    communications. <em>Trends in State Courts.</em>
+  </li>
+
+  <li style="margin-bottom:1.1rem;">
+    Kotlaja, M., &amp; <strong>Wylie, L.E.</strong> (2023). Electronically
+    monitored youth: Stigma and negative social functioning.
+    <em>Crime &amp; Delinquency.</em>
+  </li>
+
+  <li style="margin-bottom:1.1rem;">
+    Deal, T., Cienfuegos, A., &amp; <strong>Wylie, L.E.</strong> (2022).
+    Meeting the needs of emerging adults in the justice system.
+    <em>Trends in State Courts.</em>
+  </li>
+
+  <li style="margin-bottom:1.1rem;">
+    Brank, E.M., &amp; <strong>Wylie, L.E.</strong> (2021). Legal
+    responsibility among the young and the elderly.
+    <em>Annual Review of Law and Social Science.</em>
+  </li>
+
+  <li style="margin-bottom:1.1rem;">
+    <strong>Wylie, L.E.</strong>, Clinkinbeard, S., &amp; Hobbs, A. (2019).
+    The application of risk-needs-responsivity programming in juvenile
+    diversion. <em>Criminal Justice and Behavior.</em>
+  </li>
+
+  <li style="margin-bottom:1.1rem;">
+    <strong>Wylie, L.E.</strong>, &amp; Rufino, K.A. (2018). The impact of
+    victimization and mental health on recidivism for early
+    system-involved juvenile offenders. <em>Law and Human Behavior.</em>
+  </li>
+
+  <li style="margin-bottom:1.1rem;">
+    <strong>Wylie, L.E.</strong>, Knutson, A., &amp; Greene, E. (2018). A
+    review of federal and state compassionate release laws: Presence,
+    utilization, and implications.
+    <em>Psychology, Public Policy, and Law.</em>
+  </li>
+
+  <li style="margin-bottom:1.1rem;">
+    <strong>Wylie, L.E.</strong>, Hoetger, L.A., Hazen, K., Haby, J., &amp;
+    Brank, E.M. (2018). Forty years of <em>Law and Human Behavior</em>: A
+    content analysis. <em>Scientometrics.</em>
+  </li>
+
+  <li style="margin-bottom:1.1rem;">
+    Franck, S., &amp; <strong>Wylie, L.E.</strong> (2015). Predicting
+    outcomes in investment treaty arbitration. <em>Duke Law Journal.</em>
+  </li>
+
+</ul>
+</div>
+```
+
+## Curriculum vitae {.section-heading}
+
+```{=html}
+<div class="container" style="max-width: 820px;">
+  <p style="color:#4b5563;">
+    The full CV includes all peer-reviewed publications, book chapters, law
+    reviews, funded grants, project reports, presentations, and courses
+    taught.
+  </p>
+
+  <a class="cv-download" href="../CV/Wylie%20CV%208.2025.pdf" target="_blank" rel="noopener">
+    <span class="cv-download-icon">↓</span> Download CV <span class="cv-download-ext">PDF</span>
+  </a>
+
+  <p style="margin-top:2rem; color:#6b7280; font-size:0.95rem;">
+    Full publication list on
+    <a href="https://scholar.google.com/citations?user=-EyTKLcAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.
+  </p>
+</div>
+```
