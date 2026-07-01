@@ -1,0 +1,126 @@
+---
+title: "Data Dictionary & Codebook"
+subtitle: "Hip-Hop Periodic Table — construct definitions, scoring method, and sampling frame"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+---
+
+```{r setup}
+#| include: false
+library(readxl)
+library(dplyr)
+library(reactable)
+
+dict_raw <- read_excel("data/hiphop_artists.xlsx", sheet = "Data Dictionary")
+
+# The sheet has the variable table first, then a "SAMPLING FRAME & SCOPE RULES"
+# block; split on that marker so each renders in its own section.
+marker <- which(dict_raw[[1]] == "SAMPLING FRAME & SCOPE RULES")
+vars  <- dict_raw[seq_len(marker - 1), ] |> filter(!is.na(Variable))
+frame <- dict_raw[(marker + 1):nrow(dict_raw), 1:2] |>
+  setNames(c("Rule", "Definition")) |> filter(!is.na(Rule))
+```
+
+This page documents every variable in the [Hip-Hop Periodic
+Table](hiphop_periodic_table.html) dataset, the constructs behind the five
+lyricism scores, how scores were assigned, and the sampling frame the dataset
+draws from. The same content ships as the **Data Dictionary** sheet inside the
+Excel workbook, which is the single source of truth.
+
+## The five constructs
+
+Each act is scored 1–10 on five dimensions of lyricism. Scores are a
+**synthesis of published criticism and hip-hop scholarship** — no NLP analysis
+was run. Each dimension has a named anchor at 10 so the top of the scale means
+the same thing across scorers.
+
+| Construct | What it measures | Anchor at 10 |
+|---|---|---|
+| **Rhyme Density** | Frequency and complexity of rhyme: internal rhyme, multisyllabic chains, rhymes per bar, scheme inventiveness | Rakim — pioneered internal and multisyllabic rhyme as standard practice |
+| **Vocab Breadth** | Lexical diversity: range of unique words and registers across the catalog | Aesop Rock — per published NLP studies of unique-word counts in rap |
+| **Storytelling** | Narrative construction: character, plot, perspective shifts, arc within songs and across albums | Scarface |
+| **Metaphor/Imagery** | Density and originality of figurative language: extended metaphor, concrete imagery, double meanings | — |
+| **Conceptual Depth** | Thematic ambition and coherence: album-level concepts, social and philosophical substance | Kendrick Lamar — 10 is reserved for album-length conceptual execution at the highest tier |
+
+The **Composite Score** is the unweighted mean of the five dimensions, rounded
+to one decimal. Equal weighting is itself a methods decision — one of the
+module's core discussion prompts.
+
+## Scoring method
+
+- **Basis:** synthesis of published music criticism, academic hip-hop
+  scholarship (Bradley, Chang, Kajikawa, Rabaka), and documented critical
+  consensus. Scores are judgments, not computations.
+- **Scale:** integers 1–10 per dimension; anchored at the top of each scale
+  (table above).
+- **Confidence flag:** every act carries an H/M/L rating of how much to trust
+  its scores, based on the depth of its critical record (rubric below).
+
+## Confidence rubric
+
+| Flag | Meaning | Criteria |
+|---|---|---|
+| **H — High** | Extensive critical record | Sustained critical/academic attention; multiple long-form analyses of the act's lyrical craft; consistent reception across sources; a body of work large enough that scores are stable across albums |
+| **M — Medium** | Moderate documentation | Meets 1–2 of the High criteria: historically significant but under-analyzed, recently emergent with an incomplete body of work, contested reception, or regional/underground significance without mainstream scholarly attention. Treat as provisional |
+| **L — Low** | Thin or contested record | Limited formal analysis, very recent emergence, single-source scores, or reception clouded by non-lyrical controversy. Treat as initial estimates requiring verification |
+
+Recommended verification for M/L acts: RateYourMusic critical consensus,
+Pitchfork / The Wire discography reviews, Google Scholar (artist +
+"lyricism"), and genre publications (The Source, XXL retrospectives, Passion
+of the Weiss).
+
+## Sampling frame & scope rules
+
+```{r frame-table}
+#| echo: false
+reactable(
+  frame,
+  columns = list(
+    Rule = colDef(minWidth = 130, style = list(fontWeight = "600")),
+    Definition = colDef(minWidth = 380)
+  ),
+  striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
+  theme = reactableTheme(
+    headerStyle = list(background = "#1F3864", color = "#ffffff", fontWeight = "600")
+  )
+)
+```
+
+Two rules worth calling out because they are easy to get wrong:
+
+- **Region = scene, not birthplace.** Acts are assigned to the US scene they
+  are professionally rooted in — label home and scene affiliation during their
+  defining run (Da Brat is *South* via So So Def, though born in Chicago).
+- **Era = defining run, not debut year.** Debut years overlap era boundaries
+  by design; the era reflects when the act's defining work landed.
+
+## Variable definitions
+
+```{r vars-table}
+#| echo: false
+reactable(
+  vars,
+  columns = list(
+    Variable = colDef(minWidth = 110, style = list(fontWeight = "600")),
+    Type = colDef(minWidth = 80),
+    `Allowed values / range` = colDef(minWidth = 160),
+    Definition = colDef(minWidth = 340),
+    `Source / method` = colDef(minWidth = 200)
+  ),
+  striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
+  theme = reactableTheme(
+    headerStyle = list(background = "#1F3864", color = "#ffffff", fontWeight = "600")
+  )
+)
+```
+
+## Known biases
+
+The dataset over-represents critically acclaimed acts (vs. commercially
+dominant ones), male acts, Golden Age NYC, and English-language rap.
+International and non-Anglophone rap is **excluded from the frame entirely** —
+a documented scope decision. The [dashboard](hiphop_dashboard.html) section
+*"Who Is In the Data?"* quantifies these gaps and turns them into teaching
+prompts on sampling bias.

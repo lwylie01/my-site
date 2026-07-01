@@ -432,7 +432,7 @@
 <header>
   <div>
     <h1>Periodic Table of <span>Hip-Hop Artists</span></h1>
-    <p>datawithaplot.org — <span id="subtitle-count">139</span> Artists · Five-Dimension Lyrical Profiles · Drag to Rearrange</p>
+    <p>datawithaplot.org — <span id="subtitle-count">—</span> Artists · Five-Dimension Lyrical Profiles · Drag to Rearrange</p>
   </div>
   <div class="header-right">
     <button class="btn btn-outline btn-sm" onclick="toggleEditMode()">✏️ Edit Mode: <span id="edit-mode-label">Off</span></button>
@@ -522,7 +522,7 @@
 </div>
 
 <div id="stats-bar">
-  <span>Showing <strong id="stat-visible">139</strong> of <strong id="stat-total">139</strong> artists</span>
+  <span>Showing <strong id="stat-visible">—</strong> of <strong id="stat-total">—</strong> artists</span>
   <span>Avg composite: <strong id="stat-avg">—</strong></span>
   <span>Top scorer: <strong id="stat-top">—</strong></span>
 </div>
@@ -596,10 +596,6 @@ let dragSrcIdx = null;
 let currentModalId = null;
 let modalIsEditing = false;
 
-const REGION_COLORS = {
-  'NYC': '#8C6A8D', 'Philly': '#4e9e94', 'LA': '#E98973', 'South': '#c0855a',
-  'Midwest': '#7aaa8a', 'Bay Area': '#5a9abf', 'UK': '#a07ac0', 'International': '#bf9a40'
-};
 const SCORE_COLORS = ['Rhyme Density','Vocab Breadth','Storytelling','Metaphor/Imagery','Conceptual Depth'];
 const SCORE_HUES = ['#E98973','#8C6A8D','#7aaa8a','#5a9abf','#bf9a40'];
 
@@ -607,7 +603,7 @@ const SCORE_HUES = ['#E98973','#8C6A8D','#7aaa8a','#5a9abf','#bf9a40'];
 const STYLE_COLORS = {
   'Gangsta/Street': '#cf8079', 'Conscious/Lyrical': '#6f9ec2', 'Party/Pop': '#d4b15a',
   'Experimental': '#a085bd', 'Abstract': '#5cab9c', 'Political': '#86a866',
-  'Trap/Drill': '#dd9a5e', 'Jazz-Rap': '#c180a2', 'Conscious/Street': '#6f9ec2'
+  'Trap/Drill': '#dd9a5e', 'Jazz-Rap': '#c180a2'
 };
 const REGION_SHAPE = {
   'NYC': '●', 'Philly': '◆', 'LA': '★', 'South': '▲', 'Midwest': '■', 'Bay Area': '⬢'

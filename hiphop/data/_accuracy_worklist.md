@@ -1,6 +1,7 @@
 # Hip-Hop Periodic Table — Worklist
 
-`hiphop/data/hiphop_artists.xlsx`. **147 acts** = 121 Elements + 26 Compounds.
+`hiphop/data/hiphop_artists.xlsx`. **147 acts** = 120 Elements + 27 Compounds.
+(Underscore-prefixed so Quarto does not publish this internal doc.)
 
 ## Visual encoding (current)
 
@@ -11,8 +12,10 @@
 - [x] Accuracy phase (L/M factual + score nits, web-verified)
 - [x] Philly region; region = label/scene rule; dedup (JID/Noname/Ghostface)
 - [x] Expansion batch 1 (+18); removed Intl/UK (US scene+label scope)
-- [x] Compounds table (26 groups) vs Elements (121 solo)
+- [x] Compounds table (27 groups) vs Elements (120 solo); J.J. Fad reclassified Element→Compound (trio, consistent with City Girls)
 - [x] Style-as-shape glyph (8 shapes), merged Conscious/Street into Conscious/Lyrical
+- [x] Stale-content sweep (2026-07): projects/teaching copy, dashboard gender list (+Da Brat, +Eve), bias-table Language row, dead REGION_COLORS, hardcoded 139s
+- [x] Data Dictionary sheet + hiphop/data_dictionary.qmd (codebook page)
 
 ## Region shapes
 
