@@ -43,10 +43,10 @@ The six concepts I return to most often:
 
 ### The Hip-Hop Periodic Table — Data Storytelling Module
 
-A complete 90-minute session built around a dataset of 147 hip-hop artists
+A complete 90-minute session built around a dataset of 147 hip-hop acts
 scored across five lyricism dimensions. Designed for professional and executive
-audiences. Includes an interactive Quarto dashboard, data dictionary, source
-bibliography, and facilitator guide.
+audiences. Includes an interactive Quarto dashboard and a published data
+dictionary with construct definitions and methods documentation.
 
 **Concepts covered:** All six above.
 
@@ -54,9 +54,8 @@ bibliography, and facilitator guide.
 
 - [Interactive periodic table](../hiphop/hiphop_periodic_table.html) — the branded, filterable artist table
 - [Analytics dashboard](../hiphop/hiphop_dashboard.html) — companion Quarto dashboard with charts
-- Data dictionary — variable definitions, rubrics, source bibliography
-- Excel workbook — full dataset with scoring rubric and era analysis sheets
-- Facilitator README — session structure, discussion questions by tab
+- [Data dictionary](../hiphop/data_dictionary.html) — construct definitions, scoring method, confidence rubric, sampling frame, known biases
+- Excel workbook — full dataset (Artist Database + Confidence Guide + Data Dictionary sheets)
 
 ::: {.callout-tip title="Session design note"}
 I open this module by asking executives to rate a favorite artist's
