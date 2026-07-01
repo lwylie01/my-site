@@ -10,7 +10,7 @@ format:
     logo: ""
     nav-buttons:
       - icon: github
-        href: "#"
+        href: "https://github.com/lwylie01/my-site"
     scrolling: true
 execute:
   echo: false
@@ -33,7 +33,7 @@ library(readxl)
 # ── Load data from Excel ───────────────────────────────────────────────────────
 # File lives at: my-site/hiphop/data/hiphop_artists.xlsx
 # To add new artists: open the Excel file, append rows to the "Artist Database"
-# sheet, then re-run `quarto publish gh-pages` from my-site/.
+# sheet, then push to main — the publish.yml GitHub Action rebuilds the site.
 
 artists_raw <- read_excel(
   "data/hiphop_artists.xlsx",
@@ -276,7 +276,7 @@ p_region <- artists |>
   coord_flip() +
   labs(
     title = "Artists by region and era",
-    subtitle = "NYC and the South dominate — International is the largest gap",
+    subtitle = "NYC and the South dominate — international scenes sit outside the frame",
     x = NULL, y = "Number of artists", fill = "Era"
   ) +
   theme_hiphop()
@@ -289,11 +289,12 @@ ggplotly(p_region, tooltip = "text") |>
 
 ```{r bar-gender}
 female_artists <- c(
-  "Roxanne Shanté","MC Lyte","Queen Latifah","J.J. Fad",
+  "Roxanne Shanté","MC Lyte","Queen Latifah",
   "Lauryn Hill","Missy Elliott","Lil' Kim","Foxy Brown",
+  "Da Brat","Eve",
   "Nicki Minaj","Rapsody","Noname","Tierra Whack",
   "Doechii","GloRilla","Cardi B",
-  "Saweetie","City Girls","Latto"
+  "Saweetie","Latto"
 )
 
 gender_data <- artists |>
@@ -362,7 +363,7 @@ bias_df <- tribble(
   "Prestige",         "Over-represents critically acclaimed artists", "Commercial artists scored lower; vibe-first artists may be underrated",
   "Gender",           "~14% female/non-binary vs. ~50% of rap audience", "Female artists face different critical frameworks; scores may not be comparable",
   "Geography",        "NYC + Golden Age disproportionate",        "Southern and international artists underrepresented in critical canon used for scoring",
-  "Language",         "English-language criticism only",          "Latin, African, French rap scored through an inadequate lens; L-flag applied",
+  "Language",         "English-language, US-based frame only",    "International and non-Anglophone rap is excluded from the sampling frame entirely — a documented scope decision, not an oversight",
   "Survivorship",     "Only artists who entered critical canon",  "Regionally significant artists without national coverage are absent",
   "Recency (inverted)","Post-2020 artists scored conservatively", "Emerging talent may be systematically underscored; revisit annually"
 )
