@@ -11,7 +11,7 @@
     "href": "index.html#about",
     "title": "Data with a Plot",
     "section": "About",
-    "text": "About\n\n  \n  \n    My work explores the intersection of law, data, and decision-making —\n    with a throughline of measurement: how we decide to count people and\n    outcomes, and what happens downstream when those choices get treated as\n    facts.\n\n    \n      PhD, Social Psychology · certificate in Research Methods & Data Analysis\n      JD · concentration in Health Law\n      Senior Research Associate · National Center for State Courts\n    \n\n    I'm particularly interested in the unintended consequences of legal\n    decisions and interventions — the places where a well-intentioned rule\n    meets a complicated reality.\n\n    \n      ↓ Download CV PDF"
+    "text": "About\n\n  \n  \n    My work explores the intersection of law, data, and decision-making —\n    with a throughline of measurement: how we decide to count people and\n    outcomes, and what happens downstream when those choices get treated as\n    facts.\n\n    \n      PhD, Social Psychology · concentration in Research Design & Data Analysis\n      JD · concentration in Health Law\n      Senior Court Research Associate · National Center for State Courts\n    \n\n    I'm particularly interested in the unintended consequences of legal\n    decisions and interventions — the places where a well-intentioned rule\n    meets a complicated reality. That interest isn't purely academic: it's\n    shaped in part by my own experience with the legal system as a young\n    person.\n\n    Before joining the National Center for State Courts, I directed\n    research at the University of Nebraska Omaha's Juvenile Justice\n    Institute. I've led federally funded research and multi-state\n    evaluations across diversion, pretrial, and therapeutic courts. In\n    2025, I received the INSPIRE Lincoln Award.\n\n    See selected work & CV →"
   },
   {
     "objectID": "index.html#whatIdo",
@@ -33,6 +33,34 @@
     "title": "Writing",
     "section": "",
     "text": "Essays\n  Writing\n  \n    On measurement, evidence, and the gap between how decisions\n    are meant to be made and how they are made in practice.\n  \n\n\n\n\n\n\n  \n    \n      Data Storytelling\n      8 min read\n    \n    What Hip-Hop Taught Me About Construct Validity\n    When you try to measure something as contested as\n    lyricism, every methodological flaw in organizational metrics shows up\n    in sharp relief.\n    Coming soon\n  \n\n  \n    \n      Criminal Justice · Measurement\n      10 min read\n    \n    Counted Wrong: Data, Young Adults, and the\n    Criminal Justice System\n    The categories we use to count people in the\n    legal system were not designed with young adults in mind — and that\n    design failure has consequences.\n    Coming soon\n  \n\n  \n    \n      Metrics · Policy\n      7 min read\n    \n    When the Metric Becomes the Policy\n    How measurement decisions quietly become legal\n    and organizational ones — and why that matters for anyone who builds\n    or uses KPIs.\n    Coming soon\n  \n\n  \n    \n      Aging & the Law\n      9 min read\n    \n    The Mercy We Wrote Down and Never Used\n    Compassionate release exists in almost every\n    state's statutes and almost nowhere in practice. What a law that's\n    present but unused tells us about the difference between writing a\n    policy and measuring whether it works.\n    Coming soon\n  \n\n  \n    \n      Aging · Measurement\n      6 min read\n    \n    How Old Is Old? The Age the Law Pretends to Know\n    The legal system fixes hard numbers — 18, 50, 65 —\n    onto a boundary that no developmental science draws. A short piece on\n    operationalizing a category that has no natural boundary.\n    Coming soon\n  \n\n  \n    \n      Prediction · Risk\n      8 min read\n    \n    Trust the Checklist: Why Expert Judgment Keeps Losing\n    Decades of evidence say a two-variable rule\n    outpredicts the seasoned professional — in pretrial risk, in clinical\n    forecasting, almost everywhere we've checked. Why intuition retains its\n    hold regardless, and what that preference costs.\n    Coming soon\n  \n\n  \n    \n      Data Storytelling · Courts\n      7 min read\n    \n    Cultivating a Court's Data Story\n    Most court data is buried in reports that go\n    unread. A field guide for turning administrative numbers into something a\n    judge, a funder, or a community will read and remember.\n    Coming soon\n  \n\n\n\n\nMore essays in progress."
+  },
+  {
+    "objectID": "teaching/index.html",
+    "href": "teaching/index.html",
+    "title": "Teaching",
+    "section": "",
+    "text": "Education\n  \n  \n    Data storytelling and applied research methods for professionals.\n  \n  \n    Recently presented Telling Your Court's Data Story at the\n    National Association for Court Management (2025)."
+  },
+  {
+    "objectID": "teaching/index.html#philosophy",
+    "href": "teaching/index.html#philosophy",
+    "title": "Teaching",
+    "section": "Philosophy",
+    "text": "Philosophy\nGood data teaching uses datasets with documented flaws, not cleaned-up pedagogical examples. Real data has sampling gaps, contested measurements, uncertain scores, and design choices that someone made and never documented. That is what professionals encounter in practice — and what I build teaching materials around.\nThe six concepts I return to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
+  },
+  {
+    "objectID": "teaching/index.html#teaching-materials",
+    "href": "teaching/index.html#teaching-materials",
+    "title": "Teaching",
+    "section": "Teaching materials",
+    "text": "Teaching materials\n\nThe Hip-Hop Periodic Table — Data Storytelling Module\nA complete 90-minute session built around a dataset of 147 hip-hop artists scored across five lyricism dimensions. Designed for professional and executive audiences. Includes an interactive Quarto dashboard, data dictionary, source bibliography, and facilitator guide.\nConcepts covered: All six above.\nDeliverables available:\n\nInteractive periodic table — the branded, filterable artist table\nAnalytics dashboard — companion Quarto dashboard with charts\nData dictionary — variable definitions, rubrics, source bibliography\nExcel workbook — full dataset with scoring rubric and era analysis sheets\nFacilitator README — session structure, discussion questions by tab\n\n\n\n\n\n\n\nTipSession design note\n\n\n\nI open this module by asking executives to rate a favorite artist’s lyricism on a 1–10 scale — immediately, without deliberation. I then ask what, precisely, they just measured. Answering that properly takes 45 minutes, and by the end the room is debating construct validity in terms of its own KPIs."
+  },
+  {
+    "objectID": "teaching/index.html#topics-available-for-custom-sessions",
+    "href": "teaching/index.html#topics-available-for-custom-sessions",
+    "title": "Teaching",
+    "section": "Topics available for custom sessions",
+    "text": "Topics available for custom sessions\n\n\nMeasurement and metrics\n\nBuilding defensible KPIs from first principles\nWhen composite scores help and when they mislead\nCommunicating confidence and uncertainty to non-technical stakeholders\nThe politics of how organizational metrics get designed\n\n\nData visualization\n\nChoosing chart types that match your argument\nDesigning for uncertainty, not false precision\nInteractive vs. static — when each is appropriate\nCommon visualization mistakes in executive reporting\n\n\n\n\n\nGet in touch about custom session design, keynotes, or workshop facilitation: lindsey@datawithaplot.org"
   },
   {
     "objectID": "hiphop/data/accuracy_worklist.html",
@@ -70,32 +98,25 @@
     "text": "Style\nCount\n\n\n\n\nGangsta/Street\n40\n\n\nConscious/Lyrical\n39\n\n\nParty/Pop\n22\n\n\nExperimental\n14\n\n\nAbstract\n13\n\n\nPolitical\n11\n\n\nTrap/Drill\n5\n\n\nJazz-Rap\n3"
   },
   {
-    "objectID": "teaching/index.html",
-    "href": "teaching/index.html",
-    "title": "Teaching",
+    "objectID": "selected-work/index.html",
+    "href": "selected-work/index.html",
+    "title": "Selected Work",
     "section": "",
-    "text": "Education\n  \n  \n    Data storytelling and applied research methods for professionals."
+    "text": "Publications\n  \n  \n    A curated selection of published research. A full list is available on\n    Google Scholar; the complete CV is below."
   },
   {
-    "objectID": "teaching/index.html#philosophy",
-    "href": "teaching/index.html#philosophy",
-    "title": "Teaching",
-    "section": "Philosophy",
-    "text": "Philosophy\nGood data teaching uses datasets with documented flaws, not cleaned-up pedagogical examples. Real data has sampling gaps, contested measurements, uncertain scores, and design choices that someone made and never documented. That is what professionals encounter in practice — and what I build teaching materials around.\nThe six concepts I return to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
+    "objectID": "selected-work/index.html#selected-peer-reviewed-articles",
+    "href": "selected-work/index.html#selected-peer-reviewed-articles",
+    "title": "Selected Work",
+    "section": "Selected peer-reviewed articles",
+    "text": "Selected peer-reviewed articles\n\n\n\n  \n    Wylie, L.E. (2025). Cultivating a court's data STORY:\n    A guide for court leaders to develop storytelling skills and effective\n    communications. Trends in State Courts.\n  \n\n  \n    Kotlaja, M., & Wylie, L.E. (2023). Electronically\n    monitored youth: Stigma and negative social functioning.\n    Crime & Delinquency.\n  \n\n  \n    Deal, T., Cienfuegos, A., & Wylie, L.E. (2022).\n    Meeting the needs of emerging adults in the justice system.\n    Trends in State Courts.\n  \n\n  \n    Brank, E.M., & Wylie, L.E. (2021). Legal\n    responsibility among the young and the elderly.\n    Annual Review of Law and Social Science.\n  \n\n  \n    Wylie, L.E., Clinkinbeard, S., & Hobbs, A. (2019).\n    The application of risk-needs-responsivity programming in juvenile\n    diversion. Criminal Justice and Behavior.\n  \n\n  \n    Wylie, L.E., & Rufino, K.A. (2018). The impact of\n    victimization and mental health on recidivism for early\n    system-involved juvenile offenders. Law and Human Behavior.\n  \n\n  \n    Wylie, L.E., Knutson, A., & Greene, E. (2018). A\n    review of federal and state compassionate release laws: Presence,\n    utilization, and implications.\n    Psychology, Public Policy, and Law.\n  \n\n  \n    Wylie, L.E., Hoetger, L.A., Hazen, K., Haby, J., &\n    Brank, E.M. (2018). Forty years of Law and Human Behavior: A\n    content analysis. Scientometrics.\n  \n\n  \n    Franck, S., & Wylie, L.E. (2015). Predicting\n    outcomes in investment treaty arbitration. Duke Law Journal."
   },
   {
-    "objectID": "teaching/index.html#teaching-materials",
-    "href": "teaching/index.html#teaching-materials",
-    "title": "Teaching",
-    "section": "Teaching materials",
-    "text": "Teaching materials\n\nThe Hip-Hop Periodic Table — Data Storytelling Module\nA complete 90-minute session built around a dataset of 147 hip-hop artists scored across five lyricism dimensions. Designed for professional and executive audiences. Includes an interactive Quarto dashboard, data dictionary, source bibliography, and facilitator guide.\nConcepts covered: All six above.\nDeliverables available:\n\nInteractive periodic table — the branded, filterable artist table\nAnalytics dashboard — companion Quarto dashboard with charts\nData dictionary — variable definitions, rubrics, source bibliography\nExcel workbook — full dataset with scoring rubric and era analysis sheets\nFacilitator README — session structure, discussion questions by tab\n\n\n\n\n\n\n\nTipSession design note\n\n\n\nI open this module by asking executives to rate a favorite artist’s lyricism on a 1–10 scale — immediately, without deliberation. I then ask what, precisely, they just measured. Answering that properly takes 45 minutes, and by the end the room is debating construct validity in terms of its own KPIs."
-  },
-  {
-    "objectID": "teaching/index.html#topics-available-for-custom-sessions",
-    "href": "teaching/index.html#topics-available-for-custom-sessions",
-    "title": "Teaching",
-    "section": "Topics available for custom sessions",
-    "text": "Topics available for custom sessions\n\n\nMeasurement and metrics\n\nBuilding defensible KPIs from first principles\nWhen composite scores help and when they mislead\nCommunicating confidence and uncertainty to non-technical stakeholders\nThe politics of how organizational metrics get designed\n\n\nData visualization\n\nChoosing chart types that match your argument\nDesigning for uncertainty, not false precision\nInteractive vs. static — when each is appropriate\nCommon visualization mistakes in executive reporting\n\n\n\n\n\nGet in touch about custom session design, keynotes, or workshop facilitation: lindsey@datawithaplot.org"
+    "objectID": "selected-work/index.html#curriculum-vitae",
+    "href": "selected-work/index.html#curriculum-vitae",
+    "title": "Selected Work",
+    "section": "Curriculum vitae",
+    "text": "Curriculum vitae\n\n  \n    The full CV includes all peer-reviewed publications, book chapters, law\n    reviews, funded grants, project reports, presentations, and courses\n    taught.\n  \n\n  \n    ↓ Download CV PDF\n  \n\n  \n    Full publication list on\n    Google Scholar."
   },
   {
     "objectID": "projects/index.html",
