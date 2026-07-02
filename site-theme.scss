@@ -427,6 +427,9 @@ hr {
 
 .focus-card {
   position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
   background: color-mix(in srgb, var(--accent, #8C6A8D) 6%, #ffffff);
   border: 1px solid color-mix(in srgb, var(--accent, #8C6A8D) 22%, #ffffff);
   border-top: 4px solid var(--accent, #8C6A8D);
@@ -437,6 +440,22 @@ hr {
     box-shadow: 0 6px 22px color-mix(in srgb, var(--accent, #8C6A8D) 22%, transparent);
     transform: translateY(-3px);
   }
+}
+
+.focus-card-icon {
+  flex: 0 0 auto;
+  color: var(--accent, #8C6A8D);
+  margin-top: 0.1rem;
+}
+
+.focus-card-icon svg {
+  display: block;
+  width: 36px;
+  height: 33px;
+}
+
+.focus-card-body {
+  min-width: 0;
 }
 
 .focus-card-label {
