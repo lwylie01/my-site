@@ -39,7 +39,6 @@ editor:
     <div class="credential-badges">
       <span class="badge-item">PhD, Social Psychology · concentration in Research Design &amp; Data Analysis</span>
       <span class="badge-item">JD · concentration in Health Law</span>
-      <span class="badge-item">Senior Court Research Associate · National Center for State Courts</span>
     </div>
 
     <p>I'm particularly interested in the unintended consequences of legal
@@ -67,36 +66,37 @@ editor:
 <div class="focus-grid">
 
   <div class="focus-card" style="--accent:#8C6A8D;">
-    <p class="focus-card-label">Applied Research</p>
+    <p class="focus-card-label">Applied Research Methods and Design</p>
     <p class="focus-card-text">
-      Work across law, psychology, and public policy — with a standing interest
-      in construct validity, uncertainty, and the politics of how metrics get
-      built and used.
+      Randomized studies and quasi-experimental methods across law, psychology,
+      and public policy — designs matched to the question and to the
+      constraints of real-world settings.
     </p>
   </div>
 
   <div class="focus-card" style="--accent:#E98973;">
-    <p class="focus-card-label">Program Evaluation</p>
+    <p class="focus-card-label">Tailored Program Evaluation and Recommendations</p>
     <p class="focus-card-text">
       Process and outcome evaluations of courts, diversion, and pretrial
-      programs — measuring whether an intervention performs as intended.
+      programs — combining quantitative and qualitative methods to produce
+      recommendations programs can act on.
     </p>
   </div>
 
   <div class="focus-card" style="--accent:#6b4f6c;">
-    <p class="focus-card-label">Measurement &amp; Design</p>
+    <p class="focus-card-label">Tests of Measurement Validity and Reliability</p>
     <p class="focus-card-text">
-      Building and validating screening tools and latent-trait measures, and the
-      research designs that make a finding trustworthy in the first place.
+      Building and validating screening tools and latent-trait measures —
+      evidence that an instrument measures what it claims to, consistently.
     </p>
   </div>
 
   <div class="focus-card" style="--accent:#B5835A;">
-    <p class="focus-card-label">Storytelling with Data</p>
+    <p class="focus-card-label">Practical Storytelling with Data</p>
     <p class="focus-card-text">
-      Executive and graduate teaching that turns rigorous analysis into
-      something a judge, funder, or community will read and remember —
-      taught on datasets with documented flaws.
+      Executive and graduate teaching that turns rigorous analysis into work a
+      judge, funder, or community will read and remember — taught on datasets
+      whose flaws are part of the lesson.
     </p>
   </div>
 
