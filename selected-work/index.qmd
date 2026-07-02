@@ -299,6 +299,163 @@ toc: false
 </div>
 ```
 
+## Citation impact {.section-heading}
+
+```{=html}
+<div class="container" style="max-width: 960px;">
+  <p style="color:#4b5563; max-width:820px;">
+    How the field has used the work: the twenty most-cited publications,
+    colored by research thread. Roughly 880 citations across the published
+    record, led by the threads' crossover pieces.
+  </p>
+  <div id="citechart-card" style="background:#ffffff; border:1px solid #e8e4df; border-radius:10px; padding:1.5rem 1.25rem 1rem;">
+    <div id="citechart" style="overflow-x:auto; -webkit-overflow-scrolling:touch;"></div>
+    <p style="margin:0.6rem 0 0; color:#888; font-size:0.8rem;">
+      <span id="citechart-swipe-hint" style="display:none;">Swipe the chart to see full bars. </span>
+      Citation counts from Google Scholar, July 2026. Duplicate Scholar records
+      merged (counts summed). Fourteen further publications have 9 or fewer
+      citations each — about 50 combined — and the newest works are not yet
+      cited. Project reports and briefs are excluded.
+    </p>
+  </div>
+</div>
+
+<script>
+(function () {
+  const THREADS = {
+    aging:    { label: "Aging & the Law",                    key: "Aging & the Law",      color: "#8a4090" },
+    juvenile: { label: "Juvenile & Emerging Adult Justice",  key: "Juvenile Justice",     color: "#c75b3f" },
+    courts:   { label: "Courts, Data & Communication",       key: "Courts & Data",        color: "#0d8f76" },
+    evidence: { label: "Evidence & Empirical Legal Studies", key: "Evidence & Empirical", color: "#9a7d10" }
+  };
+
+  const CITES = [
+    { n: 159, t: "evidence", short: "Investment treaty arbitration",       title: "Predicting Outcomes in Investment Treaty Arbitration", venue: "Duke Law Journal", y: 2015, note: "two Scholar records merged (130 + 29)" },
+    { n: 100, t: "aging",    short: "Misinformation in older adults",      title: "Misinformation Effects in Older Versus Younger Adults: A Meta-analysis and Review", venue: "The Elderly Eyewitness in Court", y: 2014 },
+    { n: 98,  t: "juvenile", short: "Child-to-parent violence",            title: "Risk Factor Profile of Youth Incarcerated for Child-to-Parent Violence", venue: "Journal of Criminal Justice", y: 2018 },
+    { n: 60,  t: "juvenile", short: "Victimization & juvenile recidivism", title: "The Impact of Victimization and Mental Health Symptoms on Recidivism for Early System-Involved Juvenile Offenders", venue: "Law and Human Behavior", y: 2018 },
+    { n: 35,  t: "aging",    short: "Compassionate release laws",          title: "Extraordinary and Compelling: The Use of Compassionate Release Laws in the United States", venue: "Psychology, Public Policy, and Law", y: 2018 },
+    { n: 34,  t: "evidence", short: "Law student well-being",              title: "Problem Signs in Law School: Fostering Attorney Well-being Early in Professional Training", venue: "International Journal of Law and Psychiatry", y: 2016 },
+    { n: 33,  t: "juvenile", short: "Risk–needs programming in diversion", title: "The Application of Risk–Needs Programming in a Juvenile Diversion Program", venue: "Criminal Justice and Behavior", y: 2019 },
+    { n: 31,  t: "aging",    short: "Own-race bias in lineups",            title: "Age and Lineup Type Differences in the Own-Race Bias", venue: "Psychology, Crime & Law", y: 2015 },
+    { n: 31,  t: "evidence", short: "Whistleblower policies",              title: "An Empirical Study of Whistleblower Policies in United States Corporate Codes of Ethics", venue: "Whistleblowing and Democratic Values", y: 2011 },
+    { n: 28,  t: "evidence", short: "Voice identification evidence",       title: "Can the Courts Tell an Ear from an Eye? Legal Approaches to Voice Identification Evidence", venue: "Law & Psychology Review", y: 2013 },
+    { n: 28,  t: "juvenile", short: "School weapons reporting",            title: "Assessing School and Student Predictors of Weapons Reporting", venue: "Youth Violence and Juvenile Justice", y: 2010 },
+    { n: 26,  t: "aging",    short: "Older adult caregiving",              title: "Differing Perspectives on Older Adult Caregiving", venue: "Journal of Applied Gerontology", y: 2016 },
+    { n: 25,  t: "juvenile", short: "Absenteeism interventions",           title: "Absenteeism Interventions: An Approach for Common Definitions in Statewide Program Evaluations", venue: "Justice Evaluation Journal", y: 2018 },
+    { n: 25,  t: "courts",   short: "Teaching with discussions",           title: "Let's Discuss: Teaching Students About Discussions", venue: "Journal of Scholarship of Teaching and Learning", y: 2013 },
+    { n: 22,  t: "courts",   short: "Law and Human Behavior at 40",        title: "Four Decades of the Journal Law and Human Behavior: A Content Analysis", venue: "Scientometrics", y: 2018 },
+    { n: 22,  t: "aging",    short: "Am I a caregiver?",                   title: "Assuming Elder Care Responsibility: Am I a Caregiver?", venue: "Journal of Empirical Legal Studies", y: 2009 },
+    { n: 19,  t: "aging",    short: "Elder maltreatment self-report",      title: "Potential for Self-reporting of Older Adult Maltreatment: An Empirical Examination", venue: "Elder Law Journal", y: 2012 },
+    { n: 18,  t: "evidence", short: "Paraphilia diagnoses & the law",      title: "Disputed Paraphilia Diagnoses and Legal Decision Making: A Case Law Survey", venue: "Psychology, Public Policy, and Law", y: 2014 },
+    { n: 16,  t: "aging",    short: "Older adults' confidence in courts",  title: "Measuring Older Adult Confidence in the Courts and Law Enforcement", venue: "Criminal Justice Policy Review", y: 2018 },
+    { n: 13,  t: "courts",   short: "Childhood obesity framing",           title: "Public Health Framing and Attribution: Analysis of the First Lady's Remarks and News Coverage on Childhood Obesity", venue: "Cogent Social Sciences", y: 2017 }
+  ];
+
+  const W = 920, LABEL_W = 258, VAL_W = 52, PAD_T = 34, ROW_H = 27, BAR_H = 15;
+  const H = PAD_T + CITES.length * ROW_H + 30;
+  const MAXV = Math.max(...CITES.map(d => d.n));
+  const x0 = LABEL_W + 8, x1 = W - VAL_W;
+  const xFor = v => x0 + (v / MAXV) * (x1 - x0);
+
+  const ns = "http://www.w3.org/2000/svg";
+  const el = (n, attrs) => {
+    const e = document.createElementNS(ns, n);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  };
+
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "group",
+    "aria-label": "Bar chart of Google Scholar citations for the twenty most-cited publications" });
+  svg.style.fontFamily = "inherit";
+  svg.style.minWidth = "680px";
+  svg.style.display = "block";
+
+  // legend row (identity channel for the four threads)
+  let lx = 8;
+  Object.values(THREADS).forEach(t => {
+    svg.appendChild(el("rect", { x: lx, y: 6, width: 13, height: 13, rx: 3, fill: t.color }));
+    const lt = el("text", { x: lx + 19, y: 17, fill: "#555", "font-size": 13.5 });
+    lt.textContent = t.key;
+    svg.appendChild(lt);
+    lx += 19 + t.key.length * 7.1 + 26;
+  });
+
+  // gridlines at 50 / 100 / 150 (solid hairlines, recessive)
+  [50, 100, 150].forEach(v => {
+    const gx = xFor(v);
+    svg.appendChild(el("line", { x1: gx, y1: PAD_T - 4, x2: gx, y2: H - 26, stroke: "#f0ece7", "stroke-width": 1 }));
+    const gt = el("text", { x: gx, y: H - 10, "text-anchor": "middle", fill: "#999", "font-size": 12.5 });
+    gt.style.fontVariantNumeric = "tabular-nums";
+    gt.textContent = v;
+    svg.appendChild(gt);
+  });
+
+  const tip = document.getElementById("pub-tooltip");
+  const showTip = (d, target) => {
+    tip.replaceChildren();
+    const strong = document.createElement("strong");
+    strong.textContent = `${d.n} citations`;
+    const ttl = document.createElement("div");
+    ttl.style.cssText = "margin-top:0.2rem;";
+    ttl.textContent = d.title;
+    const meta = document.createElement("div");
+    meta.style.cssText = "color:#d9d4cf; margin-top:0.2rem;";
+    meta.textContent = `${d.venue} · ${d.y} · ${THREADS[d.t].label}` + (d.note ? ` · ${d.note}` : "");
+    tip.append(strong, ttl, meta);
+    const r = target.getBoundingClientRect();
+    tip.style.display = "block";
+    const tw = tip.offsetWidth;
+    let left = window.scrollX + r.left + r.width / 2 - tw / 2;
+    left = Math.max(8, Math.min(left, window.scrollX + document.documentElement.clientWidth - tw - 8));
+    tip.style.left = left + "px";
+    tip.style.top = (window.scrollY + r.top - tip.offsetHeight - 8) + "px";
+  };
+  const hideTip = () => { tip.style.display = "none"; };
+
+  CITES.forEach((d, i) => {
+    const y = PAD_T + i * ROW_H;
+    const by = y + (ROW_H - BAR_H) / 2;
+    const bw = xFor(d.n) - x0;
+
+    const lbl = el("text", { x: LABEL_W, y: by + BAR_H - 3, "text-anchor": "end", fill: "#3C3C3C", "font-size": 13.5 });
+    lbl.textContent = d.short;
+    svg.appendChild(lbl);
+
+    // bar: square at baseline, 4px rounded data-end
+    const r = Math.min(4, bw);
+    const bar = el("path", { d: `M ${x0} ${by} L ${x0 + bw - r} ${by} Q ${x0 + bw} ${by} ${x0 + bw} ${by + r} L ${x0 + bw} ${by + BAR_H - r} Q ${x0 + bw} ${by + BAR_H} ${x0 + bw - r} ${by + BAR_H} L ${x0} ${by + BAR_H} Z`,
+      fill: THREADS[d.t].color });
+    svg.appendChild(bar);
+
+    const val = el("text", { x: x0 + bw + 8, y: by + BAR_H - 3, fill: "#3C3C3C", "font-size": 13, "font-weight": 600 });
+    val.style.fontVariantNumeric = "tabular-nums";
+    val.textContent = d.n;
+    svg.appendChild(val);
+
+    // full-row hit target (>24px tall) with keyboard focus
+    const hit = el("rect", { x: 0, y: y, width: W, height: ROW_H, fill: "transparent", tabindex: 0, role: "img",
+      "aria-label": `${d.title}. ${d.venue}, ${d.y}. ${d.n} citations.` });
+    hit.style.cursor = "pointer";
+    hit.addEventListener("pointerenter", () => { bar.setAttribute("opacity", "0.75"); showTip(d, hit); });
+    hit.addEventListener("pointerleave", () => { bar.removeAttribute("opacity"); hideTip(); });
+    hit.addEventListener("focus", () => { bar.setAttribute("opacity", "0.75"); showTip(d, hit); });
+    hit.addEventListener("blur", () => { bar.removeAttribute("opacity"); hideTip(); });
+    svg.appendChild(hit);
+  });
+
+  const box = document.getElementById("citechart");
+  box.appendChild(svg);
+  const hint = document.getElementById("citechart-swipe-hint");
+  const updateHint = () => {
+    hint.style.display = box.scrollWidth > box.clientWidth ? "inline" : "none";
+  };
+  updateHint();
+  window.addEventListener("resize", updateHint);
+})();
+</script>
+```
+
 ## Curriculum vitae {.section-heading}
 
 ```{=html}
