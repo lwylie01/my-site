@@ -33,7 +33,7 @@ editor:
   <div class="bio-body">
     <p>My work explores the intersection of law, data, and decision-making —
     with a throughline of measurement: how we decide to count people and
-    outcomes, and what happens downstream when those choices get treated as
+    outcomes, and what happens downstream when those choices are treated as
     facts.</p>
 
     <div class="credential-badges">
