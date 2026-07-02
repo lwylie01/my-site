@@ -43,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-f416094168e15e61177005342f5cc10f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d8464d66e8f3b85336c07aec0e262bed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -151,9 +151,8 @@ ul.task-list li input[type="checkbox"] {
   <h1 class="page-header-title">Selected Work</h1>
   <p class="page-header-sub">
     Every published work — articles, law reviews, book chapters, and the
-    book — plotted by year and organized into the four threads that run
-    through the research. Hover any point for the citation; curated
-    highlights follow.
+    book — plotted by year and organized into four research areas. Hover
+    any point for the citation; curated highlights follow.
   </p>
 </div>
 
@@ -261,7 +260,7 @@ ul.task-list li input[type="checkbox"] {
   const H = laneY + TICK_H;
 
   const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "group",
-    "aria-label": "Timeline of publications by year and research thread" });
+    "aria-label": "Timeline of publications by year and research area" });
   svg.style.fontFamily = "inherit";
   // below this width the chart scrolls horizontally instead of shrinking,
   // so the text stays legible on phones
@@ -335,12 +334,12 @@ ul.task-list li input[type="checkbox"] {
   window.addEventListener("resize", updateHint);
 })();
 </script>
-<section id="research-threads" class="level2 section-heading">
-<h2 class="section-heading anchored" data-anchor-id="research-threads">Research threads</h2>
+<section id="research-areas" class="level2 section-heading">
+<h2 class="section-heading anchored" data-anchor-id="research-areas">Research areas</h2>
 <div class="container" style="max-width: 820px;">
 
-  <h3 style="margin-top:2rem;" class="anchored"><span style="display:inline-block; width:11px; height:11px; border-radius:50%; background:#8a4090; margin-right:0.5rem;"></span>Aging &amp; the Law</h3>
-  <p style="color:#4b5563;">
+  <h3 class="pub-area-title anchored"><span class="pub-area-dot" style="background:#8a4090;"></span>Aging &amp; the Law</h3>
+  <p class="pub-area-desc">
     How the legal system meets older adults — as litigants, victims, caregivers,
     and prisoners.
   </p>
@@ -361,13 +360,13 @@ ul.task-list li input[type="checkbox"] {
       </a>
     </div>
   </div>
-  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.55; font-size:0.88rem;">
-    <li style="margin-bottom:1.1rem;">
+  <ul class="pub-list">
+    <li>
       Brank, E.M., &amp; <strong>Wylie, L.E.</strong> (2021). Legal
       responsibility among the young and the elderly.
       <em>Annual Review of Law and Social Science.</em>
     </li>
-    <li style="margin-bottom:1.1rem;">
+    <li>
       <strong>Wylie, L.E.</strong>, Knutson, A., &amp; Greene, E. (2018). A
       review of federal and state compassionate release laws: Presence,
       utilization, and implications.
@@ -375,59 +374,59 @@ ul.task-list li input[type="checkbox"] {
     </li>
   </ul>
 
-  <h3 style="margin-top:2.5rem;" class="anchored"><span style="display:inline-block; width:11px; height:11px; border-radius:50%; background:#c75b3f; margin-right:0.5rem;"></span>Juvenile &amp; Emerging Adult Justice</h3>
-  <p style="color:#4b5563;">
+  <h3 class="pub-area-title anchored"><span class="pub-area-dot" style="background:#c75b3f;"></span>Juvenile &amp; Emerging Adult Justice</h3>
+  <p class="pub-area-desc">
     Diversion, risk and needs, and the program features that change outcomes
     for young people in the system.
   </p>
-  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.55; font-size:0.88rem;">
-    <li style="margin-bottom:1.1rem;">
+  <ul class="pub-list">
+    <li>
       Kotlaja, M., &amp; <strong>Wylie, L.E.</strong> (2023). Electronically
       monitored youth: Stigma and negative social functioning.
       <em>Crime &amp; Delinquency.</em>
     </li>
-    <li style="margin-bottom:1.1rem;">
+    <li>
       Deal, T., Cienfuegos, A., &amp; <strong>Wylie, L.E.</strong> (2022).
       Meeting the needs of emerging adults in the justice system.
       <em>Trends in State Courts.</em>
     </li>
-    <li style="margin-bottom:1.1rem;">
+    <li>
       <strong>Wylie, L.E.</strong>, Clinkinbeard, S., &amp; Hobbs, A. (2019).
       The application of risk-needs-responsivity programming in juvenile
       diversion. <em>Criminal Justice and Behavior.</em>
     </li>
-    <li style="margin-bottom:1.1rem;">
+    <li>
       <strong>Wylie, L.E.</strong>, &amp; Rufino, K.A. (2018). The impact of
       victimization and mental health on recidivism for early
       system-involved juvenile offenders. <em>Law and Human Behavior.</em>
     </li>
   </ul>
 
-  <h3 style="margin-top:2.5rem;" class="anchored"><span style="display:inline-block; width:11px; height:11px; border-radius:50%; background:#0d8f76; margin-right:0.5rem;"></span>Courts, Data &amp; Communication</h3>
-  <p style="color:#4b5563;">
+  <h3 class="pub-area-title anchored"><span class="pub-area-dot" style="background:#0d8f76;"></span>Courts, Data &amp; Communication</h3>
+  <p class="pub-area-desc">
     Helping courts measure, understand, and communicate the story of their
     own work.
   </p>
-  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.55; font-size:0.88rem;">
-    <li style="margin-bottom:1.1rem;">
+  <ul class="pub-list">
+    <li>
       <strong>Wylie, L.E.</strong> (2025). Cultivating a court's data STORY:
       A guide for court leaders to develop storytelling skills and effective
       communications. <em>Trends in State Courts.</em>
     </li>
-    <li style="margin-bottom:1.1rem;">
+    <li>
       <strong>Wylie, L.E.</strong>, Hoetger, L.A., Hazen, K., Haby, J., &amp;
       Brank, E.M. (2018). Forty years of <em>Law and Human Behavior</em>: A
       content analysis. <em>Scientometrics.</em>
     </li>
   </ul>
 
-  <h3 style="margin-top:2.5rem;" class="anchored"><span style="display:inline-block; width:11px; height:11px; border-radius:50%; background:#9a7d10; margin-right:0.5rem;"></span>Evidence &amp; Empirical Legal Studies</h3>
-  <p style="color:#4b5563;">
+  <h3 class="pub-area-title anchored"><span class="pub-area-dot" style="background:#9a7d10;"></span>Evidence &amp; Empirical Legal Studies</h3>
+  <p class="pub-area-desc">
     Empirical answers to doctrinal questions — from arbitration outcomes to
     voice identification evidence.
   </p>
-  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.55; font-size:0.88rem;">
-    <li style="margin-bottom:1.1rem;">
+  <ul class="pub-list">
+    <li>
       Franck, S., &amp; <strong>Wylie, L.E.</strong> (2015). Predicting
       outcomes in investment treaty arbitration. <em>Duke Law Journal.</em>
     </li>
@@ -439,7 +438,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="section-heading anchored" data-anchor-id="citation-impact">Citation impact</h2>
 <div class="container" style="max-width: 960px;">
   <p style="color:#4b5563; max-width:820px;">
-    The twenty most-cited publications, colored by research thread —
+    The twenty most-cited publications, colored by research area —
     approximately 880 citations across the published record.
   </p>
   <div id="citechart-card" style="background:#ffffff; border:1px solid #e8e4df; border-radius:10px; padding:1.5rem 1.25rem 1rem;">
