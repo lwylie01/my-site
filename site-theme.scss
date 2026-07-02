@@ -358,6 +358,26 @@ hr {
   transform: scale(1.06) translateX(-4px);
 }
 
+.bio-body {
+  max-width: 62ch;
+}
+
+.bio-body p {
+  font-size: 0.95rem;
+  color: #4f4f5e;
+  line-height: 1.65;
+}
+
+.bio-body p:first-of-type {
+  font-size: 1.05rem;
+  color: $dark;
+  line-height: 1.6;
+}
+
+.bio-body a {
+  font-weight: 600;
+}
+
 .credential-badges {
   display: flex;
   flex-wrap: wrap;
