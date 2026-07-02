@@ -18,8 +18,9 @@ toc: false
 
 <div class="container" style="max-width: 960px;">
   <div id="pubchart-card" style="background:#ffffff; border:1px solid #e8e4df; border-radius:10px; padding:1.5rem 1.25rem 1rem;">
-    <div id="pubchart"></div>
+    <div id="pubchart" style="overflow-x:auto; -webkit-overflow-scrolling:touch;"></div>
     <p style="margin:0.6rem 0 0; color:#888; font-size:0.8rem;">
+      <span id="pubchart-swipe-hint" style="display:none;">Swipe the chart to see the full timeline. </span>
       Peer-reviewed articles, law reviews, book chapters, and books, 2009–2025.
       Full citations in the lists below and in the CV.
     </p>
@@ -85,7 +86,7 @@ toc: false
 
   const Y0 = 2009, Y1 = 2025;
   const W = 920, PAD_L = 16, PAD_R = 16, PAD_T = 8;
-  const LANE_LABEL_H = 26, TICK_H = 26;
+  const LANE_LABEL_H = 32, TICK_H = 30;
   const DOT_R = 6, STACK_GAP = 17;
 
   const ns = "http://www.w3.org/2000/svg";
@@ -121,13 +122,17 @@ toc: false
   const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "group",
     "aria-label": "Timeline of publications by year and research thread" });
   svg.style.fontFamily = "inherit";
+  // below this width the chart scrolls horizontally instead of shrinking,
+  // so the text stays legible on phones
+  svg.style.minWidth = "680px";
+  svg.style.display = "block";
 
   // hairline year gridlines + ticks (solid, recessive)
   for (let y = Y0; y <= Y1; y++) {
     const x = xFor(y);
     svg.appendChild(el("line", { x1: x, y1: PAD_T, x2: x, y2: laneY, stroke: "#f0ece7", "stroke-width": 1 }));
     if (y % 2 === 1) {
-      const tick = el("text", { x: x, y: laneY + 18, "text-anchor": "middle", fill: "#888", "font-size": 11 });
+      const tick = el("text", { x: x, y: laneY + 20, "text-anchor": "middle", fill: "#777", "font-size": 13.5 });
       tick.style.fontVariantNumeric = "tabular-nums";
       tick.textContent = y;
       svg.appendChild(tick);
@@ -138,8 +143,8 @@ toc: false
   THREADS.forEach((t, i) => {
     const L = lanes[t.key];
     if (i > 0) svg.appendChild(el("line", { x1: PAD_L, y1: L.top, x2: W - PAD_R, y2: L.top, stroke: "#eee9e4", "stroke-width": 1 }));
-    svg.appendChild(el("circle", { cx: PAD_L + 5, cy: L.top + 14, r: 5, fill: t.color }));
-    const lbl = el("text", { x: PAD_L + 16, y: L.top + 18, fill: "#3C3C3C", "font-size": 13, "font-weight": 600 });
+    svg.appendChild(el("circle", { cx: PAD_L + 6, cy: L.top + 16, r: 6, fill: t.color }));
+    const lbl = el("text", { x: PAD_L + 19, y: L.top + 21, fill: "#3C3C3C", "font-size": 16, "font-weight": 600 });
     lbl.textContent = t.label;
     svg.appendChild(lbl);
   });
@@ -179,7 +184,14 @@ toc: false
     svg.appendChild(hit);
   });
 
-  document.getElementById("pubchart").appendChild(svg);
+  const chartBox = document.getElementById("pubchart");
+  chartBox.appendChild(svg);
+  const hint = document.getElementById("pubchart-swipe-hint");
+  const updateHint = () => {
+    hint.style.display = chartBox.scrollWidth > chartBox.clientWidth ? "inline" : "none";
+  };
+  updateHint();
+  window.addEventListener("resize", updateHint);
 })();
 </script>
 ```
@@ -212,7 +224,7 @@ toc: false
       </a>
     </div>
   </div>
-  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.6;">
+  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.55; font-size:0.88rem;">
     <li style="margin-bottom:1.1rem;">
       Brank, E.M., &amp; <strong>Wylie, L.E.</strong> (2021). Legal
       responsibility among the young and the elderly.
@@ -231,7 +243,7 @@ toc: false
     Diversion, risk and needs, and what actually changes outcomes for young
     people in the system.
   </p>
-  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.6;">
+  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.55; font-size:0.88rem;">
     <li style="margin-bottom:1.1rem;">
       Kotlaja, M., &amp; <strong>Wylie, L.E.</strong> (2023). Electronically
       monitored youth: Stigma and negative social functioning.
@@ -259,7 +271,7 @@ toc: false
     Helping courts measure, understand, and tell the story of their own work —
     the thread this website practices in public.
   </p>
-  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.6;">
+  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.55; font-size:0.88rem;">
     <li style="margin-bottom:1.1rem;">
       <strong>Wylie, L.E.</strong> (2025). Cultivating a court's data STORY:
       A guide for court leaders to develop storytelling skills and effective
@@ -277,7 +289,7 @@ toc: false
     Empirical answers to doctrinal questions — from arbitration outcomes to
     voice identification evidence.
   </p>
-  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.6;">
+  <ul class="pub-list" style="list-style:none; padding-left:0; line-height:1.55; font-size:0.88rem;">
     <li style="margin-bottom:1.1rem;">
       Franck, S., &amp; <strong>Wylie, L.E.</strong> (2015). Predicting
       outcomes in investment treaty arbitration. <em>Duke Law Journal.</em>
