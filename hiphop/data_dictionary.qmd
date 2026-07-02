@@ -88,7 +88,7 @@ reactable(
 )
 ```
 
-Two rules worth calling out because they are easy to get wrong:
+Two scope rules merit particular attention:
 
 - **Region = scene, not birthplace.** Acts are assigned to the US scene they
   are professionally rooted in — label home and scene affiliation during their

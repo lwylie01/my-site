@@ -68,7 +68,7 @@ toc: false
       question the categories were never built to answer: where does adolescence
       end and adulthood begin? The legal system draws a hard line at 18; the
       developmental data draws nothing of the kind. A project about what happens
-      when a measurement boundary gets treated as a biological one.
+      when a measurement boundary is treated as a biological one.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
