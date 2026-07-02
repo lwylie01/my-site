@@ -18,6 +18,21 @@ editor:
         datasets, practical methodology, and visualizations built to be
         understood and remembered.
       </p>
+      <svg class="hero-motif" viewBox="0 0 220 34" width="220" height="34" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="motif-line" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#8C6A8D"/>
+            <stop offset="1" stop-color="#E98973"/>
+          </linearGradient>
+        </defs>
+        <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#motif-line)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"/>
+        <circle cx="58" cy="28" r="3.2" fill="#9d7397"/>
+        <circle cx="96" cy="20" r="3.2" fill="#b07d90"/>
+        <circle cx="132" cy="22" r="3.2" fill="#c48389"/>
+        <circle cx="168" cy="12" r="3.2" fill="#d78681"/>
+        <circle cx="204" cy="10" r="3.2" fill="#E98973"/>
+      </svg>
     </div>
   </div>
 </div>
@@ -39,7 +54,6 @@ editor:
     <div class="credential-badges">
       <span class="badge-item">PhD, Social Psychology · concentration in Research Design &amp; Data Analysis</span>
       <span class="badge-item">JD · concentration in Health Law</span>
-      <span class="badge-item">Senior Court Research Associate · National Center for State Courts</span>
     </div>
 
     <p>I'm particularly interested in the unintended consequences of legal
@@ -67,36 +81,37 @@ editor:
 <div class="focus-grid">
 
   <div class="focus-card" style="--accent:#8C6A8D;">
-    <p class="focus-card-label">Applied Research</p>
+    <p class="focus-card-label">Applied Research Methods and Design</p>
     <p class="focus-card-text">
-      Work across law, psychology, and public policy — with a standing interest
-      in construct validity, uncertainty, and the politics of how metrics get
-      built and used.
+      Randomized studies and quasi-experimental methods across law, psychology,
+      and public policy — designs matched to the question and to the
+      constraints of real-world settings.
     </p>
   </div>
 
   <div class="focus-card" style="--accent:#E98973;">
-    <p class="focus-card-label">Program Evaluation</p>
+    <p class="focus-card-label">Tailored Program Evaluation and Recommendations</p>
     <p class="focus-card-text">
       Process and outcome evaluations of courts, diversion, and pretrial
-      programs — measuring whether an intervention performs as intended.
+      programs — combining quantitative and qualitative methods to produce
+      recommendations programs can act on.
     </p>
   </div>
 
   <div class="focus-card" style="--accent:#6b4f6c;">
-    <p class="focus-card-label">Measurement &amp; Design</p>
+    <p class="focus-card-label">Tests of Measurement Validity and Reliability</p>
     <p class="focus-card-text">
-      Building and validating screening tools and latent-trait measures, and the
-      research designs that make a finding trustworthy in the first place.
+      Building and validating screening tools and latent-trait measures —
+      evidence that an instrument measures what it claims to, consistently.
     </p>
   </div>
 
   <div class="focus-card" style="--accent:#B5835A;">
-    <p class="focus-card-label">Storytelling with Data</p>
+    <p class="focus-card-label">Practical Storytelling with Data</p>
     <p class="focus-card-text">
-      Executive and graduate teaching that turns rigorous analysis into
-      something a judge, funder, or community will read and remember —
-      taught on datasets with documented flaws.
+      Executive and graduate teaching that turns rigorous analysis into work a
+      judge, funder, or community will read and remember — taught on datasets
+      whose flaws are part of the lesson.
     </p>
   </div>
 
@@ -105,11 +120,14 @@ editor:
 
 ------------------------------------------------------------------------
 
-## Featured Project {#featured .section-heading}
+## Featured Projects {#featured .section-heading}
 
 ```{=html}
 <div class="project-grid">
   <div class="project-card">
+    <a href="hiphop/hiphop_periodic_table.html" class="project-card-thumb" aria-hidden="true" tabindex="-1">
+      <img src="pics/thumb-periodic.jpg" alt="" loading="lazy" />
+    </a>
     <span class="project-card-tag">Data Storytelling</span>
     <p class="project-card-title">A Periodic Table of Hip-Hop Artists</p>
     <p class="project-card-desc">
@@ -127,6 +145,28 @@ editor:
       Explore the periodic table →
     </a>
   </div>
+
+  <div class="project-card">
+    <a href="barnum/barnum_test.html" class="project-card-thumb" aria-hidden="true" tabindex="-1">
+      <img src="pics/thumb-barnum.jpg" alt="" loading="lazy" />
+    </a>
+    <span class="project-card-tag">Data Storytelling</span>
+    <p class="project-card-title">The Barnum Test</p>
+    <p class="project-card-desc">
+      A 90-second interactive exercise that builds a "personalized" profile,
+      asks how accurate it feels, then reveals that every participant receives
+      the identical text. A clear, memorable lesson in construct validity.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Construct validity</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
+    </div>
+    <br>
+    <a href="barnum/barnum_test.html" style="font-weight:600; color:#8C6A8D;">
+      Take the Barnum Test →
+    </a>
+  </div>
 </div>
 ```
 
@@ -135,4 +175,6 @@ editor:
 ::: {style="text-align: center; padding: 3rem 0 1rem; color: #6b7280; font-size: 0.9rem;"}
 Built with [Quarto](https://quarto.org) · Hosted on [GitHub
 Pages](https://pages.github.com)
+
+<span style="display:block; margin-top:0.5rem; font-size:0.8rem; color:#9ca3af; font-style:italic;">n = 1 website. Results may not generalize.</span>
 :::
