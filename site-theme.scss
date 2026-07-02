@@ -40,6 +40,19 @@ h1, h2, h3, h4, h5, h6 {
   color: $dark;
 }
 
+/* Type scale for sub-headings below the section-heading tier (1.5rem), so
+   content headings descend properly instead of falling back to the larger
+   Bootstrap defaults. Matches the homepage's sub-title tier (.project-card-title). */
+h3 {
+  font-size: 1.2rem;
+  line-height: 1.25;
+  margin-top: 2rem;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
 a {
   color: $secondary;
   text-decoration: none;
