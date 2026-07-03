@@ -16,6 +16,7 @@
 - [x] Style-as-shape glyph (8 shapes), merged Conscious/Street into Conscious/Lyrical
 - [x] Stale-content sweep (2026-07): projects/teaching copy, dashboard gender list (+Da Brat, +Eve), bias-table Language row, dead REGION_COLORS, hardcoded 139s
 - [x] Data Dictionary sheet + hiphop/data_dictionary.qmd (codebook page)
+- [x] Cleanup pass (2026-07): Gender column added to workbook (dashboard gender chart now data-driven, hardcoded list removed); Composite Score float artifacts normalized to 1 dp; dead template code removed (--uk/--intl vars, .tile-conf/.conf-* rules, 'Late 99s' checks, stale layout comments)
 
 ## Region shapes
 

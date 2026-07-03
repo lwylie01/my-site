@@ -56,7 +56,8 @@ artists_raw <- read_excel(
     metaphor       = `Metaphor/Imagery`,
     concept        = `Conceptual Depth`,
     confidence     = Confidence,
-    confidence_note = `Confidence Note`
+    confidence_note = `Confidence Note`,
+    gender         = Gender
   ) |>
   mutate(across(c(rhyme, vocab, story, metaphor, concept), as.integer))
 
@@ -288,33 +289,23 @@ ggplotly(p_region, tooltip = "text") |>
 ### Gender representation gap {width="50%"}
 
 ```{r bar-gender}
-female_artists <- c(
-  "Roxanne Shanté","MC Lyte","Queen Latifah",
-  "Lauryn Hill","Missy Elliott","Lil' Kim","Foxy Brown",
-  "Da Brat","Eve",
-  "Nicki Minaj","Rapsody","Noname","Tierra Whack",
-  "Doechii","GloRilla","Cardi B",
-  "Saweetie","Latto"
-)
-
+# Gender comes from the Gender column in the Excel workbook (single source of
+# truth). "Mixed" only occurs for Compounds, which this dashboard filters out.
 gender_data <- artists |>
-  mutate(gender_group = if_else(name %in% female_artists, "Female / non-binary", "Male")) |>
-  count(era, gender_group)
+  count(era, gender_group = gender)
 
-# Count from the data (not length(female_artists)) so the headline figure
-# always matches what the chart actually plots.
-n_female <- sum(artists$name %in% female_artists)
+n_female <- sum(artists$gender == "Female")
 
 p_gender <- gender_data |>
   ggplot(aes(x = era, y = n, fill = gender_group,
              text = paste0(gender_group, ": ", n, " artists"))) +
   geom_col(position = "fill") +
-  scale_fill_manual(values = c("Female / non-binary" = "#e377c2", "Male" = "#7f7f7f")) +
+  scale_fill_manual(values = c("Female" = "#e377c2", "Male" = "#7f7f7f")) +
   scale_y_continuous(labels = percent) +
   labs(
     title = "Gender representation by era",
     subtitle = paste0(
-      n_female, " female/non-binary artists of ", nrow(artists), " total (",
+      n_female, " female artists of ", nrow(artists), " total (",
       round(n_female/nrow(artists)*100), "%)"
     ),
     x = NULL, y = "Share of era", fill = NULL
@@ -361,7 +352,7 @@ plot_ly(conf_counts,
 bias_df <- tribble(
   ~"Bias type",        ~"Direction",                              ~"Practical implication",
   "Prestige",         "Over-represents critically acclaimed artists", "Commercial artists scored lower; vibe-first artists may be underrated",
-  "Gender",           "~14% female/non-binary vs. ~50% of rap audience", "Female artists face different critical frameworks; scores may not be comparable",
+  "Gender",           "~15% female vs. ~50% of rap audience",    "Female artists face different critical frameworks; scores may not be comparable",
   "Geography",        "NYC + Golden Age disproportionate",        "Southern and international artists underrepresented in critical canon used for scoring",
   "Language",         "English-language, US-based frame only",    "International and non-Anglophone rap is excluded from the sampling frame entirely — a documented scope decision, not an oversight",
   "Survivorship",     "Only artists who entered critical canon",  "Regionally significant artists without national coverage are absent",
