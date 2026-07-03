@@ -20,8 +20,6 @@
     --south:   #c0855a;
     --midwest: #7aaa8a;
     --bay:     #5a9abf;
-    --uk:      #a07ac0;
-    --intl:    #bf9a40;
 
     --conf-h: #2ecc71;
     --conf-m: #f39c12;
@@ -164,18 +162,6 @@
 
   .tile-top { display: flex; justify-content: space-between; align-items: flex-start; }
   .tile-num { font-size: 0.6rem; color: rgba(255,255,255,0.7); font-weight: 600; }
-  .tile-conf {
-    font-size: 0.55rem;
-    font-weight: 800;
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: white;
-  }
-  .conf-H { background: var(--conf-h); }
-  .conf-M { background: var(--conf-m); }
-  .conf-L { background: var(--conf-l); }
-
   .tile-shape {
     font-size: 0.8rem; line-height: 1;
     text-shadow: 0 0 2px rgba(0,0,0,0.45);
@@ -546,22 +532,15 @@ const CONF_COLOR = { 'H': '#2ecc71', 'M': '#f39c12', 'L': '#e74c3c' };
 
 // ─── LAYOUT BUILDER ────────────────────────────────────────────────────────
 function buildEraLayout(list) {
-  // Periodic-table-inspired 18-column layout
-  // We'll arrange by era rows, grouped loosely
-  // Row 1: Old School (18 artists ids 1-18, pad if needed)
-  // Row 2: Golden Age (25 artists ids 19-43)
-  // Row 3: Late 90s (19 artists ids 44-62)
-  // Row 4: 2000s (23 artists ids 62-84)
-  // Row 5: 2010s (26 artists ids 85-109)
-  // Row 6: 2020s (30 artists ids 110-139)
-  // Each row is 18 wide; label col 1 + 17 tiles
-  const COLS = 18;
+  // Periodic-table-inspired 18-column layout: one band of rows per era,
+  // each row = 1 label cell + 17 tile slots, wrapping to continuation
+  // rows (blank label) when an era has more than 17 acts.
   const rows = [];
 
   const byEra = {
     'Old School': list.filter(a=>a['Era']==='Old School').map(a=>a['#']),
     'Golden Age': list.filter(a=>a['Era']==='Golden Age').map(a=>a['#']),
-    'Late 90s': list.filter(a=>a['Era']==='Late 90s'||a['Era']==='Late 99s').map(a=>a['#']),
+    'Late 90s': list.filter(a=>a['Era']==='Late 90s').map(a=>a['#']),
     '2000s': list.filter(a=>a['Era']==='2000s').map(a=>a['#']),
     '2010s': list.filter(a=>a['Era']==='2010s').map(a=>a['#']),
     '2020s': list.filter(a=>a['Era']==='2020s').map(a=>a['#']),
@@ -711,7 +690,7 @@ function getFilters() {
 }
 
 function passesFilter(a, f) {
-  if(f.era && a['Era'] !== f.era && !(f.era === 'Late 90s' && a['Era']==='Late 99s')) return false;
+  if(f.era && a['Era'] !== f.era) return false;
   if(f.region && a['Region'] !== f.region) return false;
   if(f.style && a['Style'] !== f.style) return false;
   if(f.conf && a['Confidence'] !== f.conf) return false;
