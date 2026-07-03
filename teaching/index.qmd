@@ -18,15 +18,13 @@ toc: false
 </div>
 ```
 
-## Philosophy {.section-heading}
+## How I teach {.section-heading}
 
-Good data teaching uses datasets with documented flaws, not cleaned-up
-pedagogical examples. Real data has sampling gaps, contested measurements,
-uncertain scores, and design choices that someone made and never documented.
-That is what professionals encounter in practice — and what I build teaching
-materials around.
+I teach with real datasets, flaws and all. Real data has gaps, debatable
+scores, and choices somebody made but never wrote down. That is what people
+face at work, so that is what we practice on.
 
-The six concepts I return to most often:
+The six ideas I come back to most often:
 
 ::: {.concept-list}
 <span class="concept-pill" style="background:#f3edf3; border-color:#8C6A8D; color:#6b4f6c;">Construct validity</span>
@@ -41,28 +39,27 @@ The six concepts I return to most often:
 
 ## Teaching materials {.section-heading}
 
-### The Hip-Hop Periodic Table — Data Storytelling Module
+### The Hip-Hop Periodic Table: Data Storytelling Module
 
-A complete 90-minute session built around a dataset of 147 hip-hop acts
-scored across five lyricism dimensions. Designed for professional and
-graduate audiences. Includes an interactive Quarto dashboard and a published
-data dictionary with construct definitions and methods documentation.
+A complete 90-minute session built around a dataset of 147 hip-hop acts,
+each scored on five parts of lyricism. Designed for professional and
+graduate audiences.
 
-**Concepts covered:** All six above.
+**Covers:** all six ideas above.
 
-**Deliverables available:**
+**The materials:**
 
-- [Interactive periodic table](../hiphop/hiphop_periodic_table.html) — the branded, filterable artist table
-- [Analytics dashboard](../hiphop/hiphop_dashboard.html) — companion Quarto dashboard with charts
-- [Data dictionary](../hiphop/data_dictionary.html) — construct definitions, scoring method, confidence rubric, sampling frame, known biases
-- Excel workbook — full dataset (Artist Database + Confidence Guide + Data Dictionary sheets)
+- [Interactive periodic table](../hiphop/hiphop_periodic_table.html): the branded, filterable artist table
+- [Analytics dashboard](../hiphop/hiphop_dashboard.html): a companion Quarto dashboard with charts
+- [Data dictionary](../hiphop/data_dictionary.html): what each score means, how scores were assigned, how much to trust them, and known biases
+- Excel workbook: the full dataset (Artist Database, Confidence Guide, and Data Dictionary sheets)
 
 ::: {.callout-tip title="Session design note"}
-The module opens by asking participants to rate a favorite artist's
-lyricism on a 1–10 scale — immediately, without deliberation. Then comes
-the real question: what, precisely, did they just measure? Answering that
-properly takes 45 minutes, and by the end the room is debating construct
-validity in terms of its own performance measures.
+The session opens with a quick exercise: rate a favorite artist's lyricism
+on a scale of 1 to 10, right away, no second-guessing. Then comes the real
+question. What did you just measure? Working that out takes a good 45
+minutes, and by the end people are debating construct validity using
+their own performance measures as examples.
 :::
 
 ---
@@ -73,7 +70,7 @@ validity in terms of its own performance measures.
 ::: {.column width="50%"}
 **Measurement and metrics**
 
-- Building defensible performance measures from first principles
+- Building performance measures that hold up
 - When composite scores help and when they mislead
 - Communicating confidence and uncertainty to non-technical stakeholders
 - The politics of how organizational metrics get designed
@@ -84,7 +81,7 @@ validity in terms of its own performance measures.
 
 - Choosing chart types that match your argument
 - Designing for uncertainty, not false precision
-- Interactive vs. static — when each is appropriate
+- Interactive vs. static, and when to use each
 - Common visualization mistakes in stakeholder reporting
 :::
 ::::
