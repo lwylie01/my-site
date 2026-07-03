@@ -172,7 +172,7 @@ tagList(
 ## Row {height="15%"}
 
 ::: {.callout-tip title="Teaching Prompt — Construct Validity"}
-**The central measurement problem:** We started with one variable called "Lyricism" and ended up with five. Was that the right decision? What are we gaining and losing? This is the construct validity question that underlies every KPI, survey instrument, and performance rating in your organization.
+**The central measurement problem:** We started with one variable called "Lyricism" and ended up with five. Was that the right decision? What are we gaining and losing? This is the construct validity question that underlies every performance measure, survey instrument, and rating scale in your organization.
 :::
 
 ## Row {height="85%"}
@@ -533,7 +533,7 @@ ggplotly(p_top20, tooltip = "text") |>
 ## Row {height="15%"}
 
 ::: {.callout-important title="Teaching Prompt — Communicating Uncertainty"}
-**Most dashboards show you the number. This one shows you how much to trust it.** The confidence flag is almost never present in executive reporting — but it should be. Where in your organization's reporting does uncertainty get hidden? What decisions are being made on L-confidence data presented as H-confidence?
+**Most dashboards show you the number. This one shows you how much to trust it.** The confidence flag is almost never present in stakeholder reporting — but it should be. Where in your organization's reporting does uncertainty get hidden? What decisions are being made on L-confidence data presented as H-confidence?
 :::
 
 ## Row {height="45%"}

@@ -44,9 +44,9 @@ The six concepts I return to most often:
 ### The Hip-Hop Periodic Table — Data Storytelling Module
 
 A complete 90-minute session built around a dataset of 147 hip-hop acts
-scored across five lyricism dimensions. Designed for professional and executive
-audiences. Includes an interactive Quarto dashboard and a published data
-dictionary with construct definitions and methods documentation.
+scored across five lyricism dimensions. Designed for professional and
+graduate audiences. Includes an interactive Quarto dashboard and a published
+data dictionary with construct definitions and methods documentation.
 
 **Concepts covered:** All six above.
 
@@ -58,22 +58,22 @@ dictionary with construct definitions and methods documentation.
 - Excel workbook — full dataset (Artist Database + Confidence Guide + Data Dictionary sheets)
 
 ::: {.callout-tip title="Session design note"}
-I open this module by asking executives to rate a favorite artist's
-lyricism on a 1–10 scale — immediately, without deliberation. I then ask
-what, precisely, they just measured. Answering that properly takes 45
-minutes, and by the end the room is debating construct validity in terms of
-its own KPIs.
+The module opens by asking participants to rate a favorite artist's
+lyricism on a 1–10 scale — immediately, without deliberation. Then comes
+the real question: what, precisely, did they just measure? Answering that
+properly takes 45 minutes, and by the end the room is debating construct
+validity in terms of its own performance measures.
 :::
 
 ---
 
-## Topics available for custom sessions {.section-heading}
+## Topics I teach and write about {.section-heading}
 
 :::: {.columns}
 ::: {.column width="50%"}
 **Measurement and metrics**
 
-- Building defensible KPIs from first principles
+- Building defensible performance measures from first principles
 - When composite scores help and when they mislead
 - Communicating confidence and uncertainty to non-technical stakeholders
 - The politics of how organizational metrics get designed
@@ -85,13 +85,6 @@ its own KPIs.
 - Choosing chart types that match your argument
 - Designing for uncertainty, not false precision
 - Interactive vs. static — when each is appropriate
-- Common visualization mistakes in executive reporting
+- Common visualization mistakes in stakeholder reporting
 :::
 ::::
-
----
-
-::: {style="margin-top: 2rem;"}
-**Get in touch** about custom session design, keynotes, or workshop facilitation:
-[lindsey@datawithaplot.org](mailto:lindsey@datawithaplot.org)
-:::

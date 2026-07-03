@@ -11,6 +11,8 @@ barnum/barnum_test.html
 
 # Internal/private working files — keep off the public site repo
 CV/Wylie_Capacity_Dashboard.qmd
+CV/Wylie_Capacity_Dashboard.html
+CV/Wylie_Capacity_Dashboard_files/
 
 # Local-only preview helper (machine-specific R path)
 .claude/launch.json
@@ -23,3 +25,6 @@ CV/Wylie_Capacity_Dashboard.qmd
 
 # Note: _freeze/ is intentionally tracked so the R dashboard renders from cache
 # without needing R to re-execute on every publish.
+
+# Internal capacity dashboard freeze cache — never publish (contains project details)
+_freeze/CV/

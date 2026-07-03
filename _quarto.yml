@@ -1,6 +1,12 @@
 project:
   type: website
   output-dir: _site
+  # The CV/ capacity dashboard is a personal planning tool — never render it
+  # into the public site (its .qmd is also gitignored so CI never sees it).
+  render:
+    - "*.qmd"
+    - "**/*.qmd"
+    - "!CV/Wylie_Capacity_Dashboard.qmd"
   # Regenerates the interactive HTML pages from their editable Excel files on
   # every render/publish. Edit the .xlsx files to update them.
   #   hiphop/data/hiphop_artists.xlsx   -> hiphop/hiphop_periodic_table.html
@@ -48,7 +54,7 @@ website:
   sidebar: true
 
   page-footer:
-    left: "© 2026 Wylie Insights"
+    left: "© 2026 Lindsey E. Wylie · Data with a Plot"
     right:
       - icon: github
         href: https://github.com/lwylie01

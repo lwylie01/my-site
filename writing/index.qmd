@@ -51,7 +51,7 @@ toc: false
     <p class="essay-title">When the Metric Becomes the Policy</p>
     <p class="essay-desc">How measurement decisions quietly become legal
     and organizational ones — and why that matters for anyone who builds
-    or uses KPIs.</p>
+    or uses performance measures.</p>
     <span class="essay-status">Coming soon</span>
   </a>
 

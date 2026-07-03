@@ -55,7 +55,6 @@
   }
   header h1 span { color: var(--secondary); }
   header p { font-size: 0.8rem; color: var(--accent); margin-top: 0.1rem; }
-  .header-right { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
 
   /* ── Filters ─────────────────────────────────────────── */
   #filters {
@@ -95,7 +94,6 @@
   }
   .btn:hover { opacity: 0.85; }
   .btn-primary { background: var(--primary); color: white; }
-  .btn-secondary { background: var(--secondary); color: white; }
   .btn-outline { background: white; color: var(--primary); border: 1.5px solid var(--primary); }
   .btn-sm { padding: 0.25rem 0.6rem; font-size: 0.72rem; }
 
@@ -162,8 +160,6 @@
     z-index: 10;
     box-shadow: 0 6px 20px rgba(0,0,0,0.25);
   }
-  .tile.dragging { opacity: 0.55; transform: scale(1.1); z-index: 1000; }
-  .tile.drag-over { border-color: white; box-shadow: 0 0 0 3px white; }
   .tile.filtered-out { opacity: 0.12; pointer-events: none; }
 
   .tile-top { display: flex; justify-content: space-between; align-items: flex-start; }
@@ -351,43 +347,6 @@
   }
   #modal-footer .conf-note { font-size: 0.7rem; color: var(--muted); max-width: 300px; line-height: 1.4; }
 
-  /* Edit mode modal */
-  .edit-field { display: grid; grid-template-columns: 110px 1fr; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; }
-  .edit-field label { font-size: 0.75rem; font-weight: 600; color: var(--muted); }
-  .edit-field input, .edit-field select, .edit-field textarea {
-    border: 1.5px solid var(--accent);
-    border-radius: 5px;
-    padding: 0.3rem 0.5rem;
-    font-size: 0.78rem;
-    outline: none;
-    color: var(--text);
-    background: white;
-    width: 100%;
-  }
-  .edit-field input:focus, .edit-field select:focus, .edit-field textarea:focus { border-color: var(--primary); }
-  .edit-field textarea { resize: vertical; min-height: 52px; }
-
-  /* ── Add Artist Panel ─────────────────────────────────── */
-  #add-panel {
-    position: fixed; top: 0; right: -400px;
-    width: 380px; height: 100vh;
-    background: white;
-    box-shadow: -4px 0 30px rgba(0,0,0,0.15);
-    z-index: 8000;
-    transition: right 0.25s ease;
-    overflow-y: auto;
-    padding: 1.5rem;
-  }
-  #add-panel.open { right: 0; }
-  #add-panel h3 { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem; }
-  .panel-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.3);
-    z-index: 7999;
-    display: none;
-  }
-  .panel-overlay.active { display: block; }
-
   /* ── Stats Bar ────────────────────────────────────────── */
   #stats-bar {
     background: var(--dark);
@@ -410,7 +369,7 @@
 
   /* Print / export styles */
   @media print {
-    header, #filters, #legend, #stats-bar, #add-panel { display: none; }
+    header, #filters, #legend, #stats-bar { display: none; }
     #compounds-wrap { padding: 0; }
     #grid-container { padding: 0; }
   }
@@ -432,13 +391,7 @@
 <header>
   <div>
     <h1>Periodic Table of <span>Hip-Hop Artists</span></h1>
-    <p>datawithaplot.org — <span id="subtitle-count">—</span> Artists · Five-Dimension Lyrical Profiles · Drag to Rearrange</p>
-  </div>
-  <div class="header-right">
-    <button class="btn btn-outline btn-sm" onclick="toggleEditMode()">✏️ Edit Mode: <span id="edit-mode-label">Off</span></button>
-    <button class="btn btn-secondary btn-sm" onclick="openAddPanel()">＋ Add Artist</button>
-    <button class="btn btn-primary btn-sm" onclick="exportData()">⬇ Export JSON</button>
-    <button class="btn btn-outline btn-sm" onclick="resetLayout()">↺ Reset</button>
+    <p>datawithaplot.org — <span id="subtitle-count">—</span> Artists · Five-Dimension Lyrical Profiles</p>
   </div>
 </header>
 
@@ -559,26 +512,11 @@
           <span class="composite-val" id="modal-composite"></span>
         </div>
       </div>
-      <div id="modal-edit-form" style="display:none"></div>
     </div>
     <div id="modal-footer">
       <div class="conf-note" id="modal-conf-note"></div>
-      <div style="display:flex;gap:0.5rem">
-        <button class="btn btn-outline btn-sm" id="modal-edit-btn" onclick="toggleModalEdit()">✏️ Edit</button>
-        <button class="btn btn-primary btn-sm" onclick="closeModal()">Close</button>
-      </div>
+      <button class="btn btn-primary btn-sm" onclick="closeModal()">Close</button>
     </div>
-  </div>
-</div>
-
-<!-- Add panel -->
-<div class="panel-overlay" id="panel-overlay" onclick="closeAddPanel()"></div>
-<div id="add-panel">
-  <h3>＋ Add New Artist</h3>
-  <div id="add-form"></div>
-  <div style="display:flex;gap:0.5rem;margin-top:1rem">
-    <button class="btn btn-primary" onclick="saveNewArtist()">Add Artist</button>
-    <button class="btn btn-outline" onclick="closeAddPanel()">Cancel</button>
   </div>
 </div>
 
@@ -587,14 +525,10 @@
 const RAW_DATA = __RAW_DATA__;
 
 // ─── STATE ─────────────────────────────────────────────────────────────────
-let artists = JSON.parse(JSON.stringify(RAW_DATA));
-let elements = artists.filter(a => a['Type'] !== 'Compound');   // solo artists
-let compounds = artists.filter(a => a['Type'] === 'Compound');  // groups & crews
+const artists = RAW_DATA;
+const elements = artists.filter(a => a['Type'] !== 'Compound');   // solo artists
+const compounds = artists.filter(a => a['Type'] === 'Compound');  // groups & crews
 let layout = []; // array of artist IDs or null (empty cells), 18 cols
-let editMode = false;
-let dragSrcIdx = null;
-let currentModalId = null;
-let modalIsEditing = false;
 
 const SCORE_COLORS = ['Rhyme Density','Vocab Breadth','Storytelling','Metaphor/Imagery','Conceptual Depth'];
 const SCORE_HUES = ['#E98973','#8C6A8D','#7aaa8a','#5a9abf','#bf9a40'];
@@ -655,10 +589,6 @@ function buildCompoundLayout() { return buildEraLayout(compounds); }
 
 // ─── RENDER ─────────────────────────────────────────────────────────────────
 function render() {
-  // refresh partitions (covers artists added/edited in-page)
-  elements = artists.filter(a => a['Type'] !== 'Compound');
-  compounds = artists.filter(a => a['Type'] === 'Compound');
-
   const area = document.getElementById('table-area');
   area.innerHTML = '';
 
@@ -679,15 +609,6 @@ function render() {
     if(cell === null) {
       const sp = document.createElement('div');
       sp.className = 'grid-spacer';
-      if(editMode) {
-        sp.style.border = '1.5px dashed #d0c0d0';
-        sp.style.borderRadius = '6px';
-        sp.style.cursor = 'pointer';
-        sp.title = 'Empty slot';
-        sp.addEventListener('dragover', e => { e.preventDefault(); sp.classList.add('drag-over'); });
-        sp.addEventListener('dragleave', () => sp.classList.remove('drag-over'));
-        sp.addEventListener('drop', e => { e.preventDefault(); sp.classList.remove('drag-over'); handleDrop(idx); });
-      }
       area.appendChild(sp);
       return;
     }
@@ -721,19 +642,6 @@ function render() {
     `;
 
     tile.addEventListener('click', () => openModal(artist['#']));
-
-    if(editMode) {
-      tile.draggable = true;
-      tile.addEventListener('dragstart', e => {
-        dragSrcIdx = idx;
-        tile.classList.add('dragging');
-        e.dataTransfer.effectAllowed = 'move';
-      });
-      tile.addEventListener('dragend', () => tile.classList.remove('dragging'));
-      tile.addEventListener('dragover', e => { e.preventDefault(); tile.classList.add('drag-over'); });
-      tile.addEventListener('dragleave', () => tile.classList.remove('drag-over'));
-      tile.addEventListener('drop', e => { e.preventDefault(); tile.classList.remove('drag-over'); handleDrop(idx); });
-    }
 
     area.appendChild(tile);
   });
@@ -791,16 +699,6 @@ function renderCompounds() {
   if(cc) cc.textContent = compounds.length;
 }
 
-// ─── DRAG & DROP ─────────────────────────────────────────────────────────────
-function handleDrop(targetIdx) {
-  if(dragSrcIdx === null || dragSrcIdx === targetIdx) return;
-  const tmp = layout[dragSrcIdx];
-  layout[dragSrcIdx] = layout[targetIdx];
-  layout[targetIdx] = tmp;
-  dragSrcIdx = null;
-  render();
-}
-
 // ─── FILTERS ─────────────────────────────────────────────────────────────────
 function getFilters() {
   return {
@@ -850,8 +748,6 @@ function updateStats(filters) {
 
 // ─── MODAL ───────────────────────────────────────────────────────────────────
 function openModal(id) {
-  currentModalId = id;
-  modalIsEditing = false;
   populateModal(id);
   document.getElementById('modal-overlay').classList.add('active');
 }
@@ -883,206 +779,11 @@ function populateModal(id) {
   const confLabels = {H:'High confidence (well-documented)',M:'Medium confidence (some gaps)',L:'Low confidence (limited sources)'};
   const confNote = a['Confidence Note'] ? `${confLabels[a['Confidence']]} — ${a['Confidence Note']}` : confLabels[a['Confidence']];
   document.getElementById('modal-conf-note').textContent = confNote;
-
-  document.getElementById('modal-view-scores').style.display = '';
-  document.getElementById('modal-edit-form').style.display = 'none';
-  document.getElementById('modal-edit-btn').style.display = editMode ? '' : 'none';
-  document.getElementById('modal-edit-btn').textContent = '✏️ Edit';
 }
 
 function closeModal(e) {
   if(e && e.target !== document.getElementById('modal-overlay')) return;
   document.getElementById('modal-overlay').classList.remove('active');
-  currentModalId = null;
-  modalIsEditing = false;
-}
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('active');
-}
-
-function toggleModalEdit() {
-  if(!modalIsEditing) {
-    showEditForm();
-  } else {
-    saveEditForm();
-  }
-}
-
-function showEditForm() {
-  modalIsEditing = true;
-  const a = artists.find(x=>x['#']===currentModalId);
-  document.getElementById('modal-view-scores').style.display = 'none';
-  document.getElementById('modal-edit-btn').textContent = '💾 Save';
-
-  const scoreInputs = SCORE_COLORS.map(dim => `
-    <div class="edit-field">
-      <label>${dim}</label>
-      <input type="number" min="1" max="10" step="0.5" id="edit-${dim.replace(/[^a-z]/gi,'_')}" value="${a[dim]||5}">
-    </div>`).join('');
-
-  const regionOpts = ['NYC','Philly','LA','South','Midwest','Bay Area'].map(r=>`<option${r===a['Region']?' selected':''}>${r}</option>`).join('');
-  const eraOpts = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'].map(e=>`<option${e===a['Era']?' selected':''}>${e}</option>`).join('');
-  const styleOpts = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'].map(s=>`<option${s===a['Style']?' selected':''}>${s}</option>`).join('');
-  const confOpts = ['H','M','L'].map(c=>`<option${c===a['Confidence']?' selected':''}>${c}</option>`).join('');
-
-  document.getElementById('modal-edit-form').style.display = '';
-  document.getElementById('modal-edit-form').innerHTML = `
-    <div class="edit-field"><label>Name</label><input id="edit-name" value="${a['Artist Name']}"></div>
-    <div class="edit-field"><label>Symbol</label><input id="edit-symbol" value="${a['Symbol']}" maxlength="4"></div>
-    <div class="edit-field"><label>Debut Year</label><input type="number" id="edit-year" value="${a['Debut Year']}"></div>
-    <div class="edit-field"><label>Region</label><select id="edit-region">${regionOpts}</select></div>
-    <div class="edit-field"><label>Era</label><select id="edit-era">${eraOpts}</select></div>
-    <div class="edit-field"><label>Style</label><select id="edit-style">${styleOpts}</select></div>
-    <div class="edit-field"><label>Confidence</label><select id="edit-conf">${confOpts}</select></div>
-    <div class="edit-field"><label>Label</label><input id="edit-label" value="${a['Label']}"></div>
-    <div class="edit-field"><label>Prod. Style</label><input id="edit-prod" value="${a['Production Style']}"></div>
-    ${scoreInputs}
-    <div class="edit-field"><label>Description</label><textarea id="edit-desc">${a['Description']}</textarea></div>
-  `;
-}
-
-function saveEditForm() {
-  const a = artists.find(x=>x['#']===currentModalId);
-  if(!a) return;
-  a['Artist Name'] = document.getElementById('edit-name').value;
-  a['Symbol'] = document.getElementById('edit-symbol').value;
-  a['Debut Year'] = parseInt(document.getElementById('edit-year').value);
-  a['Region'] = document.getElementById('edit-region').value;
-  a['Era'] = document.getElementById('edit-era').value;
-  a['Style'] = document.getElementById('edit-style').value;
-  a['Confidence'] = document.getElementById('edit-conf').value;
-  a['Label'] = document.getElementById('edit-label').value;
-  a['Production Style'] = document.getElementById('edit-prod').value;
-  a['Description'] = document.getElementById('edit-desc').value;
-  SCORE_COLORS.forEach(dim => {
-    const key = dim.replace(/[^a-z]/gi,'_');
-    a[dim] = parseFloat(document.getElementById('edit-'+key).value)||0;
-  });
-  a['Composite Score'] = parseFloat((SCORE_COLORS.reduce((s,d)=>s+(a[d]||0),0)/5).toFixed(1));
-  modalIsEditing = false;
-  populateModal(currentModalId);
-  render();
-}
-
-// ─── EDIT MODE ───────────────────────────────────────────────────────────────
-function toggleEditMode() {
-  editMode = !editMode;
-  document.getElementById('edit-mode-label').textContent = editMode ? 'On' : 'Off';
-  render();
-}
-
-// ─── ADD ARTIST ───────────────────────────────────────────────────────────────
-function openAddPanel() {
-  const regionOpts = ['NYC','Philly','LA','South','Midwest','Bay Area'].map(r=>`<option>${r}</option>`).join('');
-  const eraOpts = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'].map(e=>`<option>${e}</option>`).join('');
-  const styleOpts = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'].map(s=>`<option>${s}</option>`).join('');
-
-  const scoreInputs = SCORE_COLORS.map(dim => `
-    <div class="edit-field">
-      <label>${dim}</label>
-      <input type="number" min="1" max="10" step="0.5" id="new-${dim.replace(/[^a-z]/gi,'_')}" value="5">
-    </div>`).join('');
-
-  document.getElementById('add-form').innerHTML = `
-    <div class="edit-field"><label>Name *</label><input id="new-name" placeholder="Artist name"></div>
-    <div class="edit-field"><label>Symbol *</label><input id="new-symbol" placeholder="e.g. KL" maxlength="4"></div>
-    <div class="edit-field"><label>Debut Year</label><input type="number" id="new-year" value="2020"></div>
-    <div class="edit-field"><label>Region</label><select id="new-region">${regionOpts}</select></div>
-    <div class="edit-field"><label>Era</label><select id="new-era">${eraOpts}</select></div>
-    <div class="edit-field"><label>Style</label><select id="new-style">${styleOpts}</select></div>
-    <div class="edit-field"><label>Label</label><input id="new-label" placeholder="Label name"></div>
-    <div class="edit-field"><label>Prod. Style</label><input id="new-prod" placeholder="Production style"></div>
-    ${scoreInputs}
-    <div class="edit-field"><label>Description</label><textarea id="new-desc" placeholder="Brief description…"></textarea></div>
-  `;
-  document.getElementById('add-panel').classList.add('open');
-  document.getElementById('panel-overlay').classList.add('active');
-}
-
-function closeAddPanel() {
-  document.getElementById('add-panel').classList.remove('open');
-  document.getElementById('panel-overlay').classList.remove('active');
-}
-
-function saveNewArtist() {
-  const name = document.getElementById('new-name').value.trim();
-  const symbol = document.getElementById('new-symbol').value.trim();
-  if(!name || !symbol) { alert('Name and Symbol are required.'); return; }
-
-  const newId = Math.max(...artists.map(a=>a['#'])) + 1;
-  const scores = {};
-  SCORE_COLORS.forEach(dim => {
-    scores[dim] = parseFloat(document.getElementById('new-'+dim.replace(/[^a-z]/gi,'_')).value)||5;
-  });
-  const composite = parseFloat((SCORE_COLORS.reduce((s,d)=>s+scores[d],0)/5).toFixed(1));
-
-  const newArtist = {
-    '#': newId,
-    Symbol: symbol,
-    'Artist Name': name,
-    Region: document.getElementById('new-region').value,
-    Era: document.getElementById('new-era').value,
-    Style: document.getElementById('new-style').value,
-    'Production Style': document.getElementById('new-prod').value,
-    Label: document.getElementById('new-label').value,
-    'Debut Year': parseInt(document.getElementById('new-year').value)||2020,
-    ...scores,
-    'Composite Score': composite,
-    Confidence: 'M',
-    'Confidence Note': 'User-added artist',
-    Description: document.getElementById('new-desc').value
-  };
-
-  artists.push(newArtist);
-  layout.push(newId); // append at end
-  closeAddPanel();
-  render();
-}
-
-// ─── EXPORT ──────────────────────────────────────────────────────────────────
-function exportData() {
-  const blob = new Blob([JSON.stringify(artists, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'hiphop_artists.json';
-  a.click(); URL.revokeObjectURL(url);
-}
-
-function resetLayout() {
-  if(!confirm('Reset layout to default order?')) return;
-  layout = buildDefaultLayout();
-  render();
-}
-
-// ─── ADD FORM BUILD ───────────────────────────────────────────────────────────
-function buildAddForm() {
-  const regions = ['NYC','Philly','LA','South','Midwest','Bay Area'];
-  const eras = ['Old School','Golden Age','Late 90s','2000s','2010s','2020s'];
-  const styles = ['Party/Pop','Political','Conscious/Lyrical','Gangsta/Street','Abstract','Jazz-Rap','Experimental','Trap/Drill'];
-
-  const form = document.getElementById('add-form');
-  if(!form.innerHTML) {
-    const rOpts = regions.map(r=>`<option>${r}</option>`).join('');
-    const eOpts = eras.map(e=>`<option>${e}</option>`).join('');
-    const sOpts = styles.map(s=>`<option>${s}</option>`).join('');
-    const scoreInputs = SCORE_COLORS.map(dim => `
-      <div class="edit-field">
-        <label>${dim}</label>
-        <input type="number" min="1" max="10" step="0.5" id="new-${dim.replace(/[^a-z]/gi,'_')}" value="5">
-      </div>`).join('');
-    form.innerHTML = `
-      <div class="edit-field"><label>Name *</label><input id="new-name" placeholder="Artist name"></div>
-      <div class="edit-field"><label>Symbol *</label><input id="new-symbol" maxlength="4" placeholder="e.g. KL"></div>
-      <div class="edit-field"><label>Debut Year</label><input type="number" id="new-year" value="2020"></div>
-      <div class="edit-field"><label>Region</label><select id="new-region">${rOpts}</select></div>
-      <div class="edit-field"><label>Era</label><select id="new-era">${eOpts}</select></div>
-      <div class="edit-field"><label>Style</label><select id="new-style">${sOpts}</select></div>
-      <div class="edit-field"><label>Label</label><input id="new-label" placeholder="Label"></div>
-      <div class="edit-field"><label>Prod. Style</label><input id="new-prod" placeholder="Production style"></div>
-      ${scoreInputs}
-      <div class="edit-field"><label>Description</label><textarea id="new-desc" placeholder="Brief description…"></textarea></div>
-    `;
-  }
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
