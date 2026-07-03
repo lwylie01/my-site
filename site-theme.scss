@@ -128,7 +128,10 @@ hr {
 
 /* SECTION HEADINGS */
 
-.section-heading {
+/* Scope to the heading element: Quarto copies the {.section-heading} class
+   onto the wrapping <section> too, and an unscoped rule would cascade the
+   heading's size/weight/color over the whole section's body text. */
+h2.section-heading {
   font-size: 1.5rem;
   font-weight: 600;
   color: $dark;
@@ -137,7 +140,7 @@ hr {
   position: relative;
 }
 
-.section-heading::after {
+h2.section-heading::after {
   content: "";
   position: absolute;
   left: 0;
