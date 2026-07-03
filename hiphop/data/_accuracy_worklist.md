@@ -18,10 +18,12 @@
 - [x] Data Dictionary sheet + hiphop/data_dictionary.qmd (codebook page)
 - [x] Cleanup pass (2026-07): Gender column added to workbook (dashboard gender chart now data-driven, hardcoded list removed); Composite Score float artifacts normalized to 1 dp; dead template code removed (--uk/--intl vars, .tile-conf/.conf-* rules, 'Late 99s' checks, stale layout comments)
 - [x] Expansion batch 2 (+16, gap-targeted, 2026-07): 7 women (Salt-N-Pepa, Megan Thee Stallion, Yo-Yo, Bahamadia, Jean Grae, Trina, Mia X — female elements now 24/132 = 18%); Midwest/Bay/South depth (Bone Thugs-N-Harmony, 8Ball & MJG, Souls of Mischief, Twista, Tech N9ne); prestige-bias cases (Nelly, Chief Keef); modern underground (Roc Marciano, Denzel Curry)
+- [x] Region taxonomy rollup (2026-07): Region now East Coast (75) / West Coast (25) / South (41) / Midwest (22); old scene values preserved in new Scene column; modal shows "East Coast (NYC)" style detail; freeze disabled for hiphop/ so data-only Excel edits re-render the dashboard
 
 ## Region shapes
 
-● NYC · ◆ Philly · ★ LA · ▲ South · ■ Midwest · ⬢ Bay Area
+● East Coast · ★ West Coast · ▲ South · ■ Midwest
+(Scene column keeps the finer NYC/Philly/LA/Bay Area detail)
 
 ## Style distribution
 
