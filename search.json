@@ -126,24 +126,24 @@
     "text": "Education\n  \n  \n    Data storytelling and applied research methods for professionals.\n  \n  \n    Recently presented Telling Your Court's Data Story at the\n    National Association for Court Management (2025)."
   },
   {
-    "objectID": "teaching/index.html#philosophy",
-    "href": "teaching/index.html#philosophy",
+    "objectID": "teaching/index.html#how-i-teach",
+    "href": "teaching/index.html#how-i-teach",
     "title": "Teaching",
-    "section": "Philosophy",
-    "text": "Philosophy\nGood data teaching uses datasets with documented flaws, not cleaned-up pedagogical examples. Real data has sampling gaps, contested measurements, uncertain scores, and design choices that someone made and never documented. That is what professionals encounter in practice — and what I build teaching materials around.\nThe six concepts I return to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
+    "section": "How I teach",
+    "text": "How I teach\nI teach with real datasets, flaws and all. Real data has gaps, debatable scores, and choices somebody made but never wrote down. That is what people face at work, so that is what we practice on.\nThe six ideas I come back to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
   },
   {
     "objectID": "teaching/index.html#teaching-materials",
     "href": "teaching/index.html#teaching-materials",
     "title": "Teaching",
     "section": "Teaching materials",
-    "text": "Teaching materials\n\nThe Hip-Hop Periodic Table — Data Storytelling Module\nA complete 90-minute session built around a dataset of 147 hip-hop acts scored across five lyricism dimensions. Designed for professional and graduate audiences. Includes an interactive Quarto dashboard and a published data dictionary with construct definitions and methods documentation.\nConcepts covered: All six above.\nDeliverables available:\n\nInteractive periodic table — the branded, filterable artist table\nAnalytics dashboard — companion Quarto dashboard with charts\nData dictionary — construct definitions, scoring method, confidence rubric, sampling frame, known biases\nExcel workbook — full dataset (Artist Database + Confidence Guide + Data Dictionary sheets)\n\n\n\n\n\n\n\nTipSession design note\n\n\n\nThe module opens by asking participants to rate a favorite artist’s lyricism on a 1–10 scale — immediately, without deliberation. Then comes the real question: what, precisely, did they just measure? Answering that properly takes 45 minutes, and by the end the room is debating construct validity in terms of its own performance measures."
+    "text": "Teaching materials\n\nThe Hip-Hop Periodic Table: Data Storytelling Module\nA complete 90-minute session built around a dataset of 147 hip-hop acts, each scored on five parts of lyricism. Designed for professional and graduate audiences.\nCovers: all six ideas above.\nThe materials:\n\nInteractive periodic table: the branded, filterable artist table\nAnalytics dashboard: a companion Quarto dashboard with charts\nData dictionary: what each score means, how scores were assigned, how much to trust them, and known biases\nExcel workbook: the full dataset (Artist Database, Confidence Guide, and Data Dictionary sheets)\n\n\n\n\n\n\n\nTipSession design note\n\n\n\nThe session opens with a quick exercise: rate a favorite artist’s lyricism on a scale of 1 to 10, right away, no second-guessing. Then comes the real question. What did you just measure? Working that out takes a good 45 minutes, and by the end people are debating construct validity using their own performance measures as examples."
   },
   {
     "objectID": "teaching/index.html#topics-i-teach-and-write-about",
     "href": "teaching/index.html#topics-i-teach-and-write-about",
     "title": "Teaching",
     "section": "Topics I teach and write about",
-    "text": "Topics I teach and write about\n\n\nMeasurement and metrics\n\nBuilding defensible performance measures from first principles\nWhen composite scores help and when they mislead\nCommunicating confidence and uncertainty to non-technical stakeholders\nThe politics of how organizational metrics get designed\n\n\nData visualization\n\nChoosing chart types that match your argument\nDesigning for uncertainty, not false precision\nInteractive vs. static — when each is appropriate\nCommon visualization mistakes in stakeholder reporting"
+    "text": "Topics I teach and write about\n\n\nMeasurement and metrics\n\nBuilding performance measures that hold up\nWhen composite scores help and when they mislead\nCommunicating confidence and uncertainty to non-technical stakeholders\nThe politics of how organizational metrics get designed\n\n\nData visualization\n\nChoosing chart types that match your argument\nDesigning for uncertainty, not false precision\nInteractive vs. static, and when to use each\nCommon visualization mistakes in stakeholder reporting"
   }
 ]
