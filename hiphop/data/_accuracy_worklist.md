@@ -1,6 +1,6 @@
 # Hip-Hop Periodic Table — Worklist
 
-`hiphop/data/hiphop_artists.xlsx`. **147 acts** = 120 Elements + 27 Compounds.
+`hiphop/data/hiphop_artists.xlsx`. **163 acts** = 132 Elements + 31 Compounds.
 (Underscore-prefixed so Quarto does not publish this internal doc.)
 
 ## Visual encoding (current)
@@ -17,6 +17,7 @@
 - [x] Stale-content sweep (2026-07): projects/teaching copy, dashboard gender list (+Da Brat, +Eve), bias-table Language row, dead REGION_COLORS, hardcoded 139s
 - [x] Data Dictionary sheet + hiphop/data_dictionary.qmd (codebook page)
 - [x] Cleanup pass (2026-07): Gender column added to workbook (dashboard gender chart now data-driven, hardcoded list removed); Composite Score float artifacts normalized to 1 dp; dead template code removed (--uk/--intl vars, .tile-conf/.conf-* rules, 'Late 99s' checks, stale layout comments)
+- [x] Expansion batch 2 (+16, gap-targeted, 2026-07): 7 women (Salt-N-Pepa, Megan Thee Stallion, Yo-Yo, Bahamadia, Jean Grae, Trina, Mia X — female elements now 24/132 = 18%); Midwest/Bay/South depth (Bone Thugs-N-Harmony, 8Ball & MJG, Souls of Mischief, Twista, Tech N9ne); prestige-bias cases (Nelly, Chief Keef); modern underground (Roc Marciano, Denzel Curry)
 
 ## Region shapes
 
@@ -26,11 +27,11 @@
 
 | Style | Count |
 |---|---|
-| Gangsta/Street | 40 |
-| Conscious/Lyrical | 39 |
-| Party/Pop | 22 |
-| Experimental | 14 |
+| Gangsta/Street | 45 |
+| Conscious/Lyrical | 42 |
+| Party/Pop | 26 |
+| Experimental | 16 |
 | Abstract | 13 |
 | Political | 11 |
-| Trap/Drill | 5 |
-| Jazz-Rap | 3 |
+| Trap/Drill | 6 |
+| Jazz-Rap | 4 |
