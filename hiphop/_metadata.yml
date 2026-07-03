@@ -1,0 +1,6 @@
+# The dashboard and data dictionary read hiphop_artists.xlsx at render time.
+# Quarto's freeze cache only invalidates when the .qmd source changes, so a
+# frozen render would silently serve stale results after data-only Excel
+# edits. Always re-execute these documents.
+execute:
+  freeze: false
