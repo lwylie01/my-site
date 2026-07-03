@@ -18,27 +18,30 @@ editor:
         datasets, practical methodology, and visualizations built to be
         understood and remembered.
       </p>
-      <svg class="hero-motif" viewBox="0 0 220 34" width="220" height="34" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="motif-line" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#8C6A8D"/>
-            <stop offset="1" stop-color="#E98973"/>
-          </linearGradient>
-        </defs>
-        <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#motif-line)" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"/>
-        <circle cx="58" cy="28" r="3.2" fill="#9d7397"/>
-        <circle cx="96" cy="20" r="3.2" fill="#b07d90"/>
-        <circle cx="132" cy="22" r="3.2" fill="#c48389"/>
-        <circle cx="168" cy="12" r="3.2" fill="#d78681"/>
-        <circle cx="204" cy="10" r="3.2" fill="#E98973"/>
-      </svg>
     </div>
   </div>
 </div>
 ```
 
-------------------------------------------------------------------------
+```{=html}
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 220 34" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="divider-line-1" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#8C6A8D"/>
+        <stop offset="1" stop-color="#E98973"/>
+      </linearGradient>
+    </defs>
+    <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#divider-line-1)" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"/>
+    <circle cx="58" cy="28" r="3.2" fill="#9d7397"/>
+    <circle cx="96" cy="20" r="3.2" fill="#b07d90"/>
+    <circle cx="132" cy="22" r="3.2" fill="#c48389"/>
+    <circle cx="168" cy="12" r="3.2" fill="#d78681"/>
+    <circle cx="204" cy="10" r="3.2" fill="#E98973"/>
+  </svg>
+</div>
+```
 
 ## What I Do {#about .section-heading}
 
@@ -72,7 +75,25 @@ editor:
 </div>
 ```
 
-------------------------------------------------------------------------
+```{=html}
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 220 34" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="divider-line-2" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#8C6A8D"/>
+        <stop offset="1" stop-color="#E98973"/>
+      </linearGradient>
+    </defs>
+    <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#divider-line-2)" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"/>
+    <circle cx="58" cy="28" r="3.2" fill="#9d7397"/>
+    <circle cx="96" cy="20" r="3.2" fill="#b07d90"/>
+    <circle cx="132" cy="22" r="3.2" fill="#c48389"/>
+    <circle cx="168" cy="12" r="3.2" fill="#d78681"/>
+    <circle cx="204" cy="10" r="3.2" fill="#E98973"/>
+  </svg>
+</div>
+```
 
 ## How I Do It {#whatIdo .section-heading}
 
@@ -162,7 +183,25 @@ editor:
 </div>
 ```
 
-------------------------------------------------------------------------
+```{=html}
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 220 34" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="divider-line-3" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#8C6A8D"/>
+        <stop offset="1" stop-color="#E98973"/>
+      </linearGradient>
+    </defs>
+    <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#divider-line-3)" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"/>
+    <circle cx="58" cy="28" r="3.2" fill="#9d7397"/>
+    <circle cx="96" cy="20" r="3.2" fill="#b07d90"/>
+    <circle cx="132" cy="22" r="3.2" fill="#c48389"/>
+    <circle cx="168" cy="12" r="3.2" fill="#d78681"/>
+    <circle cx="204" cy="10" r="3.2" fill="#E98973"/>
+  </svg>
+</div>
+```
 
 ## Featured Projects {#featured .section-heading}
 
@@ -214,7 +253,25 @@ editor:
 </div>
 ```
 
-------------------------------------------------------------------------
+```{=html}
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 220 34" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="divider-line-4" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#8C6A8D"/>
+        <stop offset="1" stop-color="#E98973"/>
+      </linearGradient>
+    </defs>
+    <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#divider-line-4)" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"/>
+    <circle cx="58" cy="28" r="3.2" fill="#9d7397"/>
+    <circle cx="96" cy="20" r="3.2" fill="#b07d90"/>
+    <circle cx="132" cy="22" r="3.2" fill="#c48389"/>
+    <circle cx="168" cy="12" r="3.2" fill="#d78681"/>
+    <circle cx="204" cy="10" r="3.2" fill="#E98973"/>
+  </svg>
+</div>
+```
 
 ::: {style="text-align: center; padding: 3rem 0 1rem; color: #6b7280; font-size: 0.9rem;"}
 Built with [Quarto](https://quarto.org) · Hosted on [GitHub
