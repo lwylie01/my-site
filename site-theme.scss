@@ -452,6 +452,154 @@ h2.section-heading::after {
   margin-bottom: 1.1rem;
 }
 
+/* Linked citation titles: ink at rest with an accent underline in the
+   research-area color (set --area on the enclosing .pub-list). */
+.pub-link {
+  color: #43434f;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--area, #8C6A8D) 45%, transparent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.pub-link:hover {
+  color: var(--area, #8C6A8D);
+  text-decoration-color: var(--area, #8C6A8D);
+}
+
+/* Chart cards: gradient accent strip + figure header so the SVGs read as
+   designed figures rather than bare embeds. */
+.chart-card {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e8e4df;
+  border-radius: 12px;
+  padding: 1.5rem 1.25rem 1rem;
+}
+
+.chart-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #8C6A8D 0%, #E98973 100%);
+}
+
+.chart-card-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $secondary;
+  margin: 0 0 0.2rem;
+}
+
+.chart-card-title {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: $dark;
+  margin: 0 0 1.1rem;
+}
+
+.chart-card-note {
+  margin: 0.6rem 0 0;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+/* Featured book: stylized cover in the Aging-&-the-Law area color */
+.book-feature {
+  display: flex;
+  align-items: stretch;
+  gap: 1.75rem;
+  background: linear-gradient(135deg, #faf6fa 0%, #fdf4f0 100%);
+  border: 1px solid #ecdfe9;
+  border-radius: 12px;
+  padding: 1.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.book-cover {
+  position: relative;
+  flex: 0 0 158px;
+  min-height: 215px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.55rem;
+  background: linear-gradient(160deg, #8a4090 0%, #5e3163 100%);
+  border-radius: 5px 10px 10px 5px;
+  padding: 1rem 0.9rem 0.85rem 1.2rem;
+  color: #ffffff !important;
+  box-shadow: 0 10px 22px rgba(94, 49, 99, 0.32);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-cover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 7px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 2px;
+}
+
+.book-cover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(94, 49, 99, 0.42);
+  color: #ffffff !important;
+}
+
+.book-cover-series {
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.book-cover-title {
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1.25;
+}
+
+.book-cover-sub {
+  font-size: 0.64rem;
+  line-height: 1.4;
+  opacity: 0.85;
+  flex: 1 1 auto;
+}
+
+.book-cover-authors {
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  opacity: 0.92;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  padding-top: 0.5rem;
+}
+
+.book-feature-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.book-feature-body .project-card-desc {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 640px) {
+  .book-feature { flex-direction: column; }
+  .book-cover { flex-basis: auto; width: 158px; }
+}
+
 .bio-body {
   max-width: 62ch;
 }
