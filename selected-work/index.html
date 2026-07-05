@@ -43,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fe3751698f79d0a106f2bb3856f3701f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-7d8e0e9019a3d57eb90574ec92f194fa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -157,9 +157,11 @@ ul.task-list li input[type="checkbox"] {
 </div>
 
 <div class="container" style="max-width: 960px;">
-  <div id="pubchart-card" style="background:#ffffff; border:1px solid #e8e4df; border-radius:10px; padding:1.5rem 1.25rem 1rem;">
+  <div id="pubchart-card" class="chart-card">
+    <p class="chart-card-tag">Figure · Timeline</p>
+    <p class="chart-card-title">The published record, 2009–2025</p>
     <div id="pubchart" style="overflow-x:auto; -webkit-overflow-scrolling:touch;"></div>
-    <p style="margin:0.6rem 0 0; color:#888; font-size:0.8rem;">
+    <p class="chart-card-note">
       <span id="pubchart-swipe-hint" style="display:none;">Swipe the chart to see the full timeline. </span>
       Peer-reviewed articles, law reviews, book chapters, and books, 2009–2025.
       Full citations in the lists below and in the CV.
@@ -334,6 +336,23 @@ ul.task-list li input[type="checkbox"] {
   window.addEventListener("resize", updateHint);
 })();
 </script>
+<div class="section-divider" aria-hidden="true">
+  <svg viewbox="0 0 220 34" aria-hidden="true" focusable="false">
+    <defs>
+      <lineargradient id="divider-line-sw1" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#8C6A8D"></stop>
+        <stop offset="1" stop-color="#E98973"></stop>
+      </lineargradient>
+    </defs>
+    <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#divider-line-sw1)" stroke-width="2" stroke-linecap="round"></path>
+    <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"></circle>
+    <circle cx="58" cy="28" r="3.2" fill="#9d7397"></circle>
+    <circle cx="96" cy="20" r="3.2" fill="#b07d90"></circle>
+    <circle cx="132" cy="22" r="3.2" fill="#c48389"></circle>
+    <circle cx="168" cy="12" r="3.2" fill="#d78681"></circle>
+    <circle cx="204" cy="10" r="3.2" fill="#E98973"></circle>
+  </svg>
+</div>
 <section id="research-areas" class="level2 section-heading">
 <h2 class="section-heading anchored" data-anchor-id="research-areas">Research areas</h2>
 <div class="container" style="max-width: 820px;">
@@ -343,8 +362,14 @@ ul.task-list li input[type="checkbox"] {
     How the legal system meets older adults — as litigants, victims, caregivers,
     and prisoners.
   </p>
-  <div class="project-grid" style="margin-bottom:1.2rem;">
-    <div class="project-card">
+  <div class="book-feature">
+    <a class="book-cover" href="https://psycnet.apa.org/record/2026-35534-000" target="_blank" rel="noopener" aria-label="Aging and the Criminal Legal System at APA">
+      <span class="book-cover-series">American Psychology-Law Series</span>
+      <span class="book-cover-title">Aging and the Criminal Legal System</span>
+      <span class="book-cover-sub">Community Services, Courts, Corrections, and Policy</span>
+      <span class="book-cover-authors">Wylie &amp; Brank</span>
+    </a>
+    <div class="book-feature-body">
       <span class="project-card-tag">Book · APA, 2025</span>
       <p class="project-card-title">Aging and the Criminal Legal System</p>
       <p class="project-card-desc">
@@ -354,22 +379,21 @@ ul.task-list li input[type="checkbox"] {
         to bear on the legal and psychological challenges facing older adults
         across the criminal legal system.
       </p>
-      <br>
-      <a href="https://www.apa.org" target="_blank" rel="noopener" style="font-weight:600; color:#8C6A8D;">
+      <a href="https://psycnet.apa.org/record/2026-35534-000" target="_blank" rel="noopener" style="font-weight:600; color:#8C6A8D;">
         View at APA →
       </a>
     </div>
   </div>
-  <ul class="pub-list">
+  <ul class="pub-list" style="--area:#8a4090;">
     <li>
-      Brank, E.M., &amp; <strong>Wylie, L.E.</strong> (2021). Legal
-      responsibility among the young and the elderly.
+      Brank, E.M., &amp; <strong>Wylie, L.E.</strong> (2021).
+      <a class="pub-link" href="https://doi.org/10.1146/annurev-lawsocsci-021721-091626" target="_blank" rel="noopener">Legal responsibility among the young and the elderly</a>.
       <em>Annual Review of Law and Social Science.</em>
     </li>
     <li>
-      <strong>Wylie, L.E.</strong>, Knutson, A., &amp; Greene, E. (2018). A
-      review of federal and state compassionate release laws: Presence,
-      utilization, and implications.
+      <strong>Wylie, L.E.</strong>, Knutson, A., &amp; Greene, E. (2018).
+      <a class="pub-link" href="https://doi.org/10.1037/law0000161" target="_blank" rel="noopener">A review of federal and state compassionate release laws:
+      Presence, utilization, and implications</a>.
       <em>Psychology, Public Policy, and Law.</em>
     </li>
   </ul>
@@ -379,26 +403,28 @@ ul.task-list li input[type="checkbox"] {
     Diversion, risk and needs, and the program features that change outcomes
     for young people in the system.
   </p>
-  <ul class="pub-list">
+  <ul class="pub-list" style="--area:#c75b3f;">
     <li>
-      Kotlaja, M., &amp; <strong>Wylie, L.E.</strong> (2023). Electronically
-      monitored youth: Stigma and negative social functioning.
+      Kotlaja, M., &amp; <strong>Wylie, L.E.</strong> (2023).
+      <a class="pub-link" href="https://doi.org/10.1177/00111287231161522" target="_blank" rel="noopener">Electronically monitored youth: Stigma and negative
+      social functioning</a>.
       <em>Crime &amp; Delinquency.</em>
     </li>
     <li>
       Deal, T., Cienfuegos, A., &amp; <strong>Wylie, L.E.</strong> (2022).
-      Meeting the needs of emerging adults in the justice system.
+      <a class="pub-link" href="https://www.ncsc.org/resources-courts/meeting-needs-emerging-adults" target="_blank" rel="noopener">Meeting the needs of emerging adults in the justice system</a>.
       <em>Trends in State Courts.</em>
     </li>
     <li>
       <strong>Wylie, L.E.</strong>, Clinkinbeard, S., &amp; Hobbs, A. (2019).
-      The application of risk-needs-responsivity programming in juvenile
-      diversion. <em>Criminal Justice and Behavior.</em>
+      <a class="pub-link" href="https://doi.org/10.1177/0093854819859045" target="_blank" rel="noopener">The application of risk-needs-responsivity programming
+      in juvenile diversion</a>. <em>Criminal Justice and Behavior.</em>
     </li>
     <li>
-      <strong>Wylie, L.E.</strong>, &amp; Rufino, K.A. (2018). The impact of
-      victimization and mental health on recidivism for early
-      system-involved juvenile offenders. <em>Law and Human Behavior.</em>
+      <strong>Wylie, L.E.</strong>, &amp; Rufino, K.A. (2018).
+      <a class="pub-link" href="https://doi.org/10.1037/lhb0000311" target="_blank" rel="noopener">The impact of victimization and mental health on
+      recidivism for early system-involved juvenile offenders</a>.
+      <em>Law and Human Behavior.</em>
     </li>
   </ul>
 
@@ -407,16 +433,18 @@ ul.task-list li input[type="checkbox"] {
     Helping courts measure, understand, and communicate the story of their
     own work.
   </p>
-  <ul class="pub-list">
+  <ul class="pub-list" style="--area:#0d8f76;">
     <li>
-      <strong>Wylie, L.E.</strong> (2025). Cultivating a court's data STORY:
-      A guide for court leaders to develop storytelling skills and effective
-      communications. <em>Trends in State Courts.</em>
+      <strong>Wylie, L.E.</strong> (2025).
+      <a class="pub-link" href="https://www.ncsc.org/sites/default/files/media/document/NCSC-Trends-2025.pdf" target="_blank" rel="noopener">Cultivating a court's data STORY: A guide for court
+      leaders to develop storytelling skills and effective communications</a>.
+      <em>Trends in State Courts.</em>
     </li>
     <li>
       <strong>Wylie, L.E.</strong>, Hoetger, L.A., Hazen, K., Haby, J., &amp;
-      Brank, E.M. (2018). Forty years of <em>Law and Human Behavior</em>: A
-      content analysis. <em>Scientometrics.</em>
+      Brank, E.M. (2018).
+      <a class="pub-link" href="https://doi.org/10.1007/s11192-018-2685-y" target="_blank" rel="noopener">Forty years of <em>Law and Human Behavior</em>: A
+      content analysis</a>. <em>Scientometrics.</em>
     </li>
   </ul>
 
@@ -425,25 +453,42 @@ ul.task-list li input[type="checkbox"] {
     Empirical answers to doctrinal questions — from arbitration outcomes to
     voice identification evidence.
   </p>
-  <ul class="pub-list">
+  <ul class="pub-list" style="--area:#9a7d10;">
     <li>
-      Franck, S., &amp; <strong>Wylie, L.E.</strong> (2015). Predicting
-      outcomes in investment treaty arbitration. <em>Duke Law Journal.</em>
+      Franck, S., &amp; <strong>Wylie, L.E.</strong> (2015).
+      <a class="pub-link" href="https://scholarship.law.duke.edu/dlj/vol65/iss3/2/" target="_blank" rel="noopener">Predicting outcomes in investment treaty arbitration</a>.
+      <em>Duke Law Journal.</em>
     </li>
   </ul>
 
+</div>
+<div class="section-divider" aria-hidden="true">
+  <svg viewbox="0 0 220 34" aria-hidden="true" focusable="false">
+    <defs>
+      <lineargradient id="divider-line-sw2" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#8C6A8D"></stop>
+        <stop offset="1" stop-color="#E98973"></stop>
+      </lineargradient>
+    </defs>
+    <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#divider-line-sw2)" stroke-width="2" stroke-linecap="round"></path>
+    <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"></circle>
+    <circle cx="58" cy="28" r="3.2" fill="#9d7397"></circle>
+    <circle cx="96" cy="20" r="3.2" fill="#b07d90"></circle>
+    <circle cx="132" cy="22" r="3.2" fill="#c48389"></circle>
+    <circle cx="168" cy="12" r="3.2" fill="#d78681"></circle>
+    <circle cx="204" cy="10" r="3.2" fill="#E98973"></circle>
+  </svg>
 </div>
 </section>
 <section id="citation-impact" class="level2 section-heading">
 <h2 class="section-heading anchored" data-anchor-id="citation-impact">Citation impact</h2>
 <div class="container" style="max-width: 960px;">
-  <p style="color:#4b5563; max-width:820px;">
-    The twenty most-cited publications, colored by research area —
-    approximately 880 citations across the published record.
-  </p>
-  <div id="citechart-card" style="background:#ffffff; border:1px solid #e8e4df; border-radius:10px; padding:1.5rem 1.25rem 1rem;">
+  <div id="citechart-card" class="chart-card">
+    <p class="chart-card-tag">Figure · Citations</p>
+    <p class="chart-card-title">The twenty most-cited publications, colored by research area
+      — approximately 880 citations across the published record</p>
     <div id="citechart" style="overflow-x:auto; -webkit-overflow-scrolling:touch;"></div>
-    <p style="margin:0.6rem 0 0; color:#888; font-size:0.8rem;">
+    <p class="chart-card-note">
       <span id="citechart-swipe-hint" style="display:none;">Swipe the chart to see full bars. </span>
       Citation counts from Google Scholar, July 2026. Duplicate Scholar records
       merged (counts summed). Fourteen further publications have 9 or fewer
@@ -587,6 +632,23 @@ ul.task-list li input[type="checkbox"] {
   window.addEventListener("resize", updateHint);
 })();
 </script>
+<div class="section-divider" aria-hidden="true">
+  <svg viewbox="0 0 220 34" aria-hidden="true" focusable="false">
+    <defs>
+      <lineargradient id="divider-line-sw3" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#8C6A8D"></stop>
+        <stop offset="1" stop-color="#E98973"></stop>
+      </lineargradient>
+    </defs>
+    <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#divider-line-sw3)" stroke-width="2" stroke-linecap="round"></path>
+    <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"></circle>
+    <circle cx="58" cy="28" r="3.2" fill="#9d7397"></circle>
+    <circle cx="96" cy="20" r="3.2" fill="#b07d90"></circle>
+    <circle cx="132" cy="22" r="3.2" fill="#c48389"></circle>
+    <circle cx="168" cy="12" r="3.2" fill="#d78681"></circle>
+    <circle cx="204" cy="10" r="3.2" fill="#E98973"></circle>
+  </svg>
+</div>
 </section>
 <section id="curriculum-vitae" class="level2 section-heading">
 <h2 class="section-heading anchored" data-anchor-id="curriculum-vitae">Curriculum vitae</h2>
