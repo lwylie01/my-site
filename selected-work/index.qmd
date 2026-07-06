@@ -229,12 +229,9 @@ toc: false
   </p>
   <div class="book-feature">
     <a class="book-cover" href="https://psycnet.apa.org/record/2026-35534-000"
-       target="_blank" rel="noopener"
-       aria-label="Aging and the Criminal Legal System at APA">
-      <span class="book-cover-series">American Psychology-Law Series</span>
-      <span class="book-cover-title">Aging and the Criminal Legal System</span>
-      <span class="book-cover-sub">Community Services, Courts, Corrections, and Policy</span>
-      <span class="book-cover-authors">Wylie &amp; Brank</span>
+       target="_blank" rel="noopener">
+      <img src="../pics/book-cover-aging.png"
+           alt="Book cover of Aging and the Criminal Legal System by Lindsey E. Wylie and Eve M. Brank — an abstract collage in ochre, cream, lavender, and black" />
     </a>
     <div class="book-feature-body">
       <span class="project-card-tag">Book · APA, 2025</span>
