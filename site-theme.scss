@@ -512,78 +512,36 @@ h2.section-heading::after {
   font-size: 0.8rem;
 }
 
-/* Featured book: stylized cover in the Aging-&-the-Law area color */
+/* Featured book: the actual cover art. Panel tint picks up the cover's
+   cream, with a faint lavender turn to echo both the art and the brand. */
 .book-feature {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   gap: 1.75rem;
-  background: linear-gradient(135deg, #faf6fa 0%, #fdf4f0 100%);
-  border: 1px solid #ecdfe9;
+  background: linear-gradient(135deg, #fbf8f1 0%, #f7f1f5 100%);
+  border: 1px solid #e7dfd2;
   border-radius: 12px;
   padding: 1.6rem;
   margin-bottom: 1.4rem;
 }
 
 .book-cover {
-  position: relative;
   flex: 0 0 158px;
-  min-height: 215px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 0.55rem;
-  background: linear-gradient(160deg, #8a4090 0%, #5e3163 100%);
-  border-radius: 5px 10px 10px 5px;
-  padding: 1rem 0.9rem 0.85rem 1.2rem;
-  color: #ffffff !important;
-  box-shadow: 0 10px 22px rgba(94, 49, 99, 0.32);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 10px 22px rgba(43, 45, 66, 0.28);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.book-cover::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 7px;
-  width: 2px;
-  background: rgba(255, 255, 255, 0.35);
-  border-radius: 2px;
+.book-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .book-cover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 14px 28px rgba(94, 49, 99, 0.42);
-  color: #ffffff !important;
-}
-
-.book-cover-series {
-  font-size: 0.55rem;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  opacity: 0.85;
-}
-
-.book-cover-title {
-  font-weight: 700;
-  font-size: 0.98rem;
-  line-height: 1.25;
-}
-
-.book-cover-sub {
-  font-size: 0.64rem;
-  line-height: 1.4;
-  opacity: 0.85;
-  flex: 1 1 auto;
-}
-
-.book-cover-authors {
-  font-size: 0.68rem;
-  letter-spacing: 0.05em;
-  opacity: 0.92;
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
-  padding-top: 0.5rem;
+  box-shadow: 0 14px 28px rgba(43, 45, 66, 0.38);
 }
 
 .book-feature-body {
