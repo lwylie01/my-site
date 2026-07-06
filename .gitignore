@@ -23,8 +23,11 @@ CV/Wylie_Capacity_Dashboard_files/
 .RData
 .Ruserdata
 
-# Note: _freeze/ is intentionally tracked so the R dashboard renders from cache
-# without needing R to re-execute on every publish.
+# Note: _freeze/ is generally tracked so unchanged R documents render from
+# cache. Exception: hiphop/ has freeze disabled (hiphop/_metadata.yml) because
+# its documents read from the Excel workbook — a frozen render would go stale
+# on data-only edits.
+_freeze/hiphop/
 
 # Internal capacity dashboard freeze cache — never publish (contains project details)
 _freeze/CV/

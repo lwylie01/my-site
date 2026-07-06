@@ -90,9 +90,12 @@ reactable(
 
 Two scope rules are worth calling out:
 
-- **Region = scene, not birthplace.** Acts are assigned to the US scene they
+- **Scene = scene, not birthplace.** Acts are assigned to the US scene they
   are professionally rooted in: label home and scene ties during their
   defining run (Da Brat is *South* via So So Def, though born in Chicago).
+  **Region** rolls scenes up to the four coast-level categories the culture
+  itself uses: East Coast (NYC + Philly), West Coast (LA + Bay Area), South,
+  and Midwest.
 - **Era = defining run, not debut year.** Debut years overlap era boundaries
   by design; the era reflects when the act's defining work landed.
 

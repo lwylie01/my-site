@@ -14,13 +14,6 @@
     --text: #3a2d3b;
     --muted: #7a6a7b;
 
-    --nyc:     #8C6A8D;
-    --philly:  #4e9e94;
-    --la:      #E98973;
-    --south:   #c0855a;
-    --midwest: #7aaa8a;
-    --bay:     #5a9abf;
-
     --conf-h: #2ecc71;
     --conf-m: #f39c12;
     --conf-l: #e74c3c;
@@ -398,12 +391,10 @@
     <label>Region</label>
     <select id="filter-region" onchange="applyFilters()">
       <option value="">All Regions</option>
-      <option>NYC</option>
-      <option>Philly</option>
-      <option>LA</option>
+      <option>East Coast</option>
+      <option>West Coast</option>
       <option>South</option>
       <option>Midwest</option>
-      <option>Bay Area</option>
     </select>
   </div>
   <div class="filter-group">
@@ -447,12 +438,10 @@
   <span class="legend-item" style="background:#dd9a5e">Trap/Drill</span>
   <span class="legend-item" style="background:#c180a2">Jazz-Rap</span>
   <span style="margin-left:0.8rem" class="legend-label">Region:</span>
-  <span class="legend-shape">● NYC</span>
-  <span class="legend-shape">◆ Philly</span>
-  <span class="legend-shape">★ LA</span>
+  <span class="legend-shape">● East Coast</span>
+  <span class="legend-shape">★ West Coast</span>
   <span class="legend-shape">▲ South</span>
   <span class="legend-shape">■ Midwest</span>
-  <span class="legend-shape">⬢ Bay Area</span>
   <span style="margin-left:0.8rem" class="legend-label">Confidence (icon color):</span>
   <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-h)"></span> High</span>
   <span class="conf-badge"><span class="conf-dot" style="background:var(--conf-m)"></span> Medium</span>
@@ -526,9 +515,15 @@ const STYLE_COLORS = {
   'Trap/Drill': '#dd9a5e', 'Jazz-Rap': '#c180a2'
 };
 const REGION_SHAPE = {
-  'NYC': '●', 'Philly': '◆', 'LA': '★', 'South': '▲', 'Midwest': '■', 'Bay Area': '⬢'
+  'East Coast': '●', 'West Coast': '★', 'South': '▲', 'Midwest': '■'
 };
 const CONF_COLOR = { 'H': '#2ecc71', 'M': '#f39c12', 'L': '#e74c3c' };
+
+// "East Coast (NYC)" when the scene is finer than the region; "South" when equal.
+function regionLabel(a) {
+  const scene = a['Scene'];
+  return scene && scene !== a['Region'] ? `${a['Region']} (${scene})` : a['Region'];
+}
 
 // ─── LAYOUT BUILDER ────────────────────────────────────────────────────────
 function buildEraLayout(list) {
@@ -612,7 +607,7 @@ function render() {
     tile.innerHTML = `
       <div class="tile-top">
         <span class="tile-num">${artist['#']}</span>
-        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${artist['Region']} · ${artist['Style']} · ${artist['Confidence']}-confidence">${REGION_SHAPE[artist['Region']]||'•'}</span>
+        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${regionLabel(artist)} · ${artist['Style']} · ${artist['Confidence']}-confidence">${REGION_SHAPE[artist['Region']]||'•'}</span>
       </div>
       <div class="tile-symbol">${artist['Symbol']}</div>
       <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
@@ -663,7 +658,7 @@ function renderCompounds() {
     tile.innerHTML = `
       <div class="tile-top">
         <span class="tile-num">${artist['#']}</span>
-        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${artist['Region']} · ${artist['Style']} · ${artist['Confidence']}-confidence">${REGION_SHAPE[artist['Region']]||'•'}</span>
+        <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${regionLabel(artist)} · ${artist['Style']} · ${artist['Confidence']}-confidence">${REGION_SHAPE[artist['Region']]||'•'}</span>
       </div>
       <div class="tile-symbol">${artist['Symbol']}</div>
       <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
@@ -739,7 +734,7 @@ function populateModal(id) {
   document.getElementById('modal-symbol-box').textContent = a['Symbol'];
   document.getElementById('modal-symbol-box').style.background = color;
   document.getElementById('modal-name').textContent = a['Artist Name'];
-  document.getElementById('modal-meta').innerHTML = `<b>${a['Region']}</b> · ${a['Era']} · Debut ${a['Debut Year']}<br>${a['Production Style']} · ${a['Label']}`;
+  document.getElementById('modal-meta').innerHTML = `<b>${regionLabel(a)}</b> · ${a['Era']} · Debut ${a['Debut Year']}<br>${a['Production Style']} · ${a['Label']}`;
   document.getElementById('modal-tags').innerHTML = `<span class="modal-tag">${a['Style']}</span><span class="modal-tag">${a['Region']}</span><span class="modal-tag">${a['Era']}</span>`;
   document.getElementById('modal-desc').textContent = a['Description'];
 
