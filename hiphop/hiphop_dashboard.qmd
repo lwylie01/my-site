@@ -67,7 +67,7 @@ artists <- artists_raw |>
     composite = round((rhyme + vocab + story + metaphor + concept) / 5, 1),
     era = factor(era, levels = c("Old School","Golden Age","Late 90s","2000s","2010s","2020s")),
     confidence = factor(confidence, levels = c("H","M","L")),
-    region = factor(region, levels = c("NYC","Philly","LA","South","Midwest","Bay Area")),
+    region = factor(region, levels = c("East Coast","West Coast","South","Midwest")),
     style = factor(style),
     confidence_note = if_else(is.na(confidence_note), "", confidence_note),
     strongest_dim = case_when(
@@ -81,12 +81,10 @@ artists <- artists_raw |>
 
 # ── Colour palettes ──────────────────────────────────────────────────────────
 region_pal <- c(
-  "NYC"      = "#3182bd",
-  "Philly"   = "#4e9e94",
-  "LA"       = "#e6550d",
-  "South"    = "#31a354",
-  "Midwest"  = "#756bb1",
-  "Bay Area" = "#d0a400"
+  "East Coast" = "#3182bd",
+  "West Coast" = "#e6550d",
+  "South"      = "#31a354",
+  "Midwest"    = "#756bb1"
 )
 
 era_pal <- c(
@@ -260,7 +258,7 @@ ggplotly(p_scatter, tooltip = "text") |>
 ## Row {height="15%"}
 
 ::: {.callout-warning title="Teaching Prompt — Sampling Decisions and Bias"}
-**Every dataset has a frame — and a gap.** This dataset over-represents critically acclaimed artists, NYC, the Golden Age, and men. Those are documented choices. What datasets do you use at work where the frame is undocumented? What populations are missing?
+**Every dataset has a frame — and a gap.** This dataset over-represents critically acclaimed artists, the East Coast (NYC especially), the Golden Age, and men. Those are documented choices. What datasets do you use at work where the frame is undocumented? What populations are missing?
 :::
 
 ## Row {height="45%"}
@@ -277,7 +275,7 @@ p_region <- artists |>
   coord_flip() +
   labs(
     title = "Artists by region and era",
-    subtitle = "NYC and the South dominate — international scenes sit outside the frame",
+    subtitle = "The East Coast and South dominate — international scenes sit outside the frame",
     x = NULL, y = "Number of artists", fill = "Era"
   ) +
   theme_hiphop()
@@ -353,7 +351,7 @@ bias_df <- tribble(
   ~"Bias type",        ~"Direction",                              ~"Practical implication",
   "Prestige",         "Over-represents critically acclaimed artists", "Commercial artists scored lower; vibe-first artists may be underrated",
   "Gender",           "~18% female vs. ~50% of rap audience",    "Female artists face different critical frameworks; scores may not be comparable",
-  "Geography",        "NYC + Golden Age disproportionate",        "Southern and international artists underrepresented in critical canon used for scoring",
+  "Geography",        "East Coast + Golden Age disproportionate", "Southern and international artists underrepresented in critical canon used for scoring",
   "Language",         "English-language, US-based frame only",    "International and non-Anglophone rap is excluded from the sampling frame entirely — a documented scope decision, not an oversight",
   "Survivorship",     "Only artists who entered critical canon",  "Regionally significant artists without national coverage are absent",
   "Recency (inverted)","Post-2020 artists scored conservatively", "Emerging talent may be systematically underscored; revisit annually"
