@@ -10,18 +10,23 @@ $font-family-base: "Inter", "Helvetica Neue", Arial, sans-serif;
 $headings-font-weight: 600;
 
 /*-- Brand colours --*/
-$primary:   #C4C3D0;
+$primary:   #8C6A8D;
 $secondary: #8C6A8D;
 $success:   #D2B1A3;
 $warning:   #F4C6C6;
 $danger:    #E98973;
 $light:     #F8F7F4;
 $dark:      #3C3C3C;
+$plum-dark: #2a1f2b;   // matches the periodic table header
+$coral:     #E98973;
+
+$navbar-bg: $plum-dark;
+$navbar-fg: #f0e8f0;
 
 /*-- Dashboard chrome --*/
 .navbar {
-  background-color: $primary !important;
-  border-bottom: 3px solid $secondary;
+  background-color: $plum-dark !important;
+  border-bottom: 3px solid $coral;
 }
 
 .navbar-brand {
@@ -30,9 +35,18 @@ $dark:      #3C3C3C;
   color: #ffffff !important;
 }
 
+.navbar .navbar-brand-container .navbar-brand,
+.navbar .nav-link,
 .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
   font-weight: 500;
   font-size: 0.9rem;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active,
+.navbar-nav .nav-link.active {
+  color: #ffffff !important;
 }
 
 /*-- Cards --*/
@@ -51,29 +65,31 @@ $dark:      #3C3C3C;
 }
 
 /*-- Callout teaching prompts --*/
+/*-- !important because Quarto's own callout CSS otherwise wins and falls
+     back to Bootstrap's green/yellow/blue/red accents --*/
 .callout {
   border-radius: 8px;
   border-left-width: 5px;
 }
 
-.callout-tip {
-  border-left-color: $success;
-  background: lighten($success, 52%);
+.callout.callout-tip {
+  border-left-color: $success !important;
+  background-color: lighten($success, 15%) !important;
 }
 
-.callout-warning {
-  border-left-color: $warning;
-  background: lighten($warning, 40%);
+.callout.callout-warning {
+  border-left-color: darken($warning, 12%) !important;
+  background-color: lighten($warning, 8%) !important;
 }
 
-.callout-note {
-  border-left-color: $secondary;
-  background: lighten($secondary, 48%);
+.callout.callout-note {
+  border-left-color: $secondary !important;
+  background-color: lighten($secondary, 42%) !important;
 }
 
-.callout-important {
-  border-left-color: $danger;
-  background: lighten($danger, 42%);
+.callout.callout-important {
+  border-left-color: $danger !important;
+  background-color: lighten($danger, 14%) !important;
 }
 
 .callout .callout-title {
@@ -82,8 +98,9 @@ $dark:      #3C3C3C;
 }
 
 /*-- Sidebar --*/
-.sidebar {
-  background: $light;
+.sidebar,
+.quarto-dashboard .sidebar {
+  background: $light !important;
   border-right: 1px solid #e0e0e0;
   font-size: 0.875rem;
 }
@@ -97,8 +114,8 @@ $dark:      #3C3C3C;
 /*-- Tab panels --*/
 .nav-tabs .nav-link.active {
   font-weight: 600;
-  color: $primary;
-  border-bottom: 3px solid $secondary;
+  color: #6b4f6c;
+  border-bottom: 3px solid $coral;
 }
 
 /*-- reactable tables --*/

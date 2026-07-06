@@ -80,28 +80,32 @@ artists <- artists_raw |>
   )
 
 # ── Colour palettes ──────────────────────────────────────────────────────────
+# Brand-family categorical hues, borrowed from the periodic table's tile and
+# score-bar palettes so the two pages read as one product.
 region_pal <- c(
-  "East Coast" = "#3182bd",
-  "West Coast" = "#e6550d",
-  "South"      = "#31a354",
-  "Midwest"    = "#756bb1"
+  "East Coast" = "#6f9ec2",
+  "West Coast" = "#cf8079",
+  "South"      = "#86a866",
+  "Midwest"    = "#a085bd"
 )
 
 era_pal <- c(
-  "Old School" = "#4292c6",
-  "Golden Age" = "#41ab5d",
-  "Late 90s"   = "#f6c141",
-  "2000s"      = "#e08214",
-  "2010s"      = "#9970ab",
-  "2020s"      = "#d73027"
+  "Old School" = "#5a9abf",
+  "Golden Age" = "#d4b15a",
+  "Late 90s"   = "#86a866",
+  "2000s"      = "#dd9a5e",
+  "2010s"      = "#a085bd",
+  "2020s"      = "#cf8079"
 )
 
+# Same five hues as the periodic table's modal score bars (SCORE_HUES), so
+# each dimension keeps one color across the whole site.
 dim_pal <- c(
-  "Rhyme Density"    = "#4472C4",
-  "Vocab Breadth"    = "#70AD47",
-  "Storytelling"     = "#ED7D31",
-  "Metaphor/Imagery" = "#9B59B6",
-  "Conceptual Depth" = "#C0392B"
+  "Rhyme Density"    = "#E98973",
+  "Vocab Breadth"    = "#8C6A8D",
+  "Storytelling"     = "#7aaa8a",
+  "Metaphor/Imagery" = "#5a9abf",
+  "Conceptual Depth" = "#bf9a40"
 )
 
 conf_pal <- c("H" = "#41ab5d", "M" = "#f6c141", "L" = "#e08214")
@@ -110,7 +114,7 @@ conf_pal <- c("H" = "#41ab5d", "M" = "#f6c141", "L" = "#e08214")
 theme_hiphop <- function() {
   theme_minimal(base_family = "sans", base_size = 12) +
     theme(
-      plot.title    = element_text(size = 14, face = "bold", color = "#1a1a2e"),
+      plot.title    = element_text(size = 14, face = "bold", color = "#3C3C3C"),
       plot.subtitle = element_text(size = 11, color = "#555555"),
       panel.grid.minor = element_blank(),
       panel.grid.major = element_line(color = "#eeeeee"),
@@ -134,7 +138,7 @@ top_artist <- artists |> slice_max(composite, n = 1) |> pull(name)
 
 tagList(
   tags$div(style = "padding: 1rem 0;",
-    tags$h4("Dataset at a Glance", style = "color:#1a1a2e; font-weight:700;"),
+    tags$h4("Dataset at a Glance", style = "color:#3C3C3C; font-weight:700;"),
     tags$hr(style = "border-color:#dddddd;"),
     tags$p(tags$strong(n_artists), " artists across 6 eras"),
     tags$p(tags$strong(length(levels(artists$region))), " geographic regions"),
@@ -195,7 +199,7 @@ radar_data <- artists |>
 
 fig_radar <- plot_ly(type = "scatterpolar", fill = "toself", mode = "lines+markers")
 
-colors_radar <- c("#4472C4","#C0392B","#70AD47","#E08214")
+colors_radar <- c("#8C6A8D","#E98973","#5a9abf","#bf9a40")
 for (i in seq_along(radar_artists)) {
   d <- radar_data |> filter(name == radar_artists[i])
   fig_radar <- fig_radar |> add_trace(
@@ -298,7 +302,7 @@ p_gender <- gender_data |>
   ggplot(aes(x = era, y = n, fill = gender_group,
              text = paste0(gender_group, ": ", n, " artists"))) +
   geom_col(position = "fill") +
-  scale_fill_manual(values = c("Female" = "#e377c2", "Male" = "#7f7f7f")) +
+  scale_fill_manual(values = c("Female" = "#c180a2", "Male" = "#b3abb3")) +
   scale_y_continuous(labels = percent) +
   labs(
     title = "Gender representation by era",
@@ -366,7 +370,7 @@ reactable(
   ),
   striped = TRUE, highlight = TRUE, bordered = TRUE,
   theme = reactableTheme(
-    headerStyle = list(background = "#1F3864", color = "#ffffff", fontWeight = "600")
+    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
   )
 )
 ```
@@ -406,7 +410,7 @@ p_heat <- dim_long |>
              text = paste0(name, " · ", dimension, ": ", score))) +
   geom_tile(color = "white", linewidth = 0.3) +
   scale_fill_gradient2(
-    low = "#f7fbff", mid = "#6baed6", high = "#08306b",
+    low = "#f6f0f6", mid = "#a87ea9", high = "#4a2d4b",
     midpoint = 5.5, limits = c(1, 10),
     name = "Score"
   ) +
@@ -558,7 +562,7 @@ plot_ly(
 ) |>
   layout(
     title  = list(text = "Score distribution by confidence tier",
-                  font = list(size = 14, color = "#1a1a2e")),
+                  font = list(size = 14, color = "#3C3C3C")),
     xaxis  = list(title = "Confidence tier"),
     yaxis  = list(title = "Composite score", range = c(1, 10.5)),
     paper_bgcolor = "rgba(0,0,0,0)",
@@ -626,7 +630,7 @@ reactable(
   ),
   searchable = TRUE, striped = TRUE, highlight = TRUE, bordered = TRUE,
   theme = reactableTheme(
-    headerStyle = list(background = "#1F3864", color = "#ffffff", fontWeight = "600")
+    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
   )
 )
 ```
@@ -704,7 +708,7 @@ plot_ly(
 ) |>
   layout(
     title  = list(text = "C: Violin + box · Distribution emphasis",
-                  font = list(size = 13, color = "#1a1a2e")),
+                  font = list(size = 13, color = "#3C3C3C")),
     xaxis  = list(title = "", categoryorder = "array",
                   categoryarray = era_levels),
     yaxis  = list(title = "Composite", range = c(1, 10.5)),
@@ -751,28 +755,28 @@ display_data <- artists |>
 reactable(
   display_data,
   columns = list(
-    Symbol    = colDef(maxWidth = 65, style = list(fontWeight = "700", color = "#1F3864")),
+    Symbol    = colDef(maxWidth = 65, style = list(fontWeight = "700", color = "#6b4f6c")),
     Artist    = colDef(minWidth = 150, style = list(fontWeight = "600")),
     Region    = colDef(maxWidth = 110),
     Era       = colDef(maxWidth = 110),
     Style     = colDef(minWidth = 145),
     Debut     = colDef(maxWidth = 70),
     Rhyme     = colDef(maxWidth = 65,
-      style = function(v) list(background = colorRampPalette(c("#deebf7","#08519c"))(10)[max(1,v)],
+      style = function(v) list(background = colorRampPalette(c("#fdf0ec","#b05a42"))(10)[max(1,v)],
                                 color = if(v >= 7) "#fff" else "#000")),
     Vocab     = colDef(maxWidth = 65,
-      style = function(v) list(background = colorRampPalette(c("#e5f5e0","#006d2c"))(10)[max(1,v)],
+      style = function(v) list(background = colorRampPalette(c("#f3edf3","#5d4360"))(10)[max(1,v)],
                                 color = if(v >= 7) "#fff" else "#000")),
     Story     = colDef(maxWidth = 65,
-      style = function(v) list(background = colorRampPalette(c("#feedde","#a63603"))(10)[max(1,v)],
+      style = function(v) list(background = colorRampPalette(c("#edf4ef","#3f6b50"))(10)[max(1,v)],
                                 color = if(v >= 7) "#fff" else "#000")),
     Metaphor  = colDef(maxWidth = 75,
-      style = function(v) list(background = colorRampPalette(c("#f2e2f7","#6a1a8a"))(10)[max(1,v)],
+      style = function(v) list(background = colorRampPalette(c("#ecf3f8","#33607f"))(10)[max(1,v)],
                                 color = if(v >= 7) "#fff" else "#000")),
     Concept   = colDef(maxWidth = 75,
-      style = function(v) list(background = colorRampPalette(c("#fee0d2","#a50f15"))(10)[max(1,v)],
+      style = function(v) list(background = colorRampPalette(c("#f8f3e4","#7a5f22"))(10)[max(1,v)],
                                 color = if(v >= 7) "#fff" else "#000")),
-    Composite = colDef(maxWidth = 85, style = list(fontWeight = "700", background = "#1F3864", color = "#fff")),
+    Composite = colDef(maxWidth = 85, style = list(fontWeight = "700", background = "#2a1f2b", color = "#fff")),
     Conf      = colDef(maxWidth = 55,
       style = function(v) {
         color <- switch(v, H = "#41ab5d", M = "#c8a000", L = "#e08214", "#000")
@@ -783,7 +787,7 @@ reactable(
   striped = TRUE, highlight = TRUE, bordered = TRUE,
   defaultPageSize = 25, showPageSizeOptions = TRUE,
   theme = reactableTheme(
-    headerStyle = list(background = "#1F3864", color = "#ffffff", fontWeight = "600")
+    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
   )
 )
 ```
