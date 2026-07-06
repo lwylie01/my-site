@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Periodic Table of Hip-Hop Artists — datawithaplot.org</title>
+<title>Periodic Table of Hip-Hop Artists · datawithaplot.org</title>
 <style>
   :root {
     --primary: #8C6A8D;
@@ -377,7 +377,7 @@
 <header>
   <div>
     <h1>Periodic Table of <span>Hip-Hop Artists</span></h1>
-    <p>datawithaplot.org — <span id="subtitle-count">—</span> Artists · Five-Dimension Lyrical Profiles</p>
+    <p>datawithaplot.org · <span id="subtitle-count">—</span> Artists · Five-Dimension Lyrical Profiles</p>
   </div>
 </header>
 
@@ -471,7 +471,7 @@
 </div>
 
 <div class="section-divider">
-  <h2>⚛️ Compounds <span>— groups &amp; crews (<span id="compound-count">0</span>)</span></h2>
+  <h2>⚛️ Compounds <span>· groups &amp; crews (<span id="compound-count">0</span>)</span></h2>
 </div>
 <div id="compounds-wrap">
   <div id="compounds-area"></div>
@@ -756,7 +756,7 @@ function populateModal(id) {
   document.getElementById('modal-composite').textContent = a['Composite Score'];
 
   const confLabels = {H:'High confidence (well-documented)',M:'Medium confidence (some gaps)',L:'Low confidence (limited sources)'};
-  const confNote = a['Confidence Note'] ? `${confLabels[a['Confidence']]} — ${a['Confidence Note']}` : confLabels[a['Confidence']];
+  const confNote = a['Confidence Note'] ? `${confLabels[a['Confidence']]} · ${a['Confidence Note']}` : confLabels[a['Confidence']];
   document.getElementById('modal-conf-note').textContent = confNote;
 }
 

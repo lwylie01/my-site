@@ -10,7 +10,7 @@ toc: false
   <h1 class="page-header-title">Projects</h1>
   <p class="page-header-sub">
     Applied research, teaching tools, and data storytelling experiments.
-    Each project is built around a real methodological question.
+    Each one is built around a real measurement question.
   </p>
 </div>
 
@@ -20,11 +20,11 @@ toc: false
     <span class="project-card-tag">Data Storytelling · Teaching Module</span>
     <p class="project-card-title">Hip-Hop Periodic Table</p>
     <p class="project-card-desc">
-      A fully documented dataset of 163 hip-hop acts — 132 solo artists and 31
-      groups — scored across five lyricism dimensions, with per-artist confidence
-      ratings and a published data dictionary. Built to teach measurement validity,
-      sampling bias, composite scoring, and uncertainty communication — using a
-      subject that provokes genuine debate.
+      A fully documented dataset of 163 hip-hop acts (132 solo artists and 31
+      groups), each scored on five parts of lyricism, with confidence ratings
+      for every act and a published data dictionary. Built to teach measurement
+      validity, sampling bias, composite scoring, and uncertainty communication,
+      using a subject people genuinely argue about.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
@@ -44,8 +44,8 @@ toc: false
     <p class="project-card-desc">
       Does your personality type measure anything at all? A 90-second interactive
       exercise builds a personalized profile, asks how accurate it feels, then
-      reveals that every participant receives the identical profile — and that the
-      answers were never used. A clear, memorable lesson in construct validity.
+      reveals that everyone gets the same profile, and that the answers were
+      never used. A clear, memorable lesson in construct validity.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
@@ -63,11 +63,11 @@ toc: false
     <span class="project-card-tag">Applied Research · Criminal Justice</span>
     <p class="project-card-title">Counted Wrong: Emerging Adults &amp; the Crossroads Study</p>
     <p class="project-card-desc">
-      A close analysis of longitudinal data from the Crossroads Study — following
-      young people through their first contact with the justice system — to illustrate
-      the complexity of where adolescence ends and adulthood begins. The legal system
-      draws a bright line at age 18, but human development does not. A project about
-      what happens when a measured boundary is treated as a biological one.
+      A close look at the Crossroads Study, which followed young people for
+      years after their first contact with the justice system. Where does
+      adolescence end and adulthood begin? The legal system draws a bright line
+      at age 18, but human development does not. A project about what happens
+      when a line someone drew gets treated as a fact of nature.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
@@ -84,12 +84,12 @@ toc: false
     <p class="project-card-title">A Right That Exists on Paper: Compassionate Release</p>
     <p class="project-card-desc">
       Nearly every state and the federal system has a compassionate or medical
-      release law on the books — a legal mechanism to release people who are dying,
-      gravely ill, or simply too old to pose a risk. Almost none are used.
+      release law on the books: a way to release people who are dying, seriously
+      ill, or simply too old to pose a risk. Almost none are used.
       Drawing on a fifty-state review and the data behind <em>Aging and the Criminal
-      Legal System</em> (APA, 2025), this project measures the distance between a
-      law's <em>presence</em> and its <em>utilization</em> — and asks what an unused
-      statute reveals about how a system measures mercy.
+      Legal System</em> (APA, 2025), this project measures the gap between a law
+      that exists and a law that gets used, and asks what an unused law says
+      about how a system measures mercy.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
@@ -107,10 +107,10 @@ toc: false
     <p class="project-card-desc">
       A 60-second exercise: set a slider to the age at which someone becomes
       "old," "a senior," "too old to drive," or "too old to start over." The
-      responses reveal how little consensus exists — and how the law fixes hard
-      numbers (18, 50, 65) onto a boundary with no basis in nature. A study in
-      operationalization, and a companion to <em>Counted Wrong</em> at the other
-      end of the lifespan.
+      answers show how little we agree, and how the law pins hard numbers
+      (18, 50, 65) onto a boundary nature never drew. A study in turning fuzzy
+      ideas into exact numbers, and a companion to <em>Counted Wrong</em> at the
+      other end of the lifespan.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
@@ -128,9 +128,8 @@ toc: false
     <p class="project-card-desc">
       Review a set of realistic case files and predict who returns to court and
       who does not. Your accuracy is then scored against a simple two-variable
-      statistical rule that consistently outperforms the reader — a pointed
-      demonstration in applied prediction that expert intuition routinely loses
-      to a checklist.
+      rule that beats nearly everyone. A hands-on lesson in why expert intuition
+      keeps losing to a checklist.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>

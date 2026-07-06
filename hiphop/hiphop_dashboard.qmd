@@ -146,7 +146,7 @@ tagList(
     tags$p(
       tags$span(style = "color:#41ab5d; font-weight:700;", paste0("H: ", n_high, " artists")),
       tags$br(),
-      tags$span(style = "color:#c8a000; font-weight:700;", paste0("M: ", n_medium, " artists (provisional)")),
+      tags$span(style = "color:#c8a000; font-weight:700;", paste0("M: ", n_medium, " artists (some gaps)")),
       tags$br(),
       tags$span(style = "color:#e08214; font-weight:700;", paste0("L: ", n_low, " artists (estimates only)"))
     ),
@@ -172,13 +172,13 @@ tagList(
 
 ## Row {height="15%"}
 
-::: {.callout-tip title="Teaching Prompt — Construct Validity"}
+::: {.callout-tip title="Teaching Prompt: Construct Validity"}
 **The central measurement problem:** We started with one variable called "Lyricism" and ended up with five. Was that the right decision? What are we gaining and losing? This is the construct validity question that underlies every performance measure, survey instrument, and rating scale in your organization.
 :::
 
 ## Row {height="85%"}
 
-### Radar: Single artist — five dimensions {width="40%"}
+### Radar: One artist, five dimensions {width="40%"}
 
 ```{r radar-single}
 radar_artists <- c("Kendrick Lamar", "Scarface", "MF DOOM", "Rakim")
@@ -259,8 +259,8 @@ ggplotly(p_scatter, tooltip = "text") |>
 
 ## Row {height="15%"}
 
-::: {.callout-warning title="Teaching Prompt — Sampling Decisions and Bias"}
-**Every dataset has a frame — and a gap.** This dataset over-represents critically acclaimed artists, NYC, the Golden Age, and men. Those are documented choices. What datasets do you use at work where the frame is undocumented? What populations are missing?
+::: {.callout-warning title="Teaching Prompt: Sampling Decisions and Bias"}
+**Every dataset has a frame, and every frame has a gap.** This dataset over-represents critically acclaimed artists, NYC, the Golden Age, and men. Those are documented choices. What datasets do you use at work where nobody wrote the frame down? Who is missing?
 :::
 
 ## Row {height="45%"}
@@ -277,7 +277,7 @@ p_region <- artists |>
   coord_flip() +
   labs(
     title = "Artists by region and era",
-    subtitle = "NYC and the South dominate — international scenes sit outside the frame",
+    subtitle = "NYC and the South dominate; international scenes sit outside the frame",
     x = NULL, y = "Number of artists", fill = "Era"
   ) +
   theme_hiphop()
@@ -354,7 +354,7 @@ bias_df <- tribble(
   "Prestige",         "Over-represents critically acclaimed artists", "Commercial artists scored lower; vibe-first artists may be underrated",
   "Gender",           "~18% female vs. ~50% of rap audience",    "Female artists face different critical frameworks; scores may not be comparable",
   "Geography",        "NYC + Golden Age disproportionate",        "Southern and international artists underrepresented in critical canon used for scoring",
-  "Language",         "English-language, US-based frame only",    "International and non-Anglophone rap is excluded from the sampling frame entirely — a documented scope decision, not an oversight",
+  "Language",         "English-language, US-based frame only",    "International and non-English rap is excluded from the sampling frame entirely, a documented scope decision rather than an oversight",
   "Survivorship",     "Only artists who entered critical canon",  "Regionally significant artists without national coverage are absent",
   "Recency (inverted)","Post-2020 artists scored conservatively", "Emerging talent may be systematically underscored; revisit annually"
 )
@@ -377,8 +377,8 @@ reactable(
 
 ## Row {height="15%"}
 
-::: {.callout-note title="Teaching Prompt — The Aggregation Problem"}
-**What does averaging destroy?** Rakim (Rhyme Density 10, composite 8.8) and Scarface (Storytelling 10, composite 8.2) land within half a point of each other on the composite — yet their dimension profiles look nothing alike. Is that near-equivalence meaningful, or does the composite erase the most important information? When does aggregation help, and when does it mislead?
+::: {.callout-note title="Teaching Prompt: The Averaging Problem"}
+**What does averaging destroy?** Rakim (Rhyme Density 10, composite 8.8) and Scarface (Storytelling 10, composite 8.2) land within half a point of each other on the composite, yet their profiles look nothing alike. Does that similarity mean anything, or does the average erase the most important information? When does averaging help, and when does it mislead?
 :::
 
 ## Row {height="45%"}
@@ -405,7 +405,7 @@ dim_long <- artists |>
 
 p_heat <- dim_long |>
   ggplot(aes(x = dimension, y = name, fill = score,
-             text = paste0(name, " — ", dimension, ": ", score))) +
+             text = paste0(name, " · ", dimension, ": ", score))) +
   geom_tile(color = "white", linewidth = 0.3) +
   scale_fill_gradient2(
     low = "#f7fbff", mid = "#6baed6", high = "#08306b",
@@ -492,7 +492,7 @@ ggplotly(p_strongest, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### Top 20 — composite score (High confidence) {width="50%"}
+### Top 20 composite scores (High confidence) {width="50%"}
 
 ```{r top20-bar}
 top20 <- artists |>
@@ -523,8 +523,8 @@ ggplotly(p_top20, tooltip = "text") |>
 
 ## Row {height="15%"}
 
-::: {.callout-important title="Teaching Prompt — Communicating Uncertainty"}
-**Most dashboards show you the number. This one shows you how much to trust it.** The confidence flag is almost never present in stakeholder reporting — but it should be. Where in your organization's reporting does uncertainty get hidden? What decisions are being made on L-confidence data presented as H-confidence?
+::: {.callout-important title="Teaching Prompt: Communicating Uncertainty"}
+**Most dashboards show you the number. This one shows you how much to trust it.** The confidence flag almost never shows up in stakeholder reporting, but it should. Where in your organization's reporting does uncertainty get hidden? What decisions are being made on L-confidence data presented as H-confidence?
 :::
 
 ## Row {height="45%"}
@@ -591,7 +591,7 @@ p_range <- uncertain |>
                      labels = c("M" = "Medium (±0.8)", "L" = "Low (±1.6)")) +
   scale_x_continuous(limits = c(1, 10), breaks = 1:10) +
   labs(
-    title = "Plausible score ranges for provisional artists",
+    title = "Plausible score ranges for less-documented artists",
     subtitle = "Point = scored value; bar = plausible range given evidence quality",
     x = "Composite score", y = NULL, color = "Confidence tier"
   ) +
@@ -603,7 +603,7 @@ ggplotly(p_range, tooltip = "text") |>
 
 ## Row {height="40%"}
 
-### Confidence notes — M and L entries {width="100%"}
+### Confidence notes for M and L entries {width="100%"}
 
 ```{r conf-notes-table}
 conf_notes <- artists |>
@@ -637,8 +637,8 @@ reactable(
 
 ## Row {height="15%"}
 
-::: {.callout-tip title="Teaching Prompt — The Same Data, Different Stories"}
-**Every visualization choice is an argument.** The four charts below show the same underlying data — composite scores by era — rendered four different ways. Each emphasizes something different and hides something else. Which one is most honest? Which is most persuasive? Are those the same chart?
+::: {.callout-tip title="Teaching Prompt: The Same Data, Different Stories"}
+**Every visualization choice is an argument.** The four charts below show the same data (composite scores by era) drawn four different ways. Each one highlights something and hides something else. Which is most honest? Which is most persuasive? Are those the same chart?
 :::
 
 ## Row {height="85%"}
@@ -705,7 +705,7 @@ plot_ly(
   showlegend = FALSE
 ) |>
   layout(
-    title  = list(text = "C: Violin + box — Distribution emphasis",
+    title  = list(text = "C: Violin + box · Distribution emphasis",
                   font = list(size = 13, color = "#1a1a2e")),
     xaxis  = list(title = "", categoryorder = "array",
                   categoryarray = era_levels),

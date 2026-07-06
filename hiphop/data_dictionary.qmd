@@ -1,6 +1,6 @@
 ---
 title: "Data Dictionary & Codebook"
-subtitle: "Hip-Hop Periodic Table — construct definitions, scoring method, and sampling frame"
+subtitle: "Hip-Hop Periodic Table: what the variables mean, how scores were assigned, and who is in the data"
 format:
   html:
     toc: true
@@ -31,28 +31,28 @@ Excel workbook, which is the single source of truth.
 
 ## The five constructs
 
-Each act is scored 1–10 on five dimensions of lyricism. Scores are a
-**synthesis of published criticism and hip-hop scholarship** — no NLP analysis
-was run. Each dimension has a named anchor at 10 so the top of the scale means
-the same thing across scorers.
+Each act is scored 1–10 on five dimensions of lyricism. Scores are
+**drawn from published criticism and hip-hop scholarship**; no automated
+text analysis was run. Each dimension has a named anchor at 10 so the top
+of the scale means the same thing across scorers.
 
 | Construct | What it measures | Anchor at 10 |
 |---|---|---|
-| **Rhyme Density** | Frequency and complexity of rhyme: internal rhyme, multisyllabic chains, rhymes per bar, scheme inventiveness | Rakim — pioneered internal and multisyllabic rhyme as standard practice |
-| **Vocab Breadth** | Lexical diversity: range of unique words and registers across the catalog | Aesop Rock — per published NLP studies of unique-word counts in rap |
+| **Rhyme Density** | Frequency and complexity of rhyme: internal rhyme, multisyllabic chains, rhymes per bar, scheme inventiveness | Rakim: pioneered internal and multisyllabic rhyme as standard practice |
+| **Vocab Breadth** | Lexical diversity: range of unique words and registers across the catalog | Aesop Rock: per published studies counting unique words in rap |
 | **Storytelling** | Narrative construction: character, plot, perspective shifts, arc within songs and across albums | Scarface |
-| **Metaphor/Imagery** | Density and originality of figurative language: extended metaphor, concrete imagery, double meanings | — |
-| **Conceptual Depth** | Thematic ambition and coherence: album-level concepts, social and philosophical substance | Kendrick Lamar — 10 is reserved for album-length conceptual execution at the highest tier |
+| **Metaphor/Imagery** | Density and originality of figurative language: extended metaphor, concrete imagery, double meanings | (none named) |
+| **Conceptual Depth** | Thematic ambition and coherence: album-level concepts, social and philosophical substance | Kendrick Lamar: 10 is reserved for carrying a concept across a full album at the highest level |
 
-The **Composite Score** is the unweighted mean of the five dimensions, rounded
-to one decimal. Equal weighting is itself a methods decision — one of the
+The **Composite Score** is the plain average of the five dimensions, rounded
+to one decimal. Counting all five equally is itself a choice, and one of the
 module's core discussion prompts.
 
 ## Scoring method
 
-- **Basis:** synthesis of published music criticism, academic hip-hop
-  scholarship (Bradley, Chang, Kajikawa, Rabaka), and documented critical
-  consensus. Scores are judgments, not computations.
+- **Basis:** published music criticism, academic hip-hop scholarship
+  (Bradley, Chang, Kajikawa, Rabaka), and documented critical consensus.
+  Scores are judgments, not calculations.
 - **Scale:** integers 1–10 per dimension; anchored at the top of each scale
   (table above).
 - **Confidence flag:** every act carries an H/M/L rating of how much to trust
@@ -62,11 +62,11 @@ module's core discussion prompts.
 
 | Flag | Meaning | Criteria |
 |---|---|---|
-| **H — High** | Extensive critical record | Sustained critical/academic attention; multiple long-form analyses of the act's lyrical craft; consistent reception across sources; a body of work large enough that scores are stable across albums |
-| **M — Medium** | Moderate documentation | Meets 1–2 of the High criteria: historically significant but under-analyzed, recently emergent with an incomplete body of work, contested reception, or regional/underground significance without mainstream scholarly attention. Treat as provisional |
-| **L — Low** | Thin or contested record | Limited formal analysis, very recent emergence, single-source scores, or reception clouded by non-lyrical controversy. Treat as initial estimates requiring verification |
+| **H (High)** | Extensive critical record | Sustained critical/academic attention; multiple long-form analyses of the act's lyrical craft; consistent reception across sources; a body of work large enough that scores are stable across albums |
+| **M (Medium)** | Moderate documentation | Meets 1–2 of the High criteria: historically important but under-analyzed, newer with an incomplete body of work, mixed critical reception, or regional/underground importance without mainstream scholarly attention. Treat as a working estimate |
+| **L (Low)** | Thin or disputed record | Little formal analysis, a very recent debut, single-source scores, or reception clouded by controversy unrelated to the music. Treat as first estimates that need checking |
 
-Recommended verification for M/L acts: RateYourMusic critical consensus,
+Good places to double-check M and L scores: RateYourMusic critical consensus,
 Pitchfork / The Wire discography reviews, Google Scholar (artist +
 "lyricism"), and genre publications (The Source, XXL retrospectives, Passion
 of the Weiss).
@@ -88,10 +88,10 @@ reactable(
 )
 ```
 
-Two scope rules merit particular attention:
+Two scope rules are worth calling out:
 
 - **Region = scene, not birthplace.** Acts are assigned to the US scene they
-  are professionally rooted in — label home and scene affiliation during their
+  are professionally rooted in: label home and scene ties during their
   defining run (Da Brat is *South* via So So Def, though born in Chicago).
 - **Era = defining run, not debut year.** Debut years overlap era boundaries
   by design; the era reflects when the act's defining work landed.
@@ -120,7 +120,7 @@ reactable(
 
 The dataset over-represents critically acclaimed acts (vs. commercially
 dominant ones), male acts, Golden Age NYC, and English-language rap.
-International and non-Anglophone rap is **excluded from the frame entirely** —
+International and non-English rap is **excluded from the frame entirely**,
 a documented scope decision. The [dashboard](hiphop_dashboard.html) section
-*"Who Is In the Data?"* quantifies these gaps and turns them into teaching
+*"Who Is In the Data?"* measures these gaps and turns them into teaching
 prompts on sampling bias.

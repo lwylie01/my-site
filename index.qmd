@@ -11,12 +11,11 @@ editor:
 <div class="hero-section container">
   <div class="row align-items-center">
     <div class="col-md-9">
-      <img class="hero-logo" src="pics/logoW-clear.png" alt="Data with a Plot — Lindsey E. Wylie, J.D., Ph.D." />
+      <img class="hero-logo" src="pics/logoW-clear.png" alt="Data with a Plot · Lindsey E. Wylie, J.D., Ph.D." />
       <p class="hero-tagline">Lindsey E. Wylie, J.D., Ph.D.</p>
       <p class="hero-intro">
-        Rigorous analytic thinking, made accessible — through unexpected
-        datasets, practical methodology, and visualizations built to be
-        understood and remembered.
+        Careful analysis, made accessible: unexpected datasets, practical
+        methods, and visuals built to be understood and remembered.
       </p>
     </div>
   </div>
@@ -49,8 +48,8 @@ editor:
 <div class="bio-block">
   <span class="bio-avatar"><img src="pics/Headshot1.jpg" alt="Lindsey E. Wylie" /></span>
   <div class="bio-body">
-    <p>I study how data informs decision-making and legal policies--with specific
-    attention to how measurement influences outcomes</p>
+    <p>I study how data shapes decisions and legal policy, with specific
+    attention to how measurement changes outcomes.</p>
 
     <div class="credential-badges">
       <span class="badge-item">Ph.D., Social Psychology · concentration in Research 
@@ -59,10 +58,10 @@ editor:
     </div>
 
     <p>I am especially interested in the unintended consequences of legal
-    decisions and interventions, which are often found at the intersection of 
-    well-intentioned law or policy, and the reality of complex systems. My interests 
-    are shaped by my experience as a system-involved young person and my desire to 
-    highlight under-studied research topics.</p>
+    decisions: what happens when a well-meant law or policy meets the reality
+    of a complex system. My interests are shaped by my experience as a
+    system-involved young person and my desire to highlight under-studied
+    research topics.</p>
 
     <p>Before joining the National Center for State Courts, I directed
     research at the University of Nebraska Omaha's Juvenile Justice
@@ -113,8 +112,8 @@ editor:
       <p class="focus-card-label">Applied Research Methods and Design</p>
       <p class="focus-card-text">
         Randomized studies and quasi-experimental methods across law, psychology,
-        and public policy — designs matched to the question and to the
-        constraints of real-world settings.
+        and public policy, with designs matched to the question and to the
+        limits of real-world settings.
       </p>
     </div>
   </div>
@@ -134,7 +133,7 @@ editor:
       <p class="focus-card-label">Tailored Program Evaluation and Recommendations</p>
       <p class="focus-card-text">
         Process and outcome evaluations of courts, diversion, and pretrial
-        programs — combining quantitative and qualitative methods to produce
+        programs, combining numbers with interviews and observation to produce
         recommendations programs can act on.
       </p>
     </div>
@@ -156,8 +155,8 @@ editor:
     <div class="focus-card-body">
       <p class="focus-card-label">Tests of Measurement Validity and Reliability</p>
       <p class="focus-card-text">
-        Building and validating screening tools and latent-trait measures —
-        evidence that an instrument measures what it claims to, consistently.
+        Building and testing screening tools and rating scales: evidence that
+        a tool measures what it claims to, consistently.
       </p>
     </div>
   </div>
@@ -173,8 +172,8 @@ editor:
     <div class="focus-card-body">
       <p class="focus-card-label">Practical Storytelling with Data</p>
       <p class="focus-card-text">
-        Professional and graduate teaching that turns rigorous analysis into work a
-        judge, funder, or community will read and remember — taught on datasets
+        Professional and graduate teaching that turns careful analysis into work a
+        judge, funder, or community will read and remember, taught on datasets
         whose flaws are part of the lesson.
       </p>
     </div>
@@ -215,8 +214,8 @@ editor:
     <p class="project-card-title">A Periodic Table of Hip-Hop Artists</p>
     <p class="project-card-desc">
       A dataset built to teach measurement validity, sampling bias, uncertainty
-      communication, and visualization design — using a subject that provokes
-      genuine debate.
+      communication, and visualization design, using a subject people genuinely
+      argue about.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
@@ -237,8 +236,8 @@ editor:
     <p class="project-card-title">The Barnum Test</p>
     <p class="project-card-desc">
       A 90-second interactive exercise that builds a "personalized" profile,
-      asks how accurate it feels, then reveals that every participant receives
-      the identical text. A clear, memorable lesson in construct validity.
+      asks how accurate it feels, then reveals that everyone gets the exact
+      same text. A clear, memorable lesson in construct validity.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
