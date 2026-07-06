@@ -231,7 +231,7 @@ toc: false
     <a class="book-cover" href="https://psycnet.apa.org/record/2026-35534-000"
        target="_blank" rel="noopener">
       <img src="../pics/book-cover-aging.png"
-           alt="Book cover of Aging and the Criminal Legal System by Lindsey E. Wylie and Eve M. Brank — an abstract collage in ochre, cream, lavender, and black" />
+           alt="Book cover of Aging and the Criminal Legal System by Lindsey E. Wylie and Eve M. Brank; an abstract collage in ochre, cream, lavender, and black" />
     </a>
     <div class="book-feature-body">
       <span class="project-card-tag">Book · APA, 2025</span>
