@@ -20,7 +20,7 @@ toc: false
     <span class="project-card-tag">Data Storytelling · Teaching Module</span>
     <p class="project-card-title">Hip-Hop Periodic Table</p>
     <p class="project-card-desc">
-      A fully documented dataset of 163 hip-hop acts — 132 solo artists and 31
+      A fully documented dataset of 173 hip-hop acts — 130 solo artists and 43
       groups — scored across five lyricism dimensions, with per-artist confidence
       ratings and a published data dictionary. Built to teach measurement validity,
       sampling bias, composite scoring, and uncertainty communication — using a

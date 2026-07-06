@@ -1,6 +1,6 @@
 # Hip-Hop Periodic Table — Worklist
 
-`hiphop/data/hiphop_artists.xlsx`. **163 acts** = 132 Elements + 31 Compounds.
+`hiphop/data/hiphop_artists.xlsx`. **173 acts** = 130 Elements + 43 Compounds.
 (Underscore-prefixed so Quarto does not publish this internal doc.)
 
 ## Visual encoding (current)
@@ -19,6 +19,7 @@
 - [x] Cleanup pass (2026-07): Gender column added to workbook (dashboard gender chart now data-driven, hardcoded list removed); Composite Score float artifacts normalized to 1 dp; dead template code removed (--uk/--intl vars, .tile-conf/.conf-* rules, 'Late 99s' checks, stale layout comments)
 - [x] Expansion batch 2 (+16, gap-targeted, 2026-07): 7 women (Salt-N-Pepa, Megan Thee Stallion, Yo-Yo, Bahamadia, Jean Grae, Trina, Mia X — female elements now 24/132 = 18%); Midwest/Bay/South depth (Bone Thugs-N-Harmony, 8Ball & MJG, Souls of Mischief, Twista, Tech N9ne); prestige-bias cases (Nelly, Chief Keef); modern underground (Roc Marciano, Denzel Curry)
 - [x] Region taxonomy rollup (2026-07): Region now East Coast (75) / West Coast (25) / South (41) / Midwest (22); old scene values preserved in new Scene column; modal shows "East Coast (NYC)" style detail; freeze disabled for hiphop/ so data-only Excel edits re-render the dashboard
+- [x] Compounds expansion (+10 post-Golden-Age, 2026-07): Fugees, Goodie Mob, Company Flow, Clipse, dead prez, Little Brother, Atmosphere, Blackalicious, Brockhampton, Griselda; Whodini + Armand Hammer reclassified Element→Compound (trio/duo, J.J. Fad precedent); compounds by era now 6/18/6/7/3/3
 
 ## Region shapes
 
@@ -29,11 +30,11 @@
 
 | Style | Count |
 |---|---|
-| Gangsta/Street | 45 |
-| Conscious/Lyrical | 42 |
+| Gangsta/Street | 47 |
+| Conscious/Lyrical | 47 |
 | Party/Pop | 26 |
-| Experimental | 16 |
+| Experimental | 18 |
 | Abstract | 13 |
-| Political | 11 |
+| Political | 12 |
 | Trap/Drill | 6 |
 | Jazz-Rap | 4 |
