@@ -41,7 +41,10 @@ truth**; everything else derives from it.
 `Birth Year` (Elements only; Compounds blank).
 
 Fixed vocabularies: Era = Old School / Golden Age / Late 90s / 2000s / 2010s /
-2020s. Region = East Coast / West Coast / South / Midwest, and it must equal
+2020s, and it is derived, not judged: Era = the bracket holding the Signature
+Work year (Debut Year only when signature is blank, i.e. Kool Herc). Brackets:
+Old School through 1985, Golden Age 1986-1994, Late 90s 1995-1999, then
+calendar decades. Region = East Coast / West Coast / South / Midwest, and it must equal
 the Scene rollup (NYC+Philly → East Coast, LA+Bay Area → West Coast). Style =
 Party/Pop, Political, Conscious/Lyrical, Gangsta/Street, Abstract, Jazz-Rap,
 Experimental, Trap/Drill. Scores follow the documented critical-consensus
@@ -55,8 +58,8 @@ Elements (18%); median age at signature work 26.
 
 **Adding or editing acts (rows):**
 1. Workbook row with every column filled per the schema above (composite must
-   equal the recomputed mean; sanity: debut ≤ signature year ≤ Active Through;
-   ages 13–45).
+   equal the recomputed mean; Era must equal the signature-year bracket;
+   sanity: debut ≤ signature year ≤ Active Through; ages 13–45).
 2. `_accuracy_worklist.md`: header counts, style-distribution table, Done item.
 3. `projects/index.qmd`: the act counts in the project card.
 4. Dashboard bias-table gender line (currently "~18% female") if the share moves.

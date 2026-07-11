@@ -23,6 +23,7 @@
 - [x] Career dimension (2026-07): Signature Work ("Title (Year)") + Active Through columns for all 173 acts (101 active / 72 concluded; blank sig only Kool Herc); modal shows signature + active span; dashboard page 6 "Careers & Longevity" (survivorship prompt, career-length vs composite, years-to-peak distribution); Full Data Table renumbered to 7
 - [x] Age dimension (2026-07): Birth Year column for all 130 Elements (Compounds blank by design; ages derive as debut-birth and sig_year-birth); modal debut line shows "(age N)"; Careers page adds age-at-debut-by-era boxplots and age-at-signature vs composite scatter
 - [x] Dashboard subtitle fix (2026-07): ggplotly_titled() helper folds each ggplot subtitle into the plotly title as a `<br><sup>` line, all 15 ggplotly charts converted (subtitles were silently dropped, hiding the gender-count and median-signature-age stats)
+- [x] Era operationalized (2026-07): Era is now derived, the bracket holding the Signature Work year (Debut Year only for Kool Herc), with brackets Old School through 1985 / Golden Age 1986-1994 / Late 90s 1995-1999 / then calendar decades; 46 acts recoded (Raekwon 2000s→Late 90s was the tell), Data Dictionary Era row rewritten to the derived rule; distribution now OS 9 / GA 41 / L90s 33 / 2000s 34 / 2010s 41 / 2020s 15 (Elements 7/22/22/29/36/14, Compounds 2/19/11/5/5/1)
 
 ## Region shapes
 
