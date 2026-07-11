@@ -736,8 +736,9 @@ function populateModal(id) {
   document.getElementById('modal-name').textContent = a['Artist Name'];
   const spanEnd = a['Active Through'] || 'present';
   const sigSeg = a['Signature Work'] ? `Signature: <i>${a['Signature Work']}</i> · ` : '';
+  const ageSeg = a['Birth Year'] ? ` (age ${a['Debut Year'] - a['Birth Year']})` : '';
   document.getElementById('modal-meta').innerHTML =
-    `<b>${regionLabel(a)}</b> · ${a['Era']} · Debut ${a['Debut Year']}<br>` +
+    `<b>${regionLabel(a)}</b> · ${a['Era']} · Debut ${a['Debut Year']}${ageSeg}<br>` +
     `${a['Production Style']} · ${a['Label']}<br>` +
     `${sigSeg}Active ${a['Debut Year']}–${spanEnd}`;
   document.getElementById('modal-tags').innerHTML = `<span class="modal-tag">${a['Style']}</span><span class="modal-tag">${a['Region']}</span><span class="modal-tag">${a['Era']}</span>`;

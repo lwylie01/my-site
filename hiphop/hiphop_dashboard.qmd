@@ -59,7 +59,8 @@ artists_raw <- read_excel(
     confidence_note = `Confidence Note`,
     gender         = Gender,
     sig_work       = `Signature Work`,
-    active_to      = `Active Through`
+    active_to      = `Active Through`,
+    birth          = `Birth Year`
   ) |>
   mutate(across(c(rhyme, vocab, story, metaphor, concept), as.integer))
 
@@ -73,6 +74,8 @@ artists <- artists_raw |>
     career_len    = career_end - debut,
     sig_year      = as.integer(str_match(sig_work, "\\((\\d{4})\\)")[, 2]),
     years_to_peak = sig_year - debut,
+    age_debut     = debut - birth,
+    age_sig       = sig_year - birth,
     era = factor(era, levels = c("Old School","Golden Age","Late 90s","2000s","2010s","2020s")),
     confidence = factor(confidence, levels = c("H","M","L")),
     region = factor(region, levels = c("East Coast","West Coast","South","Midwest")),
@@ -751,10 +754,10 @@ ggplotly(p_scatter_n, tooltip = "text") |>
 ## Row {height="15%"}
 
 ::: {.callout-warning title="Teaching Prompt: Survivorship & the Canon"}
-**Does the composite measure quality, or career length?** Critical writing accumulates over a career: the longer an act stays active, the more analyses exist to score them with. Watch how scores drift upward with career length, then ask which way the causality runs. And notice how quickly most acts produce their signature work. If the defining album usually lands within a few years of debut, what exactly is a thirty-year career adding to the number?
+**Does the composite measure quality, or career length?** Critical writing accumulates over a career: the longer an act stays active, the more analyses exist to score them with. Watch how scores drift upward with career length, then ask which way the causality runs. And notice how quickly most acts produce their signature work. If the defining album usually lands within a few years of debut, what exactly is a thirty-year career adding to the number? Age cuts the same question a different way: if the defining work reliably arrives in an artist's mid-twenties, era after era, what does that say about how the genre treats its elders?
 :::
 
-## Row {height="85%"}
+## Row {height="42.5%"}
 
 ### Career length vs. composite {width="55%"}
 
@@ -809,6 +812,65 @@ p_peak <- peak_counts |>
   theme_hiphop()
 
 ggplotly(p_peak, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+## Row {height="42.5%"}
+
+### Age at debut, by era {width="50%"}
+
+```{r age-debut-era}
+# Solo artists only: Compounds carry no Birth Year (members vary in age).
+age_data <- artists |> filter(!is.na(birth))
+
+p_age_debut <- age_data |>
+  ggplot(aes(x = era, y = age_debut)) +
+  geom_boxplot(aes(group = era), fill = "#d4b15a", alpha = 0.35,
+               color = "#7a6a7b", outlier.shape = NA) +
+  geom_jitter(aes(color = era,
+                  text = paste0("<b>", name, "</b><br>",
+                                "Born ", birth, ", debut ", debut,
+                                " at age ", age_debut)),
+              width = 0.18, height = 0.1, alpha = 0.75, size = 2) +
+  scale_color_manual(values = era_pal, guide = "none") +
+  labs(
+    title = "Age at debut, by era",
+    subtitle = "Is the genre debuting younger over time?",
+    x = NULL, y = "Age at first commercial release"
+  ) +
+  theme_hiphop() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+ggplotly(p_age_debut, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+### Age at signature work vs. composite {width="50%"}
+
+```{r age-sig-composite}
+sig_age_data <- age_data |> filter(!is.na(age_sig))
+med_age_sig  <- median(sig_age_data$age_sig)
+
+p_age_sig <- sig_age_data |>
+  ggplot(aes(x = age_sig, y = composite, color = era,
+             text = paste0("<b>", name, "</b><br>",
+                           "Signature: ", sig_work, " at age ", age_sig, "<br>",
+                           "Composite: ", composite))) +
+  geom_jitter(width = 0.15, height = 0.05, alpha = 0.75, size = 2.5) +
+  geom_vline(xintercept = med_age_sig, linetype = "dashed",
+             color = "#7a6a7b", linewidth = 0.7) +
+  scale_color_manual(values = era_pal) +
+  scale_x_continuous(breaks = seq(15, 45, 5)) +
+  labs(
+    title = "Age at signature work vs. composite",
+    subtitle = paste0("Do prodigies score higher? Median signature-work age: ",
+                      med_age_sig),
+    x = "Age when the signature work landed", y = "Composite score", color = "Era"
+  ) +
+  theme_hiphop() +
+  theme(legend.position = "right")
+
+ggplotly(p_age_sig, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
