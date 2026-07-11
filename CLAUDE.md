@@ -88,10 +88,11 @@ worklist shapes section.
   headless Chromium (`/opt/pw-browsers/chromium`, global playwright at
   `/opt/node22/lib/node_modules`) checking tile counts, filters, and modals.
   The dashboard renders only in CI, so read its R chunks carefully.
-- Known quirk: `ggplotly()` silently drops every ggplot `subtitle` across the
-  dashboard (titles survive). Don't put load-bearing stats in subtitles; a
-  future fix is folding them into the plotly title via `<br><sup>` or
-  `layout(annotations=)`.
+- Known quirk: `ggplotly()` silently drops ggplot `subtitle`s (titles
+  survive). The dashboard's `ggplotly_titled()` helper (setup chunk) works
+  around it by folding each subtitle into the plotly title as a `<br><sup>`
+  second line. Pipe new ggplot charts through the helper, not bare
+  `ggplotly()`, or the subtitle vanishes.
 
 ## Other site areas
 

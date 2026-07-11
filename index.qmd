@@ -14,8 +14,8 @@ editor:
       <img class="hero-logo" src="pics/logoW-clear.png" alt="Data with a Plot · Lindsey E. Wylie, J.D., Ph.D." />
       <p class="hero-tagline">Lindsey E. Wylie, J.D., Ph.D.</p>
       <p class="hero-intro">
-        The law treats its numbers as if they were laws of nature — you are
-        an adult at 18, a senior at 65, high-risk or you are not — when each
+        The law treats its numbers as if they were laws of nature: you are
+        an adult at 18, a senior at 65, high-risk or you are not. But each
         one is a decision someone made. I surface the decision behind the
         number and turn what is underneath into data stories people remember.
       </p>
@@ -50,8 +50,8 @@ editor:
 <div class="bio-block">
   <span class="bio-avatar"><img src="pics/Headshot1.jpg" alt="Lindsey E. Wylie" /></span>
   <div class="bio-body">
-    <p>I study how the legal system measures people — how it decides who
-    counts as an adult, who is high-risk, who is competent — and what follows
+    <p>I study how the legal system measures people: how it decides who
+    counts as an adult, who is high-risk, who is competent, and what follows
     when those measurement choices are treated as settled facts. Much of my
     work concerns the unintended consequences of well-intentioned rules, and
     the distance between what a policy is meant to do and what it does.</p>

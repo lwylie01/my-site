@@ -135,6 +135,24 @@ theme_hiphop <- function() {
       strip.text    = element_text(face = "bold", color = "#333333")
     )
 }
+
+# ── ggplotly() drops ggplot subtitles ────────────────────────────────────────
+# Fold each subtitle into the plotly title as a smaller <br><sup> second line
+# so it survives the conversion. The <b> wrapper matches the bold title text
+# ggplotly emits; the margin bump keeps both lines clear of the plot area.
+# Pipe every ggplot chart through this instead of bare ggplotly().
+ggplotly_titled <- function(p, ...) {
+  fig <- ggplotly(p, ...)
+  sub <- p$labels$subtitle
+  if (is.null(sub) || !nzchar(sub)) return(fig)
+  fig |>
+    layout(
+      title = list(text = paste0(
+        "<b>", p$labels$title, "</b><br><sup>", sub, "</sup>"
+      )),
+      margin = list(t = 70)
+    )
+}
 ```
 
 # Overview {.sidebar}
@@ -261,7 +279,7 @@ p_scatter <- artists |>
   theme_hiphop() +
   theme(legend.position = "right")
 
-ggplotly(p_scatter, tooltip = "text") |>
+ggplotly_titled(p_scatter, tooltip = "text") |>
   layout(
     paper_bgcolor = "rgba(0,0,0,0)",
     plot_bgcolor  = "rgba(0,0,0,0)"
@@ -295,7 +313,7 @@ p_region <- artists |>
   ) +
   theme_hiphop()
 
-ggplotly(p_region, tooltip = "text") |>
+ggplotly_titled(p_region, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -325,7 +343,7 @@ p_gender <- gender_data |>
   ) +
   theme_hiphop()
 
-ggplotly(p_gender, tooltip = "text") |>
+ggplotly_titled(p_gender, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -438,7 +456,7 @@ p_heat <- dim_long |>
     panel.spacing = unit(0.3, "lines")
   )
 
-ggplotly(p_heat, tooltip = "text", height = 900) |>
+ggplotly_titled(p_heat, tooltip = "text", height = 900) |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -472,7 +490,7 @@ p_era_lines <- era_dim_avg |>
   theme_hiphop() +
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
 
-ggplotly(p_era_lines, tooltip = "text") |>
+ggplotly_titled(p_era_lines, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -501,7 +519,7 @@ p_strongest <- strongest |>
   theme_hiphop() +
   theme(legend.position = "bottom")
 
-ggplotly(p_strongest, tooltip = "text") |>
+ggplotly_titled(p_strongest, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -528,7 +546,7 @@ p_top20 <- top20 |>
   ) +
   theme_hiphop()
 
-ggplotly(p_top20, tooltip = "text") |>
+ggplotly_titled(p_top20, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -610,7 +628,7 @@ p_range <- uncertain |>
   ) +
   theme_hiphop()
 
-ggplotly(p_range, tooltip = "text") |>
+ggplotly_titled(p_range, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -673,7 +691,7 @@ p_bar <- era_summary |>
   labs(title = "A: Bar chart", subtitle = "Ranking emphasis", x = NULL, y = "Mean composite") +
   theme_hiphop()
 
-ggplotly(p_bar, tooltip = "text") |>
+ggplotly_titled(p_bar, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -691,7 +709,7 @@ p_line <- era_summary |>
   theme_hiphop() +
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
 
-ggplotly(p_line, tooltip = "text") |>
+ggplotly_titled(p_line, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -745,7 +763,7 @@ p_scatter_n <- era_summary2 |>
   theme_hiphop() +
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
 
-ggplotly(p_scatter_n, tooltip = "text") |>
+ggplotly_titled(p_scatter_n, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -786,7 +804,7 @@ p_career <- career_data |>
   theme_hiphop() +
   theme(legend.position = "right")
 
-ggplotly(p_career, tooltip = "text") |>
+ggplotly_titled(p_career, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -811,7 +829,7 @@ p_peak <- peak_counts |>
   ) +
   theme_hiphop()
 
-ggplotly(p_peak, tooltip = "text") |>
+ggplotly_titled(p_peak, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -841,7 +859,7 @@ p_age_debut <- age_data |>
   theme_hiphop() +
   theme(axis.text.x = element_text(angle = 30, hjust = 1))
 
-ggplotly(p_age_debut, tooltip = "text") |>
+ggplotly_titled(p_age_debut, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
@@ -870,7 +888,7 @@ p_age_sig <- sig_age_data |>
   theme_hiphop() +
   theme(legend.position = "right")
 
-ggplotly(p_age_sig, tooltip = "text") |>
+ggplotly_titled(p_age_sig, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
