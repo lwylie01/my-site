@@ -57,14 +57,22 @@ artists_raw <- read_excel(
     concept        = `Conceptual Depth`,
     confidence     = Confidence,
     confidence_note = `Confidence Note`,
-    gender         = Gender
+    gender         = Gender,
+    sig_work       = `Signature Work`,
+    active_to      = `Active Through`
   ) |>
   mutate(across(c(rhyme, vocab, story, metaphor, concept), as.integer))
 
 # ── Derived variables ─────────────────────────────────────────────────────────
+current_year <- as.integer(format(Sys.Date(), "%Y"))
+
 artists <- artists_raw |>
   mutate(
     composite = round((rhyme + vocab + story + metaphor + concept) / 5, 1),
+    career_end    = coalesce(as.integer(active_to), current_year),
+    career_len    = career_end - debut,
+    sig_year      = as.integer(str_match(sig_work, "\\((\\d{4})\\)")[, 2]),
+    years_to_peak = sig_year - debut,
     era = factor(era, levels = c("Old School","Golden Age","Late 90s","2000s","2010s","2020s")),
     confidence = factor(confidence, levels = c("H","M","L")),
     region = factor(region, levels = c("East Coast","West Coast","South","Midwest")),
@@ -738,7 +746,73 @@ ggplotly(p_scatter_n, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-# 6 · Full Data Table
+# 6 · Careers & Longevity
+
+## Row {height="15%"}
+
+::: {.callout-warning title="Teaching Prompt: Survivorship & the Canon"}
+**Does the composite measure quality, or career length?** Critical writing accumulates over a career: the longer an act stays active, the more analyses exist to score them with. Watch how scores drift upward with career length, then ask which way the causality runs. And notice how quickly most acts produce their signature work. If the defining album usually lands within a few years of debut, what exactly is a thirty-year career adding to the number?
+:::
+
+## Row {height="85%"}
+
+### Career length vs. composite {width="55%"}
+
+```{r career-scatter}
+career_data <- artists |>
+  mutate(
+    status = if_else(is.na(active_to), "Active", "Concluded"),
+    span_label = paste0(debut, "–", if_else(is.na(active_to), "present", as.character(active_to)))
+  )
+
+p_career <- career_data |>
+  ggplot(aes(x = career_len, y = composite, color = era,
+             text = paste0(
+               "<b>", name, "</b><br>",
+               "Active: ", span_label, " (", career_len, " yrs, ", status, ")<br>",
+               "Signature: ", if_else(is.na(sig_work), "none recorded", sig_work), "<br>",
+               "Composite: ", composite
+             ))) +
+  geom_jitter(width = 0.2, height = 0.05, alpha = 0.75, size = 2.5) +
+  scale_color_manual(values = era_pal) +
+  labs(
+    title = "Career length vs. composite score",
+    subtitle = "Length = debut through last active year (or present). Does longevity buy critical standing?",
+    x = "Career length (years)", y = "Composite score", color = "Era"
+  ) +
+  theme_hiphop() +
+  theme(legend.position = "right")
+
+ggplotly(p_career, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+### Years from debut to signature work {width="45%"}
+
+```{r years-to-peak}
+peak_data   <- artists |> filter(!is.na(years_to_peak))
+med_peak    <- median(peak_data$years_to_peak)
+peak_counts <- peak_data |> count(years_to_peak)
+
+p_peak <- peak_counts |>
+  ggplot(aes(x = years_to_peak, y = n,
+             text = paste0(years_to_peak, " yrs after debut: ", n, " acts"))) +
+  geom_col(fill = "#6f9ec2", color = "white", linewidth = 0.3, width = 1) +
+  geom_vline(xintercept = med_peak, linetype = "dashed", color = "#cf8079", linewidth = 0.8) +
+  annotate("text", x = med_peak + 0.5, y = max(peak_counts$n) * 0.95, hjust = 0,
+           label = paste0("median: ", med_peak, " yrs"), color = "#cf8079", size = 3.5) +
+  labs(
+    title = "How fast does the defining work arrive?",
+    subtitle = "Years from debut to consensus signature release",
+    x = "Years from debut to signature work", y = "Number of acts"
+  ) +
+  theme_hiphop()
+
+ggplotly(p_peak, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+# 7 · Full Data Table
 
 ## Row
 
