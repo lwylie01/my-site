@@ -22,6 +22,7 @@
 - [x] Compounds expansion (+10 post-Golden-Age, 2026-07): Fugees, Goodie Mob, Company Flow, Clipse, dead prez, Little Brother, Atmosphere, Blackalicious, Brockhampton, Griselda; Whodini + Armand Hammer reclassified Element→Compound (trio/duo, J.J. Fad precedent); compounds by era now 6/18/6/7/3/3
 - [x] Career dimension (2026-07): Signature Work ("Title (Year)") + Active Through columns for all 173 acts (101 active / 72 concluded; blank sig only Kool Herc); modal shows signature + active span; dashboard page 6 "Careers & Longevity" (survivorship prompt, career-length vs composite, years-to-peak distribution); Full Data Table renumbered to 7
 - [x] Age dimension (2026-07): Birth Year column for all 130 Elements (Compounds blank by design; ages derive as debut-birth and sig_year-birth); modal debut line shows "(age N)"; Careers page adds age-at-debut-by-era boxplots and age-at-signature vs composite scatter
+- [x] Dashboard subtitle fix (2026-07): ggplotly_titled() helper folds each ggplot subtitle into the plotly title as a `<br><sup>` line, all 15 ggplotly charts converted (subtitles were silently dropped, hiding the gender-count and median-signature-age stats)
 
 ## Region shapes
 
