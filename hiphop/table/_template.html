@@ -734,7 +734,12 @@ function populateModal(id) {
   document.getElementById('modal-symbol-box').textContent = a['Symbol'];
   document.getElementById('modal-symbol-box').style.background = color;
   document.getElementById('modal-name').textContent = a['Artist Name'];
-  document.getElementById('modal-meta').innerHTML = `<b>${regionLabel(a)}</b> · ${a['Era']} · Debut ${a['Debut Year']}<br>${a['Production Style']} · ${a['Label']}`;
+  const spanEnd = a['Active Through'] || 'present';
+  const sigSeg = a['Signature Work'] ? `Signature: <i>${a['Signature Work']}</i> · ` : '';
+  document.getElementById('modal-meta').innerHTML =
+    `<b>${regionLabel(a)}</b> · ${a['Era']} · Debut ${a['Debut Year']}<br>` +
+    `${a['Production Style']} · ${a['Label']}<br>` +
+    `${sigSeg}Active ${a['Debut Year']}–${spanEnd}`;
   document.getElementById('modal-tags').innerHTML = `<span class="modal-tag">${a['Style']}</span><span class="modal-tag">${a['Region']}</span><span class="modal-tag">${a['Era']}</span>`;
   document.getElementById('modal-desc').textContent = a['Description'];
 
