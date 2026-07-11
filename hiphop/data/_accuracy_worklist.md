@@ -21,6 +21,7 @@
 - [x] Region taxonomy rollup (2026-07): Region now East Coast (75) / West Coast (25) / South (41) / Midwest (22); old scene values preserved in new Scene column; modal shows "East Coast (NYC)" style detail; freeze disabled for hiphop/ so data-only Excel edits re-render the dashboard
 - [x] Compounds expansion (+10 post-Golden-Age, 2026-07): Fugees, Goodie Mob, Company Flow, Clipse, dead prez, Little Brother, Atmosphere, Blackalicious, Brockhampton, Griselda; Whodini + Armand Hammer reclassified Element→Compound (trio/duo, J.J. Fad precedent); compounds by era now 6/18/6/7/3/3
 - [x] Career dimension (2026-07): Signature Work ("Title (Year)") + Active Through columns for all 173 acts (101 active / 72 concluded; blank sig only Kool Herc); modal shows signature + active span; dashboard page 6 "Careers & Longevity" (survivorship prompt, career-length vs composite, years-to-peak distribution); Full Data Table renumbered to 7
+- [x] Age dimension (2026-07): Birth Year column for all 130 Elements (Compounds blank by design; ages derive as debut-birth and sig_year-birth); modal debut line shows "(age N)"; Careers page adds age-at-debut-by-era boxplots and age-at-signature vs composite scatter
 
 ## Region shapes
 
