@@ -85,7 +85,10 @@ artists <- artists_raw |>
     era = factor(era, levels = c("Old School","Golden Age","Late 90s","2000s","2010s","2020s")),
     confidence = factor(confidence, levels = c("H","M","L")),
     region = factor(region, levels = c("East Coast","West Coast","South","Midwest")),
-    style = factor(style),
+    style = factor(style, levels = c(
+      "Gangsta/Street", "Trap/Drill", "Political", "Conscious/Lyrical",
+      "Abstract", "Experimental", "Jazz-Rap", "Party/Pop"
+    )),
     confidence_note = if_else(is.na(confidence_note), "", confidence_note),
     strongest_dim = case_when(
       rhyme == pmax(rhyme, vocab, story, metaphor, concept) ~ "Rhyme Density",
@@ -127,21 +130,23 @@ dim_pal <- c(
 
 conf_pal <- c("H" = "#41ab5d", "M" = "#f6c141", "L" = "#e08214")
 
-# Same eight hues as the periodic table's tiles (STYLE_COLORS in the template),
-# so each style keeps one color across the whole site. Validated 2026-07: eight
-# categorical hues sit past the colorblind-safe edge (worst adjacent pair,
-# Trap/Drill vs Political, is a near-twin under protanopia), so style identity
-# never rides on color alone here: tooltips carry the style name, and page 6
-# teaches the limit directly.
+# Family palette shared with the periodic table (STYLE_COLORS in the template):
+# hue = lane, shade = style within it. Corals = the street lane (Gangsta,
+# Trap/Drill), jades = the message lane (Political, Conscious/Lyrical),
+# purples = the left field (Abstract, Experimental), golds = the crowd lane
+# (Jazz-Rap, Party/Pop). CVD-validated 2026-07: worst colorblind pair is
+# within-family (13.1, above the strict 12 target), so a confusion is a
+# near-miss inside one lane, never a category error. Tooltips still carry
+# the style name on every mark.
 style_pal <- c(
-  "Gangsta/Street"    = "#cf8079",
-  "Conscious/Lyrical" = "#6f9ec2",
-  "Party/Pop"         = "#d4b15a",
-  "Experimental"      = "#a085bd",
-  "Abstract"          = "#5cab9c",
-  "Political"         = "#86a866",
-  "Trap/Drill"        = "#dd9a5e",
-  "Jazz-Rap"          = "#c180a2"
+  "Gangsta/Street"    = "#bd5f50",
+  "Trap/Drill"        = "#d98a6d",
+  "Political"         = "#008b7e",
+  "Conscious/Lyrical" = "#3fbaa0",
+  "Abstract"          = "#5f4384",
+  "Experimental"      = "#a385c9",
+  "Jazz-Rap"          = "#a87d2a",
+  "Party/Pop"         = "#d3ab4d"
 )
 
 # ── Shared ggplot2 theme ─────────────────────────────────────────────────────
@@ -839,7 +844,7 @@ p_three <- artists |>
   scale_y_continuous(breaks = seq(2, 10, 2)) +
   labs(
     title = "2: Add color (style)",
-    subtitle = "The Abstract cluster surfaces top-right. This is also the legible edge: two of these hues are near-twins to a colorblind reader",
+    subtitle = "Hue carries the family (corals street, jades message, purples left field, golds crowd); shade picks the style. The purple cluster surfaces top-right",
     x = "Rhyme Density (1–10)", y = "Vocab Breadth (1–10)", color = NULL
   ) +
   theme_hiphop()
