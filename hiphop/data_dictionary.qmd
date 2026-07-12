@@ -46,7 +46,7 @@ of the scale means the same thing across scorers.
 | **Rhyme Density** | Frequency and complexity of rhyme: internal rhyme, multisyllabic chains, rhymes per bar, scheme inventiveness | Rakim: pioneered internal and multisyllabic rhyme as standard practice |
 | **Vocab Breadth** | Lexical diversity: range of unique words and registers across the catalog | Aesop Rock: per published studies counting unique words in rap |
 | **Storytelling** | Narrative construction: character, plot, perspective shifts, arc within songs and across albums | Scarface |
-| **Metaphor/Imagery** | Density and originality of figurative language: extended metaphor, concrete imagery, double meanings | (none named) |
+| **Metaphor/Imagery** | Density and originality of figurative language: extended metaphor, concrete imagery, double meanings | Lil Wayne: simile machine; metaphor-stacking as his defining critical reputation |
 | **Conceptual Depth** | Thematic ambition and coherence: album-level concepts, social and philosophical substance | Kendrick Lamar: 10 is reserved for carrying a concept across a full album at the highest level |
 
 The **Composite Score** is the plain average of the five dimensions, rounded

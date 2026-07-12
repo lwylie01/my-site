@@ -49,7 +49,8 @@ the Scene rollup (NYC+Philly → East Coast, LA+Bay Area → West Coast). Style 
 Party/Pop, Political, Conscious/Lyrical, Gangsta/Street, Abstract, Jazz-Rap,
 Experimental, Trap/Drill. Scores follow the documented critical-consensus
 method (no NLP); anchors: Rakim rhyme=10, Aesop Rock vocab=10, Scarface
-story=10, Kendrick concept=10. US-scene acts only (sampling frame).
+story=10, Lil Wayne metaphor=10, Kendrick concept=10. US-scene acts only
+(sampling frame).
 
 Current state (2026-07): 173 acts = 129 Elements + 44 Compounds; 24 female
 Elements (19%); median age at signature work 25.
