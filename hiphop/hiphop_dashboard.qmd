@@ -127,6 +127,23 @@ dim_pal <- c(
 
 conf_pal <- c("H" = "#41ab5d", "M" = "#f6c141", "L" = "#e08214")
 
+# Same eight hues as the periodic table's tiles (STYLE_COLORS in the template),
+# so each style keeps one color across the whole site. Validated 2026-07: eight
+# categorical hues sit past the colorblind-safe edge (worst adjacent pair,
+# Trap/Drill vs Political, is a near-twin under protanopia), so style identity
+# never rides on color alone here: tooltips carry the style name, and page 6
+# teaches the limit directly.
+style_pal <- c(
+  "Gangsta/Street"    = "#cf8079",
+  "Conscious/Lyrical" = "#6f9ec2",
+  "Party/Pop"         = "#d4b15a",
+  "Experimental"      = "#a085bd",
+  "Abstract"          = "#5cab9c",
+  "Political"         = "#86a866",
+  "Trap/Drill"        = "#dd9a5e",
+  "Jazz-Rap"          = "#c180a2"
+)
+
 # ── Shared ggplot2 theme ─────────────────────────────────────────────────────
 theme_hiphop <- function() {
   theme_minimal(base_family = "sans", base_size = 12) +
@@ -773,7 +790,187 @@ ggplotly_titled(p_scatter_n, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-# 6 · Careers & Longevity
+# 6 · One More Variable
+
+## Row
+
+::: {.callout-tip title="Teaching Prompt: The Cost of a Channel"}
+**Every encoding channel is a tax on the reader.** Position, color, panels, size: each added variable buys information and costs attention. The first four charts ask one question (do vocabulary and rhyme craft travel together?) and add one variable at a time. Somewhere along the way the chart stops earning its ink. Decide where, then look at the last two charts, which spend the same budget differently. One scope note: Jazz-Rap does not appear on this page, because all four Jazz-Rap acts are groups and this dashboard charts solo acts.
+:::
+
+## Row
+
+### 1 · Two variables {width="50%"}
+
+```{r ladder-two}
+r_vr <- cor(artists$vocab, artists$rhyme)
+
+p_two <- artists |>
+  ggplot(aes(x = rhyme, y = vocab,
+             text = paste0("<b>", name, "</b><br>",
+                           "Rhyme ", rhyme, " · Vocab ", vocab))) +
+  geom_jitter(width = 0.15, height = 0.15, alpha = 0.7, size = 2.2,
+              color = "#8C6A8D") +
+  scale_x_continuous(breaks = seq(2, 10, 2)) +
+  scale_y_continuous(breaks = seq(2, 10, 2)) +
+  labs(
+    title = "1: Position only",
+    subtitle = paste0("Vocab vs rhyme across ", nrow(artists),
+                      " solo acts, r = ", sprintf("%.2f", r_vr),
+                      ". One skill or two?"),
+    x = "Rhyme Density (1–10)", y = "Vocab Breadth (1–10)"
+  ) +
+  theme_hiphop()
+
+ggplotly_titled(p_two, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+### 2 · Three: color joins {width="50%"}
+
+```{r ladder-three}
+p_three <- artists |>
+  ggplot(aes(x = rhyme, y = vocab, color = style,
+             text = paste0("<b>", name, "</b><br>", style, "<br>",
+                           "Rhyme ", rhyme, " · Vocab ", vocab))) +
+  geom_jitter(width = 0.15, height = 0.15, alpha = 0.8, size = 2.2) +
+  scale_color_manual(values = style_pal) +
+  scale_x_continuous(breaks = seq(2, 10, 2)) +
+  scale_y_continuous(breaks = seq(2, 10, 2)) +
+  labs(
+    title = "2: Add color (style)",
+    subtitle = "The Abstract cluster surfaces top-right. This is also the legible edge: two of these hues are near-twins to a colorblind reader",
+    x = "Rhyme Density (1–10)", y = "Vocab Breadth (1–10)", color = NULL
+  ) +
+  theme_hiphop()
+
+ggplotly_titled(p_three, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+## Row
+
+### 3 · Four: panels join {width="55%"}
+
+```{r ladder-four}
+p_four <- artists |>
+  ggplot(aes(x = rhyme, y = vocab, color = style,
+             text = paste0("<b>", name, "</b><br>", style, " · ", era, "<br>",
+                           "Rhyme ", rhyme, " · Vocab ", vocab))) +
+  geom_jitter(width = 0.2, height = 0.2, alpha = 0.8, size = 1.8) +
+  scale_color_manual(values = style_pal) +
+  facet_wrap(~era, nrow = 2) +
+  labs(
+    title = "3: Add panels (era)",
+    subtitle = "Facets scale where hues cannot: same axes, six populations, colors as in chart 2. Watch the cloud migrate",
+    x = "Rhyme Density (1–10)", y = "Vocab Breadth (1–10)", color = NULL
+  ) +
+  theme_hiphop() +
+  theme(legend.position = "none")
+
+ggplotly_titled(p_four, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+### 4 · Five: the kitchen sink {width="45%"}
+
+```{r ladder-five}
+p_five <- artists |>
+  ggplot(aes(x = rhyme, y = vocab, color = style, size = career_len,
+             text = paste0("<b>", name, "</b><br>", style, " · ", era, "<br>",
+                           "Career ", career_len, " yrs · Rhyme ", rhyme,
+                           " · Vocab ", vocab))) +
+  geom_jitter(width = 0.2, height = 0.2, alpha = 0.65) +
+  scale_color_manual(values = style_pal) +
+  scale_size_continuous(range = c(1, 5), guide = "none") +
+  facet_wrap(~era, nrow = 2) +
+  labs(
+    title = "4: Add size (career length)",
+    subtitle = "Five variables, every channel spent, and the chart stops earning its ink. Which one would you drop?",
+    x = "Rhyme Density (1–10)", y = "Vocab Breadth (1–10)", color = NULL
+  ) +
+  theme_hiphop() +
+  theme(legend.position = "none")
+
+ggplotly_titled(p_five, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+## Row
+
+### The canon map {width="50%"}
+
+```{r canon-map}
+style_order <- artists |>
+  count(style, sort = TRUE) |>
+  pull(style) |>
+  as.character()
+
+canon <- artists |>
+  group_by(era, style) |>
+  summarise(n_acts = n(), mean_comp = round(mean(composite), 1),
+            .groups = "drop") |>
+  mutate(style = factor(as.character(style), levels = rev(style_order)))
+
+p_canon <- canon |>
+  ggplot(aes(x = era, y = style,
+             text = paste0(style, " · ", era, "<br>", n_acts,
+                           " acts · mean composite ", mean_comp))) +
+  geom_point(aes(size = n_acts, color = mean_comp), alpha = 0.9) +
+  scale_size_area(max_size = 13, guide = "none") +
+  scale_color_gradient(low = "#e7dbe7", high = "#4a2d4b",
+                       name = "Mean composite") +
+  labs(
+    title = "The canon map: four variables, spent well",
+    subtitle = "Size = number of solo acts; color = mean composite. Style and era ride on position, so no channel is overloaded",
+    x = NULL, y = NULL
+  ) +
+  theme_hiphop() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1),
+        panel.grid.major = element_line(color = "#f0eaf0"))
+
+ggplotly_titled(p_canon, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+### Style fingerprints {width="50%"}
+
+```{r style-fingerprints}
+fingerprints <- artists |>
+  select(style, Rhyme = rhyme, Vocab = vocab, Story = story,
+         Metaphor = metaphor, Concept = concept) |>
+  pivot_longer(-style, names_to = "dimension", values_to = "score") |>
+  group_by(dimension) |>
+  mutate(dim_mean = mean(score)) |>
+  group_by(style, dimension, dim_mean) |>
+  summarise(avg = mean(score), .groups = "drop") |>
+  mutate(
+    dev = avg - dim_mean,
+    dimension = factor(dimension,
+                       levels = c("Rhyme", "Vocab", "Story", "Metaphor", "Concept")),
+    style = factor(as.character(style), levels = rev(style_order))
+  )
+
+p_finger <- fingerprints |>
+  ggplot(aes(x = dimension, y = style, fill = dev,
+             text = paste0(style, " · ", dimension, "<br>mean ", round(avg, 1),
+                           " (", ifelse(dev >= 0, "+", ""), round(dev, 1),
+                           " vs all solo acts)"))) +
+  geom_tile(color = "white", linewidth = 0.4) +
+  scale_fill_gradient2(low = "#33607f", mid = "#f2f0ee", high = "#b05a42",
+                       midpoint = 0, name = "vs overall mean") +
+  labs(
+    title = "Style fingerprints: three variables, falsifiable",
+    subtitle = "Warm = above the all-acts mean on that dimension, cool = below. Every taxonomy definition is checkable here",
+    x = NULL, y = NULL
+  ) +
+  theme_hiphop()
+
+ggplotly_titled(p_finger, tooltip = "text") |>
+  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+```
+
+# 7 · Careers & Longevity
 
 ## Row {height="15%"}
 
@@ -898,7 +1095,7 @@ ggplotly_titled(p_age_sig, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-# 7 · Full Data Table
+# 8 · Full Data Table
 
 ## Row
 
