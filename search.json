@@ -95,7 +95,14 @@
     "href": "hiphop/data_dictionary.html#sampling-frame-scope-rules",
     "title": "Data Dictionary & Codebook",
     "section": "Sampling frame & scope rules",
-    "text": "Sampling frame & scope rules\n\n\n\n\n\n\nTwo scope rules are worth calling out:\n\nScene = scene, not birthplace. Acts are assigned to the US scene they are professionally rooted in: label home and scene ties during their defining run (Da Brat is South via So So Def, though born in Chicago). Region rolls scenes up to the four coast-level categories the culture itself uses: East Coast (NYC + Philly), West Coast (LA + Bay Area), South, and Midwest.\nEra = defining run, not debut year. Debut years overlap era boundaries by design; the era reflects when the act’s defining work landed."
+    "text": "Sampling frame & scope rules\n\n\n\n\n\n\nTwo scope rules are worth calling out:\n\nScene = scene, not birthplace. Acts are assigned to the US scene they are professionally rooted in: label home and scene ties during their defining run (Da Brat is South via So So Def, though born in Chicago). Region rolls scenes up to the four coast-level categories the culture itself uses: East Coast (NYC + Philly), West Coast (LA + Bay Area), South, and Midwest.\nEra = the signature-year bracket. Era is derived, not judged: it is the bracket holding the Signature Work year (Debut Year only when no signature exists, i.e. Kool Herc). Brackets: Old School through 1985, Golden Age 1986–1994, Late 90s 1995–1999, then calendar decades. Debut years still overlap era boundaries by design; the judgment lives in the Signature Work pick, which has its own documented procedure (see Variable definitions)."
+  },
+  {
+    "objectID": "hiphop/data_dictionary.html#the-eight-styles",
+    "href": "hiphop/data_dictionary.html#the-eight-styles",
+    "title": "Data Dictionary & Codebook",
+    "section": "The eight styles",
+    "text": "The eight styles\nStyle is one value per act: the dominant mode of the act’s defining run, judged from critical descriptions of the catalog. The axis separating the two left-field categories is where the strangeness lives: in the words, it is Abstract; in the sound or form, it is Experimental. Each definition names an anchor act, the same way the five constructs anchor their scales."
   },
   {
     "objectID": "hiphop/data_dictionary.html#variable-definitions",
@@ -103,6 +110,13 @@
     "title": "Data Dictionary & Codebook",
     "section": "Variable definitions",
     "text": "Variable definitions"
+  },
+  {
+    "objectID": "hiphop/data_dictionary.html#contested-calls",
+    "href": "hiphop/data_dictionary.html#contested-calls",
+    "title": "Data Dictionary & Codebook",
+    "section": "Contested calls",
+    "text": "Contested calls\nThe Signature Work column drives Era, so it carries real weight, and for a handful of acts the critical record genuinely splits between two candidate releases. Those calls are not hidden: the 2026-07 audit reviewed every pick against the documented procedure, changed ten where the consensus clearly pointed elsewhere, and resolved the genuine splits by maintainer ruling. The rulings are logged here so the judgment is inspectable.\n\n\n\n\n\n\n\n\n\nAct\nThe split\nRuling\nWhy\n\n\n\n\nCommon\nResurrection (1994) vs Like Water for Chocolate (2000) vs Be (2005)\nResurrection\nThe album 90s critics call his best work, and the earliest of a three-way split\n\n\n2Pac\nMe Against the World (1995) vs All Eyez on Me (1996)\nAll Eyez on Me\nThe cultural monument outweighs the critics’ cohesion pick\n\n\nBusta Rhymes\nThe Coming (1996) vs When Disaster Strikes (1997)\nWhen Disaster Strikes\nThe peak-era statement over the classic debut\n\n\nRoyce da 5’9”\nDeath Is Certain (2004) vs Book of Ryan (2018)\nBook of Ryan\nThe critical high point of the catalog\n\n\n8Ball & MJG\nComin’ Out Hard (1993) vs On Top of the World (1995)\nOn Top of the World\nTheir highest-rated album over the influence landmark\n\n\nRoc Marciano\nMarcberg (2010) vs Reloaded (2012)\nReloaded\nThe refined peak edges the blueprint on critic scores\n\n\nLittle Brother\nThe Listening (2003) vs The Minstrel Show (2005)\nThe Minstrel Show\nThe fan-canon favorite\n\n\nXzibit\nAt the Speed of Life (1996) vs 40 Dayz & 40 Nightz (1998)\n40 Dayz & 40 Nightz\nThe album most often called his best\n\n\n\nIf you would rule differently on any of these, that disagreement is the point: the pick is documented, so the argument has something to grab."
   },
   {
     "objectID": "hiphop/data_dictionary.html#known-biases",
