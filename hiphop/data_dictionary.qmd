@@ -16,11 +16,16 @@ library(reactable)
 dict_raw <- read_excel("data/hiphop_artists.xlsx", sheet = "Data Dictionary")
 
 # The sheet has the variable table first, then a "SAMPLING FRAME & SCOPE RULES"
-# block; split on that marker so each renders in its own section.
-marker <- which(dict_raw[[1]] == "SAMPLING FRAME & SCOPE RULES")
+# block, then a "STYLE TAXONOMY" block; split on the markers so each renders
+# in its own section.
+marker  <- which(dict_raw[[1]] == "SAMPLING FRAME & SCOPE RULES")
+smarker <- which(dict_raw[[1]] == "STYLE TAXONOMY")
 vars  <- dict_raw[seq_len(marker - 1), ] |> filter(!is.na(Variable))
-frame <- dict_raw[(marker + 1):nrow(dict_raw), 1:2] |>
+frame <- dict_raw[(marker + 1):(smarker - 1), 1:2] |>
   setNames(c("Rule", "Definition")) |> filter(!is.na(Rule))
+style_rule <- dict_raw[[2]][smarker]
+styles <- dict_raw[(smarker + 1):nrow(dict_raw), 1:2] |>
+  setNames(c("Style", "Definition")) |> filter(!is.na(Style))
 ```
 
 This page documents every variable in the [Hip-Hop Periodic
@@ -102,6 +107,29 @@ Two scope rules are worth calling out:
   1986–1994, Late 90s 1995–1999, then calendar decades. Debut years still
   overlap era boundaries by design; the judgment lives in the Signature Work
   pick, which has its own documented procedure (see Variable definitions).
+
+## The eight styles
+
+Style is one value per act: the dominant mode of the act's defining run,
+judged from critical descriptions of the catalog. The axis separating the two
+left-field categories is where the strangeness lives: in the words, it is
+Abstract; in the sound or form, it is Experimental. Each definition names an
+anchor act, the same way the five constructs anchor their scales.
+
+```{r styles-table}
+#| echo: false
+reactable(
+  styles,
+  columns = list(
+    Style = colDef(minWidth = 130, style = list(fontWeight = "600")),
+    Definition = colDef(minWidth = 420)
+  ),
+  striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
+  theme = reactableTheme(
+    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
+  )
+)
+```
 
 ## Variable definitions
 

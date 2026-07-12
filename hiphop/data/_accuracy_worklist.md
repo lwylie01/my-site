@@ -27,6 +27,7 @@
 - [x] Signature Work operationalized (2026-07): dictionary row now pins the candidate pool (own-catalog studio projects, canonical mixtapes count, singles only where no album exists, side-group releases count only when the group has no row of its own), the consensus sources, and the original-release-year convention; genuine splits resolved by maintainer call. Audit of all 173 picks (27 flagged, web-verified): 10 changed — Talib Kweli→Black Star (1998), Twista→Adrenaline Rush (1997), Lil Uzi Vert→Luv Is Rage 2 (2017), Polo G→Die a Legend (2019), Lupe Fiasco→Lupe Fiasco's Food & Liquor (2006), A$AP Rocky→Live. Love. A$AP (2011), Salt-N-Pepa→Hot, Cool & Vicious (1986), Rod Wave→Pray 4 Love (2020), Del→Deltron 3030 (2000), Common→Resurrection (1994); 7 splits resolved keep (2Pac, Busta, Royce, 8Ball & MJG, Roc Marciano, Little Brother, Xzibit); Era re-derived (6 moves; now OS 9 / GA 41 / L90s 35 / 2000s 32 / 2010s 43 / 2020s 13); median sig age 26→25
 - [x] Jedi Mind Tricks reclassified Element→Compound (2026-07): MC+producer duo per Gang Starr/Atmosphere precedent; now 129 Elements + 44 Compounds; female elements 24/129 (19%); Birth Year blanked per Compound rule
 - [x] Cross-navigation + contested calls (2026-07): table header now links Home / Teaching Dashboard / Codebook; dashboard nav-buttons add house + Periodic Table + Codebook; codebook page adds a Contested Calls section logging the 8 split rulings and its scope-rules era bullet now states the derived signature-year bracket (was still describing the old judgment rule)
+- [x] Style taxonomy defined (2026-07): STYLE TAXONOMY block appended to the Data Dictionary sheet (8 one-line definitions with anchor acts + the pen-first vs form-first tiebreak: Abstract = strangeness in the words, Experimental = strangeness in the sound or form); Jazz-Rap defined as the era-bound early-90s movement; Trap/Drill defined as the 808-era sound family, so Rod Wave recoded Experimental→Trap/Drill (17/7 now); Smino stays Experimental with description fixed jazz-rap→soul-rap hybrid; codebook page renders the block as "The eight styles"
 
 ## Region shapes
 
@@ -40,8 +41,8 @@
 | Gangsta/Street | 47 |
 | Conscious/Lyrical | 47 |
 | Party/Pop | 26 |
-| Experimental | 18 |
+| Experimental | 17 |
 | Abstract | 13 |
 | Political | 12 |
-| Trap/Drill | 6 |
+| Trap/Drill | 7 |
 | Jazz-Rap | 4 |
