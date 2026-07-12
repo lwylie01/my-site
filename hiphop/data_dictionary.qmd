@@ -96,8 +96,12 @@ Two scope rules are worth calling out:
   **Region** rolls scenes up to the four coast-level categories the culture
   itself uses: East Coast (NYC + Philly), West Coast (LA + Bay Area), South,
   and Midwest.
-- **Era = defining run, not debut year.** Debut years overlap era boundaries
-  by design; the era reflects when the act's defining work landed.
+- **Era = the signature-year bracket.** Era is derived, not judged: it is the
+  bracket holding the Signature Work year (Debut Year only when no signature
+  exists, i.e. Kool Herc). Brackets: Old School through 1985, Golden Age
+  1986–1994, Late 90s 1995–1999, then calendar decades. Debut years still
+  overlap era boundaries by design; the judgment lives in the Signature Work
+  pick, which has its own documented procedure (see Variable definitions).
 
 ## Variable definitions
 
@@ -118,6 +122,29 @@ reactable(
   )
 )
 ```
+
+## Contested calls
+
+The Signature Work column drives Era, so it carries real weight, and for a
+handful of acts the critical record genuinely splits between two candidate
+releases. Those calls are not hidden: the 2026-07 audit reviewed every pick
+against the documented procedure, changed ten where the consensus clearly
+pointed elsewhere, and resolved the genuine splits by maintainer ruling. The
+rulings are logged here so the judgment is inspectable.
+
+| Act | The split | Ruling | Why |
+|---|---|---|---|
+| Common | *Resurrection* (1994) vs *Like Water for Chocolate* (2000) vs *Be* (2005) | *Resurrection* | The album 90s critics call his best work, and the earliest of a three-way split |
+| 2Pac | *Me Against the World* (1995) vs *All Eyez on Me* (1996) | *All Eyez on Me* | The cultural monument outweighs the critics' cohesion pick |
+| Busta Rhymes | *The Coming* (1996) vs *When Disaster Strikes* (1997) | *When Disaster Strikes* | The peak-era statement over the classic debut |
+| Royce da 5'9" | *Death Is Certain* (2004) vs *Book of Ryan* (2018) | *Book of Ryan* | The critical high point of the catalog |
+| 8Ball & MJG | *Comin' Out Hard* (1993) vs *On Top of the World* (1995) | *On Top of the World* | Their highest-rated album over the influence landmark |
+| Roc Marciano | *Marcberg* (2010) vs *Reloaded* (2012) | *Reloaded* | The refined peak edges the blueprint on critic scores |
+| Little Brother | *The Listening* (2003) vs *The Minstrel Show* (2005) | *The Minstrel Show* | The fan-canon favorite |
+| Xzibit | *At the Speed of Life* (1996) vs *40 Dayz & 40 Nightz* (1998) | *40 Dayz & 40 Nightz* | The album most often called his best |
+
+If you would rule differently on any of these, that disagreement is the
+point: the pick is documented, so the argument has something to grab.
 
 ## Known biases
 

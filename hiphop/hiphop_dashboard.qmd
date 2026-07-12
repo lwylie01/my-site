@@ -9,6 +9,12 @@ format:
       - ../custom.scss
     logo: ""
     nav-buttons:
+      - icon: house-fill
+        href: "../index.html"
+      - text: "Periodic Table"
+        href: "hiphop_periodic_table.html"
+      - text: "Codebook"
+        href: "data_dictionary.html"
       - icon: github
         href: "https://github.com/lwylie01/my-site"
     scrolling: true
