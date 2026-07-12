@@ -34,6 +34,9 @@ lyricism scores, how scores were assigned, and the sampling frame the dataset
 draws from. The same content ships as the **Data Dictionary** sheet inside the
 Excel workbook, which is the single source of truth.
 
+The working premise of this page: clarity is kindness. A reader should never
+have to guess what a number means or where a judgment lives.
+
 ## The five constructs
 
 Each act is scored 1–10 on five dimensions of lyricism. Scores are
@@ -46,7 +49,7 @@ of the scale means the same thing across scorers.
 | **Rhyme Density** | Frequency and complexity of rhyme: internal rhyme, multisyllabic chains, rhymes per bar, scheme inventiveness | Rakim: pioneered internal and multisyllabic rhyme as standard practice |
 | **Vocab Breadth** | Lexical diversity: range of unique words and registers across the catalog | Aesop Rock: per published studies counting unique words in rap |
 | **Storytelling** | Narrative construction: character, plot, perspective shifts, arc within songs and across albums | Scarface |
-| **Metaphor/Imagery** | Density and originality of figurative language: extended metaphor, concrete imagery, double meanings | (none named) |
+| **Metaphor/Imagery** | Density and originality of figurative language: extended metaphor, concrete imagery, double meanings | Lil Wayne: simile machine; metaphor-stacking as his defining critical reputation |
 | **Conceptual Depth** | Thematic ambition and coherence: album-level concepts, social and philosophical substance | Kendrick Lamar: 10 is reserved for carrying a concept across a full album at the highest level |
 
 The **Composite Score** is the plain average of the five dimensions, rounded
@@ -60,6 +63,22 @@ module's core discussion prompts.
   Scores are judgments, not calculations.
 - **Scale:** integers 1–10 per dimension; anchored at the top of each scale
   (table above).
+- **How anchors create scores:** a score here is a comparison, not an
+  absolute rating. Each dimension pins 10 to a named exemplar, so scoring an
+  act means asking how far below the anchor it sits: how far below Rakim's
+  rhyme craft, how far below Lil Wayne's simile-stacking. That comparison
+  does three jobs. It calibrates scorers to each other, since disagreements
+  become arguments about distance from a shared ceiling rather than about
+  what an 8 means. It keeps the five scales comparable enough to average
+  into the Composite, because each column's 10 is equally rare and equally
+  extreme. And it keeps future entries comparable to past ones, since every
+  act, whenever it is added, is measured against the same fixed ceiling.
+  Two limits travel with the method: an anchor pins the top of the scale,
+  not the gaps between scores, so this is ordinal measurement with a
+  calibrated ceiling; and the choice of anchor quietly defines the
+  construct itself (Rakim makes rhyme density mean innovation and internal
+  complexity rather than speed). The judgment does not disappear. It moves
+  to one visible place.
 - **Confidence flag:** every act carries an H/M/L rating of how much to trust
   its scores, based on the depth of its critical record (rubric below).
 
