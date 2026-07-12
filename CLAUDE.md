@@ -24,7 +24,7 @@ truth**; everything else derives from it.
 | `hiphop/data_dictionary.qmd` | Public codebook; renders the Data Dictionary sheet directly (auto-updates when the sheet changes) |
 | `hiphop/_metadata.yml` | `freeze: false` so data-only Excel edits still re-render the dashboard/codebook in CI. Do not remove |
 | `hiphop/data/_accuracy_worklist.md` | Internal changelog + counts. Update its header counts, style table, and Done list with every data change |
-| `projects/index.qmd` | Project card hardcodes the act counts ("173 hip-hop acts, 130 solo artists and 43 groups"). Update when counts change |
+| `projects/index.qmd` | Project card hardcodes the act counts ("173 hip-hop acts, 129 solo artists and 44 groups"). Update when counts change |
 
 ### Artist Database schema (columns A–X, one row per act)
 
@@ -51,8 +51,8 @@ Experimental, Trap/Drill. Scores follow the documented critical-consensus
 method (no NLP); anchors: Rakim rhyme=10, Aesop Rock vocab=10, Scarface
 story=10, Kendrick concept=10. US-scene acts only (sampling frame).
 
-Current state (2026-07): 173 acts = 130 Elements + 43 Compounds; 24 female
-Elements (18%); median age at signature work 26.
+Current state (2026-07): 173 acts = 129 Elements + 44 Compounds; 24 female
+Elements (19%); median age at signature work 25.
 
 ### Update checklist: what to touch for each kind of change
 
@@ -62,7 +62,7 @@ Elements (18%); median age at signature work 26.
    sanity: debut ≤ signature year ≤ Active Through; ages 13–45).
 2. `_accuracy_worklist.md`: header counts, style-distribution table, Done item.
 3. `projects/index.qmd`: the act counts in the project card.
-4. Dashboard bias-table gender line (currently "~18% female") if the share moves.
+4. Dashboard bias-table gender line (currently "~19% female") if the share moves.
 5. Everything else (sidebar counts, charts, table page) recomputes from data.
 
 **Adding a column (schema change):**
