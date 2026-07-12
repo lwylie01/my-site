@@ -34,6 +34,9 @@ lyricism scores, how scores were assigned, and the sampling frame the dataset
 draws from. The same content ships as the **Data Dictionary** sheet inside the
 Excel workbook, which is the single source of truth.
 
+The working premise of this page: clarity is kindness. A reader should never
+have to guess what a number means or where a judgment lives.
+
 ## The five constructs
 
 Each act is scored 1–10 on five dimensions of lyricism. Scores are
