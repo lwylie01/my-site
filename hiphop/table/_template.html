@@ -46,6 +46,16 @@
   }
   header h1 span { color: var(--secondary); }
   header p { font-size: 0.8rem; color: var(--accent); margin-top: 0.1rem; }
+  header nav { display: flex; gap: 1.1rem; align-items: center; flex-wrap: wrap; }
+  header nav a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+  }
+  header nav a:hover { color: var(--secondary); border-bottom-color: var(--secondary); }
 
   /* ── Filters ─────────────────────────────────────────── */
   #filters {
@@ -372,6 +382,11 @@
     <h1>Periodic Table of <span>Hip-Hop Artists</span></h1>
     <p>datawithaplot.org · <span id="subtitle-count">—</span> Artists · Five-Dimension Lyrical Profiles</p>
   </div>
+  <nav aria-label="Site">
+    <a href="../index.html">← Home</a>
+    <a href="hiphop_dashboard.html">Teaching Dashboard</a>
+    <a href="data_dictionary.html">Codebook</a>
+  </nav>
 </header>
 
 <div id="filters">
