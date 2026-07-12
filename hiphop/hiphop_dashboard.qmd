@@ -415,7 +415,7 @@ reactable(
 ## Row {height="15%"}
 
 ::: {.callout-note title="Teaching Prompt: The Averaging Problem"}
-**What does averaging destroy?** Rakim (Rhyme Density 10, composite 8.8) and Scarface (Storytelling 10, composite 8.2) land within half a point of each other on the composite, yet their profiles look nothing alike. Does that similarity mean anything, or does the average erase the most important information? When does averaging help, and when does it mislead?
+**What does averaging destroy?** Rakim (Rhyme Density 10, composite 8.8) and Scarface (Storytelling 10, composite 8.2) sit six tenths of a point apart on the composite, yet their profiles look nothing alike. Does that similarity mean anything, or does the average erase the most important information? When does averaging help, and when does it mislead?
 :::
 
 ## Row {height="45%"}
