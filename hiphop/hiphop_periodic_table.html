@@ -444,14 +444,14 @@
 
 <div id="legend">
   <span class="legend-label">Style:</span>
-  <span class="legend-item" style="background:#cf8079">Gangsta/Street</span>
-  <span class="legend-item" style="background:#6f9ec2">Conscious/Lyrical</span>
-  <span class="legend-item" style="background:#d4b15a">Party/Pop</span>
-  <span class="legend-item" style="background:#a085bd">Experimental</span>
-  <span class="legend-item" style="background:#5cab9c">Abstract</span>
-  <span class="legend-item" style="background:#86a866">Political</span>
-  <span class="legend-item" style="background:#dd9a5e">Trap/Drill</span>
-  <span class="legend-item" style="background:#c180a2">Jazz-Rap</span>
+  <span class="legend-item" style="background:#bd5f50">Gangsta/Street</span>
+  <span class="legend-item" style="background:#d98a6d">Trap/Drill</span>
+  <span class="legend-item" style="background:#008b7e">Political</span>
+  <span class="legend-item" style="background:#3fbaa0">Conscious/Lyrical</span>
+  <span class="legend-item" style="background:#5f4384">Abstract</span>
+  <span class="legend-item" style="background:#a385c9">Experimental</span>
+  <span class="legend-item" style="background:#a87d2a">Jazz-Rap</span>
+  <span class="legend-item" style="background:#d3ab4d">Party/Pop</span>
   <span style="margin-left:0.8rem" class="legend-label">Region:</span>
   <span class="legend-shape">● East Coast</span>
   <span class="legend-shape">★ West Coast</span>
@@ -524,10 +524,15 @@ const SCORE_COLORS = ['Rhyme Density','Vocab Breadth','Storytelling','Metaphor/I
 const SCORE_HUES = ['#E98973','#8C6A8D','#7aaa8a','#5a9abf','#bf9a40'];
 
 // Color = style (semantic, muted to match the light palette); shape = region; shape tint = confidence.
+// Family palette: hue = lane, shade = style within it. Corals = the street
+// lane, jades = the message lane, purples = the left field, golds = the crowd
+// lane. CVD-validated 2026-07: worst colorblind pair is within-family (13.1),
+// so any confusion is a near-miss, never a category error.
 const STYLE_COLORS = {
-  'Gangsta/Street': '#cf8079', 'Conscious/Lyrical': '#6f9ec2', 'Party/Pop': '#d4b15a',
-  'Experimental': '#a085bd', 'Abstract': '#5cab9c', 'Political': '#86a866',
-  'Trap/Drill': '#dd9a5e', 'Jazz-Rap': '#c180a2'
+  'Gangsta/Street': '#bd5f50', 'Trap/Drill': '#d98a6d',
+  'Political': '#008b7e', 'Conscious/Lyrical': '#3fbaa0',
+  'Abstract': '#5f4384', 'Experimental': '#a385c9',
+  'Jazz-Rap': '#a87d2a', 'Party/Pop': '#d3ab4d'
 };
 const REGION_SHAPE = {
   'East Coast': '●', 'West Coast': '★', 'South': '▲', 'Midwest': '■'
