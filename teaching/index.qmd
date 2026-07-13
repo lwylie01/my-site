@@ -20,15 +20,11 @@ toc: false
 </div>
 ```
 
-## A teaching philosophy {.section-heading}
+## How I Teach {.section-heading}
 
-My classroom is wherever the work is happening: shoulder to shoulder in a
-project, one on one with a researcher stuck on a measurement question, or a
-conference room full of professionals who did not expect to have opinions
-about data quality. No syllabus, no semester. We work with real datasets
-because that is what work looks like: missing values, debatable scores,
-decisions nobody wrote down. Practice on tidy data and you are ready for a
-textbook. Practice on real data and you are ready for Monday.
+Give the room a number worth arguing about, then let the argument do the
+teaching. The debate starts with a rap score and ends with people questioning
+their own metrics.
 
 The six ideas I come back to most often:
 
