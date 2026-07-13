@@ -119,7 +119,9 @@ toc: false
       <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
     </div>
     <br>
-    <span class="essay-status">Coming soon</span>
+    <a href="../howold/how_old_is_old.html" style="font-weight:600; color:#8C6A8D;">
+      Draw your lines →
+    </a>
   </div>
 
   <div class="project-card">
@@ -138,7 +140,9 @@ toc: false
       <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
     </div>
     <br>
-    <span class="essay-status">Coming soon</span>
+    <a href="../gut/trust_your_gut.html" style="font-weight:600; color:#8C6A8D;">
+      Open the case files →
+    </a>
   </div>
 
 </div>

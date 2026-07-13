@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Old Is Old? · datawithaplot.org</title>
+<style>
+  :root {
+    --primary: #8C6A8D;
+    --secondary: #E98973;
+    --accent: #D2B1A3;
+    --light-bg: #F8F7F4;
+    --dark: #2a1f2b;
+    --text: #3a2d3b;
+    --muted: #7a6a7b;
+    --card: #ffffff;
+    --line: #e8e0e8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── Header ─────────────────────────────────────────── */
+  header {
+    background: var(--dark);
+    color: #f0e8f0;
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.03em; }
+  header h1 span { color: var(--secondary); }
+  header p { font-size: 0.8rem; color: var(--accent); margin-top: 0.1rem; }
+  header a { color: var(--accent); font-size: 0.8rem; text-decoration: none; font-weight: 600; }
+  header a:hover { color: #fff; }
+
+  /* ── Progress ───────────────────────────────────────── */
+  #progress {
+    display: flex; gap: 0; background: #fff;
+    border-bottom: 2px solid var(--accent);
+    font-size: 0.72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .step {
+    flex: 1; text-align: center; padding: 0.7rem 0.5rem;
+    color: var(--muted); position: relative; transition: all 0.2s;
+  }
+  .step.active { color: #fff; background: var(--primary); }
+  .step.done { color: var(--primary); }
+  .step .num {
+    display: inline-flex; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--line); color: var(--muted);
+    align-items: center; justify-content: center; margin-right: 0.4rem;
+    font-size: 0.65rem;
+  }
+  .step.active .num { background: #fff; color: var(--primary); }
+  .step.done .num { background: var(--primary); color: #fff; }
+
+  /* ── Layout ─────────────────────────────────────────── */
+  .wrap { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  .screen { display: none; animation: fade 0.4s ease; }
+  .screen.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .eyebrow {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--secondary); margin-bottom: 0.6rem;
+  }
+  h2 { font-size: 1.85rem; line-height: 1.2; color: var(--dark); margin-bottom: 0.9rem; font-weight: 700; }
+  h3 { font-size: 1.25rem; color: var(--dark); margin: 2rem 0 0.8rem; font-weight: 700; }
+  .lead { font-size: 1.02rem; color: var(--text); margin-bottom: 1.5rem; }
+  p { margin-bottom: 1rem; }
+  .muted { color: var(--muted); }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1.6rem 1.5rem; margin-bottom: 1.5rem;
+  }
+
+  /* ── Buttons ────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.7rem 1.4rem; border-radius: 8px; border: none;
+    font-size: 0.92rem; font-weight: 700; cursor: pointer;
+    font-family: inherit; transition: opacity 0.15s, transform 0.1s;
+    text-decoration: none;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-secondary { background: var(--secondary); color: #fff; }
+  .btn-outline { background: #fff; color: var(--primary); border: 1.5px solid var(--primary); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ── Sliders ────────────────────────────────────────── */
+  .sl-field { padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+  .sl-field:last-child { border-bottom: none; }
+  .sl-top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .sl-q { font-weight: 700; color: var(--dark); font-size: 1.02rem; }
+  .sl-note { font-size: 0.8rem; color: var(--muted); }
+  .sl-val { font-size: 2rem; font-weight: 800; color: var(--primary); line-height: 1; min-width: 2.4ch; text-align: right; }
+  .sl-val.unset { color: var(--muted); font-weight: 600; }
+  input[type=range] { width: 100%; margin: 0.7rem 0 0.2rem; accent-color: var(--primary); height: 6px; }
+  .scale-ends { display: flex; justify-content: space-between; font-size: 0.74rem; color: var(--muted); }
+
+  /* ── Reveal ─────────────────────────────────────────── */
+  .punch {
+    font-size: 1.5rem; font-weight: 800; color: var(--dark);
+    line-height: 1.25; margin-bottom: 1.2rem;
+  }
+  .punch b { color: var(--secondary); }
+
+  .statrow { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.2rem 0; }
+  .stat {
+    flex: 1; min-width: 150px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 1.1rem 1rem; text-align: center;
+  }
+  .stat .big { font-size: 2.1rem; font-weight: 800; color: var(--primary); line-height: 1; }
+  .stat .lab { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .stat.you .big { color: var(--secondary); }
+
+  /* ── Number line ────────────────────────────────────── */
+  .tl-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+  .tl { min-width: 620px; position: relative; padding: 1rem 2.2rem 0.6rem; }
+  .tl-lane { position: relative; }
+  .tl-lane.lawlane { height: 64px; }
+  .tl-dot {
+    position: absolute; width: 13px; height: 13px; border-radius: 50%;
+    transform: translateX(-50%); bottom: 6px; border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(42,31,43,0.35);
+  }
+  .tl-dot.you { background: var(--secondary); }
+  .tl-dot.law { background: var(--primary); cursor: pointer; }
+  .tl-lane.lawlane .tl-dot { bottom: auto; top: 8px; }
+  .tl-lab {
+    position: absolute; transform: translateX(-50%); font-size: 0.66rem;
+    font-weight: 700; color: var(--text); white-space: nowrap;
+  }
+  .tl-lane.lawlane .tl-lab { top: 26px; color: var(--primary); }
+  .tl-lane.lawlane .tl-lab.r1 { top: 44px; }
+  .tl-axis { position: relative; height: 26px; border-top: 2px solid var(--accent); }
+  .tl-tick { position: absolute; top: 0; width: 1px; height: 7px; background: var(--accent); }
+  .tl-ticklab {
+    position: absolute; top: 8px; transform: translateX(-50%);
+    font-size: 0.68rem; color: var(--muted);
+  }
+  .tl-legend { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.74rem; color: var(--muted); margin-top: 0.6rem; }
+  .tl-legend span::before { content: "● "; }
+  .tl-legend .lg-you::before { color: var(--secondary); }
+  .tl-legend .lg-law::before { color: var(--primary); }
+  .tl-hint { font-size: 0.74rem; color: var(--muted); margin: 0.5rem 0 0; }
+
+  /* ── Legal line cards ───────────────────────────────── */
+  .ll { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-top: 0.5rem; }
+  .ll-item {
+    display: flex; gap: 1rem; padding: 1rem 1.1rem;
+    border-bottom: 1px solid var(--line); align-items: flex-start;
+    transition: background 0.5s;
+  }
+  .ll-item:last-child { border-bottom: none; }
+  .ll-item.flash { background: #f7eef2; }
+  .ll-age {
+    flex: 0 0 auto; width: 52px; height: 52px; border-radius: 10px;
+    background: #f3ecf3; color: var(--primary); font-size: 1.35rem; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ll-item .l-name { font-size: 0.98rem; color: var(--dark); font-weight: 700; }
+  .ll-item .l-cat {
+    display: inline-block; font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; padding: 0.12rem 0.5rem; border-radius: 12px;
+    background: #f3ecf3; color: var(--primary); margin-left: 0.5rem; vertical-align: 2px;
+  }
+  .ll-item .l-detail { font-size: 0.88rem; color: var(--text); margin: 0.25rem 0 0.2rem; }
+  .ll-item .l-src { font-size: 0.74rem; color: var(--muted); margin-bottom: 0; }
+
+  .callout {
+    border-left: 4px solid var(--secondary); background: #fdf3ef;
+    padding: 1.1rem 1.3rem; border-radius: 0 10px 10px 0; margin: 1.5rem 0;
+  }
+  .callout .ct { font-weight: 800; color: var(--dark); margin-bottom: 0.4rem; }
+  .callout p { margin-bottom: 0; font-size: 0.95rem; }
+
+  .sources { font-size: 0.82rem; color: var(--muted); }
+  .sources li { margin-bottom: 0.6rem; list-style: none; padding-left: 1rem; text-indent: -1rem; }
+  .note {
+    font-size: 0.8rem; color: var(--muted); background: #f4eff4;
+    border-radius: 8px; padding: 0.9rem 1.1rem; margin-top: 1rem;
+  }
+
+  footer {
+    text-align: center; padding: 2.5rem 1.5rem; color: var(--muted);
+    font-size: 0.82rem; border-top: 1px solid var(--line); margin-top: 2rem;
+  }
+  footer a { color: var(--primary); font-weight: 600; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    h2 { font-size: 1.5rem; }
+    .punch { font-size: 1.25rem; }
+    .step span.txt { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>How Old Is <span>Old</span>?</h1>
+    <p>datawithaplot.org · a study in operationalization</p>
+  </div>
+  <a href="../index.html">← datawithaplot.org</a>
+</header>
+
+<div id="progress">
+  <div class="step active" data-step="0"><span class="num">1</span><span class="txt">Draw your lines</span></div>
+  <div class="step" data-step="1"><span class="num">2</span><span class="txt">Your yardstick</span></div>
+  <div class="step" data-step="2"><span class="num">3</span><span class="txt">The law's lines</span></div>
+</div>
+
+<div class="wrap">
+
+  <!-- ── SCREEN 0: Draw your lines ───────────────────── -->
+  <section class="screen active" id="screen-0">
+    <div class="eyebrow">A 60-second exercise</div>
+    <h2>Where does old begin?</h2>
+    <p class="lead">Four questions. For each one, drag the line to the age where
+      it starts. There are no wrong answers, but you do have to commit to a number.</p>
+
+    <div class="card" id="sliders"></div>
+
+    <button class="btn btn-primary" id="go-yardstick" disabled>See what you just did →</button>
+    <p class="muted" style="font-size:0.8rem;margin-top:0.8rem;">Takes about a minute. Nothing you enter leaves your browser.</p>
+  </section>
+
+  <!-- ── SCREEN 1: Your yardstick ────────────────────── -->
+  <section class="screen" id="screen-1">
+    <div class="eyebrow">Your yardstick</div>
+    <div class="punch" id="yard-punch"></div>
+
+    <div class="statrow">
+      <div class="stat you">
+        <div class="big" id="stat-low">–</div>
+        <div class="lab" id="stat-low-lab">Lowest line</div>
+      </div>
+      <div class="stat you">
+        <div class="big" id="stat-high">–</div>
+        <div class="lab" id="stat-high-lab">Highest line</div>
+      </div>
+      <div class="stat">
+        <div class="big" id="stat-span">–</div>
+        <div class="lab">Years between your lines</div>
+      </div>
+    </div>
+
+    <h3>Your Four Lines</h3>
+    <div id="you-track"></div>
+
+    <h3>What Moved the Number</h3>
+    <p>Each question swapped in a different <em>old</em>. A senior is a category.
+      Too old to drive is a body. Too old to start over is a future. When the
+      meaning changed, your number moved with it.</p>
+    <p>That move is the whole trick of measurement. A fuzzy idea cannot be counted
+      until someone picks one exact, countable version of it. The picking has a
+      name: <b>operationalization</b>. And the number you get depends on the
+      version you pick.</p>
+
+    <button class="btn btn-primary" id="go-law" style="margin-top:0.5rem;">Now see where the law draws them →</button>
+  </section>
+
+  <!-- ── SCREEN 2: The law's lines ───────────────────── -->
+  <section class="screen" id="screen-2">
+    <div class="eyebrow">The law's lines</div>
+    <div class="punch">The law has your problem, with real stakes. A statute
+      cannot say <b>"it depends."</b></div>
+
+    <p class="lead">When a law needs <em>old</em>, someone picks a number and writes
+      it down. Here are your lines next to the ones on the books.</p>
+
+    <div id="law-track"></div>
+
+    <h3>Every Line Has a Job</h3>
+    <p class="muted" style="font-size:0.9rem;">Tap a purple dot above, or browse the list.
+      Each number was drawn for a different purpose. None of them agree.</p>
+    <div class="ll" id="law-list"></div>
+
+    <h3>The Line That Is Not There</h3>
+    <p id="drive-para"></p>
+
+    <div class="callout">
+      <div class="ct">Teaching Prompt: Operationalization</div>
+      <p>None of these numbers is the true <em>old</em>, yours included. Each one is
+        a definition built for a purpose: pouring drinks, protecting workers,
+        funding meals, releasing prisoners. So when a claim begins with "older
+        adults," ask the operationalization question: <em>which line, drawn for
+        what job?</em> Clarity is kindness: say which old you mean.</p>
+    </div>
+
+    <p class="muted" style="font-size:0.9rem;">At the other end of the lifespan, one
+      line does far more work than any of these: 18. <em>Counted Wrong</em>, a
+      companion project coming to this site, takes up that story.</p>
+
+    <h3>Sources &amp; Method Notes</h3>
+    <ul class="sources" id="sources"></ul>
+    <div class="note" id="method-note"></div>
+
+    <div style="margin-top:2rem;display:flex;gap:0.8rem;flex-wrap:wrap;">
+      <button class="btn btn-outline" id="restart">↻ Draw them again</button>
+      <a class="btn btn-secondary" href="../projects/index.html">See more projects →</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Part of <a href="../index.html">Data with a Plot</a> · built by Lindsey E. Wylie, J.D., Ph.D.<br>
+  Ages, lines, and sources are editable in <code>howold/data/howold_items.xlsx</code>.
+</footer>
+
+<script>
+// ── Data injected at build time from howold/data/howold_items.xlsx ──────────
+const PROMPTS = __PROMPTS_DATA__;
+const LINES   = __LINES_DATA__;
+const SOURCES = __SOURCES_DATA__;
+
+const state = { values: {}, touched: {} };
+
+// ── Build the sliders ────────────────────────────────────────────────────────
+const slBox = document.getElementById("sliders");
+PROMPTS.forEach(p => {
+  const mid = Math.round((p.slider_min + p.slider_max) / 2);
+  state.values[p.prompt_id] = mid;
+
+  const f = document.createElement("div");
+  f.className = "sl-field";
+  f.innerHTML =
+    `<div class="sl-top"><div><div class="sl-q">${p.prompt}</div>` +
+    `<div class="sl-note">${p.note}</div></div>` +
+    `<div class="sl-val unset" id="val-${p.prompt_id}">–</div></div>` +
+    `<input type="range" id="sl-${p.prompt_id}" min="${p.slider_min}" max="${p.slider_max}" step="1" value="${mid}" ` +
+    `aria-label="${p.prompt}">` +
+    `<div class="scale-ends"><span>${p.slider_min}</span><span>${p.slider_max}</span></div>`;
+  slBox.appendChild(f);
+
+  const input = f.querySelector("input");
+  const val = f.querySelector(".sl-val");
+  const touch = () => {
+    state.touched[p.prompt_id] = true;
+    state.values[p.prompt_id] = parseInt(input.value, 10);
+    val.textContent = input.value;
+    val.classList.remove("unset");
+    checkReady();
+  };
+  input.addEventListener("input", touch);
+  input.addEventListener("pointerdown", touch);
+});
+
+function checkReady() {
+  const ready = PROMPTS.every(p => state.touched[p.prompt_id]);
+  document.getElementById("go-yardstick").disabled = !ready;
+}
+
+// ── Screen navigation ───────────────────────────────────────────────────────
+function showScreen(n) {
+  document.querySelectorAll(".screen").forEach((s, i) => s.classList.toggle("active", i === n));
+  document.querySelectorAll(".step").forEach((s, i) => {
+    s.classList.toggle("active", i === n);
+    s.classList.toggle("done", i < n);
+  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ── Number-line renderer ─────────────────────────────────────────────────────
+// rows: [{lane: "you"|"law", age, label, id}]
+function renderTrack(el, minA, maxA, rows, hint) {
+  const pct = a => ((a - minA) / (maxA - minA) * 100).toFixed(2) + "%";
+
+  const you = rows.filter(r => r.lane === "you").sort((a, b) => a.age - b.age);
+  const law = rows.filter(r => r.lane === "law").sort((a, b) => a.age - b.age);
+
+  let html = '<div class="tl-scroll"><div class="tl">';
+
+  if (you.length) {
+    // Collision-aware label rows: place each label on the lowest row where it
+    // fits, measured against the track's minimum rendered width.
+    const laneW = 550;
+    const rowOf = [], lastRight = [];
+    you.forEach(r => {
+      const x = (r.age - minA) / (maxA - minA) * laneW;
+      const half = ((r.label.length + String(r.age).length + 3) * 6 + 10) / 2;
+      let row = 0;
+      while (lastRight[row] !== undefined && x - half < lastRight[row] + 6) row++;
+      lastRight[row] = x + half;
+      rowOf.push(row);
+    });
+    const laneH = 56 + 18 * Math.max(...rowOf);
+    html += `<div class="tl-lane youlane" style="height:${laneH}px">`;
+    you.forEach((r, i) => {
+      html += `<div class="tl-dot you" style="left:${pct(r.age)}" title="${r.label} · ${r.age}"></div>` +
+        `<div class="tl-lab" style="left:${pct(r.age)};bottom:${24 + 18 * rowOf[i]}px">${r.label} · ${r.age}</div>`;
+    });
+    html += "</div>";
+  }
+
+  html += '<div class="tl-axis">';
+  for (let t = Math.ceil(minA / 10) * 10; t <= maxA; t += 10) {
+    html += `<div class="tl-tick" style="left:${pct(t)}"></div>` +
+      `<div class="tl-ticklab" style="left:${pct(t)}">${t}</div>`;
+  }
+  html += "</div>";
+
+  if (law.length) {
+    html += '<div class="tl-lane lawlane">';
+    law.forEach((r, i) => {
+      html += `<div class="tl-dot law" style="left:${pct(r.age)}" title="${r.label}" data-target="${r.id}"></div>` +
+        `<div class="tl-lab ${i % 2 ? "r1" : ""}" style="left:${pct(r.age)}">${r.age}</div>`;
+    });
+    html += "</div>";
+  }
+
+  html += "</div></div>";
+  if (you.length && law.length) {
+    html += '<div class="tl-legend"><span class="lg-you">Your lines</span>' +
+      '<span class="lg-law">Lines on the books</span></div>';
+  }
+  if (hint) html += `<p class="tl-hint">${hint}</p>`;
+  el.innerHTML = html;
+
+  el.querySelectorAll(".tl-dot.law").forEach(d => {
+    d.onclick = () => {
+      const card = document.getElementById(d.dataset.target);
+      if (!card) return;
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      card.classList.add("flash");
+      setTimeout(() => card.classList.remove("flash"), 1200);
+    };
+  });
+}
+
+// ── Screen 1: yardstick ─────────────────────────────────────────────────────
+function buildYardstick() {
+  const entries = PROMPTS.map(p => ({
+    lane: "you", label: p.short_label, age: state.values[p.prompt_id]
+  }));
+  const lo = entries.reduce((a, b) => (b.age < a.age ? b : a));
+  const hi = entries.reduce((a, b) => (b.age > a.age ? b : a));
+  const span = hi.age - lo.age;
+
+  const punch = document.getElementById("yard-punch");
+  if (span === 0) {
+    punch.innerHTML = `All four of your lines landed on <b>${lo.age}</b>. Almost nobody does that.`;
+  } else {
+    punch.innerHTML = `Old starts at <b>${lo.age}</b>. Or <b>${hi.age}</b>. You just said both.`;
+  }
+
+  document.getElementById("stat-low").textContent = lo.age;
+  document.getElementById("stat-low-lab").textContent = "Lowest line · " + lo.label.toLowerCase();
+  document.getElementById("stat-high").textContent = hi.age;
+  document.getElementById("stat-high-lab").textContent = "Highest line · " + hi.label.toLowerCase();
+  document.getElementById("stat-span").textContent = span;
+
+  const minS = Math.min(...PROMPTS.map(p => p.slider_min));
+  const maxS = Math.max(...PROMPTS.map(p => p.slider_max));
+  renderTrack(document.getElementById("you-track"), minS, maxS, entries, "");
+}
+
+// ── Screen 2: the law's lines ────────────────────────────────────────────────
+function buildLaw() {
+  const rows = PROMPTS.map(p => ({
+    lane: "you", label: p.short_label, age: state.values[p.prompt_id]
+  }));
+  LINES.forEach(l => rows.push({ lane: "law", label: l.label, age: l.age, id: "ll-" + l.age }));
+  renderTrack(document.getElementById("law-track"), 15, 100, rows,
+    "Scroll sideways on a small screen.");
+
+  const list = document.getElementById("law-list");
+  list.innerHTML = "";
+  LINES.slice().sort((a, b) => a.age - b.age).forEach(l => {
+    const item = document.createElement("div");
+    item.className = "ll-item";
+    item.id = "ll-" + l.age;
+    item.innerHTML =
+      `<div class="ll-age">${l.age}</div><div>` +
+      `<p class="l-name">${l.label}<span class="l-cat">${l.category}</span></p>` +
+      `<p class="l-detail">${l.detail}</p>` +
+      `<p class="l-src">${l.source}</p></div>`;
+    list.appendChild(item);
+  });
+
+  const driveAge = state.values["drive"];
+  document.getElementById("drive-para").innerHTML =
+    `You drew a line for too old to drive: <b>${driveAge}</b>. The law never does. ` +
+    `No state sets an age when driving ends. The strictest rules are shorter renewal ` +
+    `cycles, vision tests, or an in-person visit, mostly starting around 70. A line ` +
+    `that feels obvious from the passenger seat turns out to be one the law refuses to draw.`;
+
+  const src = document.getElementById("sources");
+  src.innerHTML = "";
+  SOURCES.filter(s => s.kind === "source").forEach(s => {
+    const li = document.createElement("li");
+    li.textContent = s.text;
+    src.appendChild(li);
+  });
+  const notes = SOURCES.filter(s => s.kind === "note").map(s => s.text);
+  document.getElementById("method-note").innerHTML =
+    "<b>Honest note:</b> " + notes.join(" ");
+}
+
+document.getElementById("go-yardstick").onclick = () => { buildYardstick(); showScreen(1); };
+document.getElementById("go-law").onclick = () => { buildLaw(); showScreen(2); };
+
+document.getElementById("restart").onclick = () => {
+  state.touched = {};
+  PROMPTS.forEach(p => {
+    const mid = Math.round((p.slider_min + p.slider_max) / 2);
+    state.values[p.prompt_id] = mid;
+    document.getElementById("sl-" + p.prompt_id).value = mid;
+    const val = document.getElementById("val-" + p.prompt_id);
+    val.textContent = "–";
+    val.classList.add("unset");
+  });
+  checkReady();
+  showScreen(0);
+};
+</script>
+</body>
+</html>
