@@ -9,12 +9,13 @@ toc: false
   <p class="page-header-label">Education</p>
   <h1 class="page-header-title">Teaching</h1>
   <p class="page-header-sub" style="font-style:italic;">
-    Numbers do not speak for themselves. Someone has to teach the room to
-    listen.
+    Numbers do not speak for themselves. Someone has to understand the
+    audience and communicate so they listen and act.
   </p>
   <p style="color:#6b7280; font-size:0.9rem; margin-top:0.75rem;">
-    Most recently: <em>Telling Your Court's Data Story</em>, National
-    Association for Court Management, 2025.
+    More in <a href="https://www.ncsc.org/sites/default/files/media/document/NCSC-Trends-2025.pdf"><em>Telling
+    Your Court's Data Story</em></a>, Trends in State Courts, 2025. Presented
+    at the National Association for Court Management.
   </p>
 </div>
 ```
