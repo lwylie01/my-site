@@ -20,7 +20,7 @@ toc: false
 </div>
 ```
 
-## How I teach {.section-heading}
+## How I Teach {.section-heading}
 
 Give the room a number worth arguing about, then let the argument do the
 teaching. The debate starts with a rap score and ends with people questioning
