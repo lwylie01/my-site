@@ -14,9 +14,9 @@ editor:
       <img class="hero-logo" src="pics/logoW-clear.png" alt="Data with a Plot · Lindsey E. Wylie, J.D., Ph.D." />
       <p class="hero-tagline">Lindsey E. Wylie, J.D., Ph.D.</p>
       <p class="hero-intro">
-        Adult at 18. Senior at 65. High-risk or not. The law treats these
-        bright lines like laws of nature. Every line misses the ones in
-        between. I tell their stories with data.
+        Adult at 18. Senior at 65. High risk, moderate, or low. The law
+        treats these bright lines like laws of nature. Every line misses the
+        ones in between. I tell their stories with data.
       </p>
     </div>
   </div>
