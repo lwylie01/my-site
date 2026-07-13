@@ -217,7 +217,7 @@ toc: false
 </div>
 ```
 
-## Research areas {.section-heading}
+## Research Areas {.section-heading}
 
 ```{=html}
 <div class="container" style="max-width: 820px;">
@@ -358,7 +358,7 @@ toc: false
 </div>
 ```
 
-## Citation impact {.section-heading}
+## Citation Impact {.section-heading}
 
 ```{=html}
 <div class="container" style="max-width: 960px;">
@@ -533,7 +533,7 @@ toc: false
 </div>
 ```
 
-## Curriculum vitae {.section-heading}
+## Curriculum Vitae {.section-heading}
 
 ```{=html}
 <div class="container" style="max-width: 820px;">
