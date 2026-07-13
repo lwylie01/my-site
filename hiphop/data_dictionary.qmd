@@ -37,7 +37,7 @@ Excel workbook, which is the single source of truth.
 The working premise of this page: clarity is kindness. A reader should never
 have to guess what a number means or where a judgment lives.
 
-## The five constructs
+## The Five Constructs
 
 Each act is scored 1–10 on five dimensions of lyricism. Scores are
 **drawn from published criticism and hip-hop scholarship**; no automated
@@ -56,7 +56,7 @@ The **Composite Score** is the plain average of the five dimensions, rounded
 to one decimal. Counting all five equally is itself a choice, and one of the
 module's core discussion prompts.
 
-## Scoring method
+## Scoring Method
 
 - **Basis:** published music criticism, academic hip-hop scholarship
   (Bradley, Chang, Kajikawa, Rabaka), and documented critical consensus.
@@ -82,7 +82,7 @@ module's core discussion prompts.
 - **Confidence flag:** every act carries an H/M/L rating of how much to trust
   its scores, based on the depth of its critical record (rubric below).
 
-## Confidence rubric
+## Confidence Rubric
 
 | Flag | Meaning | Criteria |
 |---|---|---|
@@ -95,7 +95,7 @@ Pitchfork / The Wire discography reviews, Google Scholar (artist +
 "lyricism"), and genre publications (The Source, XXL retrospectives, Passion
 of the Weiss).
 
-## Sampling frame & scope rules
+## Sampling Frame & Scope Rules
 
 ```{r frame-table}
 #| echo: false
@@ -127,7 +127,7 @@ Two scope rules are worth calling out:
   overlap era boundaries by design; the judgment lives in the Signature Work
   pick, which has its own documented procedure (see Variable definitions).
 
-## The eight styles
+## The Eight Styles
 
 Style is one value per act: the dominant mode of the act's defining run,
 judged from critical descriptions of the catalog. The axis separating the two
@@ -150,7 +150,7 @@ reactable(
 )
 ```
 
-## Variable definitions
+## Variable Definitions
 
 ```{r vars-table}
 #| echo: false
@@ -170,7 +170,7 @@ reactable(
 )
 ```
 
-## Contested calls
+## Contested Calls
 
 The Signature Work column drives Era, so it carries real weight, and for a
 handful of acts the critical record genuinely splits between two candidate
@@ -193,7 +193,7 @@ rulings are logged here so the judgment is inspectable.
 If you would rule differently on any of these, that disagreement is the
 point: the pick is documented, so the argument has something to grab.
 
-## Known biases
+## Known Biases
 
 The dataset over-represents critically acclaimed acts (vs. commercially
 dominant ones), male acts, Golden Age NYC, and English-language rap.

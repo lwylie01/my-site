@@ -237,7 +237,7 @@ tagList(
 
 ## Row {height="85%"}
 
-### Radar: One artist, five dimensions {width="40%"}
+### Radar: One Artist, Five Dimensions {width="40%"}
 
 ```{r radar-single}
 radar_artists <- c("Kendrick Lamar", "Scarface", "MF DOOM", "Rakim")
@@ -278,7 +278,7 @@ fig_radar |>
   )
 ```
 
-### Scatter: Composite score vs. Storytelling {width="60%"}
+### Scatter: Composite Score vs. Storytelling {width="60%"}
 
 ```{r scatter-composite-v-story}
 p_scatter <- artists |>
@@ -324,7 +324,7 @@ ggplotly_titled(p_scatter, tooltip = "text") |>
 
 ## Row {height="45%"}
 
-### Artists by region {width="50%"}
+### Artists by Region {width="50%"}
 
 ```{r bar-region}
 p_region <- artists |>
@@ -345,7 +345,7 @@ ggplotly_titled(p_region, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### Gender representation gap {width="50%"}
+### Gender Representation Gap {width="50%"}
 
 ```{r bar-gender}
 # Gender comes from the Gender column in the Excel workbook (single source of
@@ -377,7 +377,7 @@ ggplotly_titled(p_gender, tooltip = "text") |>
 
 ## Row {height="40%"}
 
-### Confidence distribution {width="35%"}
+### Confidence Distribution {width="35%"}
 
 ```{r confidence-donut}
 conf_counts <- artists |>
@@ -405,7 +405,7 @@ plot_ly(conf_counts,
   )
 ```
 
-### What bias looks like in practice {width="65%"}
+### What Bias Looks Like in Practice {width="65%"}
 
 ```{r bias-table}
 bias_df <- tribble(
@@ -442,7 +442,7 @@ reactable(
 
 ## Row {height="45%"}
 
-### Heatmap: All artists, all dimensions {width="65%"}
+### Heatmap: All Artists, All Dimensions {width="65%"}
 
 ```{r heatmap-dims}
 dim_long <- artists |>
@@ -488,7 +488,7 @@ ggplotly_titled(p_heat, tooltip = "text", height = 900) |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### Era averages by dimension {width="35%"}
+### Era Averages by Dimension {width="35%"}
 
 ```{r era-dim-lines}
 era_dim_avg <- artists |>
@@ -524,7 +524,7 @@ ggplotly_titled(p_era_lines, tooltip = "text") |>
 
 ## Row {height="40%"}
 
-### Strongest dimension by style {width="50%"}
+### Strongest Dimension by Style {width="50%"}
 
 ```{r strongest-dim-style}
 strongest <- artists |>
@@ -551,7 +551,7 @@ ggplotly_titled(p_strongest, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### Top 20 composite scores (High confidence) {width="50%"}
+### Top 20 Composite Scores (High Confidence) {width="50%"}
 
 ```{r top20-bar}
 top20 <- artists |>
@@ -588,7 +588,7 @@ ggplotly_titled(p_top20, tooltip = "text") |>
 
 ## Row {height="45%"}
 
-### Composite distribution by confidence tier {width="50%"}
+### Composite Distribution by Confidence Tier {width="50%"}
 
 ```{r violin-confidence}
 violin_data <- artists |>
@@ -627,7 +627,7 @@ plot_ly(
   )
 ```
 
-### Score range: What we don't know {width="50%"}
+### Score Range: What We Don't Know {width="50%"}
 
 ```{r uncertainty-range}
 uncertain <- artists |>
@@ -662,7 +662,7 @@ ggplotly_titled(p_range, tooltip = "text") |>
 
 ## Row {height="40%"}
 
-### Confidence notes for M and L entries {width="100%"}
+### Confidence Notes for M and L Entries {width="100%"}
 
 ```{r conf-notes-table}
 conf_notes <- artists |>
@@ -702,7 +702,7 @@ reactable(
 
 ## Row {height="85%"}
 
-### A: Ranked bar {width="25%"}
+### A: Ranked Bar {width="25%"}
 
 ```{r viz-bar}
 era_summary <- artists |>
@@ -723,7 +723,7 @@ ggplotly_titled(p_bar, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### B: Time trend line {width="25%"}
+### B: Time Trend Line {width="25%"}
 
 ```{r viz-line}
 p_line <- era_summary |>
@@ -741,7 +741,7 @@ ggplotly_titled(p_line, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### C: Distribution (violin) {width="25%"}
+### C: Distribution (Violin) {width="25%"}
 
 ```{r viz-violin}
 era_levels <- levels(artists$era)
@@ -774,7 +774,7 @@ plot_ly(
   )
 ```
 
-### D: Scatter with n shown {width="25%"}
+### D: Scatter with n Shown {width="25%"}
 
 ```{r viz-scatter-n}
 era_n <- artists |> count(era, name = "n_artists")
@@ -805,7 +805,7 @@ ggplotly_titled(p_scatter_n, tooltip = "text") |>
 
 ## Row
 
-### 1 · Two variables {width="50%"}
+### 1 · Two Variables {width="50%"}
 
 ```{r ladder-two}
 r_vr <- cor(artists$vocab, artists$rhyme)
@@ -831,7 +831,7 @@ ggplotly_titled(p_two, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### 2 · Three: color joins {width="50%"}
+### 2 · Three: Color Joins {width="50%"}
 
 ```{r ladder-three}
 p_three <- artists |>
@@ -855,7 +855,7 @@ ggplotly_titled(p_three, tooltip = "text") |>
 
 ## Row
 
-### 3 · Four: panels join {width="55%"}
+### 3 · Four: Panels Join {width="55%"}
 
 ```{r ladder-four}
 p_four <- artists |>
@@ -877,7 +877,7 @@ ggplotly_titled(p_four, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### 4 · Five: the kitchen sink {width="45%"}
+### 4 · Five: The Kitchen Sink {width="45%"}
 
 ```{r ladder-five}
 p_five <- artists |>
@@ -903,7 +903,7 @@ ggplotly_titled(p_five, tooltip = "text") |>
 
 ## Row
 
-### The canon map {width="50%"}
+### The Canon Map {width="50%"}
 
 ```{r canon-map}
 style_order <- artists |>
@@ -938,7 +938,7 @@ ggplotly_titled(p_canon, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### Style fingerprints {width="50%"}
+### Style Fingerprints {width="50%"}
 
 ```{r style-fingerprints}
 fingerprints <- artists |>
@@ -985,7 +985,7 @@ ggplotly_titled(p_finger, tooltip = "text") |>
 
 ## Row {height="42.5%"}
 
-### Career length vs. composite {width="55%"}
+### Career Length vs. Composite {width="55%"}
 
 ```{r career-scatter}
 career_data <- artists |>
@@ -1016,7 +1016,7 @@ ggplotly_titled(p_career, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### Years from debut to signature work {width="45%"}
+### Years from Debut to Signature Work {width="45%"}
 
 ```{r years-to-peak}
 peak_data   <- artists |> filter(!is.na(years_to_peak))
@@ -1043,7 +1043,7 @@ ggplotly_titled(p_peak, tooltip = "text") |>
 
 ## Row {height="42.5%"}
 
-### Age at debut, by era {width="50%"}
+### Age at Debut, by Era {width="50%"}
 
 ```{r age-debut-era}
 # Solo artists only: Compounds carry no Birth Year (members vary in age).
@@ -1071,7 +1071,7 @@ ggplotly_titled(p_age_debut, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### Age at signature work vs. composite {width="50%"}
+### Age at Signature Work vs. Composite {width="50%"}
 
 ```{r age-sig-composite}
 sig_age_data <- age_data |> filter(!is.na(age_sig))
