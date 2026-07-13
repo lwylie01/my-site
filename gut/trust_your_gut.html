@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trust Your Gut? · datawithaplot.org</title>
+<style>
+  :root {
+    --primary: #8C6A8D;
+    --secondary: #E98973;
+    --accent: #D2B1A3;
+    --light-bg: #F8F7F4;
+    --dark: #2a1f2b;
+    --text: #3a2d3b;
+    --muted: #7a6a7b;
+    --card: #ffffff;
+    --line: #e8e0e8;
+    --good: #2ecc71;
+    --bad: #d9534f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── Header ─────────────────────────────────────────── */
+  header {
+    background: var(--dark);
+    color: #f0e8f0;
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.03em; }
+  header h1 span { color: var(--secondary); }
+  header p { font-size: 0.8rem; color: var(--accent); margin-top: 0.1rem; }
+  header a { color: var(--accent); font-size: 0.8rem; text-decoration: none; font-weight: 600; }
+  header a:hover { color: #fff; }
+
+  /* ── Progress ───────────────────────────────────────── */
+  #progress {
+    display: flex; gap: 0; background: #fff;
+    border-bottom: 2px solid var(--accent);
+    font-size: 0.72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .step {
+    flex: 1; text-align: center; padding: 0.7rem 0.5rem;
+    color: var(--muted); position: relative; transition: all 0.2s;
+  }
+  .step.active { color: #fff; background: var(--primary); }
+  .step.done { color: var(--primary); }
+  .step .num {
+    display: inline-flex; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--line); color: var(--muted);
+    align-items: center; justify-content: center; margin-right: 0.4rem;
+    font-size: 0.65rem;
+  }
+  .step.active .num { background: #fff; color: var(--primary); }
+  .step.done .num { background: var(--primary); color: #fff; }
+
+  /* ── Layout ─────────────────────────────────────────── */
+  .wrap { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  .screen { display: none; animation: fade 0.4s ease; }
+  .screen.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .eyebrow {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--secondary); margin-bottom: 0.6rem;
+  }
+  h2 { font-size: 1.85rem; line-height: 1.2; color: var(--dark); margin-bottom: 0.9rem; font-weight: 700; }
+  h3 { font-size: 1.25rem; color: var(--dark); margin: 2rem 0 0.8rem; font-weight: 700; }
+  .lead { font-size: 1.02rem; color: var(--text); margin-bottom: 1.5rem; }
+  p { margin-bottom: 1rem; }
+  .muted { color: var(--muted); }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1.6rem 1.5rem; margin-bottom: 1.5rem;
+  }
+
+  /* ── Buttons ────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.7rem 1.4rem; border-radius: 8px; border: none;
+    font-size: 0.92rem; font-weight: 700; cursor: pointer;
+    font-family: inherit; transition: opacity 0.15s, transform 0.1s;
+    text-decoration: none;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-secondary { background: var(--secondary); color: #fff; }
+  .btn-outline { background: #fff; color: var(--primary); border: 1.5px solid var(--primary); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ── Case files ─────────────────────────────────────── */
+  .f-progress { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.9rem; }
+  .f-count { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .fdots { display: flex; gap: 5px; }
+  .fdots span { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+  .fdots span.on { background: var(--primary); }
+
+  .file-card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; overflow: hidden; margin-bottom: 1.2rem;
+  }
+  .file-strip {
+    background: #f3ecf3; color: var(--primary);
+    font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.45rem 1.5rem; display: flex; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;
+  }
+  .file-body { padding: 1.4rem 1.5rem 1.5rem; }
+  .f-name { font-size: 1.3rem; font-weight: 800; color: var(--dark); }
+  .f-meta { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
+  .f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 1.4rem; margin-bottom: 1rem; }
+  .f-field .fl {
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.1rem;
+  }
+  .f-field .fv { font-size: 0.9rem; color: var(--text); }
+  .f-notes {
+    border-top: 1px dashed var(--accent); padding-top: 0.9rem;
+    font-size: 0.93rem; color: var(--text); font-style: italic;
+  }
+  .f-notes .fl {
+    font-style: normal; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.15rem;
+  }
+  .callrow { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .callrow .btn { flex: 1; justify-content: center; min-width: 180px; }
+
+  /* ── Reveal ─────────────────────────────────────────── */
+  .punch {
+    font-size: 1.5rem; font-weight: 800; color: var(--dark);
+    line-height: 1.25; margin-bottom: 1.2rem;
+  }
+  .punch b { color: var(--secondary); }
+
+  .statrow { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.2rem 0; }
+  .stat {
+    flex: 1; min-width: 150px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 1.1rem 1rem; text-align: center;
+  }
+  .stat .big { font-size: 2.1rem; font-weight: 800; color: var(--primary); line-height: 1; }
+  .stat .lab { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .stat.you .big { color: var(--secondary); }
+
+  .rule-card {
+    background: linear-gradient(135deg, #fff 0%, #faf6fa 100%);
+    border: 1px solid var(--primary); border-radius: 12px;
+    padding: 1.5rem 1.6rem; margin: 1rem 0 1.5rem;
+    box-shadow: 0 6px 24px rgba(140,106,141,0.10);
+  }
+  .rule-card .rq { font-weight: 700; color: var(--dark); margin-bottom: 0.15rem; }
+  .rule-card .rwhy { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.9rem; }
+  .rule-card .rdecide {
+    border-top: 1px solid var(--line); padding-top: 0.8rem;
+    font-size: 0.95rem; color: var(--dark); font-weight: 700; margin-bottom: 0;
+  }
+
+  .rv { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-top: 0.5rem; }
+  .rv-item { padding: 1rem 1.1rem; border-bottom: 1px solid var(--line); }
+  .rv-item:last-child { border-bottom: none; }
+  .rv-head { display: flex; justify-content: space-between; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+  .rv-name { font-weight: 700; color: var(--dark); font-size: 0.95rem; }
+  .rv-charge { font-size: 0.78rem; color: var(--muted); }
+  .rv-calls { display: flex; gap: 1.4rem; flex-wrap: wrap; font-size: 0.82rem; margin-bottom: 0.45rem; }
+  .rv-calls .who { color: var(--muted); text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.05em; display: block; }
+  .rv-calls .ok { color: var(--good); font-weight: 800; }
+  .rv-calls .no { color: var(--bad); font-weight: 800; }
+  .rv-lure { font-size: 0.84rem; color: var(--muted); margin-bottom: 0; }
+
+  .callout {
+    border-left: 4px solid var(--secondary); background: #fdf3ef;
+    padding: 1.1rem 1.3rem; border-radius: 0 10px 10px 0; margin: 1.5rem 0;
+  }
+  .callout .ct { font-weight: 800; color: var(--dark); margin-bottom: 0.4rem; }
+  .callout p { margin-bottom: 0; font-size: 0.95rem; }
+
+  .sources { font-size: 0.82rem; color: var(--muted); }
+  .sources li { margin-bottom: 0.7rem; list-style: none; padding-left: 1rem; text-indent: -1rem; }
+  .sources li .find { display: block; font-size: 0.78rem; color: var(--muted); text-indent: 0; padding-left: 0; margin-top: 0.1rem; font-style: italic; }
+  .note {
+    font-size: 0.8rem; color: var(--muted); background: #f4eff4;
+    border-radius: 8px; padding: 0.9rem 1.1rem; margin-top: 1rem;
+  }
+
+  footer {
+    text-align: center; padding: 2.5rem 1.5rem; color: var(--muted);
+    font-size: 0.82rem; border-top: 1px solid var(--line); margin-top: 2rem;
+  }
+  footer a { color: var(--primary); font-weight: 600; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    h2 { font-size: 1.5rem; }
+    .punch { font-size: 1.25rem; }
+    .step span.txt { display: none; }
+    .f-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Trust Your <span>Gut</span>?</h1>
+    <p>datawithaplot.org · clinical vs. actuarial prediction</p>
+  </div>
+  <a href="../index.html">← datawithaplot.org</a>
+</header>
+
+<div id="progress">
+  <div class="step active" data-step="0"><span class="num">1</span><span class="txt">The morning stack</span></div>
+  <div class="step" data-step="1"><span class="num">2</span><span class="txt">Your calls</span></div>
+  <div class="step" data-step="2"><span class="num">3</span><span class="txt">The score</span></div>
+</div>
+
+<div class="wrap">
+
+  <!-- ── SCREEN 0: Brief ─────────────────────────────── -->
+  <section class="screen active" id="screen-0">
+    <div class="eyebrow">A prediction exercise</div>
+    <h2>Ten files. Who comes back?</h2>
+    <p class="lead">You are running pretrial intake this morning. Ten people were
+      arrested, released, and given a court date. Your job: for each file, predict
+      whether they return to court or miss it.</p>
+
+    <div class="card">
+      <p style="margin-bottom:0.6rem;"><b>Read however you like.</b> The history, the job,
+        the notes, the vibe. Use everything.</p>
+      <p style="margin-bottom:0;"><b>No takebacks.</b> Once you call a file, it's called.
+        When you finish, a checklist that uses exactly two facts makes the same ten
+        calls, and we compare scores.</p>
+    </div>
+
+    <button class="btn btn-primary" id="go-cases">Open the first file →</button>
+    <p class="muted" style="font-size:0.8rem;margin-top:0.8rem;">All ten files are fictional
+      composites. Nothing you enter leaves your browser.</p>
+  </section>
+
+  <!-- ── SCREEN 1: Case files ────────────────────────── -->
+  <section class="screen" id="screen-1">
+    <div class="f-progress">
+      <span class="f-count" id="f-count">File 1 of 10</span>
+      <div class="fdots" id="f-dots"></div>
+    </div>
+    <div id="file-box"></div>
+    <div class="callrow">
+      <button class="btn btn-primary" id="call-return">Will return to court</button>
+      <button class="btn btn-secondary" id="call-miss">Will miss court</button>
+    </div>
+    <p class="muted" style="font-size:0.8rem;margin-top:0.8rem;">Make the call, then the next file opens.</p>
+  </section>
+
+  <!-- ── SCREEN 2: The score ─────────────────────────── -->
+  <section class="screen" id="screen-2">
+    <div class="eyebrow">The score</div>
+    <div class="punch" id="score-punch"></div>
+
+    <div class="statrow">
+      <div class="stat you">
+        <div class="big" id="stat-you">–</div>
+        <div class="lab">You, reading full files</div>
+      </div>
+      <div class="stat">
+        <div class="big" id="stat-rule">–</div>
+        <div class="lab">The checklist, two facts</div>
+      </div>
+      <div class="stat">
+        <div class="big" id="stat-base">–</div>
+        <div class="lab">Guessing "returns" every time</div>
+      </div>
+    </div>
+
+    <h3>The Whole Checklist</h3>
+    <p class="muted" style="font-size:0.9rem;">This is everything it looked at.
+      It never read the notes.</p>
+    <div class="rule-card" id="rule-card"></div>
+
+    <h3>File by File</h3>
+    <div class="rv" id="rv-list"></div>
+
+    <h3>Why the Checklist Wins</h3>
+    <p>This fight is old. In 1954, the psychologist Paul Meehl compared expert
+      predictions with simple statistical rules across every study he could find,
+      and the rules kept winning. Almost fifty years later, a meta-analysis of 136
+      studies reached the same verdict: mechanical prediction ties or beats expert
+      judgment most of the time, in medicine, education, and courtrooms alike.</p>
+    <p>The reason is not that experts know too little. It is that files like these
+      are full of vivid, useless detail. The apology letter, the anger, the
+      exhaustion: they feel like signal and behave like noise. Two boring facts
+      carry most of the real information, and the checklist never gets distracted
+      from them, never has a rough morning, never gives one extra chance because
+      someone brought their mom.</p>
+    <p>There is also a quieter trap in the stack: most people return to court.
+      Guess "returns" every time and you score <span id="base-inline"></span> of 10
+      here without opening a single file. A gut that calls a lot of misses has to
+      be very good just to beat doing nothing.</p>
+
+    <div class="callout">
+      <div class="ct">Teaching Prompt: Clinical vs. Actuarial Judgment</div>
+      <p>The lesson is not that judgment is worthless. Someone had to pick the two
+        variables, and someone should keep studying the exceptions the rule gets
+        wrong. The lesson is where judgment belongs: building the checklist and
+        auditing it, not overriding it one charming file at a time. When intuition
+        and a validated rule disagree, the rule is the better bet, and it does not
+        get tired by the tenth file.</p>
+    </div>
+
+    <h3>Sources &amp; Method Notes</h3>
+    <ul class="sources" id="sources"></ul>
+    <div class="note" id="method-note"></div>
+
+    <div style="margin-top:2rem;display:flex;gap:0.8rem;flex-wrap:wrap;">
+      <button class="btn btn-outline" id="restart">↻ Run the stack again</button>
+      <a class="btn btn-secondary" href="../projects/index.html">See more projects →</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Part of <a href="../index.html">Data with a Plot</a> · built by Lindsey E. Wylie, J.D., Ph.D.<br>
+  Case files, the rule, and sources are editable in <code>gut/data/gut_cases.xlsx</code>.
+</footer>
+
+<script>
+// ── Data injected at build time from gut/data/gut_cases.xlsx ────────────────
+const CASES    = [{"case_id":1,"name":"Marcus T.","age":34,"charge":"Retail theft","court_history":"No prior court dates. First case.","pending_text":"None.","employment":"Between jobs since March.","transport":"Staying with a cousin across town; no car.","notes":"Kept his answers short. Could not give his own street address and listed the cousin's instead. Looked at the floor for most of the interview.","prior_miss":"No","pending_case":"No","outcome":"Returned","lure":"No address, no job, flat affect: the file reads risky. The two variables that actually predict say otherwise."},{"case_id":2,"name":"Denise W.","age":52,"charge":"Driving under the influence, first offense","court_history":"No prior court dates. First arrest.","pending_text":"None.","employment":"Hospital nurse, 14 years.","transport":"License suspended 30 days; her sister will drive.","notes":"Mortified from start to finish. Asked twice whether paying the fine early would help, and wrote the court date down on three separate pieces of paper.","prior_miss":"No","pending_case":"No","outcome":"Returned","lure":"Everything in this file says reliable, and for once the story and the variables agree. The easy ones feel like proof that the gut works."},{"case_id":3,"name":"Tyler R.","age":23,"charge":"Marijuana possession","court_history":"Missed one court date last year, on a traffic case.","pending_text":"None.","employment":"Started at a warehouse three weeks ago.","transport":"His mother drives him.","notes":"Came in with his mother. Brought a handwritten apology letter about the date he missed and a printout of his new work schedule.","prior_miss":"Yes","pending_case":"No","outcome":"Missed","lure":"The apology letter does a lot of work on your gut. The strongest predictor of missing court is having missed before, and it is quietly sitting in line two of the file."},{"case_id":4,"name":"Angela M.","age":41,"charge":"Shoplifting","court_history":"No missed dates on record.","pending_text":"An open case in the next county.","employment":"Part-time home health aide.","transport":"Borrows her sister's car.","notes":"Polite and organized. Three kids, volunteers at her church's food pantry, asked for an evening date so she would not lose shift hours.","prior_miss":"No","pending_case":"Yes","outcome":"Missed","lure":"A warm, organized file. But a second open case means twice the dates, twice the notices, twice the ways one slips. Load predicts better than warmth."},{"case_id":5,"name":"Ray D.","age":58,"charge":"Disorderly conduct","court_history":"No prior court dates.","pending_text":"None.","employment":"Machinist, 20 years at the same shop.","transport":"Own truck.","notes":"Furious for the entire interview. Called the charge harassment, demanded the officer's badge number twice, and left before signing the courtesy reminder form.","prior_miss":"No","pending_case":"No","outcome":"Returned","lure":"Angry is not the same as absent. He wants his day in court, and people who feel wronged tend to show up early, files in hand."},{"case_id":6,"name":"Jasmine K.","age":19,"charge":"Driving without a license","court_history":"Missed two court dates in the past year.","pending_text":"None.","employment":"Fast food; the schedule changes weekly.","transport":"No license; rides are unreliable.","notes":"Shrugged through most of the questions. Did not write anything down and left the reminder card on the table.","prior_miss":"Yes","pending_case":"No","outcome":"Missed","lure":"The one file where everything points the same way. Easy for the gut, easy for the rule. Cases like this teach the gut false confidence."},{"case_id":7,"name":"Walt B.","age":66,"charge":"Trespassing","court_history":"No prior court dates.","pending_text":"None.","employment":"Retired postal carrier.","transport":"Walks; lives four blocks from the courthouse.","notes":"Confused about why the charge was filed and certain it will be dismissed, but wrote the date in the pocket calendar he carries everywhere.","prior_miss":"No","pending_case":"No","outcome":"Returned","lure":"Dismissive about the charge, meticulous about the date. The pocket calendar matters more than the attitude."},{"case_id":8,"name":"Priya S.","age":29,"charge":"Driving under the influence","court_history":"Missed one date two years ago on this same matter.","pending_text":"A separate case pending downtown.","employment":"Software engineer.","transport":"Rideshare account; offered to show the receipts.","notes":"Hired a private attorney the day after the arrest. Showed intake her phone with three calendar reminders already set for the court date.","prior_miss":"Yes","pending_case":"Yes","outcome":"Returned","lure":"The rule's one miss in this set. Both flags fire and she shows up anyway, lawyer in tow. Rules are not right about people; they are right about groups."},{"case_id":9,"name":"Deon C.","age":37,"charge":"Driving on a suspended license","court_history":"No prior court dates. First case.","pending_text":"None.","employment":"Day labor since winter; missed a job interview the morning of intake.","transport":"Bus pass expired; walked 40 minutes to the interview.","notes":"Exhausted and overwhelmed. Answered slowly, lost his paperwork once during the interview, and had to borrow a pen.","prior_miss":"No","pending_case":"No","outcome":"Returned","lure":"Overwhelmed reads as unreliable. But he walked 40 minutes to make this appointment. That is what showing up looks like."},{"case_id":10,"name":"Carla V.","age":45,"charge":"Writing bad checks","court_history":"Missed one court date three years ago.","pending_text":"None.","employment":"Waitress, splitting time between two restaurants.","transport":"Between apartments right now.","notes":"Apologetic about everything and a little vague on dates. Said she is getting back on her feet and asked that reminder calls not go to her ex's number.","prior_miss":"Yes","pending_case":"No","outcome":"Missed","lure":"Sympathy and vagueness pull in opposite directions, so the gut flips a coin. The missed date from three years back is still the loudest signal in the file."}];
+const RULE     = [{"ord":1,"question":"Did they miss a court date before?","field":"prior_miss","flags_on":"Yes","why":"The strongest single predictor of missing court is having missed one already."},{"ord":2,"question":"Do they have another case pending?","field":"pending_case","flags_on":"Yes","why":"More open cases mean more dates, more notices, and more chances for one to slip."}];
+const RESEARCH = [{"citation":"Meehl, P. E. (1954). Clinical versus statistical prediction: A theoretical analysis and a review of the evidence. University of Minnesota Press.","finding":"The book that started the fight: across the studies then available, simple statistical rules matched or beat expert judgment in nearly every comparison."},{"citation":"Grove, W. M., Zald, D. H., Lebow, B. S., Snitz, B. E., & Nelson, C. (2000). Clinical versus mechanical prediction: A meta-analysis. Psychological Assessment, 12(1), 19-30.","finding":"Across 136 studies, mechanical prediction equaled or beat clinical judgment in the great majority of comparisons, in medicine, education, and criminal justice alike."},{"citation":"Dawes, R. M. (1979). The robust beauty of improper linear models in decision making. American Psychologist, 34(7), 571-582.","finding":"Even crude models with unit weights tend to outperform the experts who built them, because they never get tired, bored, or charmed."}];
+const METHOD   = [{"ord":1,"kind":"note","text":"Every case file on this page is fictional: composites written for teaching, with invented names. No real court records were used."},{"ord":2,"kind":"note","text":"Outcomes were constructed so the checklist scores 9 of 10, near the high end of what simple rules do in practice, to make the mechanism easy to see. The gap between story-reading and rule-following is the lesson, not the exact percentages."},{"ord":3,"kind":"note","text":"The two variables mirror the strongest failure-to-appear factors in validated pretrial tools: a prior missed court date and another case pending."},{"ord":4,"kind":"note","text":"In real courts, most people do return; missing court is the exception. Nothing you enter is stored or sent anywhere."}];
+
+CASES.sort((a, b) => a.case_id - b.case_id);
+const state = { idx: 0, picks: [] };
+
+function ruleCall(c) {
+  const flagged = RULE.some(r => String(c[r.field]).toLowerCase() === "yes");
+  return flagged ? "Missed" : "Returned";
+}
+
+// ── Screen navigation ───────────────────────────────────────────────────────
+function showScreen(n) {
+  document.querySelectorAll(".screen").forEach((s, i) => s.classList.toggle("active", i === n));
+  document.querySelectorAll(".step").forEach((s, i) => {
+    s.classList.toggle("active", i === n);
+    s.classList.toggle("done", i < n);
+  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ── Case files ──────────────────────────────────────────────────────────────
+function renderCase() {
+  const c = CASES[state.idx];
+  document.getElementById("f-count").textContent =
+    `File ${state.idx + 1} of ${CASES.length}`;
+
+  const dots = document.getElementById("f-dots");
+  dots.innerHTML = "";
+  CASES.forEach((_, i) => {
+    const d = document.createElement("span");
+    if (i < state.idx) d.classList.add("on");
+    dots.appendChild(d);
+  });
+
+  document.getElementById("file-box").innerHTML =
+    `<div class="file-card">` +
+    `<div class="file-strip"><span>Pretrial services · intake summary</span>` +
+    `<span>Case ${String(c.case_id).padStart(2, "0")}</span></div>` +
+    `<div class="file-body">` +
+    `<div class="f-name">${c.name}</div>` +
+    `<div class="f-meta">Age ${c.age} · ${c.charge}</div>` +
+    `<div class="f-grid">` +
+    `<div class="f-field"><div class="fl">Court history</div><div class="fv">${c.court_history}</div></div>` +
+    `<div class="f-field"><div class="fl">Other cases</div><div class="fv">${c.pending_text}</div></div>` +
+    `<div class="f-field"><div class="fl">Work</div><div class="fv">${c.employment}</div></div>` +
+    `<div class="f-field"><div class="fl">Getting to court</div><div class="fv">${c.transport}</div></div>` +
+    `</div>` +
+    `<div class="f-notes"><div class="fl">Notes from intake</div>${c.notes}</div>` +
+    `</div></div>`;
+}
+
+function makeCall(pick) {
+  state.picks[state.idx] = pick;
+  state.idx++;
+  if (state.idx < CASES.length) {
+    renderCase();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    buildScore();
+    showScreen(2);
+  }
+}
+
+document.getElementById("go-cases").onclick = () => { state.idx = 0; state.picks = []; renderCase(); showScreen(1); };
+document.getElementById("call-return").onclick = () => makeCall("Returned");
+document.getElementById("call-miss").onclick = () => makeCall("Missed");
+
+// ── The score ───────────────────────────────────────────────────────────────
+function buildScore() {
+  const n = CASES.length;
+  let you = 0, rule = 0, base = 0;
+  CASES.forEach((c, i) => {
+    if (state.picks[i] === c.outcome) you++;
+    if (ruleCall(c) === c.outcome) rule++;
+    if (c.outcome === "Returned") base++;
+  });
+
+  const punch = document.getElementById("score-punch");
+  if (you < rule) {
+    punch.innerHTML = `You called <b>${you} of ${n}</b>. The two-fact checklist called ` +
+      `<b>${rule}</b>. Don't take it personally: it beats almost everyone.`;
+  } else if (you === rule) {
+    punch.innerHTML = `You called <b>${you} of ${n}</b>. So did the checklist, and it ` +
+      `only read two lines per file.`;
+  } else {
+    punch.innerHTML = `You called <b>${you} of ${n}</b> and beat the checklist's ` +
+      `<b>${rule}</b>. Enjoy it: run enough stacks, and the checklist wins.`;
+  }
+
+  document.getElementById("stat-you").textContent = you + "/" + n;
+  document.getElementById("stat-rule").textContent = rule + "/" + n;
+  document.getElementById("stat-base").textContent = base + "/" + n;
+  document.getElementById("base-inline").textContent = base;
+
+  // The rule, spelled out
+  const rc = document.getElementById("rule-card");
+  rc.innerHTML = "";
+  RULE.slice().sort((a, b) => a.ord - b.ord).forEach((r, i) => {
+    rc.innerHTML +=
+      `<p class="rq">${i + 1}. ${r.question}</p>` +
+      `<p class="rwhy">${r.why}</p>`;
+  });
+  rc.innerHTML += `<p class="rdecide">If either answer is yes, call it a miss. Otherwise, call it a return.</p>`;
+
+  // File-by-file comparison
+  const list = document.getElementById("rv-list");
+  list.innerHTML = "";
+  CASES.forEach((c, i) => {
+    const yours = state.picks[i];
+    const rules = ruleCall(c);
+    const mark = (call) => call === c.outcome
+      ? '<span class="ok">✓</span>' : '<span class="no">✗</span>';
+    const item = document.createElement("div");
+    item.className = "rv-item";
+    item.innerHTML =
+      `<div class="rv-head"><span class="rv-name">${c.name}</span>` +
+      `<span class="rv-charge">${c.charge}</span></div>` +
+      `<div class="rv-calls">` +
+      `<span><span class="who">You</span>${yours} ${mark(yours)}</span>` +
+      `<span><span class="who">Checklist</span>${rules} ${mark(rules)}</span>` +
+      `<span><span class="who">Actual</span><b>${c.outcome}</b></span>` +
+      `</div>` +
+      `<p class="rv-lure">${c.lure}</p>`;
+    list.appendChild(item);
+  });
+
+  // Sources & method notes
+  const src = document.getElementById("sources");
+  src.innerHTML = "";
+  RESEARCH.forEach(rr => {
+    if (!rr.citation) return;
+    const li = document.createElement("li");
+    li.textContent = rr.citation;
+    if (rr.finding) {
+      const f = document.createElement("span");
+      f.className = "find";
+      f.textContent = rr.finding;
+      li.appendChild(f);
+    }
+    src.appendChild(li);
+  });
+  const notes = METHOD.slice().sort((a, b) => a.ord - b.ord)
+    .filter(m => m.kind === "note").map(m => m.text);
+  document.getElementById("method-note").innerHTML =
+    "<b>Honest note:</b> " + notes.join(" ");
+}
+
+document.getElementById("restart").onclick = () => {
+  state.idx = 0;
+  state.picks = [];
+  showScreen(0);
+};
+</script>
+</body>
+</html>
