@@ -6,7 +6,19 @@ There is no PR-level CI: nothing builds until a PR merges.
 
 Voice rule (site-wide, July 2026): plain voice, **no em dashes** (use colons or
 commas), no ten-dollar words. Callout titles use colons ("Teaching Prompt:
-Construct Validity").
+Construct Validity"). Headings are title case sitewide ("How I Teach", "The
+Eight Styles"); statistical n and vs. stay lowercase. Hero and section intros
+run short and punchy (the homepage hero is fragments plus two sentences; the
+How I Teach section is two sentences). "Clarity is kindness" is the site's
+working premise (codebook intro). When drafting copy, offer the maintainer 2-3
+options and let her pick and tune: never present drafted copy as her quote,
+and never attribute words to a publication without reading it.
+
+Maintainer workflow (learned 2026-07): PRs merge within minutes of opening.
+One PR per batch of work. Immediately before every push, check whether the
+branch's PR just merged; if it did, restart the branch from origin/main (same
+name, force-with-lease) and open a new PR rather than stacking. This also
+protects the unmergeable binary xlsx.
 
 ## Hip-Hop Periodic Table (`hiphop/`)
 
@@ -100,7 +112,13 @@ worklist shapes section.
 
 ## Other site areas
 
-- `barnum/` mirrors the hiphop pattern (Excel → `build_barnum.R` → HTML).
+- `barnum/` mirrors the hiphop pattern (Excel → `build_barnum.R` → HTML). It
+  is the template for new self-contained interactives: of the coming-soon
+  project cards, "How Old Is Old?" (slider exercise) and "Trust Your Gut?"
+  (case-file prediction vs a two-variable rule) can be built on this pattern
+  without new data; "Counted Wrong" (Crossroads) and "A Right That Exists on
+  Paper" (compassionate release, 50-state review) need datasets from the
+  maintainer first.
 - `CV/Wylie_Capacity_Dashboard.qmd` is private: gitignored and excluded from
   rendering. Keep it and `_freeze/CV/` out of the public site.
 - `_freeze/` is tracked except `_freeze/hiphop/` (ignored; freeze disabled).
