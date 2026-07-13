@@ -137,14 +137,14 @@
     "href": "teaching/index.html",
     "title": "Teaching",
     "section": "",
-    "text": "Education\n  \n  \n    Data storytelling and applied research methods for professionals.\n  \n  \n    Recently presented Telling Your Court's Data Story at the\n    National Association for Court Management (2025)."
+    "text": "Education\n  \n  \n    Numbers do not speak for themselves. Someone has to teach the room to\n    listen.\n  \n  \n    Most recently: Telling Your Court's Data Story, National\n    Association for Court Management, 2025."
   },
   {
-    "objectID": "teaching/index.html#how-i-teach",
-    "href": "teaching/index.html#how-i-teach",
+    "objectID": "teaching/index.html#a-teaching-philosophy",
+    "href": "teaching/index.html#a-teaching-philosophy",
     "title": "Teaching",
-    "section": "How I teach",
-    "text": "How I teach\nI teach with real datasets, flaws and all. Real data has gaps, debatable scores, and choices somebody made but never wrote down. That is what people face at work, so that is what we practice on.\nThe six ideas I come back to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
+    "section": "A teaching philosophy",
+    "text": "A teaching philosophy\nMy classroom is wherever the work is happening: shoulder to shoulder in a project, one on one with a researcher stuck on a measurement question, or a conference room full of professionals who did not expect to have opinions about data quality. No syllabus, no semester. We work with real datasets because that is what work looks like: missing values, debatable scores, decisions nobody wrote down. Practice on tidy data and you are ready for a textbook. Practice on real data and you are ready for Monday.\nThe six ideas I come back to most often:\n\nConstruct validity Sampling and bias Multidimensional measurement Uncertainty communication Visualization design Narrative framing"
   },
   {
     "objectID": "teaching/index.html#teaching-materials",
