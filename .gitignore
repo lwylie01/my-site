@@ -35,5 +35,9 @@ CV/Wylie_Capacity_Dashboard_files/
 # on data-only edits.
 _freeze/hiphop/
 
+# Counted Wrong freeze cache: freeze is disabled (countedwrong/_metadata.yml)
+# because the essay reads countedwrong/data/*.csv. Keep stray caches out.
+_freeze/countedwrong/
+
 # Internal capacity dashboard freeze cache — never publish (contains project details)
 _freeze/CV/

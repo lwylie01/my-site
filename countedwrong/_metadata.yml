@@ -1,0 +1,7 @@
+# The essay reads the aggregate CSVs in countedwrong/data/ at render time.
+# Quarto's freeze cache only invalidates when the .qmd source changes, so a
+# frozen render would silently serve stale results after data-only CSV
+# updates (new aggregates copied over from the private EAs repo). Always
+# re-execute these documents.
+execute:
+  freeze: false
