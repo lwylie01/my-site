@@ -116,27 +116,33 @@ worklist shapes section.
   is the template for self-contained interactives. `howold/` ("How Old Is
   Old?") and `gut/` ("Trust Your Gut?") shipped on it in July 2026: edit their
   xlsx, CI rebuilds; outputs gitignored; reveal punch lines were maintainer-
-  approved 2026-07. Last coming-soon card besides Counted Wrong: "A Right That
+  approved 2026-07. The only coming-soon project card left: "A Right That
   Exists on Paper" (compassionate release, 50-state review) still needs the
   maintainer's dataset.
-- **Counted Wrong (in progress, 2026-07).** The study is **Pathways to
-  Desistance**; the live card still says "Crossroads Study" and must be
-  corrected (title + description: Pathways followed ~1,300 youth for seven
-  years after a serious offense, not first contact) when the page ships, with
-  2-3 copy options per the voice rule. Hard rules for this project: the data
-  is restricted-access and person-level, so it is NEVER committed to any
-  GitHub repo, public or private, and Git LFS is never the answer to a
-  file-size rejection; the public site gets aggregates only. Her analysis code
-  belongs in the private repo `lwylie01/EAs` (Claude GitHub app has access; a
-  starter kit is already unzipped in her local folder: hardened default-deny
-  .gitignore with an `aggregates/*.csv` allowlist, plus `make_aggregates.R`
-  whose `assert_aggregate()` refuses person-level tables). Status 2026-07-13:
-  her push to EAs still failed GitHub's 100 MB limit (two 312 MB person-level
-  CSVs, `pathways_panel_long_clean.csv` and `pathways_EAs_clean.csv`); next
-  session starts by reading her actual terminal output, then `add_repo` EAs,
-  verify via the API that zero data files landed, audit her scripts, and build
-  `countedwrong/` as a CI-rendered analysis essay (Quarto, publish.yml R
-  packages, `ggplotly_titled()` for any plotly charts).
+- **Counted Wrong (`countedwrong/`, shipped 2026-07).** The site's first
+  long-form analysis essay, on **Pathways to Desistance** (ICPSR 29961:
+  1,354 youth, 11 waves over seven years after a serious offense, ages
+  14-26 observed, PSMI maturity measures through age 24). Pieces:
+  `index.qmd` (format html + toc; its own `ggplotly_titled()` copy;
+  `stopifnot` guards in the setup chunk so a bad CSV fails the CI render
+  instead of publishing wrong charts), `_metadata.yml` (`freeze: false`;
+  `_freeze/countedwrong/` gitignored), and `data/*.csv`: byte-identical
+  copies of the seven aggregate tables from the private `lwylie01/EAs`
+  repo (written there by `make_aggregates.R`; every cell n ≥ 10, smaller
+  cells suppressed at source; EAs has its own CI guard re-validating every
+  push). Update flow: regenerate aggregates in EAs, commit there, re-copy
+  here, verify byte-identity, push; freeze is off so CI re-renders. The
+  projects card ("Counted Wrong: The Line at 18") and the Writing page
+  essay card link to the page; howold's template still says "coming to
+  this site" (maintainer deferred that link, 2026-07). Hard rules
+  unchanged: person-level Pathways data is NEVER committed to any GitHub
+  repo, public or private, and Git LFS is never the answer; the public
+  site gets aggregates only. EAs remote verified clean 2026-07-14 (API
+  tree walk + full-history blob scan; the two 312 MB CSVs never landed).
+  One essay detail is from general study knowledge, not repo docs, and is
+  flagged for the maintainer: the "Philadelphia and Phoenix, early 2000s"
+  enrollment sentence.
 - `CV/Wylie_Capacity_Dashboard.qmd` is private: gitignored and excluded from
   rendering. Keep it and `_freeze/CV/` out of the public site.
-- `_freeze/` is tracked except `_freeze/hiphop/` (ignored; freeze disabled).
+- `_freeze/` is tracked except `_freeze/hiphop/` and `_freeze/countedwrong/`
+  (both ignored; freeze disabled for both).
