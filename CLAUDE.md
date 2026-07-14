@@ -112,13 +112,31 @@ worklist shapes section.
 
 ## Other site areas
 
-- `barnum/` mirrors the hiphop pattern (Excel → `build_barnum.R` → HTML). It
-  is the template for new self-contained interactives: of the coming-soon
-  project cards, "How Old Is Old?" (slider exercise) and "Trust Your Gut?"
-  (case-file prediction vs a two-variable rule) can be built on this pattern
-  without new data; "Counted Wrong" (Crossroads) and "A Right That Exists on
-  Paper" (compassionate release, 50-state review) need datasets from the
-  maintainer first.
+- `barnum/` mirrors the hiphop pattern (Excel → `build_barnum.R` → HTML) and
+  is the template for self-contained interactives. `howold/` ("How Old Is
+  Old?") and `gut/` ("Trust Your Gut?") shipped on it in July 2026: edit their
+  xlsx, CI rebuilds; outputs gitignored; reveal punch lines were maintainer-
+  approved 2026-07. Last coming-soon card besides Counted Wrong: "A Right That
+  Exists on Paper" (compassionate release, 50-state review) still needs the
+  maintainer's dataset.
+- **Counted Wrong (in progress, 2026-07).** The study is **Pathways to
+  Desistance**; the live card still says "Crossroads Study" and must be
+  corrected (title + description: Pathways followed ~1,300 youth for seven
+  years after a serious offense, not first contact) when the page ships, with
+  2-3 copy options per the voice rule. Hard rules for this project: the data
+  is restricted-access and person-level, so it is NEVER committed to any
+  GitHub repo, public or private, and Git LFS is never the answer to a
+  file-size rejection; the public site gets aggregates only. Her analysis code
+  belongs in the private repo `lwylie01/EAs` (Claude GitHub app has access; a
+  starter kit is already unzipped in her local folder: hardened default-deny
+  .gitignore with an `aggregates/*.csv` allowlist, plus `make_aggregates.R`
+  whose `assert_aggregate()` refuses person-level tables). Status 2026-07-13:
+  her push to EAs still failed GitHub's 100 MB limit (two 312 MB person-level
+  CSVs, `pathways_panel_long_clean.csv` and `pathways_EAs_clean.csv`); next
+  session starts by reading her actual terminal output, then `add_repo` EAs,
+  verify via the API that zero data files landed, audit her scripts, and build
+  `countedwrong/` as a CI-rendered analysis essay (Quarto, publish.yml R
+  packages, `ggplotly_titled()` for any plotly charts).
 - `CV/Wylie_Capacity_Dashboard.qmd` is private: gitignored and excluded from
   rendering. Keep it and `_freeze/CV/` out of the public site.
 - `_freeze/` is tracked except `_freeze/hiphop/` (ignored; freeze disabled).
