@@ -9,8 +9,9 @@ toc: false
   <p class="page-header-label">Work</p>
   <h1 class="page-header-title">Projects</h1>
   <p class="page-header-sub">
-    Applied research, teaching tools, and data storytelling experiments.
-    Each one is built around a real measurement question.
+    Applied research, decision tools, and documented datasets. Each one is built
+    around a real measurement question. The short classroom exercises live on the
+    <a href="../teaching/">teaching page</a>.
   </p>
 </div>
 
@@ -63,27 +64,6 @@ toc: false
   </div>
 
   <div class="project-card">
-    <span class="project-card-tag">Data Storytelling · Teaching Module</span>
-    <p class="project-card-title">The Barnum Test</p>
-    <p class="project-card-desc">
-      Does your personality type measure anything at all? A 90-second interactive
-      exercise builds a personalized profile, asks how accurate it feels, then
-      reveals that everyone gets the same profile, and that the answers were
-      never used. A clear, memorable lesson in construct validity.
-    </p>
-    <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Construct validity</span>
-      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
-    </div>
-    <br>
-    <a href="../barnum/barnum_test.html" style="font-weight:600; color:#8C6A8D;">
-      Take the Barnum Test →
-    </a>
-  </div>
-
-  <div class="project-card">
     <span class="project-card-tag">Applied Research · Criminal Justice</span>
     <p class="project-card-title">Counted Wrong: Emerging Adults &amp; the Crossroads Study</p>
     <p class="project-card-desc">
@@ -120,46 +100,6 @@ toc: false
       <span><span class="project-card-accent" style="background:#E98973;"></span>50-state legal review</span>
       <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Aging &amp; corrections</span>
       <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Law &amp; policy</span>
-    </div>
-    <br>
-    <span class="essay-status">Coming soon</span>
-  </div>
-
-  <div class="project-card">
-    <span class="project-card-tag">Data Storytelling · Teaching Module</span>
-    <p class="project-card-title">How Old Is Old?</p>
-    <p class="project-card-desc">
-      A 60-second exercise: set a slider to the age at which someone becomes
-      "old," "a senior," "too old to drive," or "too old to start over." The
-      answers show how little we agree, and how the law pins hard numbers
-      (18, 50, 65) onto a boundary nature never drew. A study in turning fuzzy
-      ideas into exact numbers, and a companion to <em>Counted Wrong</em> at the
-      other end of the lifespan.
-    </p>
-    <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Operationalization</span>
-      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
-    </div>
-    <br>
-    <span class="essay-status">Coming soon</span>
-  </div>
-
-  <div class="project-card">
-    <span class="project-card-tag">Data Storytelling · Teaching Module</span>
-    <p class="project-card-title">Trust Your Gut?</p>
-    <p class="project-card-desc">
-      Review a set of realistic case files and predict who returns to court and
-      who does not. Your accuracy is then scored against a simple two-variable
-      rule that beats nearly everyone. A hands-on lesson in why expert intuition
-      keeps losing to a checklist.
-    </p>
-    <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Actuarial vs. clinical</span>
-      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
     </div>
     <br>
     <span class="essay-status">Coming soon</span>
