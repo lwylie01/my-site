@@ -1,6 +1,6 @@
 # Hip-Hop Periodic Table — Worklist
 
-`hiphop/data/hiphop_artists.xlsx`. **173 acts** = 130 Elements + 43 Compounds.
+`hiphop/data/hiphop_artists.xlsx`. **173 acts** = 129 Elements + 44 Compounds.
 (Underscore-prefixed so Quarto does not publish this internal doc.)
 
 ## Visual encoding (current)
@@ -20,6 +20,17 @@
 - [x] Expansion batch 2 (+16, gap-targeted, 2026-07): 7 women (Salt-N-Pepa, Megan Thee Stallion, Yo-Yo, Bahamadia, Jean Grae, Trina, Mia X — female elements now 24/132 = 18%); Midwest/Bay/South depth (Bone Thugs-N-Harmony, 8Ball & MJG, Souls of Mischief, Twista, Tech N9ne); prestige-bias cases (Nelly, Chief Keef); modern underground (Roc Marciano, Denzel Curry)
 - [x] Region taxonomy rollup (2026-07): Region now East Coast (75) / West Coast (25) / South (41) / Midwest (22); old scene values preserved in new Scene column; modal shows "East Coast (NYC)" style detail; freeze disabled for hiphop/ so data-only Excel edits re-render the dashboard
 - [x] Compounds expansion (+10 post-Golden-Age, 2026-07): Fugees, Goodie Mob, Company Flow, Clipse, dead prez, Little Brother, Atmosphere, Blackalicious, Brockhampton, Griselda; Whodini + Armand Hammer reclassified Element→Compound (trio/duo, J.J. Fad precedent); compounds by era now 6/18/6/7/3/3
+- [x] Career dimension (2026-07): Signature Work ("Title (Year)") + Active Through columns for all 173 acts (101 active / 72 concluded; blank sig only Kool Herc); modal shows signature + active span; dashboard page 6 "Careers & Longevity" (survivorship prompt, career-length vs composite, years-to-peak distribution); Full Data Table renumbered to 7
+- [x] Age dimension (2026-07): Birth Year column for all 130 Elements (Compounds blank by design; ages derive as debut-birth and sig_year-birth); modal debut line shows "(age N)"; Careers page adds age-at-debut-by-era boxplots and age-at-signature vs composite scatter
+- [x] Dashboard subtitle fix (2026-07): ggplotly_titled() helper folds each ggplot subtitle into the plotly title as a `<br><sup>` line, all 15 ggplotly charts converted (subtitles were silently dropped, hiding the gender-count and median-signature-age stats)
+- [x] Era operationalized (2026-07): Era is now derived, the bracket holding the Signature Work year (Debut Year only for Kool Herc), with brackets Old School through 1985 / Golden Age 1986-1994 / Late 90s 1995-1999 / then calendar decades; 46 acts recoded (Raekwon 2000s→Late 90s was the tell), Data Dictionary Era row rewritten to the derived rule; distribution now OS 9 / GA 41 / L90s 33 / 2000s 34 / 2010s 41 / 2020s 15 (Elements 7/22/22/29/36/14, Compounds 2/19/11/5/5/1)
+- [x] Signature Work operationalized (2026-07): dictionary row now pins the candidate pool (own-catalog studio projects, canonical mixtapes count, singles only where no album exists, side-group releases count only when the group has no row of its own), the consensus sources, and the original-release-year convention; genuine splits resolved by maintainer call. Audit of all 173 picks (27 flagged, web-verified): 10 changed — Talib Kweli→Black Star (1998), Twista→Adrenaline Rush (1997), Lil Uzi Vert→Luv Is Rage 2 (2017), Polo G→Die a Legend (2019), Lupe Fiasco→Lupe Fiasco's Food & Liquor (2006), A$AP Rocky→Live. Love. A$AP (2011), Salt-N-Pepa→Hot, Cool & Vicious (1986), Rod Wave→Pray 4 Love (2020), Del→Deltron 3030 (2000), Common→Resurrection (1994); 7 splits resolved keep (2Pac, Busta, Royce, 8Ball & MJG, Roc Marciano, Little Brother, Xzibit); Era re-derived (6 moves; now OS 9 / GA 41 / L90s 35 / 2000s 32 / 2010s 43 / 2020s 13); median sig age 26→25
+- [x] Jedi Mind Tricks reclassified Element→Compound (2026-07): MC+producer duo per Gang Starr/Atmosphere precedent; now 129 Elements + 44 Compounds; female elements 24/129 (19%); Birth Year blanked per Compound rule
+- [x] Cross-navigation + contested calls (2026-07): table header now links Home / Teaching Dashboard / Codebook; dashboard nav-buttons add house + Periodic Table + Codebook; codebook page adds a Contested Calls section logging the 8 split rulings and its scope-rules era bullet now states the derived signature-year bracket (was still describing the old judgment rule)
+- [x] Style palette rebuilt as four families (2026-07): hue = lane, shade = style within it (corals = Gangsta/Street + Trap/Drill, jades = Political + Conscious/Lyrical, purples = Abstract + Experimental, golds = Jazz-Rap + Party/Pop); validator-driven redesign against all-pairs colorblind simulation, chroma floor, lightness band, and surface contrast: worst colorblind pair is now 13.1 and within-family (a near-miss inside one lane) vs 4.4 cross-category before; applied to template tiles + legend (pills reordered by family), dashboard style_pal + family-ordered style factor levels, page-6 color lesson now teaches hierarchical encoding (hue = family, shade = member); thumbnail regenerated
+- [x] Dashboard page 6 "One More Variable" (2026-07): encoding-channel ladder (2-var scatter, +style color, +era facets, then the deliberate 5-var kitchen sink with the which-channel-would-you-drop prompt) plus two payoff charts (canon map: era×style dot grid, size = acts, color = mean composite; style fingerprints: diverging style×dimension deviation heatmap); style_pal added to the setup chunk mirroring the template's STYLE_COLORS (8 hues validated 2026-07: past the CVD-safe edge, worst pair Trap/Drill vs Political under protanopia, so tooltips always carry the style name); Careers renumbered to 7, Full Data Table to 8; Jazz-Rap absent from the page by design (all four acts are Compounds)
+- [x] Style taxonomy defined (2026-07): STYLE TAXONOMY block appended to the Data Dictionary sheet (8 one-line definitions with anchor acts + the pen-first vs form-first tiebreak: Abstract = strangeness in the words, Experimental = strangeness in the sound or form); Jazz-Rap defined as the era-bound early-90s movement; Trap/Drill defined as the 808-era sound family, so Rod Wave recoded Experimental→Trap/Drill (17/7 now); Smino stays Experimental with description fixed jazz-rap→soul-rap hybrid; codebook page renders the block as "The eight styles"
+- [x] Dictionary completeness pass (2026-07): last four gaps closed. Metaphor/Imagery gains its anchor (Lil Wayne = 10; was the only unanchored dimension); Type row now states the duo/trio rule (duos and trios are Compounds, including MC+producer duos); Confidence Note now states the requirement (required for every M and L act); Debut Year clarified to first release under the act's own billing (guest features do not count). All 24 columns now carry a written rule. Codebook Scoring method section now explains how anchors create scores (comparison to a fixed exemplar, not absolute rating; calibrates scorers, dimensions, and future entries; ordinal with a calibrated ceiling)
 
 ## Region shapes
 
@@ -33,8 +44,8 @@
 | Gangsta/Street | 47 |
 | Conscious/Lyrical | 47 |
 | Party/Pop | 26 |
-| Experimental | 18 |
+| Experimental | 17 |
 | Abstract | 13 |
 | Political | 12 |
-| Trap/Drill | 6 |
+| Trap/Drill | 7 |
 | Jazz-Rap | 4 |

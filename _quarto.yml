@@ -9,7 +9,7 @@ project:
     - "!CV/Wylie_Capacity_Dashboard.qmd"
   # Regenerates the interactive HTML pages from their editable Excel files on
   # every render/publish. Edit the .xlsx files to update them.
-  #   hiphop/data/hiphop_artists.xlsx   -> hiphop/hiphop_periodic_table.html
+  #   hiphop/data/hiphop_artists.xlsx    -> hiphop/hiphop_periodic_table.html
   #   barnum/data/barnum_statements.xlsx -> barnum/barnum_test.html
   #   evalpicker/data/evaluation_approaches.xlsx -> evalpicker/eval_picker.html
   pre-render:

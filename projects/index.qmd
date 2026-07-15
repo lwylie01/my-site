@@ -65,10 +65,10 @@ toc: false
 
   <div class="project-card">
     <span class="project-card-tag">Applied Research · Criminal Justice</span>
-    <p class="project-card-title">Counted Wrong: Emerging Adults &amp; the Crossroads Study</p>
+    <p class="project-card-title">Counted Wrong: The Line at 18</p>
     <p class="project-card-desc">
-      A close look at the Crossroads Study, which followed young people for
-      years after their first contact with the justice system. Where does
+      A data essay built on Pathways to Desistance, a study that followed
+      1,354 young people for seven years after a serious offense. Where does
       adolescence end and adulthood begin? The legal system draws a bright line
       at age 18, but human development does not. A project about what happens
       when a line someone drew gets treated as a fact of nature.
@@ -80,7 +80,9 @@ toc: false
       <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Law &amp; policy</span>
     </div>
     <br>
-    <span class="essay-status">Coming soon</span>
+    <a href="../countedwrong/index.html" style="font-weight:600; color:#8C6A8D;">
+      Read the essay →
+    </a>
   </div>
 
   <div class="project-card">

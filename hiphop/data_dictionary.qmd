@@ -16,11 +16,16 @@ library(reactable)
 dict_raw <- read_excel("data/hiphop_artists.xlsx", sheet = "Data Dictionary")
 
 # The sheet has the variable table first, then a "SAMPLING FRAME & SCOPE RULES"
-# block; split on that marker so each renders in its own section.
-marker <- which(dict_raw[[1]] == "SAMPLING FRAME & SCOPE RULES")
+# block, then a "STYLE TAXONOMY" block; split on the markers so each renders
+# in its own section.
+marker  <- which(dict_raw[[1]] == "SAMPLING FRAME & SCOPE RULES")
+smarker <- which(dict_raw[[1]] == "STYLE TAXONOMY")
 vars  <- dict_raw[seq_len(marker - 1), ] |> filter(!is.na(Variable))
-frame <- dict_raw[(marker + 1):nrow(dict_raw), 1:2] |>
+frame <- dict_raw[(marker + 1):(smarker - 1), 1:2] |>
   setNames(c("Rule", "Definition")) |> filter(!is.na(Rule))
+style_rule <- dict_raw[[2]][smarker]
+styles <- dict_raw[(smarker + 1):nrow(dict_raw), 1:2] |>
+  setNames(c("Style", "Definition")) |> filter(!is.na(Style))
 ```
 
 This page documents every variable in the [Hip-Hop Periodic
@@ -29,7 +34,10 @@ lyricism scores, how scores were assigned, and the sampling frame the dataset
 draws from. The same content ships as the **Data Dictionary** sheet inside the
 Excel workbook, which is the single source of truth.
 
-## The five constructs
+The working premise of this page: clarity is kindness. A reader should never
+have to guess what a number means or where a judgment lives.
+
+## The Five Constructs
 
 Each act is scored 1–10 on five dimensions of lyricism. Scores are
 **drawn from published criticism and hip-hop scholarship**; no automated
@@ -41,24 +49,40 @@ of the scale means the same thing across scorers.
 | **Rhyme Density** | Frequency and complexity of rhyme: internal rhyme, multisyllabic chains, rhymes per bar, scheme inventiveness | Rakim: pioneered internal and multisyllabic rhyme as standard practice |
 | **Vocab Breadth** | Lexical diversity: range of unique words and registers across the catalog | Aesop Rock: per published studies counting unique words in rap |
 | **Storytelling** | Narrative construction: character, plot, perspective shifts, arc within songs and across albums | Scarface |
-| **Metaphor/Imagery** | Density and originality of figurative language: extended metaphor, concrete imagery, double meanings | (none named) |
+| **Metaphor/Imagery** | Density and originality of figurative language: extended metaphor, concrete imagery, double meanings | Lil Wayne: simile machine; metaphor-stacking as his defining critical reputation |
 | **Conceptual Depth** | Thematic ambition and coherence: album-level concepts, social and philosophical substance | Kendrick Lamar: 10 is reserved for carrying a concept across a full album at the highest level |
 
 The **Composite Score** is the plain average of the five dimensions, rounded
 to one decimal. Counting all five equally is itself a choice, and one of the
 module's core discussion prompts.
 
-## Scoring method
+## Scoring Method
 
 - **Basis:** published music criticism, academic hip-hop scholarship
   (Bradley, Chang, Kajikawa, Rabaka), and documented critical consensus.
   Scores are judgments, not calculations.
 - **Scale:** integers 1–10 per dimension; anchored at the top of each scale
   (table above).
+- **How anchors create scores:** a score here is a comparison, not an
+  absolute rating. Each dimension pins 10 to a named exemplar, so scoring an
+  act means asking how far below the anchor it sits: how far below Rakim's
+  rhyme craft, how far below Lil Wayne's simile-stacking. That comparison
+  does three jobs. It calibrates scorers to each other, since disagreements
+  become arguments about distance from a shared ceiling rather than about
+  what an 8 means. It keeps the five scales comparable enough to average
+  into the Composite, because each column's 10 is equally rare and equally
+  extreme. And it keeps future entries comparable to past ones, since every
+  act, whenever it is added, is measured against the same fixed ceiling.
+  Two limits travel with the method: an anchor pins the top of the scale,
+  not the gaps between scores, so this is ordinal measurement with a
+  calibrated ceiling; and the choice of anchor quietly defines the
+  construct itself (Rakim makes rhyme density mean innovation and internal
+  complexity rather than speed). The judgment does not disappear. It moves
+  to one visible place.
 - **Confidence flag:** every act carries an H/M/L rating of how much to trust
   its scores, based on the depth of its critical record (rubric below).
 
-## Confidence rubric
+## Confidence Rubric
 
 | Flag | Meaning | Criteria |
 |---|---|---|
@@ -71,7 +95,7 @@ Pitchfork / The Wire discography reviews, Google Scholar (artist +
 "lyricism"), and genre publications (The Source, XXL retrospectives, Passion
 of the Weiss).
 
-## Sampling frame & scope rules
+## Sampling Frame & Scope Rules
 
 ```{r frame-table}
 #| echo: false
@@ -96,10 +120,37 @@ Two scope rules are worth calling out:
   **Region** rolls scenes up to the four coast-level categories the culture
   itself uses: East Coast (NYC + Philly), West Coast (LA + Bay Area), South,
   and Midwest.
-- **Era = defining run, not debut year.** Debut years overlap era boundaries
-  by design; the era reflects when the act's defining work landed.
+- **Era = the signature-year bracket.** Era is derived, not judged: it is the
+  bracket holding the Signature Work year (Debut Year only when no signature
+  exists, i.e. Kool Herc). Brackets: Old School through 1985, Golden Age
+  1986–1994, Late 90s 1995–1999, then calendar decades. Debut years still
+  overlap era boundaries by design; the judgment lives in the Signature Work
+  pick, which has its own documented procedure (see Variable definitions).
 
-## Variable definitions
+## The Eight Styles
+
+Style is one value per act: the dominant mode of the act's defining run,
+judged from critical descriptions of the catalog. The axis separating the two
+left-field categories is where the strangeness lives: in the words, it is
+Abstract; in the sound or form, it is Experimental. Each definition names an
+anchor act, the same way the five constructs anchor their scales.
+
+```{r styles-table}
+#| echo: false
+reactable(
+  styles,
+  columns = list(
+    Style = colDef(minWidth = 130, style = list(fontWeight = "600")),
+    Definition = colDef(minWidth = 420)
+  ),
+  striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
+  theme = reactableTheme(
+    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
+  )
+)
+```
+
+## Variable Definitions
 
 ```{r vars-table}
 #| echo: false
@@ -119,7 +170,30 @@ reactable(
 )
 ```
 
-## Known biases
+## Contested Calls
+
+The Signature Work column drives Era, so it carries real weight, and for a
+handful of acts the critical record genuinely splits between two candidate
+releases. Those calls are not hidden: the 2026-07 audit reviewed every pick
+against the documented procedure, changed ten where the consensus clearly
+pointed elsewhere, and resolved the genuine splits by maintainer ruling. The
+rulings are logged here so the judgment is inspectable.
+
+| Act | The split | Ruling | Why |
+|---|---|---|---|
+| Common | *Resurrection* (1994) vs *Like Water for Chocolate* (2000) vs *Be* (2005) | *Resurrection* | The album 90s critics call his best work, and the earliest of a three-way split |
+| 2Pac | *Me Against the World* (1995) vs *All Eyez on Me* (1996) | *All Eyez on Me* | The cultural monument outweighs the critics' cohesion pick |
+| Busta Rhymes | *The Coming* (1996) vs *When Disaster Strikes* (1997) | *When Disaster Strikes* | The peak-era statement over the classic debut |
+| Royce da 5'9" | *Death Is Certain* (2004) vs *Book of Ryan* (2018) | *Book of Ryan* | The critical high point of the catalog |
+| 8Ball & MJG | *Comin' Out Hard* (1993) vs *On Top of the World* (1995) | *On Top of the World* | Their highest-rated album over the influence landmark |
+| Roc Marciano | *Marcberg* (2010) vs *Reloaded* (2012) | *Reloaded* | The refined peak edges the blueprint on critic scores |
+| Little Brother | *The Listening* (2003) vs *The Minstrel Show* (2005) | *The Minstrel Show* | The fan-canon favorite |
+| Xzibit | *At the Speed of Life* (1996) vs *40 Dayz & 40 Nightz* (1998) | *40 Dayz & 40 Nightz* | The album most often called his best |
+
+If you would rule differently on any of these, that disagreement is the
+point: the pick is documented, so the argument has something to grab.
+
+## Known Biases
 
 The dataset over-represents critically acclaimed acts (vs. commercially
 dominant ones), male acts, Golden Age NYC, and English-language rap.

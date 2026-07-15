@@ -1,0 +1,450 @@
+---
+title: "Counted Wrong"
+subtitle: "Data, young adults, and the criminal justice system"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+resources:
+  - data/psmi_by_age.csv
+  - data/age_score_counts_maturity.csv
+  - data/age_score_counts_self_reliance.csv
+  - data/age_score_counts_identity.csv
+  - data/age_score_counts_work_orient.csv
+  - data/ea_share_by_wave.csv
+  - data/mean_age_by_wave.csv
+---
+
+```{r setup}
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(scales)
+library(reactable)
+
+# Every input here is an aggregate: group means and binned counts, each cell
+# covering at least 10 interviews (smaller cells suppressed at the source).
+# The person-level Pathways data never touches this repo. See the closing
+# section of this page and the private analysis repo's One Rule.
+psmi_by_age <- read.csv("data/psmi_by_age.csv", fileEncoding = "UTF-8")
+ea_share    <- read.csv("data/ea_share_by_wave.csv", fileEncoding = "UTF-8")
+mean_age    <- read.csv("data/mean_age_by_wave.csv", fileEncoding = "UTF-8")
+score_grid  <- read.csv("data/age_score_counts_maturity.csv", fileEncoding = "UTF-8")
+
+measure_levels <- c("maturity", "self_reliance", "identity", "work_orient")
+measure_labels <- c("Overall Maturity", "Self-Reliance", "Identity", "Work Orientation")
+
+psmi <- psmi_by_age |>
+  mutate(measure_f = factor(measure, levels = measure_levels, labels = measure_labels))
+
+# The middle emerging_adult value contains an en dash in the CSV. Match the
+# two ASCII values and let the en-dash value be the fallback, so no
+# non-ASCII literal has to live in this code.
+ea <- ea_share |>
+  mutate(group = case_when(
+    emerging_adult == "Under 18" ~ "Under 18",
+    emerging_adult == "26+"      ~ "26 and up",
+    TRUE                         ~ "18 to 25"
+  )) |>
+  left_join(select(mean_age, wave, mean_age), by = "wave")
+
+# Fail the CI render loudly rather than publish a wrong page (a failed
+# publish leaves the previous version of the site live).
+stopifnot(
+  nrow(psmi) == 44, !anyNA(psmi$measure_f), !anyNA(psmi$mean),
+  nrow(mean_age) == 11, nrow(ea) == 18,
+  !anyNA(ea$mean_age),
+  all(ea$group %in% c("Under 18", "18 to 25", "26 and up")),
+  all(score_grid$n >= 10)
+)
+
+plum_dark   <- "#6b4f6c"
+plum        <- "#8C6A8D"
+plum_series <- "#774379"   # chroma-bumped plum: only for multi-series charts
+coral_dark  <- "#c96b52"
+line_18_col <- coral_dark
+
+theme_cw <- function() {
+  theme_minimal(base_family = "sans", base_size = 12) +
+    theme(
+      plot.title    = element_text(size = 14, face = "bold", color = "#3C3C3C"),
+      plot.subtitle = element_text(size = 11, color = "#555555"),
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(color = "#eeeeee"),
+      axis.text     = element_text(color = "#444444"),
+      legend.position = "bottom",
+      legend.title  = element_text(size = 10, face = "bold"),
+      strip.text    = element_text(face = "bold", color = "#333333")
+    )
+}
+
+# ggplotly() drops ggplot subtitles. Fold each subtitle into the plotly
+# title as a smaller <br><sup> second line so it survives the conversion.
+# Pipe every chart through this instead of bare ggplotly().
+ggplotly_titled <- function(p, ...) {
+  fig <- ggplotly(p, ...)
+  sub <- p$labels$subtitle
+  if (is.null(sub) || !nzchar(sub)) return(fig)
+  fig |>
+    layout(
+      title = list(text = paste0(
+        "<b>", p$labels$title, "</b><br><sup>", sub, "</sup>"
+      )),
+      margin = list(t = 70)
+    )
+}
+
+clear_bg <- function(fig) {
+  layout(fig, paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+}
+```
+
+Adult at 18. Two words in a statute, and everything changes: which court
+hears the case, which facility takes custody, how long a record follows
+someone. The line is exact. The people crossing it are not.
+
+This page follows 1,354 young people through Pathways to Desistance, a
+study that interviewed them 11 times over seven years after a serious
+offense. At every interview they answered the same questions about
+maturity. The result is a rare thing: a measurement of growing up, taken
+on the same people, spanning the very line the law cares about.
+
+## The Study {.section-heading}
+
+Pathways to Desistance enrolled 1,354 young people in the early 2000s,
+shortly after each was found responsible for a serious offense. It then
+interviewed them for seven years: a baseline interview plus follow-ups out
+to 84 months, with ages 14 to 26 observed along the way. The public
+archive is [ICPSR study 29961](https://www.icpsr.umich.edu/web/ICPSR/studies/29961).
+
+Maturity here means the Psychosocial Maturity Inventory, PSMI for short: a
+questionnaire scored 1 to 4, with three subscales. Self-reliance covers
+acting on your own judgment, identity covers how settled your sense of
+yourself is, and work orientation covers how you handle work and
+obligations. The overall score averages the three. In this data the
+measure runs through age 24.
+
+::: {.callout-warning title="Who Is in These Numbers"}
+Everyone here was enrolled after a serious offense, in the juvenile and
+adult systems of two large metro areas (Philadelphia and Phoenix). This is
+not a portrait of all young people. It is the group the justice system
+actually handles, which is exactly where the line at 18 does its heaviest
+work.
+:::
+
+## The Curve {.section-heading}
+
+Start with the overall score. Line up all of the interviews by the age
+the person was when they gave one, and take the mean at each age.
+
+::: {.chart-card}
+```{r chart-curve}
+#| fig-height: 4.8
+#| out-width: "100%"
+mat <- filter(psmi, measure == "maturity")
+
+p_curve <- ggplot(mat, aes(x = age, y = mean)) +
+  geom_ribbon(aes(ymin = mean - sd, ymax = mean + sd),
+              fill = plum, alpha = 0.16) +
+  geom_vline(xintercept = 18, linetype = "dashed",
+             color = line_18_col, linewidth = 0.5) +
+  geom_line(color = plum_dark, linewidth = 0.9) +
+  geom_point(aes(text = paste0(
+    "<b>Age ", age, "</b><br>",
+    "Mean score: ", sprintf("%.2f", mean), "<br>",
+    "Standard deviation: ", sprintf("%.2f", sd), "<br>",
+    "Interviews: ", format(n, big.mark = ",")
+  )), color = plum_dark, size = 1.9) +
+  annotate("text", x = 18.15, y = 2.56, label = "The line: 18",
+           hjust = 0, size = 3.2, color = "#555555") +
+  scale_x_continuous(breaks = seq(14, 24, 2)) +
+  scale_y_continuous(limits = c(2.45, 3.85), breaks = seq(2.5, 3.5, 0.5)) +
+  labs(
+    title = "Overall maturity keeps climbing past 18",
+    subtitle = "Mean PSMI score by age at interview; band is one standard deviation each side",
+    x = "Age at interview",
+    y = "PSMI score (scale runs 1 to 4)"
+  ) +
+  theme_cw()
+
+ggplotly_titled(p_curve, tooltip = "text") |> clear_bg()
+```
+<p class="chart-card-note">Each point pools every interview given at that
+age. The shaded band is not a confidence interval: it shows how spread out
+individual scores are around each mean.</p>
+:::
+
+The mean climbs from 3.01 at age 14 to 3.15 at age 18. If maturity
+finished at 18, the curve would flatten there. It does not. By 24 the mean
+reaches 3.35 and is still rising at the edge of the data.
+
+Now do the arithmetic the line implies. This cohort gained 0.14 points
+from 14 to 18. It gained 0.21 points from 18 to 24. Sixty percent of the
+climb we can observe lands on the adult side of the line.
+
+**Most of the growth comes after the line.**
+
+::: {.callout-tip title="Teaching Prompt: The Zoomed Axis"}
+The y axis above runs from about 2.5 to 3.9, not the full 1 to 4. On the
+full scale the climb would look flatter and the shaded band would still
+dwarf it. Which version tells the truth? What is each one trying to
+persuade you of?
+:::
+
+## Four Measures, One Shape {.section-heading}
+
+The three subscales could each have told a different story. They almost
+do: identity barely moves before 18, gaining 0.04 points from 14 to 18,
+then climbs five times that after. Work orientation starts lowest and
+keeps climbing longest. But the headline repeats in every panel: more than
+half of each measure's observed growth lands after 18, and nothing
+flattens at the line.
+
+::: {.chart-card}
+```{r chart-four-measures}
+#| fig-height: 5.6
+#| out-width: "100%"
+p_four <- ggplot(psmi, aes(x = age, y = mean)) +
+  geom_vline(xintercept = 18, linetype = "dashed",
+             color = line_18_col, linewidth = 0.4) +
+  geom_line(color = plum_dark, linewidth = 0.7) +
+  geom_point(aes(text = paste0(
+    "<b>", measure_f, ", age ", age, "</b><br>",
+    "Mean score: ", sprintf("%.2f", mean), "<br>",
+    "Interviews: ", format(n, big.mark = ",")
+  )), color = plum_dark, size = 1.4) +
+  facet_wrap(~ measure_f, nrow = 2) +
+  scale_x_continuous(breaks = seq(14, 24, 2)) +
+  scale_y_continuous(limits = c(2.6, 3.6), breaks = seq(2.6, 3.4, 0.4)) +
+  labs(
+    title = "The same shape in all four measures",
+    subtitle = "Mean score by age at interview; the dashed line is 18",
+    x = "Age at interview",
+    y = "Mean score"
+  ) +
+  theme_cw()
+
+ggplotly_titled(p_four, tooltip = "text") |> clear_bg()
+```
+<p class="chart-card-note">All four panels share one y axis, so slopes are
+comparable. Growth after 18, as a share of each measure's total: identity
+83 percent, overall 60 percent, work orientation 54 percent,
+self-reliance 53 percent.</p>
+:::
+
+::: {.callout-note title="Teaching Prompt: One Score or Four"}
+The overall PSMI averages three subscales that grow on different
+schedules. When does a composite clarify, and when does it bury the
+interesting part? The [Hip-Hop Periodic Table](../hiphop/hiphop_dashboard.html)
+teaches the same lesson from the other direction.
+:::
+
+## The Spread Inside Every Age {.section-heading}
+
+Means are tidy. People are not. The next chart drops the averaging: each
+column is an age, and each cell shows the share of that age's interviews
+landing in one half-point score bin.
+
+::: {.chart-card}
+```{r chart-heatmap}
+#| fig-height: 4.6
+#| out-width: "100%"
+heat <- score_grid |>
+  group_by(age) |>
+  mutate(share = n / sum(n)) |>
+  ungroup()
+
+p_heat <- ggplot(heat, aes(x = age, y = score_bin, fill = share,
+                           text = paste0(
+    "<b>Age ", age, ", score bin ", score_bin, "</b><br>",
+    "Share of that age: ", percent(share, accuracy = 1), "<br>",
+    "Interviews: ", format(n, big.mark = ",")
+  ))) +
+  geom_tile(color = "white", linewidth = 0.6) +
+  geom_vline(xintercept = 17.5, linetype = "dashed",
+             color = line_18_col, linewidth = 0.5) +
+  scale_fill_gradient(low = "#f3edf3", high = plum_dark,
+                      labels = percent_format(accuracy = 1),
+                      name = "Share of age") +
+  scale_x_continuous(breaks = seq(14, 24, 2)) +
+  scale_y_continuous(breaks = seq(2, 4, 0.5)) +
+  labs(
+    title = "Every age holds most of the scale",
+    subtitle = "Overall maturity: share of each age's interviews by half-point score bin",
+    x = "Age at interview",
+    y = "Score bin"
+  ) +
+  theme_cw()
+
+ggplotly_titled(p_heat, tooltip = "text") |> clear_bg()
+```
+<p class="chart-card-note">The dashed line sits where the 17 and 18
+columns meet. Shares are of the cells shown. Blank cells are not zeros:
+any cell holding fewer than 10 interviews was suppressed before this page
+ever saw the data.</p>
+:::
+
+Read any column bottom to top and the range is wide. At 18, scores spread
+from 2 to 4, and the spread within that single age (a standard deviation
+of 0.47) is bigger than the entire average climb from 14 to 24 (0.34
+points). Two people on either side of their 18th birthday can be counted
+differently by every system that uses the line, while scoring identically
+on the thing the line is supposed to mark.
+
+::: {.callout-important title="Teaching Prompt: Means and People"}
+A judge never meets a mean. If you had to design a rule that respected
+both the average curve and the spread around it, what would it use besides
+a birthday?
+:::
+
+## Growing Up Inside the Study {.section-heading}
+
+The study did not sample teenagers and adults separately. It watched one
+group cross the line. At the first interview, 92 percent of the cohort was
+under 18. Four years in, no one was.
+
+::: {.chart-card}
+```{r chart-ea-share}
+#| fig-height: 4.4
+#| out-width: "100%"
+ea_lines <- ea |>
+  filter(group != "26 and up") |>
+  mutate(group = factor(group, levels = c("Under 18", "18 to 25")))
+
+x_cross <- min(mean_age$months_since_baseline[mean_age$mean_age >= 18])
+
+p_ea <- ggplot(ea_lines, aes(x = months_since_baseline, y = share,
+                             color = group, group = group)) +
+  geom_vline(xintercept = x_cross, linetype = "dotted",
+             color = "#999999", linewidth = 0.5) +
+  annotate("text", x = x_cross + 1.5, y = 0.04,
+           label = "Mean age passes 18", hjust = 0, size = 3.1,
+           color = "#555555") +
+  geom_line(linewidth = 0.9) +
+  geom_point(aes(text = paste0(
+    "<b>", group, "</b><br>",
+    "Months since first interview: ", months_since_baseline, "<br>",
+    "Cohort mean age: ", sprintf("%.1f", mean_age), "<br>",
+    "Share of cohort: ", percent(share, accuracy = 0.1), "<br>",
+    "People: ", format(n, big.mark = ","), " of 1,354"
+  )), size = 1.9) +
+  annotate("text", x = 30, y = 0.13, label = "Under 18",
+           hjust = 0, size = 3.4, color = "#3C3C3C") +
+  annotate("text", x = 30, y = 0.90, label = "18 to 25",
+           hjust = 1, size = 3.4, color = "#3C3C3C") +
+  scale_color_manual(values = c("Under 18" = coral_dark,
+                                "18 to 25" = plum_series),
+                     name = NULL) +
+  scale_x_continuous(breaks = c(0, 12, 24, 36, 48, 60, 72, 84)) +
+  scale_y_continuous(labels = percent_format(accuracy = 1),
+                     limits = c(0, 1.02)) +
+  labs(
+    title = "One cohort crossing the line",
+    subtitle = "Share of the 1,354 people in each age band, by interview wave",
+    x = "Months since first interview",
+    y = "Share of cohort"
+  ) +
+  theme_cw()
+
+ggplotly_titled(p_ea, tooltip = "text") |> clear_bg()
+```
+<p class="chart-card-note">The under 18 line stops after month 36 because
+later waves had no one under 18 left to count. At month 84 the plum line
+dips a hair below 100 percent: one person had aged past 25, and cells that
+small are suppressed.</p>
+:::
+
+The cohort's mean age moves from 16.0 at the first interview to 23.0 at
+the last. Every curve above comes from the same people aging through the
+window the law splits in half.
+
+## What Gets Counted Wrong {.section-heading}
+
+None of this says 18 is meaningless. Courts, custody, and records have to
+draw lines somewhere, and this data cannot say where. What it says is
+narrower and harder to ignore: whatever 18 marks, it is not the end of
+growing up. The average person in this cohort did most of that growing
+after the law stopped calling them a child, and the gap between any two
+people of the same age was wider than the gap the line is supposed to
+mark.
+
+A line someone drew, treated as a fact of nature, will count some people
+wrong. This study kept measuring long enough to show it. Most of the
+growth comes after the line.
+
+[How Old Is Old?](../howold/how_old_is_old.html), this site's companion
+piece, walks the same problem at the other end of the lifespan.
+
+## Where the Numbers Come From {.section-heading}
+
+Pathways to Desistance data is restricted access. The person-level records
+live on one analyst's machine under a data use agreement, and they never
+touch this website or its repositories. What this page renders is
+aggregates only, produced by a small script whose whole job is refusing to
+output anything person-shaped.
+
+- Every table behind this page is a group summary: means, standard
+  deviations, and binned counts.
+- Every published cell covers at least 10 interviews. Smaller cells were
+  suppressed at the source, which is why some heatmap cells are blank.
+- The unit is the interview, not the person. Someone interviewed twice
+  while 18 counts twice in the age 18 column. In total, 1,354 people gave
+  14,894 interviews, and more than 12,000 of those carry a maturity score.
+- Ages pool the panel: the age 18 column holds everyone who was 18 at any
+  of their interviews, whichever wave that was.
+
+::: {.callout-note title="Data Ethics: Why Cells Disappear"}
+Ten is not a magic number. It is a promise: no published cell small enough
+to point at a person. Suppression trades a little completeness for a lot
+of privacy, and the blank cells above are that trade made visible.
+:::
+
+Clarity is kindness, so here are the exact numbers behind the curves.
+
+```{r table-psmi}
+psmi_display <- psmi |>
+  arrange(measure_f, age) |>
+  transmute(
+    Measure    = as.character(measure_f),
+    Age        = age,
+    Interviews = n,
+    Mean       = sprintf("%.2f", mean),
+    SD         = sprintf("%.2f", sd)
+  )
+
+reactable(
+  psmi_display,
+  columns = list(
+    Measure    = colDef(minWidth = 170, style = list(fontWeight = "600")),
+    Age        = colDef(maxWidth = 70),
+    Interviews = colDef(maxWidth = 110),
+    Mean       = colDef(maxWidth = 80),
+    SD         = colDef(maxWidth = 70)
+  ),
+  searchable = TRUE,
+  defaultPageSize = 11,
+  striped = TRUE,
+  highlight = TRUE,
+  bordered = TRUE,
+  theme = reactableTheme(
+    headerStyle = list(background = "#2a1f2b", color = "#ffffff",
+                       fontWeight = "600")
+  )
+)
+```
+
+All seven published tables are downloadable:
+[psmi_by_age](data/psmi_by_age.csv) (the means and spreads behind the
+curves), [age_score_counts_maturity](data/age_score_counts_maturity.csv),
+[age_score_counts_self_reliance](data/age_score_counts_self_reliance.csv),
+[age_score_counts_identity](data/age_score_counts_identity.csv) and
+[age_score_counts_work_orient](data/age_score_counts_work_orient.csv)
+(the binned counts behind the heatmap),
+[ea_share_by_wave](data/ea_share_by_wave.csv) (the cohort crossing the
+line), and [mean_age_by_wave](data/mean_age_by_wave.csv) (the cohort's
+aging).
+
+Data: Pathways to Desistance (ICPSR 29961), person-level access
+restricted. This page renders only the published aggregate tables above;
+the analysis code lives in a private repository.
