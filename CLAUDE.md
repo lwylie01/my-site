@@ -26,8 +26,20 @@ generated-page block in `.gitignore`. A branch cut before another interactive
 landed conflicts there, and resolving by keeping one side drops the other
 without erroring: the page just stops being built and published. #45 did this
 to howold and gut, and the #46 fix caught only the `.gitignore` half, so both
-pages sat unbuilt until 2026-07-15. Before pushing, check that all three lists
-name every interactive.
+pages sat unbuilt until #47. Before pushing, check that all three lists name
+every interactive.
+
+The same merge damaged `index.qmd` the opposite way, by keeping **both** sides:
+the homepage carried two "Featured Projects" sections, two `id="featured"`
+anchors, two `id="divider-line-3"` gradients and the periodic table twice, live
+from #45 until 2026-07-15. So the thing to distrust is any wholesale
+resolution, either side of it. When a conflict covers something the branch
+changed and main also touched, read both parents (`git show <sha>:<file>`) and
+rebuild the intended result instead of picking. History is the arbiter and the
+obvious guess loses: main had deliberately moved Featured Projects ahead of
+"How I Do It" (2722879) while the branch only swapped a card (14e5a48), so the
+correct merge was main's position with the branch's cards. Deleting the "extra"
+section, the natural fix, would have silently undone main's move.
 
 ## Hip-Hop Periodic Table (`hiphop/`)
 
@@ -211,13 +223,28 @@ any Prerequisites `condition_value`. The validator catches what you miss.
   `gut/` ("Trust Your Gut?") and `evalpicker/` (above) all follow it. Each is a
   `build_*.R` pre-render step plus `app/_template.html` plus `data/*.xlsx`,
   with a gitignored HTML output: edit the xlsx, CI rebuilds. howold and gut
-  shipped July 2026 (reveal punch lines maintainer-approved 2026-07), but the
-  Teaching page still lists both under "More exercises in development" without
-  links, so the Counted Wrong essay's link to How Old Is Old? is the only way
-  in. The only coming-soon project card left: "A Right That Exists on Paper"
+  shipped July 2026 (reveal punch lines maintainer-approved 2026-07), and the
+  Teaching page links both under "Two Shorter Exercises" (2026-07-15; they sat
+  there unlinked as "in development" until then). The Counted Wrong essay also
+  links How Old Is Old?, and howold's template names Counted Wrong in prose
+  without linking it: the maintainer deferred that link (2026-07), so only the
+  tense was corrected when the essay shipped.
+  The only coming-soon project card left: "A Right That Exists on Paper"
   (compassionate release, 50-state review) still needs the maintainer's
   dataset. Re-checked 2026-07-15: `projects/index.qmd` has four cards, with the
   picker, the periodic table and Counted Wrong live and that one still pending.
+- Homepage project cards (`index.qmd`) each carry a thumbnail at
+  `pics/thumb-<name>.jpg`: 1150x430, a screenshot of that page's own header.
+  That size is the aspect `.project-card-thumb img` crops to
+  (`site-theme.scss:298`), so the whole shot shows in the card. Nothing checks
+  the file exists: #45 added the picker card pointing at `thumb-evalpicker.jpg`
+  and never committed one, so the featured card 404ed on the live homepage
+  until 2026-07-15. Regenerate with headless Chrome (the browser pane cannot
+  load `file://`, so point it at the published page), then convert to JPEG at
+  quality 88, which lands in the 42-95 KB band the others sit in:
+  `chrome --headless=new --hide-scrollbars --window-size=1150,430 --screenshot=out.png <url>`.
+  The homepage features the periodic table and the picker; Barnum belongs to
+  Teaching now (14e5a48).
 - **Counted Wrong (`countedwrong/`, shipped 2026-07).** The site's first
   long-form analysis essay, on **Pathways to Desistance** (ICPSR 29961:
   1,354 youth, 11 waves over seven years after a serious offense, ages
