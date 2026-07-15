@@ -234,6 +234,89 @@
 
   .empty { font-size: 0.8rem; color: var(--muted); font-style: italic; }
 
+  /* ── Modal ──────────────────────────────────────────── */
+  #modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(30,20,30,0.7);
+    z-index: 9000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  #modal-overlay.active { display: flex; }
+
+  #modal {
+    background: white;
+    border-radius: 14px;
+    max-width: 640px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: pop-in 0.18s ease;
+  }
+  @keyframes pop-in { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  #modal-header {
+    padding: 1.3rem 1.5rem 1rem;
+    border-top: 5px solid var(--out);
+    border-radius: 14px 14px 0 0;
+    position: relative;
+  }
+  #modal-header.v-fits   { border-top-color: var(--fits); }
+  #modal-header.v-unlock { border-top-color: var(--unlock); }
+  #modal-header h2 { font-size: 1.3rem; font-weight: 700; color: var(--dark); padding-right: 2rem; }
+  #modal-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.55rem; }
+  #modal-close {
+    position: absolute; top: 0.9rem; right: 1rem;
+    background: none; border: none; cursor: pointer;
+    font-size: 1.4rem; line-height: 1; color: var(--muted);
+    font-family: inherit; padding: 0.2rem 0.4rem;
+  }
+  #modal-close:hover { color: var(--dark); }
+
+  #modal-body { padding: 0 1.5rem 1.5rem; }
+  .modal-lead { font-size: 0.88rem; margin-bottom: 0.3rem; }
+
+  /* The live verdict. This is what makes the detail view worth opening: it
+     answers for the filters that are set right now, not in the abstract. */
+  .modal-verdict {
+    margin: 1rem 0 0.4rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 6px;
+    border-left: 4px solid var(--out);
+    background: var(--light-bg);
+  }
+  .modal-verdict.v-fits   { border-left-color: var(--fits); }
+  .modal-verdict.v-unlock { border-left-color: var(--unlock); }
+  .modal-verdict .v-lead {
+    font-size: 0.64rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    display: block; margin-bottom: 0.25rem;
+  }
+  .modal-verdict .v-say { font-size: 0.84rem; font-weight: 600; }
+  .modal-verdict ul { margin: 0.45rem 0 0 1rem; font-size: 0.78rem; }
+  .modal-verdict li { margin-bottom: 0.25rem; }
+
+  .modal-sec { margin-top: 1.1rem; }
+  .modal-sec h4 {
+    font-size: 0.66rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+  .modal-sec p { font-size: 0.82rem; }
+  .modal-sec ol { margin-left: 1.1rem; font-size: 0.82rem; }
+  .modal-sec ol li { margin-bottom: 0.4rem; }
+  .modal-sec .why { color: var(--muted); font-style: italic; }
+  .modal-sec.origin { background: #f7f3f7; border-radius: 6px; padding: 0.75rem 0.9rem; }
+  .modal-sec.origin p + h4 { margin-top: 0.7rem; }
+  .modal-source { font-size: 0.72rem; color: var(--muted); }
+
+  .modal-hint { font-size: 0.68rem; color: var(--muted); font-style: italic; }
+  .card { cursor: pointer; }
+  .card:hover { box-shadow: 0 3px 10px rgba(60,40,60,0.12); }
+
   footer {
     border-top: 1px solid #e0d8e0;
     padding: 1.5rem;
@@ -246,10 +329,10 @@
   footer a { color: var(--primary); }
 
   @media print {
-    #tabs, #filters, #stats-bar { display: none; }
+    #tabs, #filters, #stats-bar, #modal-overlay { display: none !important; }
     body { background: white; }
     .card-out { opacity: 1; }
-    .card { break-inside: avoid; }
+    .card { break-inside: avoid; cursor: default; }
   }
 
   @media (max-width: 640px) {
@@ -295,6 +378,17 @@
     <div class="card-grid" id="out"></div>
   </section>
 </main>
+
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+    <div id="modal-header">
+      <button id="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      <h2 id="modal-name"></h2>
+      <div id="modal-tags"></div>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
 
 <footer>
   <p id="scope-note"></p>
@@ -555,7 +649,8 @@ function cardHtml(r) {
   const it = r.item;
   const fam = cell(it, 'family');
   const burden = cell(it, 'data_burden');
-  let h = '<article class="card card-' + r.bucket + '">';
+  let h = '<article class="card card-' + r.bucket + '" onclick="openModal(\'' +
+          esc(cell(it, 'id')) + '\')">';
 
   h += '<div class="card-head"><h3>' + esc(cell(it, 'approach_name')) + '</h3>';
   if (fam) {
@@ -632,10 +727,111 @@ function render() {
     '<span><strong>' + fits.length + '</strong> fit</span>' +
     '<span><strong>' + unl.length  + '</strong> close</span>' +
     '<span><strong>' + out.length  + '</strong> not the right tool</span>' +
+    '<span class="modal-hint">' + esc(t('modal_hint')) + '</span>' +
     '<span style="margin-left:auto"><button class="btn btn-outline btn-sm" onclick="window.print()">Print this shortlist</button></span>';
 }
 
-function applyFilters() { render(); }
+function applyFilters() { render(); if (openId) populateModal(openId); }
+
+// ─── Modal ───────────────────────────────────────────────────────────────────
+// The detail view is filter-aware. A static description would not be worth
+// opening, so the verdict at the top answers for the filters set right now, and
+// it re-answers if the filters change underneath it.
+let openId = null;
+
+function openModal(id) {
+  openId = id;
+  populateModal(id);
+  document.getElementById('modal-overlay').classList.add('active');
+  document.getElementById('modal-close').focus();
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  openId = null;
+  document.getElementById('modal-overlay').classList.remove('active');
+}
+
+function sec(label, body, cls) {
+  if (!body) return '';
+  return '<div class="modal-sec ' + (cls || '') + '"><h4>' + esc(label) + '</h4>' + body + '</div>';
+}
+
+function populateModal(id) {
+  const it = items().find(x => cell(x, 'id') === id) ||
+             APPROACHES.concat(TMFS).find(x => cell(x, 'id') === id);
+  if (!it) return;
+
+  const answers   = readFilters();
+  const completed = readCompleted();
+  const r         = evaluate(it, answers, completed);
+  const v         = 'v-' + r.bucket;
+
+  document.getElementById('modal-header').className = v;
+  document.getElementById('modal-name').textContent = cell(it, 'approach_name');
+
+  const fam = cell(it, 'family');
+  let tags = '';
+  if (fam) tags += '<span class="chip chip-family" style="background:' +
+                   (FAMILY_COLORS[fam] || '#888') + '">' + esc(fam) + '</span>';
+  if (cell(it, 'data_burden')) tags += '<span class="chip burden-' + esc(cell(it, 'data_burden')) +
+                                       '">' + esc(cell(it, 'data_burden')) + ' data burden</span>';
+  if (cell(it, 'typical_timeline')) tags += '<span class="chip chip-plain">' + esc(cell(it, 'typical_timeline')) + '</span>';
+  if (cell(it, 'nilsen_category')) tags += '<span class="chip chip-plain">' + esc(cell(it, 'nilsen_category')) + '</span>';
+  document.getElementById('modal-tags').innerHTML = tags;
+
+  let h = '<p class="modal-lead">' + esc(cell(it, 'one_liner')) + '</p>';
+
+  // The live verdict
+  const says = { fits: t('verdict_fits'), unlock: t('verdict_unlock'), out: t('verdict_out') };
+  let bullets = (r.failures || []).map(f =>
+    '<li>' + esc(f.reason) + (f.unlock ? ' <span class="why">' + esc(f.unlock) + '</span>' : '') + '</li>');
+  (r.prereqs || []).forEach(p =>
+    bullets.push('<li>' + esc(nameOfId(cell(p, 'prereq_id'))) + ' has to come first. <span class="why">' +
+                 esc(cell(p, 'why')) + '</span></li>'));
+  (r.caveats || []).forEach(c => bullets.push('<li>' + esc(c.reason) + '</li>'));
+
+  h += '<div class="modal-verdict ' + v + '"><span class="v-lead">' + esc(t('modal_verdict')) + '</span>' +
+       '<span class="v-say">' + esc(says[r.bucket]) +
+       (r.bucket === 'unlock' ? ' ' + esc(r.steps === 1 ? t('steps_away_one') : t('steps_away', { n: r.steps })) : '') +
+       '</span>' + (bullets.length ? '<ul>' + bullets.join('') + '</ul>' : '') + '</div>';
+
+  h += sec(t('modal_what_you_get'),     cell(it, 'what_you_get')   ? '<p>' + esc(cell(it, 'what_you_get')) + '</p>' : '');
+  h += sec(t('modal_wont_tell'),        cell(it, 'what_it_will_not_tell_you') ? '<p>' + esc(cell(it, 'what_it_will_not_tell_you')) + '</p>' : '');
+  h += sec(t('modal_required_data'),    cell(it, 'required_data')  ? '<p>' + esc(cell(it, 'required_data')) + '</p>' : '');
+
+  // The full chain, annotated with what is already done
+  const edges = prereqsOf(id);
+  if (edges.length) {
+    const li = edges.map(p => {
+      const pid  = cell(p, 'prereq_id');
+      const done = completed.has(pid);
+      const applies = isBlocking(p, answers);
+      const note = done ? 'already done' :
+                   (cell(p, 'strength') === 'Recommended' ? 'worth doing first' :
+                    applies ? 'required first' : 'not needed here');
+      return '<li><strong>' + esc(nameOfId(pid)) + '</strong> (' + esc(note) + ')<br>' +
+             '<span class="why">' + esc(cell(p, 'why')) + '</span></li>';
+    }).join('');
+    h += sec(t('modal_chain'), '<ol>' + li + '</ol>');
+  }
+
+  // Paradigm and values. Displayed, never filtered on.
+  const para = cell(it, 'paradigm'), vals = cell(it, 'values_note');
+  if (para || vals) {
+    let o = para ? '<p>' + esc(para) + '</p>' : '';
+    if (vals) o += '<h4>' + esc(t('modal_values')) + '</h4><p>' + esc(vals) + '</p>';
+    h += sec(t('modal_origin'), o, 'origin');
+  }
+
+  h += sec(t('modal_sources'), cell(it, 'source') ? '<p class="modal-source">' + esc(cell(it, 'source')) + '</p>' : '');
+
+  document.getElementById('modal-body').innerHTML = h;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && openId) closeModal();
+});
 
 function clearFilters() {
   AXES.forEach(ax => { const el = document.getElementById('f-' + ax); if (el) el.value = ''; });
