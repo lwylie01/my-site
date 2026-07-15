@@ -9,6 +9,9 @@ hiphop/hiphop_periodic_table.html
 # Generated Barnum Test page (built from Excel by barnum/build_barnum.R on render)
 barnum/barnum_test.html
 
+# Generated evaluation picker (built from Excel by evalpicker/build_eval.R on render)
+evalpicker/eval_picker.html
+
 # Internal/private working files — keep off the public site repo
 CV/Wylie_Capacity_Dashboard.qmd
 CV/Wylie_Capacity_Dashboard.html

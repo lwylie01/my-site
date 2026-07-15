@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which Evaluation Should We Do? · datawithaplot.org</title>
+<style>
+  /* Palette copied from hiphop/table/_template.html — the site SCSS does not
+     reach a standalone HTML page, so it re-declares its own custom properties. */
+  :root {
+    --primary: #8C6A8D;
+    --secondary: #E98973;
+    --accent: #D2B1A3;
+    --light-bg: #F8F7F4;
+    --dark: #2a1f2b;
+    --text: #3a2d3b;
+    --muted: #7a6a7b;
+
+    /* Bucket colours. On-brand rather than traffic lights: plum is the site's
+       own colour, and coral is its call-to-action colour, which is exactly what
+       an unlockable approach is. */
+    --fits: #8C6A8D;
+    --unlock: #E98973;
+    --out: #9a9a9a;
+
+    --burden-low: #7fa87f;
+    --burden-med: #d9a441;
+    --burden-high: #c96f5c;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  /* ── Header ─────────────────────────────────────────── */
+  header {
+    background: var(--dark);
+    color: #f0e8f0;
+    padding: 1.2rem 2rem;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.03em; }
+  header h1 span { color: var(--secondary); }
+  header p { font-size: 0.82rem; color: var(--accent); margin-top: 0.35rem; max-width: 62ch; }
+
+  /* ── Tabs ───────────────────────────────────────────── */
+  #tabs {
+    background: var(--dark);
+    padding: 0 2rem;
+    display: flex;
+    gap: 0.25rem;
+  }
+  .tab {
+    background: none;
+    border: none;
+    color: var(--accent);
+    padding: 0.55rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    font-family: inherit;
+  }
+  .tab:hover { color: #f0e8f0; }
+  .tab.active { color: white; border-bottom-color: var(--secondary); }
+
+  /* ── Filters ────────────────────────────────────────── */
+  #filters {
+    background: white;
+    border-bottom: 2px solid var(--accent);
+    padding: 0.85rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 500;
+  }
+  #filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.1rem;
+    align-items: flex-end;
+  }
+  .filter-group { display: flex; flex-direction: column; gap: 0.25rem; }
+  .filter-group label {
+    font-size: 0.68rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  #filters select {
+    border: 1.5px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.78rem;
+    background: var(--light-bg);
+    color: var(--text);
+    cursor: pointer;
+    outline: none;
+    max-width: 230px;
+    font-family: inherit;
+  }
+  #filters select:focus { border-color: var(--primary); }
+
+  #done-row {
+    margin-top: 0.8rem;
+    padding-top: 0.7rem;
+    border-top: 1px dashed #e0d8e0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    align-items: center;
+    font-size: 0.76rem;
+  }
+  #done-row .done-label {
+    font-size: 0.68rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  #done-row label { display: flex; align-items: center; gap: 0.3rem; cursor: pointer; }
+
+  .btn {
+    padding: 0.35rem 0.9rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: inherit;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-outline { background: white; color: var(--primary); border: 1.5px solid var(--primary); }
+  .btn-sm { padding: 0.25rem 0.6rem; font-size: 0.72rem; }
+
+  /* ── Stats bar ──────────────────────────────────────── */
+  #stats-bar {
+    background: var(--dark);
+    color: var(--accent);
+    padding: 0.45rem 1.5rem;
+    font-size: 0.76rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  #stats-bar strong { color: white; }
+
+  /* ── Results ────────────────────────────────────────── */
+  main { padding: 1.2rem 1.5rem 3rem; max-width: 1300px; margin: 0 auto; }
+
+  .bucket { margin-bottom: 2.2rem; }
+  .bucket-head { margin-bottom: 0.2rem; }
+  .bucket-head h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    display: inline-block;
+    padding-bottom: 0.3rem;
+  }
+  /* The signature gradient rule, matching h2.section-heading::after on the site */
+  .bucket-head h2::after {
+    content: '';
+    display: block;
+    height: 3px;
+    margin-top: 0.3rem;
+    background: linear-gradient(90deg, #8C6A8D 0%, #E98973 100%);
+  }
+  .bucket-sub { font-size: 0.8rem; color: var(--muted); margin: 0.4rem 0 0.9rem; max-width: 70ch; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 0.9rem;
+  }
+
+  .card {
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e8e0e8;
+    border-left: 4px solid var(--out);
+    padding: 0.9rem 1rem;
+    box-shadow: 0 1px 3px rgba(60,40,60,0.05);
+  }
+  .card-fits   { border-left-color: var(--fits); }
+  .card-unlock { border-left-color: var(--unlock); }
+  /* Deprioritised, still legible. The reason is the whole product, so this page
+     must not use the 0.12 dim that the periodic table uses. */
+  .card-out    { border-left-color: var(--out); opacity: 0.6; }
+  .card-out:hover { opacity: 1; }
+
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+  .card h3 { font-size: 0.95rem; font-weight: 700; color: var(--dark); }
+
+  .chip {
+    display: inline-block;
+    font-size: 0.64rem;
+    font-weight: 700;
+    padding: 0.12rem 0.45rem;
+    border-radius: 10px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .chip-family { color: white; }
+  .chip-plain { background: #f0ebf0; color: var(--muted); }
+  .burden-Low  { background: var(--burden-low); color: white; }
+  .burden-Medium { background: var(--burden-med); color: white; }
+  .burden-High { background: var(--burden-high); color: white; }
+
+  .card-one-liner { font-size: 0.8rem; margin: 0.45rem 0 0.6rem; }
+  .card-meta { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+  .steps {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--unlock);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0.7rem 0 0.35rem;
+  }
+  .gap {
+    font-size: 0.76rem;
+    border-top: 1px solid #f0ebf0;
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .gap-lead {
+    font-size: 0.66rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.04em;
+    display: block; margin-bottom: 0.2rem;
+  }
+  .gap-do { font-style: italic; color: var(--muted); margin-top: 0.25rem; }
+  .caveat { font-size: 0.74rem; color: var(--muted); margin-top: 0.5rem; font-style: italic; }
+
+  .empty { font-size: 0.8rem; color: var(--muted); font-style: italic; }
+
+  footer {
+    border-top: 1px solid #e0d8e0;
+    padding: 1.5rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  footer p { margin-bottom: 0.5rem; max-width: 75ch; }
+  footer a { color: var(--primary); }
+
+  @media print {
+    #tabs, #filters, #stats-bar { display: none; }
+    body { background: white; }
+    .card-out { opacity: 1; }
+    .card { break-inside: avoid; }
+  }
+
+  @media (max-width: 640px) {
+    header, #filters, #stats-bar, main { padding-left: 1rem; padding-right: 1rem; }
+    #tabs { padding: 0 1rem; }
+    #filters select { max-width: 100%; }
+    .filter-group { flex: 1 1 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 id="page-title">Which Evaluation <span>Should We Do?</span></h1>
+  <p id="page-sub"></p>
+</header>
+
+<div id="tabs">
+  <button class="tab active" data-tab="approaches" onclick="switchTab('approaches')">Evaluation approaches</button>
+  <button class="tab" data-tab="tmfs" onclick="switchTab('tmfs')">Implementation frameworks</button>
+</div>
+
+<div id="filters">
+  <div id="filter-row"></div>
+  <div id="done-row"></div>
+</div>
+
+<div id="stats-bar"></div>
+
+<main>
+  <section class="bucket">
+    <div class="bucket-head"><h2 id="head-fits"></h2></div>
+    <div class="card-grid" id="fits"></div>
+  </section>
+  <section class="bucket">
+    <div class="bucket-head"><h2 id="head-unlock"></h2></div>
+    <p class="bucket-sub" id="sub-unlock"></p>
+    <div class="card-grid" id="unlock"></div>
+  </section>
+  <section class="bucket">
+    <div class="bucket-head"><h2 id="head-out"></h2></div>
+    <p class="bucket-sub" id="sub-out"></p>
+    <div class="card-grid" id="out"></div>
+  </section>
+</main>
+
+<footer>
+  <p id="scope-note"></p>
+  <p><strong>Sources and credit.</strong>
+    The idea of laying the whole field out at once is borrowed from three places:
+    Lemire's Evaluation Metro Map (2024), Vaca and Patton's Periodic Table of
+    Evaluation 2.0 (2025), and Schröter, Becho and Montrosse-Moorhead's Garden of
+    Evaluation Approaches (2026). Those three classify approaches by what they are.
+    This one asks what you can actually do, which is the part they leave to you.
+    Per-approach sources are listed on each entry.</p>
+</footer>
+
+<script>
+// ─── Data, injected from evaluation_approaches.xlsx by build_eval.R ──────────
+const RULES      = __RULES_DATA__;
+const LEVELS     = __LEVELS_DATA__;
+const APPROACHES = __APPROACHES_DATA__;
+const TMFS       = __TMFS_DATA__;
+const PREREQS    = __PREREQS_DATA__;
+const COPY       = __COPY_DATA__;
+
+const FAMILY_COLORS = {
+  'Implementation':          '#8C6A8D',
+  'Outcomes':                '#6b4f6c',
+  'Economic':                '#D2B1A3',
+  'Learning and adaptation': '#E98973',
+  'Determinant framework':   '#7a6a7b',
+  'Evaluation framework':    '#9a8a9b'
+};
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+// Always String(x || '') and never x.trim(): readxl types an all-blank column as
+// logical, and encode_val turns logical NA into JSON null. Sparse columns like
+// maturity_max WILL arrive as null.
+const cell = (o, c) => String((o && o[c]) || '').trim();
+const list = v => String(v || '').split(';').map(s => s.trim()).filter(Boolean);
+const esc  = s => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const levelsOf = axis => LEVELS.filter(l => cell(l, 'axis') === axis)
+                               .sort((a, b) => a.order - b.order);
+const levelRow = (axis, v) => levelsOf(axis).find(x => cell(x, 'level_value') === v);
+const rank  = (axis, v) => { const r = levelRow(axis, v); return r ? r.order : null; };
+const label = (axis, v) => { const r = levelRow(axis, v); return r ? cell(r, 'label') : v; };
+const unlk  = (axis, v) => { const r = levelRow(axis, v); return r ? cell(r, 'unlock_text') : ''; };
+const labels = (axis, vs) => vs.map(v => label(axis, v)).join(', ');
+
+function t(key, vars) {
+  const row = COPY.find(c => cell(c, 'key') === key);
+  let s = row ? cell(row, 'text') : '[' + key + ']';
+  for (const k in (vars || {})) s = s.split('{' + k + '}').join(vars[k]);
+  return s;
+}
+
+// Axes in Rules order, deduped. Maturity has two rules but one dropdown.
+const AXES = RULES.map(r => cell(r, 'axis')).filter((a, i, arr) => arr.indexOf(a) === i);
+const axisMeta = axis => RULES.find(r => cell(r, 'axis') === axis);
+
+// ─── One rule ────────────────────────────────────────────────────────────────
+// Returns null (passes) or a failure. fail_class 'Soft' never blocks.
+function checkRule(item, rule, answer) {
+  const col  = cell(rule, 'rule_column');
+  const axis = cell(rule, 'axis');
+  const kind = cell(rule, 'rule_kind');
+  const cls  = cell(rule, 'fail_class');
+  const need = cell(item, col);
+
+  if (!need)   return null;   // blank cell  = unconstrained
+  if (!answer) return null;   // unanswered  = do not judge
+
+  const say = (failClass, key, vars, unlock) => ({
+    axis: axis,
+    fail_class: failClass,
+    reason: cell(item, 'note_' + col) || t(key, vars),
+    unlock: unlock || ''
+  });
+  const nm = cell(item, 'approach_name');
+
+  if (kind === 'in-list') {
+    const ok = list(need);
+    if (ok.includes(answer)) return null;
+    return say(cls, 'reason_' + col, {
+      approach: nm, have: label(axis, answer), needed: labels(axis, ok)
+    });
+  }
+
+  if (kind === 'at-least') {
+    if (rank(axis, answer) >= rank(axis, need)) return null;
+    return say(cls, 'reason_' + col, {
+      approach: nm, have: label(axis, answer), needed: label(axis, need)
+    }, unlk(axis, need));   // unlock text of the level you must REACH
+  }
+
+  if (kind === 'at-most') {
+    if (rank(axis, answer) <= rank(axis, need)) return null;
+    // No unlock. You cannot un-age a program.
+    return say(cls, 'reason_' + col, {
+      approach: nm, have: label(axis, answer), needed: label(axis, need)
+    });
+  }
+
+  if (kind === 'gate') {
+    // need: Required | Recommended | Not needed.  answer: Yes | No | Not sure.
+    if (need === 'Not needed')  return null;
+    if (answer === 'Yes')       return null;
+    if (need === 'Recommended') return say('Soft', 'note_comparison_recommended', {});
+    if (answer === 'Not sure')  return say('Soft', 'note_comparison_unsure', {});
+    return say(cls, 'reason_' + col, { approach: nm }, unlk(axis, 'No'));
+  }
+
+  return null;
+}
+
+// ─── Prerequisites ───────────────────────────────────────────────────────────
+const prereqsOf = id => PREREQS.filter(p => cell(p, 'approach_id') === id);
+
+// Whether an edge blocks depends on the answers, so the graph is resolved per
+// filter state rather than being fixed.
+function isBlocking(p, answers) {
+  const s = cell(p, 'strength');
+  if (s === 'Required')    return true;
+  if (s === 'Recommended') return false;
+  const axis = cell(p, 'condition_axis');
+  if (!axis) return true;
+  const answer = answers[axis];
+  // Unanswered blocks. This is the one place the tool judges before being asked,
+  // and it is deliberate: not knowing whether you follow the model is itself a
+  // reason to run the process evaluation that would tell you.
+  if (!answer) return true;
+  return list(cell(p, 'condition_value')).includes(answer);
+}
+
+function blockingUnmet(id, completed, answers) {
+  return prereqsOf(id)
+    .filter(p => isBlocking(p, answers))
+    .filter(p => !completed.has(cell(p, 'prereq_id')));
+}
+
+function stepsAway(id, completed, answers, seen) {
+  seen = seen || new Set();
+  if (completed.has(id)) return 0;
+  if (seen.has(id)) return 1;        // depth guard; build_eval.R rejects cycles
+  seen.add(id);
+  const unmet = blockingUnmet(id, completed, answers).map(p => cell(p, 'prereq_id'));
+  if (!unmet.length) return 1;
+  return 1 + Math.max.apply(null, unmet.map(x => stepsAway(x, completed, answers, seen)));
+}
+
+function unlockPath(id, completed, answers) {
+  const out = [], seen = new Set();
+  (function visit(n) {
+    if (completed.has(n) || seen.has(n)) return;
+    seen.add(n);
+    blockingUnmet(n, completed, answers).forEach(p => visit(cell(p, 'prereq_id')));
+    out.push(n);
+  })(id);
+  return out;
+}
+
+// ─── The three buckets ───────────────────────────────────────────────────────
+function evaluate(item, answers, completed) {
+  const failures = [], caveats = [];
+  RULES.forEach(rule => {
+    const r = checkRule(item, rule, answers[cell(rule, 'axis')]);
+    if (!r) return;
+    (r.fail_class === 'Soft' ? caveats : failures).push(r);
+  });
+
+  const id       = cell(item, 'id');
+  const intent   = failures.filter(f => f.fail_class === 'Intent');
+  const capacity = failures.filter(f => f.fail_class === 'Capacity');
+  const need     = blockingUnmet(id, completed, answers);
+  const advise   = prereqsOf(id)
+    .filter(p => cell(p, 'strength') === 'Recommended')
+    .filter(p => !completed.has(cell(p, 'prereq_id')));
+
+  // Precedence: any Intent failure wins over any Capacity failure. Unlocking
+  // capacity would not help, so listing it as unlockable would be a lie.
+  if (intent.length) {
+    return { bucket: 'out', failures: intent, caveats: caveats, advise: [] };
+  }
+  if (capacity.length || need.length) {
+    return {
+      bucket: 'unlock', failures: capacity, prereqs: need, advise: advise,
+      caveats: caveats,
+      path:   unlockPath(id, completed, answers),
+      steps:  stepsAway(id, completed, answers),
+      effort: capacity.length + need.length
+    };
+  }
+  return { bucket: 'fits', failures: [], prereqs: [], advise: advise, caveats: caveats };
+}
+
+// ─── UI state ────────────────────────────────────────────────────────────────
+let currentTab = 'approaches';
+const items = () => (currentTab === 'tmfs' ? TMFS : APPROACHES);
+
+function readFilters() {
+  const a = {};
+  AXES.forEach(ax => {
+    const el = document.getElementById('f-' + ax);
+    a[ax] = el ? el.value : '';
+  });
+  return a;
+}
+
+function readCompleted() {
+  const s = new Set();
+  document.querySelectorAll('#done-row input:checked')
+    .forEach(el => s.add(el.value));
+  return s;
+}
+
+// ─── Build the controls from the data ────────────────────────────────────────
+// Dropdowns come from the Levels sheet, so adding a level is adding a row and
+// never an HTML edit.
+function buildFilters() {
+  const row = document.getElementById('filter-row');
+  row.innerHTML = AXES.map(ax => {
+    const meta = axisMeta(ax);
+    const opts = levelsOf(ax).map(l =>
+      '<option value="' + esc(cell(l, 'level_value')) + '">' + esc(cell(l, 'label')) + '</option>'
+    ).join('');
+    return '<div class="filter-group">' +
+      '<label for="f-' + esc(ax) + '">' + esc(cell(meta, 'axis_label')) + '</label>' +
+      '<select id="f-' + esc(ax) + '" title="' + esc(cell(meta, 'help_text')) + '" onchange="applyFilters()">' +
+      '<option value="">Any</option>' + opts + '</select></div>';
+  }).join('') +
+  '<div class="filter-group"><button class="btn btn-outline btn-sm" onclick="clearFilters()">Clear</button></div>';
+}
+
+// The "already done" boxes are derived from the prerequisite edges, so adding an
+// edge in Excel makes a checkbox appear.
+function buildCompleted() {
+  const ids = PREREQS.map(p => cell(p, 'prereq_id')).filter((v, i, a) => a.indexOf(v) === i);
+  const nameOf = id => {
+    const hit = APPROACHES.concat(TMFS).find(x => cell(x, 'id') === id);
+    return hit ? cell(hit, 'approach_name') : id;
+  };
+  document.getElementById('done-row').innerHTML =
+    '<span class="done-label">Already done</span>' +
+    ids.map(id =>
+      '<label><input type="checkbox" value="' + esc(id) + '" onchange="applyFilters()"> ' +
+      esc(nameOf(id)) + '</label>'
+    ).join('');
+}
+
+// ─── Render ──────────────────────────────────────────────────────────────────
+const BURDEN_ORDER = { 'Low': 1, 'Medium': 2, 'High': 3 };
+
+function gapBlock(lead, body, doText) {
+  return '<div class="gap"><span class="gap-lead">' + esc(lead) + '</span>' +
+    esc(body) + (doText ? '<p class="gap-do">' + esc(doText) + '</p>' : '') + '</div>';
+}
+
+function cardHtml(r) {
+  const it = r.item;
+  const fam = cell(it, 'family');
+  const burden = cell(it, 'data_burden');
+  let h = '<article class="card card-' + r.bucket + '">';
+
+  h += '<div class="card-head"><h3>' + esc(cell(it, 'approach_name')) + '</h3>';
+  if (fam) {
+    h += '<span class="chip chip-family" style="background:' +
+         (FAMILY_COLORS[fam] || '#888') + '">' + esc(fam) + '</span>';
+  }
+  h += '</div>';
+  h += '<p class="card-one-liner">' + esc(cell(it, 'one_liner')) + '</p>';
+
+  h += '<div class="card-meta">';
+  if (burden) h += '<span class="chip burden-' + esc(burden) + '">' + esc(burden) + ' data burden</span>';
+  if (cell(it, 'typical_timeline')) h += '<span class="chip chip-plain">' + esc(cell(it, 'typical_timeline')) + '</span>';
+  if (cell(it, 'nilsen_category')) h += '<span class="chip chip-plain">' + esc(cell(it, 'nilsen_category')) + '</span>';
+  h += '</div>';
+
+  if (r.bucket === 'unlock') {
+    h += '<p class="steps">' + esc(r.steps === 1 ? t('steps_away_one') : t('steps_away', { n: r.steps })) + '</p>';
+    r.prereqs.forEach(p => {
+      h += gapBlock(t('prereq_required_lead') + ' ' + nameOfId(cell(p, 'prereq_id')),
+                    cell(p, 'why'), '');
+    });
+    r.failures.forEach(f => h += gapBlock('Missing', f.reason, f.unlock));
+  }
+
+  if (r.bucket === 'out') {
+    r.failures.forEach(f => h += gapBlock('Why not', f.reason, ''));
+  }
+
+  if (r.bucket !== 'out') {
+    r.advise.forEach(p => {
+      h += gapBlock(t('prereq_advise_lead') + ' ' + nameOfId(cell(p, 'prereq_id')),
+                    cell(p, 'why'), '');
+    });
+  }
+
+  r.caveats.forEach(c => h += '<p class="caveat">' + esc(c.reason) + '</p>');
+
+  h += '</article>';
+  return h;
+}
+
+function nameOfId(id) {
+  const hit = APPROACHES.concat(TMFS).find(x => cell(x, 'id') === id);
+  return hit ? cell(hit, 'approach_name') : id;
+}
+
+function paint(sel, rows, emptyMsg) {
+  const el = document.getElementById(sel);
+  el.innerHTML = rows.length
+    ? rows.map(cardHtml).join('')
+    : '<p class="empty">' + esc(emptyMsg) + '</p>';
+}
+
+function render() {
+  const answers   = readFilters();
+  const completed = readCompleted();
+  const rows = items().map(it => {
+    const r = evaluate(it, answers, completed);
+    r.item = it;
+    return r;
+  });
+
+  const fits = rows.filter(x => x.bucket === 'fits')
+    .sort((a, b) => (BURDEN_ORDER[cell(a.item, 'data_burden')] || 9) -
+                    (BURDEN_ORDER[cell(b.item, 'data_burden')] || 9));
+  const unl  = rows.filter(x => x.bucket === 'unlock').sort((a, b) => a.effort - b.effort);
+  const out  = rows.filter(x => x.bucket === 'out');
+
+  paint('fits',   fits, t('empty_fits'));
+  paint('unlock', unl,  'Nothing is waiting on anything you do not have.');
+  paint('out',    out,  'Nothing here is the wrong tool for what you picked.');
+
+  document.getElementById('stats-bar').innerHTML =
+    '<span><strong>' + fits.length + '</strong> fit</span>' +
+    '<span><strong>' + unl.length  + '</strong> close</span>' +
+    '<span><strong>' + out.length  + '</strong> not the right tool</span>' +
+    '<span style="margin-left:auto"><button class="btn btn-outline btn-sm" onclick="window.print()">Print this shortlist</button></span>';
+}
+
+function applyFilters() { render(); }
+
+function clearFilters() {
+  AXES.forEach(ax => { const el = document.getElementById('f-' + ax); if (el) el.value = ''; });
+  document.querySelectorAll('#done-row input:checked').forEach(el => el.checked = false);
+  render();
+}
+
+function switchTab(name) {
+  currentTab = name;
+  document.querySelectorAll('.tab').forEach(b =>
+    b.classList.toggle('active', b.dataset.tab === name));
+  render();
+}
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+document.getElementById('page-sub').textContent   = t('page_sub');
+document.getElementById('scope-note').textContent = t('scope_note');
+document.getElementById('head-fits').textContent  = t('heading_fits');
+document.getElementById('head-unlock').textContent = t('heading_unlock');
+document.getElementById('sub-unlock').textContent = t('heading_unlock_sub');
+document.getElementById('head-out').textContent   = t('heading_out');
+document.getElementById('sub-out').textContent    = t('heading_out_sub');
+buildFilters();
+buildCompleted();
+render();
+</script>
+</body>
+</html>

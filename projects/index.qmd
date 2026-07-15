@@ -17,6 +17,30 @@ toc: false
 <div class="project-grid container">
 
   <div class="project-card">
+    <span class="project-card-tag">Evaluation Practice · Decision Tool</span>
+    <p class="project-card-title">Which Evaluation Should We Do?</p>
+    <p class="project-card-desc">
+      Say who needs to act on the findings, what the evaluation is for, how long
+      the program has run, what data you can get, whether you have a comparison
+      group, what you want to know, and whether the program follows an
+      evidence-based model. Every approach then lands in one of three piles: what
+      fits, what is the wrong tool and why, and what is close, with the gap named
+      and the work to close it spelled out. It will tell you that cost-benefit is
+      three steps away, and name the three steps.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>HTML / JS</span>
+      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Excel / readxl</span>
+      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
+    </div>
+    <br>
+    <a href="../evalpicker/eval_picker.html" style="font-weight:600; color:#E98973;">
+      Open the evaluation picker →
+    </a>
+  </div>
+
+  <div class="project-card">
     <span class="project-card-tag">Data Storytelling · Teaching Module</span>
     <p class="project-card-title">Hip-Hop Periodic Table</p>
     <p class="project-card-desc">
