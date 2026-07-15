@@ -20,6 +20,15 @@ branch's PR just merged; if it did, restart the branch from origin/main (same
 name, force-with-lease) and open a new PR rather than stacking. This also
 protects the unmergeable binary xlsx.
 
+The shared build blocks need the same care. Every interactive adds a line to
+the same three lists: `pre-render` and `resources` in `_quarto.yml`, and the
+generated-page block in `.gitignore`. A branch cut before another interactive
+landed conflicts there, and resolving by keeping one side drops the other
+without erroring: the page just stops being built and published. #45 did this
+to howold and gut, and the #46 fix caught only the `.gitignore` half, so both
+pages sat unbuilt until 2026-07-15. Before pushing, check that all three lists
+name every interactive.
+
 ## Hip-Hop Periodic Table (`hiphop/`)
 
 The flagship teaching module. **The Excel workbook is the single source of
@@ -36,7 +45,7 @@ truth**; everything else derives from it.
 | `hiphop/data_dictionary.qmd` | Public codebook; renders the Data Dictionary sheet directly (auto-updates when the sheet changes) |
 | `hiphop/_metadata.yml` | `freeze: false` so data-only Excel edits still re-render the dashboard/codebook in CI. Do not remove |
 | `hiphop/data/_accuracy_worklist.md` | Internal changelog + counts. Update its header counts, style table, and Done list with every data change |
-| `projects/index.qmd` | Project card hardcodes the act counts ("173 hip-hop acts, 129 solo artists and 44 groups"). Update when counts change |
+| `projects/index.qmd` | Project card hardcodes the act counts ("173 hip-hop acts (129 solo artists and 44 groups)"). Update when counts change: nothing recomputes it, and it sat at the pre-Jedi-Mind-Tricks 130/43 until 2026-07-15 |
 
 ### Artist Database schema (columns A–X, one row per act)
 
@@ -110,15 +119,105 @@ worklist shapes section.
   second line. Pipe new ggplot charts through the helper, not bare
   `ggplotly()`, or the subtitle vanishes.
 
+## Evaluation Picker (`evalpicker/`)
+
+Shipped 2026-07-15 (#45). A decision tool: you describe the evaluation you face
+on seven axes, and every approach lands in one of three piles (fits, ruled out,
+close with the gap named and the work to close it spelled out). Same shape as
+barnum, Excel to R to one self-contained HTML page, vanilla JS, no CDN, no
+server, no new CI packages (readxl plus base R). Unlike hiphop it has no `.qmd`
+and no `_metadata.yml`: nothing renders from it, the page is a listed resource,
+so freeze never enters into it.
+
+### The pieces
+
+| File | Role |
+|---|---|
+| `evalpicker/data/evaluation_approaches.xlsx` | Source of truth. Sheets: **Rules** (one row per rule, 8 rows over 7 axes), **Levels** (allowed values per axis, 35 rows), **Approaches** (7), **TMFs** (2; theories, models and frameworks), **Prerequisites** (what must come first, 5), **Copy** (UI strings + one `reason_*` per rule, 38) |
+| `evalpicker/build_eval.R` | Quarto pre-render step. Validates the workbook (see below), then serializes all six sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__APPROACHES_DATA__`, `__TMFS_DATA__`, `__PREREQS_DATA__` and `__COPY_DATA__` in the template, producing `evalpicker/eval_picker.html` (gitignored; built in CI; never edit the output directly) |
+| `evalpicker/app/_template.html` | The picker's look and matching logic |
+| `index.qmd`, `projects/index.qmd` | Both link `evalpicker/eval_picker.html`. The homepage card also needs `pics/thumb-evalpicker.jpg` |
+
+### The rules live in the workbook, not the code
+
+Seven axes: `audience`, `purpose`, `question`, `maturity`, `data_capacity`,
+`comparison`, `fidelity`. Each Rules row names the `rule_column` it reads on
+Approaches and TMFs, a `rule_kind` (`in-list`, `at-least`, `at-most`, `gate`),
+and a `fail_class`. A blank rule cell means "this does not constrain me", so
+blank always passes.
+
+`fail_class` carries the central idea, so get it right when adding a rule.
+**Capacity** means the answer could change if you went and got more (no
+comparison group, thin data, a program too new), so failing it makes an
+approach unlockable. **Intent** means more resources will not help, because it
+is the wrong tool (cost-benefit for the wrong audience), so failing it rules
+the approach out. Any Intent failure beats any Capacity failure. `maturity` is
+the axis with two rules for this reason: too new is Capacity (wait), too mature
+is Intent (wrong tool).
+
+Prerequisites can be Required, Recommended or Conditional. Conditional is what
+makes process evaluation required before outcome or impact only when fidelity
+is Adapted, Local or Not sure: if you do not know what was delivered, the
+numbers are uninterpretable.
+
+### The validator (`build_eval.R`)
+
+Read the header comment before touching this file. The whole design bets on
+rules authored in a spreadsheet, so a trailing space or a near-miss value would
+otherwise produce a silently wrong verdict, and this tool tells a court which
+evaluation to run. Every check `stop()`s the CI render, and the messages point
+at the offending row and list the values that would have been valid. The eight:
+
+1. ids unique and non-blank across Approaches + TMFs.
+2. Every rule cell resolves to a Levels value for its axis (gates take
+   Required / Recommended / Not needed instead).
+3. Levels has a numeric `order` on every row (a blank becomes JSON null and the
+   ordered comparisons then misbehave silently).
+4. `axis_label` agrees across rows sharing an axis (maturity has two).
+5. Copy has a `reason_<rule_column>` key for every rule.
+6. Prerequisites resolve to real ids, and `strength` is known.
+7. Conditional rows carry a real condition and the other strengths carry none
+   (a condition on a Required row would silently do nothing).
+8. The prerequisite graph is acyclic, counting conditional edges, or the page
+   hangs.
+
+A failed render here is the validator working. Fix the spreadsheet, not the
+check, and do not downgrade a `stop()` to a warning.
+
+### Update checklist: what to touch for each kind of change
+
+**Adding or editing an approach or framework (rows):**
+1. Workbook row in Approaches or TMFs: unique id, and every rule cell either
+   blank or a Levels value for that axis.
+2. Prerequisites rows if it needs something first (Conditional needs both
+   `condition_axis` and `condition_value`; the others need neither).
+3. Nothing else. The page rebuilds from the workbook.
+
+**Adding an axis (a new question):**
+1. Rules row: `axis`, `axis_label`, `rule_column`, `rule_kind`, `fail_class`.
+2. Levels rows for its values, each with an `order`.
+3. Copy row keyed `reason_<rule_column>`, or check 5 fails the build.
+4. The matching `rule_column` on **both** Approaches and TMFs, or check 2 fails.
+5. Template only if the axis needs a control that breaks the existing pattern.
+
+**Changing allowed values:**
+Levels rows first, then every Approaches / TMFs cell using the old value, then
+any Prerequisites `condition_value`. The validator catches what you miss.
+
 ## Other site areas
 
-- `barnum/` mirrors the hiphop pattern (Excel → `build_barnum.R` → HTML) and
-  is the template for self-contained interactives. `howold/` ("How Old Is
-  Old?") and `gut/` ("Trust Your Gut?") shipped on it in July 2026: edit their
-  xlsx, CI rebuilds; outputs gitignored; reveal punch lines were maintainer-
-  approved 2026-07. The only coming-soon project card left: "A Right That
-  Exists on Paper" (compassionate release, 50-state review) still needs the
-  maintainer's dataset.
+- `barnum/` mirrors the hiphop pattern (Excel → `build_barnum.R` → HTML) and is
+  the template for self-contained interactives: `howold/` ("How Old Is Old?"),
+  `gut/` ("Trust Your Gut?") and `evalpicker/` (above) all follow it. Each is a
+  `build_*.R` pre-render step plus `app/_template.html` plus `data/*.xlsx`,
+  with a gitignored HTML output: edit the xlsx, CI rebuilds. howold and gut
+  shipped July 2026 (reveal punch lines maintainer-approved 2026-07), but the
+  Teaching page still lists both under "More exercises in development" without
+  links, so the Counted Wrong essay's link to How Old Is Old? is the only way
+  in. The only coming-soon project card left: "A Right That Exists on Paper"
+  (compassionate release, 50-state review) still needs the maintainer's
+  dataset. Re-checked 2026-07-15: `projects/index.qmd` has four cards, with the
+  picker, the periodic table and Counted Wrong live and that one still pending.
 - **Counted Wrong (`countedwrong/`, shipped 2026-07).** The site's first
   long-form analysis essay, on **Pathways to Desistance** (ICPSR 29961:
   1,354 youth, 11 waves over seven years after a serious offense, ages
