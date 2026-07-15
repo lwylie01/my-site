@@ -11,22 +11,18 @@ project:
   # every render/publish. Edit the .xlsx files to update them.
   #   hiphop/data/hiphop_artists.xlsx    -> hiphop/hiphop_periodic_table.html
   #   barnum/data/barnum_statements.xlsx -> barnum/barnum_test.html
-  #   howold/data/howold_items.xlsx      -> howold/how_old_is_old.html
-  #   gut/data/gut_cases.xlsx            -> gut/trust_your_gut.html
+  #   evalpicker/data/evaluation_approaches.xlsx -> evalpicker/eval_picker.html
   pre-render:
     - hiphop/build_table.R
     - barnum/build_barnum.R
-    - howold/build_howold.R
-    - gut/build_gut.R
+    - evalpicker/build_eval.R
   resources:
     - hiphop/hiphop_periodic_table.html
     - hiphop/data/hiphop_artists.xlsx
     - barnum/barnum_test.html
     - barnum/data/barnum_statements.xlsx
-    - howold/how_old_is_old.html
-    - howold/data/howold_items.xlsx
-    - gut/trust_your_gut.html
-    - gut/data/gut_cases.xlsx
+    - evalpicker/eval_picker.html
+    - evalpicker/data/evaluation_approaches.xlsx
     - "CV/Wylie CV 8.2025.pdf"
     - CNAME
 
