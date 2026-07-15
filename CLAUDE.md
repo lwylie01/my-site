@@ -41,6 +41,23 @@ obvious guess loses: main had deliberately moved Featured Projects ahead of
 correct merge was main's position with the branch's cards. Deleting the "extra"
 section, the natural fix, would have silently undone main's move.
 
+The third shape is the quietest, because it looks like nobody's fault. The
+merge **reverted a fix main had already made**: the hip-hop act counts on the
+projects card were corrected to 129/44 in 404d287, the same commit that
+reclassified Jedi Mind Tricks, exactly as the checklist below requires. #45 put
+the branch's older 130/43 back. That reads exactly like a card someone forgot
+to hand-edit, and #47 fixed it as though it were, which was wrong about the
+cause: the checklist was followed and the merge ate the result. So when
+content looks merely stale, check whether main ever had it right
+(`git log -G'<text>' -- <file>`) before calling it neglect: same symptom,
+different lesson, and the neglect story hides a merge that is still eating
+fixes. Audit method that found all of this, worth repeating after any messy
+merge: `git diff <merge>^2 <merge> --name-only`, then for each file count the
+dropped main-side lines (`git diff <merge>^2 <merge> -- <file> | grep -c
+'^-[^-]'`) and read them. Every file #45 touched has been through this now, and
+the casualties were `.gitignore` (#46), `_quarto.yml` (#47), the counts (#47)
+and `index.qmd` (#48).
+
 ## Hip-Hop Periodic Table (`hiphop/`)
 
 The flagship teaching module. **The Excel workbook is the single source of
@@ -57,7 +74,7 @@ truth**; everything else derives from it.
 | `hiphop/data_dictionary.qmd` | Public codebook; renders the Data Dictionary sheet directly (auto-updates when the sheet changes) |
 | `hiphop/_metadata.yml` | `freeze: false` so data-only Excel edits still re-render the dashboard/codebook in CI. Do not remove |
 | `hiphop/data/_accuracy_worklist.md` | Internal changelog + counts. Update its header counts, style table, and Done list with every data change |
-| `projects/index.qmd` | Project card hardcodes the act counts ("173 hip-hop acts (129 solo artists and 44 groups)"). Update when counts change: nothing recomputes it, and it sat at the pre-Jedi-Mind-Tricks 130/43 until 2026-07-15 |
+| `projects/index.qmd` | Project card hardcodes the act counts ("173 hip-hop acts (129 solo artists and 44 groups)"). Update when counts change: nothing recomputes it. It read 130/43 from #45 to #47, but not from neglect: main had already corrected it and the #45 merge reverted the fix (see the merge hazard above) |
 
 ### Artist Database schema (columns A–X, one row per act)
 
