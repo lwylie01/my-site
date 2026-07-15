@@ -86,17 +86,17 @@ they rate it privately. The point is not that they were fooled. It is that a
 measure everyone scores high on has not measured anyone.
 :::
 
-### More exercises in development
+### Two Shorter Exercises
 
-- **How Old Is Old?** Set a slider to the age at which someone becomes "old,"
-  "a senior," "too old to drive," or "too old to start over." The answers show
-  how little we agree, and how the law pins hard numbers (18, 50, 65) onto a
-  boundary nature never drew. A study in turning fuzzy ideas into exact
-  numbers.
-- **Trust Your Gut?** Review realistic case files, predict who returns to
-  court, then see your accuracy scored against a simple two-variable rule that
-  beats nearly everyone. A lesson in why expert intuition keeps losing to a
-  checklist.
+- **[How Old Is Old?](../howold/how_old_is_old.html)** Set a slider to the age
+  at which someone becomes "old," "a senior," "too old to drive," or "too old
+  to start over." The answers show how little we agree, and how the law pins
+  hard numbers (18, 50, 65) onto a boundary nature never drew. A study in
+  turning fuzzy ideas into exact numbers.
+- **[Trust Your Gut?](../gut/trust_your_gut.html)** Review realistic case
+  files, predict who returns to court, then see your accuracy scored against a
+  simple two-variable rule that beats nearly everyone. A lesson in why expert
+  intuition keeps losing to a checklist.
 
 ---
 
