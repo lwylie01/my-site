@@ -9,6 +9,12 @@ hiphop/hiphop_periodic_table.html
 # Generated Barnum Test page (built from Excel by barnum/build_barnum.R on render)
 barnum/barnum_test.html
 
+# Generated How Old Is Old? page (built from Excel by howold/build_howold.R on render)
+howold/how_old_is_old.html
+
+# Generated Trust Your Gut? page (built from Excel by gut/build_gut.R on render)
+gut/trust_your_gut.html
+
 # Generated evaluation picker (built from Excel by evalpicker/build_eval.R on render)
 evalpicker/eval_picker.html
 
