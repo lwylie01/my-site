@@ -25,11 +25,15 @@ read_sheet <- function(sheet) {
   df
 }
 
-# Base-R JSON serialiser — no jsonlite dependency needed.
+# Base-R JSON serialiser — no jsonlite dependency needed. The output is injected
+# as a JS literal rather than parsed, so anything that is not valid JSON throws
+# and takes the rest of the script block with it: booleans must be lowercase,
+# and Inf has no JSON spelling, so it joins NA and NaN as null.
 as_json <- function(df) {
   encode_val <- function(x) {
-    if (is.na(x))                           return("null")
-    if (is.numeric(x) || is.logical(x))    return(as.character(x))
+    if (is.na(x))      return("null")
+    if (is.logical(x)) return(if (x) "true" else "false")
+    if (is.numeric(x)) return(if (is.finite(x)) as.character(x) else "null")
     s <- as.character(x)
     s <- gsub("\\\\", "\\\\\\\\", s)
     s <- gsub('"',    '\\\\"',    s)
