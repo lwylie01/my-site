@@ -242,14 +242,29 @@ any Prerequisites `condition_value`. The validator catches what you miss.
   with a gitignored HTML output: edit the xlsx, CI rebuilds. howold and gut
   shipped July 2026 (reveal punch lines maintainer-approved 2026-07), and the
   Teaching page links both under "Two Shorter Exercises" (2026-07-15; they sat
-  there unlinked as "in development" until then). The Counted Wrong essay also
-  links How Old Is Old?, and howold's template names Counted Wrong in prose
-  without linking it: the maintainer deferred that link (2026-07), so only the
-  tense was corrected when the essay shipped.
+  there unlinked as "in development" until then). How Old Is Old? and Counted
+  Wrong now link to each other: the howold link was deferred while the essay
+  was still coming, so #48 corrected only its tense and #51 added the link once
+  the essay was live. The link sits in howold's reveal (`#screen-2`), which is
+  `display:none` until the exercise is done, so drive the sliders and both
+  buttons to see it.
   The only coming-soon project card left: "A Right That Exists on Paper"
   (compassionate release, 50-state review) still needs the maintainer's
   dataset. Re-checked 2026-07-15: `projects/index.qmd` has four cards, with the
   picker, the periodic table and Counted Wrong live and that one still pending.
+- The standalone templates carry their own CSS and had no inline prose link
+  until #51, so there is no generic `a` rule to inherit and a bare `<a>` in body
+  copy renders browser-default blue. Style it, and measure against the rendered
+  page rather than against white: the background is `--light-bg` (#F8F7F4),
+  which is exactly what sinks the obvious choice. `--primary` reaches only
+  4.3:1 there and misses AA at body size, so links take `--link` (#6b4f6c, the
+  site's deeper plum, `plum_dark` in the Counted Wrong palette) at 6.6:1.
+  Underline them: `--link` and `--muted` differ by 1.4:1, so color alone does
+  not mark a link. Hover darkens to `--dark` (14.8:1); brightening to
+  `--secondary` would fail at 2.4:1, and a hover state has to clear AA too.
+  Known and unfixed, flagged 2026-07-16: the project card links on `index.qmd`
+  and `projects/index.qmd` use #E98973 on white at about 2.4:1, under AA for
+  their size. That is a design call, not a bug fix.
 - Homepage project cards (`index.qmd`) each carry a thumbnail at
   `pics/thumb-<name>.jpg`: 1150x430, a screenshot of that page's own header.
   That size is the aspect `.project-card-thumb img` crops to
@@ -276,8 +291,11 @@ any Prerequisites `condition_value`. The validator catches what you miss.
   push). Update flow: regenerate aggregates in EAs, commit there, re-copy
   here, verify byte-identity, push; freeze is off so CI re-renders. The
   projects card ("Counted Wrong: The Line at 18") and the Writing page
-  essay card link to the page; howold's template still says "coming to
-  this site" (maintainer deferred that link, 2026-07). Hard rules
+  essay card link to the page, and howold's reveal links it too (#51); the
+  essay links back, so that pair closes both ways. The Writing card keeps
+  the essay's own title and subtitle rather than the projects card's "The
+  Line at 18", which is deliberate: fcacd43 edited that card and left the
+  title. Hard rules
   unchanged: person-level Pathways data is NEVER committed to any GitHub
   repo, public or private, and Git LFS is never the answer; the public
   site gets aggregates only. EAs remote verified clean 2026-07-14 (API
