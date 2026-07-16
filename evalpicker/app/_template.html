@@ -231,10 +231,6 @@
   .rescard:hover { box-shadow: 0 3px 10px rgba(60,40,60,0.12); }
   .rescard-fits   { border-left-color: var(--fits); }
   .rescard-unlock { border-left-color: var(--unlock); }
-  /* Deprioritised, still legible. The reason is the whole product, so this page
-     must not use the 0.12 dim that the periodic table uses. */
-  .rescard-out    { border-left-color: var(--out); opacity: 0.72; }
-  .rescard-out:hover, .rescard-out:focus-within { opacity: 1; }
 
   .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
   /* The heading is the affordance. A real button keeps the card reachable by
@@ -283,26 +279,43 @@
   .card-meta { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 
   .steps {
-    font-size: 0.76rem;
+    font-size: 0.7rem;
     font-weight: 700;
     color: var(--link);
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    margin: 0.9rem 0 0.4rem;
+    white-space: nowrap;
+    flex: none;
   }
-  .gap {
-    font-size: 0.9rem;
-    border-top: 1px solid var(--line);
-    padding-top: 0.6rem;
-    margin-top: 0.6rem;
+
+  /* Tags: the short form of a reason. The sentence lives in the modal. */
+  .taglist { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.7rem; }
+  .tag {
+    font-size: 0.75rem; font-weight: 600; line-height: 1.35;
+    padding: 0.2rem 0.55rem; border-radius: 6px; max-width: 100%;
   }
-  .gap-lead {
-    font-size: 0.7rem; font-weight: 700; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.04em;
-    display: block; margin-bottom: 0.25rem;
-  }
-  .gap-do { font-style: italic; color: var(--muted); margin-top: 0.3rem; }
+  .tag-gap    { background: #fbeee9; color: #8a4a33; }
+  .tag-advise { background: var(--tint); color: var(--link); font-style: italic; font-weight: 600; margin-top: 0.7rem; display: inline-block; }
   .caveat { font-size: 0.88rem; color: var(--muted); margin-top: 0.6rem; font-style: italic; }
+
+  /* Ruled out: one line each. You want to see it was considered and dismissed,
+     not read a paragraph about it nine times. */
+  .outlist {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; overflow: hidden;
+  }
+  .outrow {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 1rem; padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--line);
+    border-left: 3px solid var(--out);
+    cursor: pointer; opacity: 0.8;
+  }
+  .outrow:last-child { border-bottom: none; }
+  .outrow:hover, .outrow:focus-within { opacity: 1; background: var(--tint); }
+  .outrow .card-open { font-size: 0.95rem; font-weight: 600; }
+  .outwhy { font-size: 0.8rem; color: var(--muted); text-align: right; flex: none; }
+  .outlist .empty { display: block; padding: 0.9rem 1rem; }
 
   .empty { font-size: 0.95rem; color: var(--muted); font-style: italic; }
 
@@ -407,8 +420,8 @@
     #tabs, #questions-card, #stats-bar, #modal-overlay, header a { display: none !important; }
     body { background: white; }
     #results-bar { position: static; }
-    .rescard-out { opacity: 1; }
-    .rescard { break-inside: avoid; cursor: default; }
+    .outrow { opacity: 1; cursor: default; }
+    .rescard, .outrow { break-inside: avoid; cursor: default; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -475,7 +488,7 @@
     <section class="bucket">
       <div class="bucket-head"><h2 id="head-out"></h2></div>
       <p class="bucket-sub" id="sub-out"></p>
-      <div class="card-grid" id="out"></div>
+      <div class="outlist" id="out"></div>
     </section>
   </main>
 </div>
@@ -511,8 +524,13 @@ const TMFS       = __TMFS_DATA__;
 const PREREQS    = __PREREQS_DATA__;
 const COPY       = __COPY_DATA__;
 
+// A family with no entry here silently renders a grey dot, so every family value
+// in the workbook needs a line. The dot is decorative: the family name is spelt
+// out beside it, so these carry no contrast floor.
 const FAMILY_COLORS = {
+  'Groundwork':              '#B3906B',
   'Implementation':          '#8C6A8D',
+  'Explanatory':             '#9C5F7A',
   'Outcomes':                '#6b4f6c',
   'Economic':                '#D2B1A3',
   'Learning and adaptation': '#E98973',
@@ -565,10 +583,15 @@ function checkRule(item, rule, answer) {
   if (!need)   return null;   // blank cell  = unconstrained
   if (!answer) return null;   // unanswered  = do not judge
 
+  // Two forms of the same failure. `reason` is the sentence, and a note_ cell on
+  // the row overrides it. `short` is the tag the card shows: always the generic
+  // per-rule label, never overridden, because a card needs a phrase of a fixed
+  // length and a bespoke sentence is not that.
   const say = (failClass, key, vars, unlock) => ({
     axis: axis,
     fail_class: failClass,
     reason: cell(item, 'note_' + col) || t(key, vars),
+    short: t('short_' + col),
     unlock: unlock || ''
   });
   const nm = cell(item, 'approach_name');
@@ -755,11 +778,6 @@ function buildTabs() {
 // ─── Render ──────────────────────────────────────────────────────────────────
 const BURDEN_ORDER = { 'Low': 1, 'Medium': 2, 'High': 3 };
 
-function gapBlock(lead, body, doText) {
-  return '<div class="gap"><span class="gap-lead">' + esc(lead) + '</span>' +
-    esc(body) + (doText ? '<p class="gap-do">' + esc(doText) + '</p>' : '') + '</div>';
-}
-
 // Burden reads as an ordinal meter rather than a traffic light: the old
 // red/amber/green fills carried white text at 2.25:1 to 3.55:1, and coral meant
 // both "Medium burden" and "close", which are unrelated things.
@@ -796,41 +814,49 @@ function metaChips(it) {
   return h;
 }
 
-function cardHtml(r) {
+// Three densities, because the three piles are not worth the same. Fits is your
+// answer and keeps a full card. Close is a maybe and shows the definition plus
+// the gaps as tags. Ruled out you mostly want to see was considered and
+// dismissed, so it collapses to one line. Every reason in full is a click away
+// in the modal, which re-answers live.
+const openAttr = it => ' onclick="openModal(\'' + esc(cell(it, 'id')) + '\')"';
+const titleBtn = it => '<h3><button type="button" class="card-open">' +
+                       esc(cell(it, 'approach_name')) + '</button></h3>';
+
+function fitsCard(r) {
   const it = r.item;
-  let h = '<article class="rescard rescard-' + r.bucket + '" onclick="openModal(\'' +
-          esc(cell(it, 'id')) + '\')">';
-
-  h += '<div class="card-head"><h3><button type="button" class="card-open">' +
-       esc(cell(it, 'approach_name')) + '</button></h3>';
-  h += familyChip(cell(it, 'family'));
-  h += '</div>';
+  let h = '<article class="rescard rescard-fits"' + openAttr(it) + '>';
+  h += '<div class="card-head">' + titleBtn(it) + familyChip(cell(it, 'family')) + '</div>';
   h += '<p class="card-one-liner">' + esc(cell(it, 'one_liner')) + '</p>';
-
   h += '<div class="card-meta">' + metaChips(it) + '</div>';
-
-  if (r.bucket === 'unlock') {
-    h += '<p class="steps">' + esc(r.steps === 1 ? t('steps_away_one') : t('steps_away', { n: r.steps })) + '</p>';
-    r.prereqs.forEach(p => {
-      h += gapBlock(t('prereq_required_lead') + ' ' + nameOfId(cell(p, 'prereq_id')),
-                    cell(p, 'why'), '');
-    });
-    r.failures.forEach(f => h += gapBlock(t('gap_lead_missing'), f.reason, f.unlock));
-  }
-
-  if (r.bucket === 'out') {
-    r.failures.forEach(f => h += gapBlock(t('gap_lead_whynot'), f.reason, ''));
-  }
-
-  if (r.bucket !== 'out') {
-    r.advise.forEach(p => {
-      h += gapBlock(t('prereq_advise_lead') + ' ' + nameOfId(cell(p, 'prereq_id')),
-                    cell(p, 'why'), '');
-    });
-  }
-
+  r.advise.forEach(p => h += '<p class="tag tag-advise">' +
+    esc(t('prereq_advise_lead') + ' ' + nameOfId(cell(p, 'prereq_id'))) + '</p>');
   r.caveats.forEach(c => h += '<p class="caveat">' + esc(c.reason) + '</p>');
+  h += '</article>';
+  return h;
+}
 
+function closeCard(r) {
+  const it = r.item;
+  let h = '<article class="rescard rescard-unlock"' + openAttr(it) + '>';
+  h += '<div class="card-head">' + titleBtn(it) + '<span class="steps">' +
+       esc(r.steps === 1 ? t('steps_away_one') : t('steps_away', { n: r.steps })) +
+       '</span></div>';
+  h += '<p class="card-one-liner">' + esc(cell(it, 'one_liner')) + '</p>';
+  const tags = [];
+  r.prereqs.forEach(p => tags.push(t('short_prereq', { name: nameOfId(cell(p, 'prereq_id')) })));
+  r.failures.forEach(f => tags.push(f.short));
+  h += '<ul class="taglist">' +
+       tags.map(x => '<li class="tag tag-gap">' + esc(x) + '</li>').join('') + '</ul>';
+  h += '</article>';
+  return h;
+}
+
+function outRow(r) {
+  const it = r.item;
+  let h = '<article class="outrow"' + openAttr(it) + '>';
+  h += titleBtn(it);
+  h += '<span class="outwhy">' + esc((r.failures[0] || {}).short || '') + '</span>';
   h += '</article>';
   return h;
 }
@@ -840,10 +866,10 @@ function nameOfId(id) {
   return hit ? cell(hit, 'approach_name') : id;
 }
 
-function paint(sel, rows, emptyMsg) {
+function paint(sel, rows, emptyMsg, renderer) {
   const el = document.getElementById(sel);
   el.innerHTML = rows.length
-    ? rows.map(cardHtml).join('')
+    ? rows.map(renderer).join('')
     : '<p class="empty">' + esc(emptyMsg) + '</p>';
 }
 
@@ -877,9 +903,9 @@ function render() {
   const unl  = rows.filter(x => x.bucket === 'unlock').sort((a, b) => a.effort - b.effort);
   const out  = rows.filter(x => x.bucket === 'out');
 
-  paint('fits',   fits, t('empty_fits'));
-  paint('unlock', unl,  t('empty_unlock'));
-  paint('out',    out,  t('empty_out'));
+  paint('fits',   fits, t('empty_fits'),   fitsCard);
+  paint('unlock', unl,  t('empty_unlock'), closeCard);
+  paint('out',    out,  t('empty_out'),    outRow);
 
   document.getElementById('stats-bar').innerHTML =
     '<span><strong>' + fits.length + '</strong> ' + esc(t('stats_fits')) + '</span>' +

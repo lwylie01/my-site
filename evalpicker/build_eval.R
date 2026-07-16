@@ -134,8 +134,14 @@ for (ax in unique(txt(rules$axis))) {
   }
 }
 
-# 5. Copy needs a reason template per rule
-missing <- setdiff(paste0("reason_", txt(rules$rule_column)), txt(copy_df$key))
+# 5. Copy needs a reason template per rule, and a short form of it. The long
+#    reason is the sentence in the modal; the short one is the tag on the card,
+#    where a paragraph per card would bury the page. Both are keyed off
+#    rule_column and built by string concatenation in the template, so neither
+#    can be found by the scan in 5b below.
+rule_keys <- c(paste0("reason_", txt(rules$rule_column)),
+               paste0("short_",  txt(rules$rule_column)))
+missing <- setdiff(rule_keys, txt(copy_df$key))
 if (length(missing)) {
   stop("Copy sheet is missing key(s): ", paste(missing, collapse = ", "))
 }
@@ -166,6 +172,10 @@ template_keys <- unique(c(
   grab_keys("setText\\('[a-z-]+',\\s*'([a-z_]+)'"),
   grab_keys("say\\('[A-Za-z]+',\\s*'([a-z_]+)'")
 ))
+# A capture ending in "_" is a prefix being concatenated with a rule_column,
+# as in t('short_' + col), not a key anyone expects to resolve. Those families
+# are covered per-rule by check 5 above.
+template_keys <- template_keys[!grepl("_$", template_keys)]
 
 missing <- setdiff(template_keys, txt(copy_df$key))
 if (length(missing)) {
@@ -175,8 +185,7 @@ if (length(missing)) {
        " should be.")
 }
 
-unused <- setdiff(txt(copy_df$key),
-                  c(template_keys, paste0("reason_", txt(rules$rule_column))))
+unused <- setdiff(txt(copy_df$key), c(template_keys, rule_keys))
 if (length(unused)) {
   message("build_eval.R: NOTE - Copy key(s) nothing reads: ",
           paste(unused, collapse = ", "),
