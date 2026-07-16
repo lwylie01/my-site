@@ -140,6 +140,49 @@ if (length(missing)) {
   stop("Copy sheet is missing key(s): ", paste(missing, collapse = ", "))
 }
 
+# 5b. every other Copy key the template names must resolve too. t() falls back to
+#     a literal "[key_name]" rather than throwing, so before this check only the
+#     reason_* keys above were protected: any other typo, or any key renamed in
+#     the sheet but not the template, shipped "[heading_fits]" to the page and
+#     nothing failed. The template is scanned for the three shapes that reach
+#     t(): a direct t('key'), the setText('id', 'key') init pairs, and the
+#     say('Soft', 'key') caveats that pass a key through to t() indirectly.
+#     Unused keys only warn: a stray row is clutter, a missing one is a broken
+#     page, so they are not the same failure.
+#     Whole-line // comments are dropped before the scan, so that the comments
+#     documenting these shapes can quote them without inventing a key.
+template_src <- readLines(template_path, warn = FALSE, encoding = "UTF-8")
+template_src <- paste(sub("^\\s*//.*$", "", template_src), collapse = "\n")
+
+grab_keys <- function(pattern) {
+  hits <- regmatches(template_src, gregexpr(pattern, template_src, perl = TRUE))[[1]]
+  if (!length(hits)) return(character(0))
+  sub(pattern, "\\1", hits, perl = TRUE)
+}
+
+# The lookbehind matters: without it "paint('fits'" matches as t('fits').
+template_keys <- unique(c(
+  grab_keys("(?<![A-Za-z])t\\('([a-z_]+)'"),
+  grab_keys("setText\\('[a-z-]+',\\s*'([a-z_]+)'"),
+  grab_keys("say\\('[A-Za-z]+',\\s*'([a-z_]+)'")
+))
+
+missing <- setdiff(template_keys, txt(copy_df$key))
+if (length(missing)) {
+  stop("Copy sheet is missing key(s) that ", template_path, " asks for: ",
+       paste(missing, collapse = ", "),
+       "\n  Without them the page renders a literal [key_name] where the words",
+       " should be.")
+}
+
+unused <- setdiff(txt(copy_df$key),
+                  c(template_keys, paste0("reason_", txt(rules$rule_column))))
+if (length(unused)) {
+  message("build_eval.R: NOTE - Copy key(s) nothing reads: ",
+          paste(unused, collapse = ", "),
+          "\n  Either wire them up in the template or delete the rows.")
+}
+
 # 6. Prerequisites resolve, and strength is a known value
 bad <- setdiff(c(txt(prereqs$approach_id), txt(prereqs$prereq_id)), all_ids)
 if (length(bad)) {

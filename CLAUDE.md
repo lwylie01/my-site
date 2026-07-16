@@ -158,11 +158,40 @@ server, no new CI packages (readxl plus base R). Unlike hiphop it has no `.qmd`
 and no `_metadata.yml`: nothing renders from it, the page is a listed resource,
 so freeze never enters into it.
 
+Content/style pass July 2026. It shipped as a filter dashboard (seven dropdowns
+defaulted to "Any", results pre-sorted before you said anything) while both site
+cards promised an interview, and its palette was copied from the periodic table
+rather than from its actual siblings. It is now **two screens**: an `#intro`
+on-ramp (howold's `.screen`/`@keyframes fade` pattern) then `#screen-tool`.
+Results stay hidden until at least one of the seven is answered: `render()`
+returns early and shows `#zero`, because sorting nine cards into "these fit what
+you have" before you have said what you have is a claim the page cannot make.
+This does not cost the footer's credited premise: the tool never *removes* an
+approach, it sorts them, so the whole field still appears at once. The seven
+axis labels are the questions and are set as questions, with `help_text` visible
+under each rather than in a `title=` tooltip that touch and keyboard users never
+saw. One verb sitewide for the act of answering: **"said"** (it was three, "set"
+/ "said" / "picked", across eleven strings).
+
+Two things not to re-break. **Chips carry no text on a coloured fill**: six of
+the nine old chip colours failed AA with white text, worst the `Economic` family
+chip at 1.99:1 on three of seven cards, so family identity moved to a dot (the
+`.project-card-accent` device from `index.qmd`) and data burden to a filled-dot
+meter. Colour is never the only channel, and the burden ramp is not a traffic
+light. **Cards are opened by a real `<button>` inside the `<h3>`**, not by
+`role="button"` on the `<article>`: the article's reasons are the product, and
+`role="button"` would hide them from a screen reader. The article keeps its
+click handler for mice and the button's click bubbles up to it. `.chip` must not
+use `white-space: nowrap` (some `typical_timeline` values are sentences and a
+nowrap pill punches out of a narrow viewport), and both grids use
+`minmax(min(Npx, 100%), 1fr)` because an auto-fit track cannot shrink below a
+bare floor.
+
 ### The pieces
 
 | File | Role |
 |---|---|
-| `evalpicker/data/evaluation_approaches.xlsx` | Source of truth. Sheets: **Rules** (one row per rule, 8 rows over 7 axes), **Levels** (allowed values per axis, 35 rows), **Approaches** (7), **TMFs** (2; theories, models and frameworks), **Prerequisites** (what must come first, 5), **Copy** (UI strings + one `reason_*` per rule, 38) |
+| `evalpicker/data/evaluation_approaches.xlsx` | Source of truth. Sheets: **Rules** (one row per rule, 8 rows over 7 axes), **Levels** (allowed values per axis, 35 rows), **Approaches** (7), **TMFs** (2; theories, models and frameworks), **Prerequisites** (what must come first, 5), **Copy** (UI strings + one `reason_*` per rule, 62). Copy went 38 to 62 in the July 2026 pass: ~15 strings were welded into the template (both empty states, the tab labels, `Any` / `Clear` / `Already done`, the stats words, the gap leads, the chain annotations) so the "words live in Excel" premise was only half true. Check 5b now enforces it. Text is HTML-escaped on every path, so no markup or links can live in a Copy string. The `<h1>` stays hardcoded like barnum's and howold's: its `<span>` cannot survive escaping, which is why `page_title` was deleted rather than wired |
 | `evalpicker/build_eval.R` | Quarto pre-render step. Validates the workbook (see below), then serializes all six sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__APPROACHES_DATA__`, `__TMFS_DATA__`, `__PREREQS_DATA__` and `__COPY_DATA__` in the template, producing `evalpicker/eval_picker.html` (gitignored; built in CI; never edit the output directly) |
 | `evalpicker/app/_template.html` | The picker's look and matching logic |
 | `index.qmd`, `projects/index.qmd` | Both link `evalpicker/eval_picker.html`. The homepage card also needs `pics/thumb-evalpicker.jpg` |
@@ -189,13 +218,43 @@ makes process evaluation required before outcome or impact only when fidelity
 is Adapted, Local or Not sure: if you do not know what was delivered, the
 numbers are uninterpretable.
 
+**Known gap, live on the site (as of July 2026): two dead options.**
+`Participants` (audience) and `For whom` (question) appear in no `audience_ok`
+or `question_ok` cell on any of the nine items, so picking either fails all nine
+on an Intent rule: 0 fit, 0 close, 9 ruled out. Verified on the built page, not
+inferred. The tool offers a choice and answers it with a wall of refusals. This
+is a content gap, not a rules bug: there is no realist evaluation row (Pawson &
+Tilley own "what works, for whom, in what circumstances") and nothing is written
+for a participant audience. The fix is agreed and is the next PR: add `REALIST`
+and `EMPOWER` (empowerment evaluation, Fetterman) plus widen `audience_ok` on
+the existing rows that genuinely serve that audience (`PROCESS` and `REAIM` are
+the candidates; maintainer decides). It is held, not abandoned, because no
+validator check touches a prose cell: a row with blank prose renders as a thin
+card rather than failing, and TODO placeholder text would publish on push. So
+the rows land only when the prose and sources exist. A worthwhile assertion for
+any future audit: **every Levels value should appear in at least one item's rule
+cell.** Nothing checks that today.
+
+The `note_*` overrides look neglected and are not. 42 failure cells can actually
+fire; 5 are bespoke and 37 use the generic `reason_*` template. But every rule
+that fires rarely is 100% bespoke (maturity_max 1/1, comparison_required 2/2,
+fidelity_ok 2/2) and every rule that fires constantly is generic (audience,
+purpose, question: 9 items each). The overrides were written exactly where the
+generic was weak ("does not suit this program" says nothing, so both its users
+override it) and skipped where it interpolates well. Do not "fix" this with a
+bulk pass: the generic carries `{have}` and `{needed}`, so it is specific in
+content though templated in form. Note `reason_fidelity_ok` and
+`reason_comparison_required` can never render today (every row that constrains
+on them has an override); they stay as the fallback for the next row that does
+not, and check 5 requires them anyway.
+
 ### The validator (`build_eval.R`)
 
 Read the header comment before touching this file. The whole design bets on
 rules authored in a spreadsheet, so a trailing space or a near-miss value would
 otherwise produce a silently wrong verdict, and this tool tells a court which
 evaluation to run. Every check `stop()`s the CI render, and the messages point
-at the offending row and list the values that would have been valid. The eight:
+at the offending row and list the values that would have been valid. The nine:
 
 1. ids unique and non-blank across Approaches + TMFs.
 2. Every rule cell resolves to a Levels value for its axis (gates take
@@ -204,6 +263,15 @@ at the offending row and list the values that would have been valid. The eight:
    ordered comparisons then misbehave silently).
 4. `axis_label` agrees across rows sharing an axis (maturity has two).
 5. Copy has a `reason_<rule_column>` key for every rule.
+5b. Every *other* Copy key the template names resolves too. `t()` falls back to a
+   literal `[key_name]` instead of throwing, so before this only `reason_*` was
+   protected and any other typo shipped `[heading_fits]` to the page silently.
+   The check scans the template for the three shapes that reach `t()`:
+   `t('key')`, the `setText('id', 'key')` init pairs, and the `say('Soft', 'key')`
+   caveats that pass a key through indirectly. A new way of naming a key needs a
+   new pattern there. Whole-line `//` comments are stripped first, so comments
+   can quote the shapes without inventing a key. Unused keys only `message()`:
+   a stray row is clutter, a missing one is a broken page.
 6. Prerequisites resolve to real ids, and `strength` is known.
 7. Conditional rows carry a real condition and the other strengths carry none
    (a condition on a Required row would silently do nothing).
