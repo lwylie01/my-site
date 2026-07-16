@@ -15,6 +15,9 @@
     --muted: #7a6a7b;
     --card: #ffffff;
     --line: #e8e0e8;
+    /* The site's deeper plum (plum_dark in the Counted Wrong palette). --primary
+       only reaches 4.3:1 on --light-bg, which misses AA for body-size text. */
+    --link: #6b4f6c;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -81,6 +84,11 @@
   .lead { font-size: 1.02rem; color: var(--text); margin-bottom: 1.5rem; }
   p { margin-bottom: 1rem; }
   .muted { color: var(--muted); }
+  /* Inline prose links. Underlined on purpose: --link and the --muted text
+     around it differ by only 1.4:1, so colour alone would not mark the link.
+     Hover darkens rather than brightening, so both states clear AA. */
+  .muted a { color: var(--link); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  .muted a:hover { color: var(--dark); }
 
   .card {
     background: var(--card); border: 1px solid var(--line);
@@ -305,7 +313,8 @@
     </div>
 
     <p class="muted" style="font-size:0.9rem;">At the other end of the lifespan, one
-      line does far more work than any of these: 18. <em>Counted Wrong</em>, a
+      line does far more work than any of these: 18.
+      <a href="../countedwrong/index.html"><em>Counted Wrong</em></a>, a
       companion project on this site, takes up that story.</p>
 
     <h3>Sources &amp; Method Notes</h3>
