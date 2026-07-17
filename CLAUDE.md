@@ -301,11 +301,59 @@ check, and do not downgrade a `stop()` to a warning.
 Levels rows first, then every Approaches / TMFs cell using the old value, then
 any Prerequisites `condition_value`. The validator catches what you miss.
 
+## Format Picker (`formatpicker/`)
+
+Shipped 2026-07. A sibling of the evaluation picker for a different question:
+you say who you are trying to reach, how far the work must travel, and what you
+want it to do, and every delivery format sorts into three piles (fits / could
+work with a tweak / not the tool here). Same Excel-to-R-to-one-HTML shape, no
+prerequisite or TMF machinery. It wears the **orchard palette** from the source
+graphic (sage green, gold, slate blue, warm brown, apple red) so it reads as a
+distinct page, not a recolour of the plum/coral picker. Every text/border pair
+was checked against AA on `--light-bg` (#F7F5EF); the apple red `--secondary`
+(#BC4634) was tuned to clear 4.5:1 as the eyebrow on light **and** 3.0:1 as the
+`<h1>` span on the dark header at once.
+
+Built from **Figure 2** (the delivery-formats tree: circle size = length, colour
+= illustration-to-text ratio, branch position = external reach) and **Figure 3**
+(audience subgroups, novice through funder) of Lindsey Wylie's "Cultivating a
+Court's Data STORY," NCSC Trends in State Courts (2025). The source figures live
+under the private working folder, not in this repo.
+
+### The pieces
+
+| File | Role |
+|---|---|
+| `formatpicker/data/delivery_formats.xlsx` | Source of truth. Sheets: **Rules** (3, one per question), **Levels** (13), **Formats** (14), **Copy** (41: UI strings plus one `reason_`/`short_` per rule). Editable in Excel |
+| `formatpicker/build_format.R` | Pre-render step. Validates the workbook (checks 1-5b from `build_eval.R`, minus the prerequisite checks 6-8), serializes the four sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__FORMATS_DATA__`, `__COPY_DATA__`, producing `formatpicker/format_picker.html` (gitignored; built in CI; never edit the output) |
+| `formatpicker/app/_template.html` | The picker's look + matching logic |
+| `index.qmd`, `projects/index.qmd` | Both link `formatpicker/format_picker.html`. The homepage card also needs `pics/thumb-formatpicker.jpg` (1150x430) |
+
+### The model
+
+Three axes, all `in-list`: `audience` and `objective` fail as **Intent** (wrong
+tool, ruled out); `reach` fails as **Capacity** (pitched for a different reach,
+so it lands in the middle pile with an "Adapt for reach" tag). Any Intent
+failure beats a Capacity one. Length and illustration-to-text are **not**
+questions: they ride along as card chips (a filled-dot length meter and a
+labelled illustration dot, colour never the only channel). Reason sentences use
+`plabel()`, the dropdown label with its "(general public)" gloss stripped, so
+they read as prose.
+
+**The mapping is the maintainer's to argue with.** Which format serves which
+audience, reach, and objective (the `*_ok` cells) is a drafted starting point,
+not settled fact. No validator check touches that judgment: a wrong `audience_ok`
+value still passes every check, it just sorts a format into the wrong pile. So
+review the `Formats` sheet as content, not code. The reach-as-soft choice is
+also a call, not a law: if a format that only reaches one way should be ruled
+out rather than softened, move its rule's `fail_class` to `Intent`.
+
 ## Other site areas
 
 - `barnum/` mirrors the hiphop pattern (Excel → `build_barnum.R` → HTML) and is
   the template for self-contained interactives: `howold/` ("How Old Is Old?"),
-  `gut/` ("Trust Your Gut?") and `evalpicker/` (above) all follow it. Each is a
+  `gut/` ("Trust Your Gut?"), `evalpicker/` and `formatpicker/` (both above) all
+  follow it. Each is a
   `build_*.R` pre-render step plus `app/_template.html` plus `data/*.xlsx`,
   with a gitignored HTML output: edit the xlsx, CI rebuilds. howold and gut
   shipped July 2026 (reveal punch lines maintainer-approved 2026-07), and the

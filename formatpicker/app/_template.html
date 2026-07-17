@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which Format Fits Best? · datawithaplot.org</title>
+<style>
+  /* Sibling of evalpicker: the site SCSS does not reach a standalone HTML page,
+     so it re-declares its own custom properties. This one wears the "orchard"
+     palette from the Trends chapter's delivery-formats tree (Fig. 2): sage
+     green, gold, slate blue, warm brown, apple red. Same layout as the eval
+     picker, different skin. Every text/border pair here was checked against AA
+     on --light-bg. */
+  :root {
+    --primary: #4F6B33;    /* deep sage: buttons, focus, meter, fits pile */
+    --secondary: #BC4634;  /* apple red: eyebrow, header accent, gradient end */
+    --accent: #C9A24B;     /* gold: header links, select borders */
+    --light-bg: #F7F5EF;
+    --dark: #2C2016;       /* deep brown: header, headings */
+    --text: #33291E;
+    --muted: #6E6355;
+    --card: #ffffff;
+    --line: #E6E0D4;
+    /* Body links: --primary reaches only ~4.9:1 on --light-bg, so links take a
+       darker green (7.1:1). */
+    --link: #3F5A2A;
+
+    /* Pile colours: green fits, amber for could-work, muted brown-grey for the
+       ruled-out list. On-brand rather than traffic lights. */
+    --fits: #4F6B33;
+    --unlock: #B0791C;
+    --out: #6E6355;
+
+    --chip-bg: #EFEAE0;
+    --tint: #F3EEE4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── Header ─────────────────────────────────────────── */
+  header {
+    background: var(--dark);
+    color: #F2ECE0;
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.03em; }
+  header h1 span { color: var(--secondary); }
+  header p { font-size: 0.8rem; color: var(--accent); margin-top: 0.1rem; }
+  header a { color: var(--accent); font-size: 0.8rem; text-decoration: none; font-weight: 600; }
+  header a:hover { color: #fff; }
+
+  /* ── Screens ────────────────────────────────────────── */
+  /* Two screens: an intro on-ramp, then the tool, so the first thing you meet is
+     a question rather than a verdict about a situation you have not described. */
+  .screen { display: none; animation: fade 0.4s ease; }
+  .screen.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  .wrap-wide { max-width: 1100px; margin: 0 auto; padding: 1.6rem 1.5rem 0; }
+
+  .eyebrow {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--secondary); margin-bottom: 0.6rem;
+  }
+  h2 { font-size: 1.85rem; line-height: 1.2; color: var(--dark); margin-bottom: 0.9rem; font-weight: 700; }
+  .lead { font-size: 1.02rem; color: var(--text); margin-bottom: 1.5rem; }
+  .muted { color: var(--muted); }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1.6rem 1.5rem;
+  }
+
+  /* ── Buttons ────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.7rem 1.4rem; border-radius: 8px; border: none;
+    font-size: 0.92rem; font-weight: 700; cursor: pointer;
+    font-family: inherit; transition: opacity 0.15s, transform 0.1s;
+    text-decoration: none;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-outline { background: var(--card); color: var(--primary); border: 1.5px solid var(--primary); }
+  .btn-sm { padding: 0.35rem 0.8rem; font-size: 0.78rem; border-radius: 6px; }
+
+  /* ── The three questions ────────────────────────────── */
+  #questions-card { margin-bottom: 1.4rem; }
+  /* min() on the track floor, not a bare 300px: an auto-fit track cannot shrink
+     below its minimum, so a bare floor overflows once the viewport is narrower. */
+  #filter-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: 1.4rem 1.6rem;
+  }
+  .q-field { display: flex; flex-direction: column; }
+  .q-label { font-size: 1rem; font-weight: 700; color: var(--dark); line-height: 1.35; }
+  .q-help { font-size: 0.85rem; color: var(--muted); margin: 0.25rem 0 0.5rem; }
+  .q-field select {
+    border: 1.5px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.55rem 0.7rem;
+    font-size: 0.92rem;
+    background: var(--light-bg);
+    color: var(--text);
+    cursor: pointer;
+    outline: none;
+    font-family: inherit;
+    margin-top: auto;
+  }
+  .q-field select:focus-visible { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79,107,51,0.28); }
+  .q-field select.set { border-color: var(--primary); background: var(--card); font-weight: 600; }
+
+  #q-actions { margin-top: 1.2rem; display: flex; gap: 0.7rem; flex-wrap: wrap; }
+
+  /* ── Zero state ─────────────────────────────────────── */
+  /* Nothing is sorted until something is said. */
+  #zero { text-align: center; padding: 2.5rem 1.5rem 4rem; }
+  #zero p { font-size: 1.02rem; color: var(--muted); font-style: italic; }
+
+  /* ── Stats bar ──────────────────────────────────────── */
+  #results-bar { position: sticky; top: 0; z-index: 500; }
+  #stats-bar {
+    background: var(--dark);
+    color: var(--accent);
+    padding: 0.45rem 1.5rem;
+    font-size: 0.8rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  #stats-bar strong { color: white; }
+
+  /* ── Results ────────────────────────────────────────── */
+  main { padding: 1.6rem 1.5rem 3rem; max-width: 1100px; margin: 0 auto; }
+
+  .bucket { margin-bottom: 2.4rem; }
+  .bucket-head { margin-bottom: 0.2rem; }
+  .bucket-head h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    display: inline-block;
+    padding-bottom: 0.3rem;
+    margin-bottom: 0;
+  }
+  /* The signature gradient rule, matching h2.section-heading::after on the site */
+  .bucket-head h2::after {
+    content: '';
+    display: block;
+    height: 3px;
+    margin-top: 0.3rem;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  }
+  .bucket-sub { font-size: 0.9rem; color: var(--muted); margin: 0.5rem 0 1rem; max-width: 70ch; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr));
+    gap: 1rem;
+  }
+
+  .rescard {
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--out);
+    padding: 1.1rem 1.2rem;
+    box-shadow: 0 1px 3px rgba(60,45,30,0.05);
+    cursor: pointer;
+  }
+  .rescard:hover { box-shadow: 0 3px 10px rgba(60,45,30,0.12); }
+  .rescard-fits   { border-left-color: var(--fits); }
+  .rescard-unlock { border-left-color: var(--unlock); }
+
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+  /* The heading is the affordance. A real button keeps the card reachable by
+     keyboard without wrapping the whole article in role="button", which would
+     hide the reasons inside it from a screen reader. */
+  .card-open {
+    background: none; border: none; padding: 0; margin: 0;
+    font-family: inherit; font-size: 1.05rem; font-weight: 700;
+    color: var(--dark); text-align: left; cursor: pointer; line-height: 1.3;
+  }
+  .card-open:hover { color: var(--link); }
+  .card-open:focus-visible {
+    outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 3px;
+  }
+
+  /* Chips carry a label, never colour alone: the family/illustration dot is
+     decorative, with the word spelt out beside it, and length is a filled-dot
+     meter rather than a colour ramp. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    letter-spacing: 0.02em;
+    background: var(--chip-bg);
+    color: var(--text);
+    max-width: 100%;
+  }
+  .chip-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .meter { display: inline-flex; gap: 2px; flex: none; }
+  .meter i {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--line); display: block;
+  }
+  .meter i.on { background: var(--primary); }
+
+  .card-one-liner { font-size: 0.95rem; margin: 0.55rem 0 0.7rem; }
+  .card-meta { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+  /* Tags: the short form of a reason. The sentence lives in the modal. */
+  .taglist { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.7rem; }
+  .tag {
+    font-size: 0.75rem; font-weight: 600; line-height: 1.35;
+    padding: 0.2rem 0.55rem; border-radius: 6px; max-width: 100%;
+  }
+  .tag-gap { background: #F6E9D9; color: #8A5A16; }
+
+  /* Ruled out: one line each. You want to see it was considered and dismissed,
+     not read a paragraph about it. */
+  .outlist {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; overflow: hidden;
+  }
+  .outrow {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 1rem; padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--line);
+    border-left: 3px solid var(--out);
+    cursor: pointer; opacity: 0.85;
+  }
+  .outrow:last-child { border-bottom: none; }
+  .outrow:hover, .outrow:focus-within { opacity: 1; background: var(--tint); }
+  .outrow .card-open { font-size: 0.95rem; font-weight: 600; }
+  .outwhy { font-size: 0.8rem; color: var(--muted); text-align: right; flex: none; }
+  .outlist .empty { display: block; padding: 0.9rem 1rem; }
+
+  .empty { font-size: 0.95rem; color: var(--muted); font-style: italic; }
+
+  /* ── Modal ──────────────────────────────────────────── */
+  #modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(30,22,12,0.7);
+    z-index: 9000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  #modal-overlay.active { display: flex; }
+
+  #modal {
+    background: var(--card);
+    border-radius: 14px;
+    max-width: 640px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: pop-in 0.18s ease;
+  }
+  @keyframes pop-in { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  #modal-header {
+    padding: 1.3rem 1.5rem 1rem;
+    border-top: 5px solid var(--out);
+    border-radius: 14px 14px 0 0;
+    position: relative;
+  }
+  #modal-header.v-fits   { border-top-color: var(--fits); }
+  #modal-header.v-unlock { border-top-color: var(--unlock); }
+  #modal-header h2 { font-size: 1.3rem; font-weight: 700; color: var(--dark); padding-right: 2rem; margin-bottom: 0; }
+  #modal-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+  #modal-close {
+    position: absolute; top: 0.9rem; right: 1rem;
+    background: none; border: none; cursor: pointer;
+    font-size: 1.4rem; line-height: 1; color: var(--muted);
+    font-family: inherit; padding: 0.2rem 0.4rem; border-radius: 4px;
+  }
+  #modal-close:hover { color: var(--dark); }
+  #modal-close:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+  #modal-body { padding: 0 1.5rem 1.5rem; }
+  .modal-lead { font-size: 0.98rem; margin-bottom: 0.3rem; }
+
+  /* The live verdict. This is what makes the detail view worth opening: it
+     answers for the answers that are set right now, not in the abstract. */
+  .modal-verdict {
+    margin: 1rem 0 0.4rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--out);
+    background: var(--light-bg);
+  }
+  .modal-verdict.v-fits   { border-left-color: var(--fits); }
+  .modal-verdict.v-unlock { border-left-color: var(--unlock); }
+  .modal-verdict .v-lead {
+    font-size: 0.7rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    display: block; margin-bottom: 0.25rem;
+  }
+  .modal-verdict .v-say { font-size: 0.95rem; font-weight: 600; }
+  .modal-verdict ul { margin: 0.5rem 0 0 1rem; font-size: 0.9rem; }
+  .modal-verdict li { margin-bottom: 0.3rem; }
+
+  .modal-sec { margin-top: 1.2rem; }
+  .modal-sec h4 {
+    font-size: 0.7rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+  .modal-sec p { font-size: 0.94rem; }
+  .modal-source { font-size: 0.82rem; color: var(--muted); }
+
+  .modal-hint { font-style: italic; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 1.5rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  footer p { margin-bottom: 0.6rem; max-width: 75ch; }
+  /* Underlined on purpose: --link and the --muted text around it are close in
+     hue, so colour alone would not mark the link. Hover darkens rather than
+     brightening, so both states clear AA. */
+  footer a { color: var(--link); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  footer a:hover { color: var(--dark); }
+
+  @media print {
+    #questions-card, #stats-bar, #modal-overlay, header a { display: none !important; }
+    body { background: white; }
+    #results-bar { position: static; }
+    .outrow { opacity: 1; cursor: default; }
+    .rescard, .outrow { break-inside: avoid; cursor: default; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .screen, #modal { animation: none; }
+    .btn:active { transform: none; }
+    * { transition: none !important; }
+  }
+
+  @media (max-width: 640px) {
+    header, #stats-bar, main { padding-left: 1rem; padding-right: 1rem; }
+    .wrap, .wrap-wide { padding-left: 1rem; padding-right: 1rem; }
+    h2 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Which Format <span>Fits Best?</span></h1>
+    <p id="page-sub"></p>
+  </div>
+  <a href="../index.html">← datawithaplot.org</a>
+</header>
+
+<section class="screen active" id="screen-intro">
+  <div class="wrap">
+    <div class="eyebrow" id="intro-eyebrow"></div>
+    <h2 id="intro-title"></h2>
+    <p class="lead" id="intro-lead"></p>
+    <button class="btn btn-primary" id="go-tool"></button>
+    <p class="muted" id="intro-note" style="font-size:0.8rem;margin-top:0.8rem;"></p>
+  </div>
+</section>
+
+<div class="screen" id="screen-tool">
+  <div class="wrap-wide">
+    <div class="card" id="questions-card">
+      <div id="filter-row"></div>
+      <div id="q-actions"></div>
+    </div>
+  </div>
+
+  <div id="zero"><p id="zero-prompt"></p></div>
+
+  <div id="results-bar">
+    <div id="stats-bar"></div>
+  </div>
+
+  <main>
+    <section class="bucket">
+      <div class="bucket-head"><h2 id="head-fits"></h2></div>
+      <p class="bucket-sub" id="sub-fits"></p>
+      <div class="card-grid" id="fits"></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-head"><h2 id="head-unlock"></h2></div>
+      <p class="bucket-sub" id="sub-unlock"></p>
+      <div class="card-grid" id="unlock"></div>
+    </section>
+    <section class="bucket">
+      <div class="bucket-head"><h2 id="head-out"></h2></div>
+      <p class="bucket-sub" id="sub-out"></p>
+      <div class="outlist" id="out"></div>
+    </section>
+  </main>
+</div>
+
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-name">
+    <div id="modal-header">
+      <button id="modal-close" onclick="closeModal()"></button>
+      <h2 id="modal-name"></h2>
+      <div id="modal-tags"></div>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<footer>
+  <p id="scope-note"></p>
+  <p><strong>Where this comes from.</strong>
+    The formats and their reach, length, and illustration-to-text ratio are drawn
+    from the delivery-formats tree (Figure 2) in
+    <a href="https://www.ncsc.org/" target="_blank" rel="noopener">Lindsey Wylie's
+    "Cultivating a Court's Data STORY," NCSC Trends in State Courts (2025)</a>.
+    The audience subgroups (novice through funder) are that chapter's Figure 3.
+    The mapping of which format suits which audience and objective is a starting
+    point meant to be argued with, not a verdict.</p>
+</footer>
+
+<script>
+// ─── Data, injected from delivery_formats.xlsx by build_format.R ─────────────
+const RULES   = __RULES_DATA__;
+const LEVELS  = __LEVELS_DATA__;
+const FORMATS = __FORMATS_DATA__;
+const COPY    = __COPY_DATA__;
+
+// A group with no entry here renders a grey dot, so every family value in the
+// workbook needs a line. The dot is decorative: the group name is spelt out
+// beside it, so these carry no contrast floor.
+const GROUP_COLORS = {
+  'Written report':        '#6B4A24',
+  'Brief & summary':       '#4F6B33',
+  'Presentation':          '#B0791C',
+  'Digital & interactive': '#4E7E92',
+  'Outreach & media':      '#BC4634',
+  'Funding':               '#8A6D3B'
+};
+
+// Illustration-to-text ratio, the tree's circle colour. Paired with its word,
+// so the colour is never the only channel.
+const ILLUS = {
+  'High':   { label: 'Mostly visual', color: '#C9A24B' },
+  'Medium': { label: 'Balanced',      color: '#4E7E92' },
+  'Low':    { label: 'Mostly text',   color: '#8A8072' }
+};
+
+const LENGTH_ORDER = { 'Short': 1, 'Medium': 2, 'Long': 3 };
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+const cell = (o, c) => String((o && o[c]) || '').trim();
+const list = v => String(v || '').split(';').map(s => s.trim()).filter(Boolean);
+const esc  = s => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const levelsOf = axis => LEVELS.filter(l => cell(l, 'axis') === axis)
+                               .sort((a, b) => a.order - b.order);
+const levelRow = (axis, v) => levelsOf(axis).find(x => cell(x, 'level_value') === v);
+const rank  = (axis, v) => { const r = levelRow(axis, v); return r ? r.order : null; };
+const label = (axis, v) => { const r = levelRow(axis, v); return r ? cell(r, 'label') : v; };
+const labels = (axis, vs) => vs.map(v => label(axis, v)).join(', ');
+// Prose forms: the dropdown labels carry a "(general public)"-style gloss that
+// reads awkwardly mid-sentence, so reason strings use the label with the
+// parenthetical stripped ("Internal", "Novice").
+const plabel  = (axis, v) => label(axis, v).replace(/\s*\([^)]*\)\s*$/, '');
+const plabels = (axis, vs) => vs.map(v => plabel(axis, v)).join(', ');
+
+// build_format.R check 5b scans this file for every key named below and asserts
+// it resolves, so a typo fails the render rather than shipping a literal
+// [key_name]. It reads two shapes: t('key') and setText('id', 'key').
+function t(key, vars) {
+  const row = COPY.find(c => cell(c, 'key') === key);
+  let s = row ? cell(row, 'text') : '[' + key + ']';
+  for (const k in (vars || {})) s = s.split('{' + k + '}').join(vars[k]);
+  return s;
+}
+
+// Axes in Rules order, deduped.
+const AXES = RULES.map(r => cell(r, 'axis')).filter((a, i, arr) => arr.indexOf(a) === i);
+const axisMeta = axis => RULES.find(r => cell(r, 'axis') === axis);
+
+// ─── One rule ────────────────────────────────────────────────────────────────
+// Returns null (passes) or a failure carrying its fail_class.
+function checkRule(item, rule, answer) {
+  const col  = cell(rule, 'rule_column');
+  const axis = cell(rule, 'axis');
+  const kind = cell(rule, 'rule_kind');
+  const cls  = cell(rule, 'fail_class');
+  const need = cell(item, col);
+
+  if (!need)   return null;   // blank cell = unconstrained
+  if (!answer) return null;   // unanswered = do not judge
+
+  const nm = cell(item, 'format_name');
+  const say = (key, vars) => ({
+    axis: axis,
+    fail_class: cls,
+    reason: cell(item, 'note_' + col) || t(key, vars),
+    short: t('short_' + col)
+  });
+
+  if (kind === 'in-list') {
+    const ok = list(need);
+    if (ok.includes(answer)) return null;
+    return say('reason_' + col, {
+      format: nm, have: plabel(axis, answer), needed: plabels(axis, ok)
+    });
+  }
+
+  if (kind === 'at-least') {
+    if (rank(axis, answer) >= rank(axis, need)) return null;
+    return say('reason_' + col, {
+      format: nm, have: plabel(axis, answer), needed: plabel(axis, need)
+    });
+  }
+
+  if (kind === 'at-most') {
+    if (rank(axis, answer) <= rank(axis, need)) return null;
+    return say('reason_' + col, {
+      format: nm, have: plabel(axis, answer), needed: plabel(axis, need)
+    });
+  }
+
+  return null;
+}
+
+// ─── The three piles ─────────────────────────────────────────────────────────
+// Intent failure (wrong audience or objective) rules a format out. A Capacity
+// failure (pitched for a different reach) is adjustable, so it lands in the
+// middle. Any Intent failure beats any Capacity failure: adapting the reach
+// would not fix the wrong audience, so listing it as adjustable would be a lie.
+function evaluate(item, answers) {
+  const failures = [];
+  RULES.forEach(rule => {
+    const r = checkRule(item, rule, answers[cell(rule, 'axis')]);
+    if (r) failures.push(r);
+  });
+  const intent   = failures.filter(f => f.fail_class === 'Intent');
+  const capacity = failures.filter(f => f.fail_class === 'Capacity');
+
+  if (intent.length)   return { bucket: 'out',    failures: intent };
+  if (capacity.length) return { bucket: 'unlock', failures: capacity, effort: capacity.length };
+  return { bucket: 'fits', failures: [] };
+}
+
+// ─── UI state ────────────────────────────────────────────────────────────────
+const items = () => FORMATS;
+
+function readFilters() {
+  const a = {};
+  AXES.forEach(ax => {
+    const el = document.getElementById('f-' + ax);
+    a[ax] = el ? el.value : '';
+  });
+  return a;
+}
+
+// ─── Build the controls from the data ────────────────────────────────────────
+// Questions come from the Rules sheet and their answers from Levels, so adding a
+// level is adding a row and never an HTML edit.
+function buildFilters() {
+  const row = document.getElementById('filter-row');
+  row.innerHTML = AXES.map(ax => {
+    const meta = axisMeta(ax);
+    const help = cell(meta, 'help_text');
+    const opts = levelsOf(ax).map(l =>
+      '<option value="' + esc(cell(l, 'level_value')) + '">' + esc(cell(l, 'label')) + '</option>'
+    ).join('');
+    return '<div class="q-field">' +
+      '<label class="q-label" for="f-' + esc(ax) + '">' + esc(cell(meta, 'axis_label')) + '</label>' +
+      (help ? '<p class="q-help" id="h-' + esc(ax) + '">' + esc(help) + '</p>' : '') +
+      '<select id="f-' + esc(ax) + '"' + (help ? ' aria-describedby="h-' + esc(ax) + '"' : '') +
+      ' onchange="applyFilters()">' +
+      '<option value="">' + esc(t('filter_any')) + '</option>' + opts + '</select></div>';
+  }).join('');
+
+  document.getElementById('q-actions').innerHTML =
+    '<button class="btn btn-outline btn-sm" onclick="clearFilters()">' +
+    esc(t('filter_clear')) + '</button>';
+}
+
+// ─── Chips: the tree's encodings ─────────────────────────────────────────────
+function lengthChip(len) {
+  const n = LENGTH_ORDER[len] || 0;
+  if (!n) return '';
+  let dots = '';
+  for (let i = 1; i <= 3; i++) dots += '<i class="' + (i <= n ? 'on' : '') + '"></i>';
+  return '<span class="chip" aria-label="Length: ' + esc(len) + '">' +
+         '<span class="meter" aria-hidden="true">' + dots + '</span>' + esc(len) + '</span>';
+}
+
+function illusChip(v) {
+  const m = ILLUS[v];
+  if (!m) return '';
+  return '<span class="chip"><span class="chip-dot" aria-hidden="true" style="background:' +
+         m.color + '"></span>' + esc(m.label) + '</span>';
+}
+
+function reachPhrase(item) {
+  const r = list(cell(item, 'reach_ok'));
+  const hasInt = r.includes('Internal') || r.includes('Both');
+  const hasExt = r.includes('External') || r.includes('Both');
+  if (hasInt && hasExt) return 'Internal & external';
+  if (hasExt) return 'External';
+  return 'Internal';
+}
+
+function reachChip(item) {
+  const phrase = reachPhrase(item);
+  return '<span class="chip" aria-label="Reach: ' + esc(phrase) + '">' + esc(phrase) + ' reach</span>';
+}
+
+function groupChip(group) {
+  if (!group) return '';
+  return '<span class="chip"><span class="chip-dot" aria-hidden="true" style="background:' +
+         (GROUP_COLORS[group] || '#6E6355') + '"></span>' + esc(group) + '</span>';
+}
+
+function metaChips(it) {
+  return lengthChip(cell(it, 'length')) + illusChip(cell(it, 'illustration')) + reachChip(it);
+}
+
+// ─── Render ──────────────────────────────────────────────────────────────────
+const openAttr = it => ' onclick="openModal(\'' + esc(cell(it, 'id')) + '\')"';
+const titleBtn = it => '<h3><button type="button" class="card-open">' +
+                       esc(cell(it, 'format_name')) + '</button></h3>';
+
+function fitsCard(r) {
+  const it = r.item;
+  let h = '<article class="rescard rescard-fits"' + openAttr(it) + '>';
+  h += '<div class="card-head">' + titleBtn(it) + groupChip(cell(it, 'family')) + '</div>';
+  h += '<p class="card-one-liner">' + esc(cell(it, 'one_liner')) + '</p>';
+  h += '<div class="card-meta">' + metaChips(it) + '</div>';
+  h += '</article>';
+  return h;
+}
+
+function closeCard(r) {
+  const it = r.item;
+  let h = '<article class="rescard rescard-unlock"' + openAttr(it) + '>';
+  h += '<div class="card-head">' + titleBtn(it) + groupChip(cell(it, 'family')) + '</div>';
+  h += '<p class="card-one-liner">' + esc(cell(it, 'one_liner')) + '</p>';
+  h += '<div class="card-meta">' + metaChips(it) + '</div>';
+  h += '<ul class="taglist">' +
+       r.failures.map(f => '<li class="tag tag-gap">' + esc(f.short) + '</li>').join('') + '</ul>';
+  h += '</article>';
+  return h;
+}
+
+function outRow(r) {
+  const it = r.item;
+  let h = '<article class="outrow"' + openAttr(it) + '>';
+  h += titleBtn(it);
+  h += '<span class="outwhy">' + esc((r.failures[0] || {}).short || '') + '</span>';
+  h += '</article>';
+  return h;
+}
+
+function nameOfId(id) {
+  const hit = FORMATS.find(x => cell(x, 'id') === id);
+  return hit ? cell(hit, 'format_name') : id;
+}
+
+function paint(sel, rows, emptyMsg, renderer) {
+  const el = document.getElementById(sel);
+  el.innerHTML = rows.length
+    ? rows.map(renderer).join('')
+    : '<p class="empty">' + esc(emptyMsg) + '</p>';
+}
+
+const anyAnswered = answers => AXES.some(ax => answers[ax]);
+
+function render() {
+  const answers = readFilters();
+
+  AXES.forEach(ax => {
+    const el = document.getElementById('f-' + ax);
+    if (el) el.classList.toggle('set', !!el.value);
+  });
+
+  // Nothing is sorted until something is said.
+  const live = anyAnswered(answers);
+  document.getElementById('zero').style.display        = live ? 'none' : '';
+  document.getElementById('results-bar').style.display = live ? '' : 'none';
+  document.querySelector('main').style.display         = live ? '' : 'none';
+  if (!live) return;
+
+  const rows = items().map(it => {
+    const r = evaluate(it, answers);
+    r.item = it;
+    return r;
+  });
+
+  const fits = rows.filter(x => x.bucket === 'fits')
+    .sort((a, b) => (LENGTH_ORDER[cell(a.item, 'length')] || 9) -
+                    (LENGTH_ORDER[cell(b.item, 'length')] || 9));
+  const unl  = rows.filter(x => x.bucket === 'unlock').sort((a, b) => a.effort - b.effort);
+  const out  = rows.filter(x => x.bucket === 'out');
+
+  paint('fits',   fits, t('empty_fits'),   fitsCard);
+  paint('unlock', unl,  t('empty_unlock'), closeCard);
+  paint('out',    out,  t('empty_out'),    outRow);
+
+  document.getElementById('stats-bar').innerHTML =
+    '<span><strong>' + fits.length + '</strong> ' + esc(t('stats_fits')) + '</span>' +
+    '<span><strong>' + unl.length  + '</strong> ' + esc(t('stats_unlock')) + '</span>' +
+    '<span><strong>' + out.length  + '</strong> ' + esc(t('stats_out')) + '</span>' +
+    '<span class="modal-hint">' + esc(t('modal_hint')) + '</span>' +
+    '<span style="margin-left:auto"><button class="btn btn-outline btn-sm" onclick="window.print()">' +
+    esc(t('btn_print')) + '</button></span>';
+}
+
+function applyFilters() { render(); if (openId) populateModal(openId); }
+
+// ─── Modal ───────────────────────────────────────────────────────────────────
+// The detail view is answer-aware. A static description would not be worth
+// opening, so the verdict at the top answers for what is set right now.
+let openId = null;
+let lastFocus = null;
+
+function openModal(id) {
+  openId = id;
+  lastFocus = document.activeElement;
+  populateModal(id);
+  document.getElementById('modal-overlay').classList.add('active');
+  document.getElementById('modal-close').focus();
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  openId = null;
+  document.getElementById('modal-overlay').classList.remove('active');
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+  lastFocus = null;
+}
+
+function sec(label, body, cls) {
+  if (!body) return '';
+  return '<div class="modal-sec ' + (cls || '') + '"><h4>' + esc(label) + '</h4>' + body + '</div>';
+}
+
+function populateModal(id) {
+  const it = FORMATS.find(x => cell(x, 'id') === id);
+  if (!it) return;
+
+  const answers = readFilters();
+  const r       = evaluate(it, answers);
+  const v       = 'v-' + r.bucket;
+
+  document.getElementById('modal-header').className = v;
+  document.getElementById('modal-name').textContent = cell(it, 'format_name');
+  document.getElementById('modal-tags').innerHTML =
+    groupChip(cell(it, 'family')) + metaChips(it);
+
+  let h = '<p class="modal-lead">' + esc(cell(it, 'one_liner')) + '</p>';
+
+  // The live verdict
+  const says = { fits: t('verdict_fits'), unlock: t('verdict_unlock'), out: t('verdict_out') };
+  const bullets = (r.failures || []).map(f => '<li>' + esc(f.reason) + '</li>');
+  h += '<div class="modal-verdict ' + v + '"><span class="v-lead">' + esc(t('modal_verdict')) + '</span>' +
+       '<span class="v-say">' + esc(says[r.bucket]) + '</span>' +
+       (bullets.length ? '<ul>' + bullets.join('') + '</ul>' : '') + '</div>';
+
+  h += sec(t('modal_good_for'), cell(it, 'good_for') ? '<p>' + esc(cell(it, 'good_for')) + '</p>' : '');
+  h += sec(t('modal_not_for'),  cell(it, 'not_for')  ? '<p>' + esc(cell(it, 'not_for'))  + '</p>' : '');
+  h += sec(t('modal_length'),   cell(it, 'typical_length') ? '<p>' + esc(cell(it, 'typical_length')) + '</p>' : '');
+
+  const auds = labels('audience', list(cell(it, 'audience_ok')));
+  h += sec(t('modal_best_audiences'), auds ? '<p>' + esc(auds) + '</p>' : '');
+
+  const objs = labels('objective', list(cell(it, 'objective_ok')));
+  const serves = reachPhrase(it) + (objs ? '. ' + objs : '');
+  h += sec(t('modal_serves'), '<p>' + esc(serves) + '</p>');
+
+  h += sec(t('modal_sources'), cell(it, 'source') ? '<p class="modal-source">' + esc(cell(it, 'source')) + '</p>' : '');
+
+  document.getElementById('modal-body').innerHTML = h;
+}
+
+document.addEventListener('keydown', e => {
+  if (!openId) return;
+  if (e.key === 'Escape') { closeModal(); return; }
+  if (e.key !== 'Tab') return;
+  // Focus trap. Without it, tabbing walks out of an aria-modal dialog and into
+  // the cards behind it, which are still there and still clickable.
+  const modal = document.getElementById('modal');
+  const f = modal.querySelectorAll('button, [href], select, input, [tabindex]:not([tabindex="-1"])');
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+
+function clearFilters() {
+  AXES.forEach(ax => { const el = document.getElementById('f-' + ax); if (el) el.value = ''; });
+  render();
+}
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+const setText = (id, key) => { document.getElementById(id).textContent = t(key); };
+setText('page-sub',      'page_sub');
+setText('intro-eyebrow', 'intro_eyebrow');
+setText('intro-title',   'intro_title');
+setText('intro-lead',    'intro_lead');
+setText('go-tool',       'intro_btn');
+setText('intro-note',    'intro_note');
+setText('zero-prompt',   'zero_prompt');
+setText('scope-note',    'scope_note');
+setText('head-fits',     'heading_fits');
+setText('sub-fits',      'heading_fits_sub');
+setText('head-unlock',   'heading_unlock');
+setText('sub-unlock',    'heading_unlock_sub');
+setText('head-out',      'heading_out');
+setText('sub-out',       'heading_out_sub');
+document.getElementById('modal-close').innerHTML = '&times;';
+document.getElementById('modal-close').setAttribute('aria-label', t('modal_close'));
+
+document.getElementById('go-tool').addEventListener('click', () => {
+  document.getElementById('screen-intro').classList.remove('active');
+  document.getElementById('screen-tool').classList.add('active');
+  const first = document.querySelector('#filter-row select');
+  if (first) first.focus();
+});
+
+buildFilters();
+render();
+</script>
+</body>
+</html>
