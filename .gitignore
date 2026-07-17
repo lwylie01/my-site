@@ -18,6 +18,9 @@ gut/trust_your_gut.html
 # Generated evaluation picker (built from Excel by evalpicker/build_eval.R on render)
 evalpicker/eval_picker.html
 
+# Generated format picker (built from Excel by formatpicker/build_format.R on render)
+formatpicker/format_picker.html
+
 # Internal/private working files — keep off the public site repo
 CV/Wylie_Capacity_Dashboard.qmd
 CV/Wylie_Capacity_Dashboard.html

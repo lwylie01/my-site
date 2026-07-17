@@ -14,6 +14,7 @@ project:
   #   howold/data/howold_items.xlsx      -> howold/how_old_is_old.html
   #   gut/data/gut_cases.xlsx            -> gut/trust_your_gut.html
   #   evalpicker/data/evaluation_approaches.xlsx -> evalpicker/eval_picker.html
+  #   formatpicker/data/delivery_formats.xlsx    -> formatpicker/format_picker.html
   # Every generated page needs a build script here AND a resources entry below,
   # or it silently stops being published. Keep both lists in sync when merging.
   pre-render:
@@ -22,6 +23,7 @@ project:
     - howold/build_howold.R
     - gut/build_gut.R
     - evalpicker/build_eval.R
+    - formatpicker/build_format.R
   resources:
     - hiphop/hiphop_periodic_table.html
     - hiphop/data/hiphop_artists.xlsx
@@ -33,6 +35,8 @@ project:
     - gut/data/gut_cases.xlsx
     - evalpicker/eval_picker.html
     - evalpicker/data/evaluation_approaches.xlsx
+    - formatpicker/format_picker.html
+    - formatpicker/data/delivery_formats.xlsx
     - "CV/Wylie CV 8.2025.pdf"
     - CNAME
 
