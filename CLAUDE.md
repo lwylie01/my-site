@@ -508,47 +508,66 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   2026 naming pass) features the periodic table and both pickers (evaluation
   and format); it is a curated highlight, so it keeps the pickers even though
   they now live on Teaching. Barnum belongs to Teaching too (14e5a48).
-- **Counted Wrong (`countedwrong/`, shipped 2026-07).** The site's first
-  long-form analysis essay, on **Pathways to Desistance** (ICPSR 29961:
-  1,354 youth, 11 waves over seven years after a serious offense, ages
-  14-26 observed, PSMI maturity measures through age 24). Pieces:
-  `index.qmd` (format html + toc; its own `ggplotly_titled()` copy;
-  `stopifnot` guards in the setup chunk so a bad CSV fails the CI render
-  instead of publishing wrong charts), `_metadata.yml` (`freeze: false`;
-  `_freeze/countedwrong/` gitignored), and `data/*.csv`: byte-identical
-  copies of the seven aggregate tables from the private `lwylie01/EAs`
-  repo (written there by `make_aggregates.R`; every cell n ≥ 10, smaller
-  cells suppressed at source; EAs has its own CI guard re-validating every
-  push). Update flow: regenerate aggregates in EAs, commit there, re-copy
-  here, verify byte-identity, push; freeze is off so CI re-renders. The
-  projects card ("Counted Wrong: The Line at 18") and the Writing page
-  essay card link to the page, and howold's reveal links it too (#51); the
-  essay links back, so that pair closes both ways. The Writing card keeps
-  the essay's own title and subtitle rather than the projects card's "The
-  Line at 18", which is deliberate: fcacd43 edited that card and left the
-  title. Hard rules
-  unchanged: person-level Pathways data is NEVER committed to any GitHub
-  repo, public or private, and Git LFS is never the answer; the public
-  site gets aggregates only. EAs remote verified clean 2026-07-14 (API
-  tree walk + full-history blob scan; the two 312 MB CSVs never landed).
-  The "Philadelphia and Phoenix, early 2000s" enrollment sentence, once
-  flagged as unverified general knowledge, was checked against the published
-  record 2026-07-18: 1,354 youth, ages 14-17 at offense, enrolled Nov 2000
-  to Jan 2003 in Philadelphia County PA and Maricopa County AZ, baseline
-  plus follow-ups to 84 months. A full value audit the same day verified
-  every prose number against the CSVs.
-  The intro figure (`countedwrong/pics/age_crime_curve_overlay.png`) is the
-  maintainer's own age-crime-curve-over-developmental-arc graphic (navy
-  version; source pptx lives in her NCSC Young Adult Deliverables folder,
-  outside the repo). Its caption deliberately dates the ~19 arrest peak to
-  the study era: the graphic's cited PPI 2018 chart shows a 20-24 bracket
-  peak for violent offenses, and the national peak has drifted older since,
-  so the caption, not the PNG, carries the reconciliation. Wording rule from
-  the audit: 14,894 person-wave records is NOT an interview count (the EAs
-  import imputes age for missed waves, and all of wave 11), so the page says
-  "followed 1,354 people across 11 interview waves" and credits only the
-  12,000+ scored interviews as completed; do not "correct" it back to "gave
-  14,894 interviews".
+- **The Maturity Gap (`countedwrong/`; shipped 2026-07 as the essay
+  "Counted Wrong", rebuilt 2026-07-18 as a chart-forward data story).** The
+  folder and URL stay `countedwrong/` so nothing external breaks; only
+  displayed names changed (same rule as selected-work). The page's two
+  objectives, maintainer-stated: teach about young adults and the
+  developmental framework in the criminal legal system implicitly through
+  the figures, and demonstrate chart diversity, viz best practices, and
+  chart selection in data storytelling. So each section is one question,
+  one chart form, and a `chart-card-note` beginning "**Why this chart:**"
+  (two sentences: why this form, one best-practice point). Eleven forms:
+  the maintainer's diagram, emphasized-line-with-gray-context, dot plot,
+  dumbbell, stat tiles, line+band, small multiples, free-scale slope
+  multiples, sequential heatmap, stacked area, and a two-panel shared-x
+  centerpiece (the dual-axis refusal). Teaching Prompt callouts, the
+  reactable table, and the CSV download links were removed deliberately
+  (maintainer: no teaching-activity framing, no public table links); do
+  not reintroduce them. Multi-series colors are the validated pair
+  `#774379`/`#c96b52` (CVD dE 52.6 on white); context lines are `#8a8a8a`
+  and always direct-labeled; plum_dark stays for single series. Machinery
+  unchanged: `index.qmd` format html + toc, its own `ggplotly_titled()`
+  copy, `stopifnot` guards extended to every CSV, `_metadata.yml`
+  (`freeze: false`; `_freeze/countedwrong/` gitignored).
+  Data is two kinds with different rules. (1) **Pathways aggregates** from
+  the private `lwylie01/EAs` repo (nine tables now: the original seven
+  plus `offending_by_age` and `capacities_by_age`, added 2026-07-18;
+  every cell n ≥ 10, suppressed at source; EAs `validate.yml` re-checks
+  every push). Update flow unchanged: regenerate in EAs, commit there,
+  re-copy here, push; freeze off so CI re-renders. `offending_by_age`
+  uses follow-up waves only (baseline SRO recall is not comparable and
+  enrollment guarantees an offense); the recall window lengthens at month
+  48, which biases the decline conservative, and the page says so. (2)
+  **Public benchmarks** in `data/public_age_benchmarks.csv`: every row
+  carries its own source citation (BJS NCJ 239423 robbery age-arrest
+  curves 1990/2000/2010 from the report's figure-12 data file; BJS NCJ
+  236096 appendix table 13; BJS NCJ 250975 tables 1 and 3; Census
+  Statistical Abstract 2012 table 7). Numbers were transcribed from the
+  named tables, never from memory; peak single-year age of all-offense
+  arrests in 2010 is 19 (641,342, NCJ 239423 table 3), which is what the
+  intro diagram's "~age 19" caption leans on. Never source from NCSC
+  products (employer COI). No CSV is publicly linked; the files exist for
+  the render.
+  Hard rules unchanged: person-level Pathways data is NEVER committed to
+  any GitHub repo, public or private, and Git LFS is never the answer; the
+  public site gets aggregates only. EAs remote verified clean 2026-07-14.
+  Study facts verified 2026-07-18 against the published record: 1,354
+  youth, ages 14-17 at offense, enrolled Nov 2000 to Jan 2003 in
+  Philadelphia County PA and Maricopa County AZ, baseline plus follow-ups
+  to 84 months. Wording rule from the same audit: 14,894 person-wave
+  records is NOT an interview count (the EAs import imputes age for missed
+  waves, and all of wave 11), so the page says "followed 1,354 people
+  across 11 interview waves" and credits only the 12,000+ scored
+  interviews as completed; do not "correct" it back to "gave 14,894
+  interviews". The intro figure
+  (`countedwrong/pics/age_crime_curve_overlay.png`) is the maintainer's
+  own graphic (navy version; source pptx in her NCSC Young Adult
+  Deliverables folder, outside the repo). Cross-links renamed with the
+  page: the projects card ("The Maturity Gap: The Line at 18"), the
+  Writing card (stays, described as a data story, maintainer's choice),
+  and howold's reveal link. The close still links How Old Is Old? and the
+  phrase "count some people wrong" stays as the echo of the old name.
 - `CV/Wylie_Capacity_Dashboard.qmd` is private: gitignored and excluded from
   rendering. Keep it and `_freeze/CV/` out of the public site.
 - `_freeze/` is tracked except `_freeze/hiphop/` and `_freeze/countedwrong/`
