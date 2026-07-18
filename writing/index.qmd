@@ -56,7 +56,7 @@ toc: false
 
   <a class="essay-card" href="#">
     <div class="essay-meta">
-      <span class="essay-tag">Aging &amp; the Law</span>
+      <span class="essay-tag">Aging and the Law</span>
       <span class="essay-read">9 min read</span>
     </div>
     <p class="essay-title">The Mercy We Wrote Down and Never Used</p>

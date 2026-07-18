@@ -62,7 +62,7 @@ toc: false
   </div>
 
   <div class="project-card">
-    <span class="project-card-tag">Applied Research · Aging &amp; the Law</span>
+    <span class="project-card-tag">Applied Research · Aging and the Law</span>
     <p class="project-card-title">A Right That Exists on Paper: Compassionate Release</p>
     <p class="project-card-desc">
       Nearly every state and the federal system has a compassionate or medical
