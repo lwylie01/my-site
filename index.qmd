@@ -70,7 +70,7 @@ editor:
     evaluations across topics in pretrial and diversion, behavioral health in courts, 
     and family violence.</p>
 
-    <p><a href="selected-work/">See selected work &amp; CV →</a></p>
+    <p><a href="selected-work/">See the plot so far: publications and CV →</a></p>
   </div>
 </div>
 ```

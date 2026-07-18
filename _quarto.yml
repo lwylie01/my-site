@@ -60,7 +60,7 @@ website:
       - href: writing/index.qmd
         text: Writing
       - href: selected-work/index.qmd
-        text: Selected Work
+        text: The Plot So Far
     right:
       - icon: github
         href: https://github.com/lwylie01
