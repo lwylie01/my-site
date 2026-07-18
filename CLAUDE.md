@@ -364,6 +364,15 @@ did "Writing" and "Projects": a second plot pun in the nav ("Plot Points") or
 renaming Projects to "Exhibits" was judged one step too cute. Keep new names
 in this register and stop before kitsch.
 
+The same naming pass reached the other pages (all July 2026, maintainer-picked
+from offered options): homepage sections are **The Premise** (was "What I Do",
+over the bio), **Start Here** (was "Featured Projects"), and **The Method**
+(was "How I Do It"); the html anchor ids (#about, #featured, #whatIdo) kept
+their old names on purpose, so links do not break. Teaching's topics section
+is **The Usual Subjects** (was "Topics I Teach and Write About"; a rejected
+candidate was "On the Syllabus"). "How I Teach" and "Teaching Materials" stay:
+already in voice.
+
 Rebuilt July 2026 from hand-coded JS arrays to a single data source. Before the
 rebuild, the timeline (`PUBS`), the citations chart (`CITES`), and the curated
 lists were three separately hand-written copies, and nine publications had
@@ -495,10 +504,10 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   load `file://`, so point it at the published page), then convert to JPEG at
   quality 88, which lands in the 42-95 KB band the others sit in:
   `chrome --headless=new --hide-scrollbars --window-size=1150,430 --screenshot=out.png <url>`.
-  The homepage "Featured Projects" grid features the periodic table and both
-  pickers (evaluation and format); it is a curated highlight, so it keeps the
-  pickers even though they now live on Teaching. Barnum belongs to Teaching too
-  (14e5a48).
+  The homepage "Start Here" grid (headed "Featured Projects" until the July
+  2026 naming pass) features the periodic table and both pickers (evaluation
+  and format); it is a curated highlight, so it keeps the pickers even though
+  they now live on Teaching. Barnum belongs to Teaching too (14e5a48).
 - **Counted Wrong (`countedwrong/`, shipped 2026-07).** The site's first
   long-form analysis essay, on **Pathways to Desistance** (ICPSR 29961:
   1,354 youth, 11 waves over seven years after a serious offense, ages

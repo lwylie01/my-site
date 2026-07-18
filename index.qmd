@@ -43,7 +43,7 @@ editor:
 </div>
 ```
 
-## What I Do {#about .section-heading}
+## The Premise {#about .section-heading}
 
 ```{=html}
 <div class="bio-block">
@@ -95,7 +95,7 @@ editor:
 </div>
 ```
 
-## Featured Projects {#featured .section-heading}
+## Start Here {#featured .section-heading}
 
 ```{=html}
 <div class="project-grid">
@@ -187,7 +187,7 @@ editor:
 </div>
 ```
 
-## How I Do It {#whatIdo .section-heading}
+## The Method {#whatIdo .section-heading}
 
 ```{=html}
 <div class="focus-grid">

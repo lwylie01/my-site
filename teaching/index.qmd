@@ -185,7 +185,7 @@ privately.
 
 ---
 
-## Topics I Teach and Write About {.section-heading}
+## The Usual Subjects {.section-heading}
 
 :::: {.columns}
 ::: {.column width="50%"}
