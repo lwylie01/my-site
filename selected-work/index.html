@@ -166,7 +166,7 @@ ul.task-list li input[type="checkbox"] {
   <h1 class="page-header-title">The Plot So Far</h1>
   <p class="page-header-sub">
     Every published work (articles, law reviews, book chapters, and the
-    book) plotted by year and organized into four research areas. Hover
+    book) plotted by year and organized into four threads. Hover
     any point for the citation; highlights follow.
   </p>
 </div>
@@ -246,7 +246,7 @@ ul.task-list li input[type="checkbox"] {
   const H = laneY + TICK_H;
 
   const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "group",
-    "aria-label": "Timeline of publications by year and research area" });
+    "aria-label": "Timeline of publications by year and thread" });
   svg.style.fontFamily = "inherit";
   // below this width the chart scrolls horizontally instead of shrinking,
   // so the text stays legible on phones
@@ -345,8 +345,8 @@ ul.task-list li input[type="checkbox"] {
     <circle cx="204" cy="10" r="3.2" fill="#E98973"></circle>
   </svg>
 </div>
-<section id="research-areas" class="level2 section-heading">
-<h2 class="section-heading anchored" data-anchor-id="research-areas">Research Areas</h2>
+<section id="the-four-threads" class="level2 section-heading">
+<h2 class="section-heading anchored" data-anchor-id="the-four-threads">The Four Threads</h2>
 <div class="container" style="max-width: 820px;">
   <h3 class="pub-area-title anchored"><span class="pub-area-dot" style="background:#8a4090;"></span>Aging and the Law</h3>
   <p class="pub-area-desc">How the legal system meets older adults: as litigants, victims, caregivers, and prisoners.</p>
@@ -454,10 +454,10 @@ ul.task-list li input[type="checkbox"] {
   </svg>
 </div>
 </section>
-<section id="program-evaluations-and-applied-research" class="level2 section-heading">
-<h2 class="section-heading anchored" data-anchor-id="program-evaluations-and-applied-research">Program Evaluations and Applied Research</h2>
+<section id="the-applied-side" class="level2 section-heading">
+<h2 class="section-heading anchored" data-anchor-id="the-applied-side">The Applied Side</h2>
 <div class="container" style="max-width: 820px;">
-  <p class="pub-area-desc" style="margin-top:0;">Program evaluation is the applied side of this record: process and outcome evaluations, assessment tools, and research briefs for courts and justice agencies, at the <a href="https://www.ncsc.org" target="_blank" rel="noopener">National Center for State Courts</a> and before that directing research for the <a href="https://www.unomaha.edu/college-of-public-affairs-and-community-service/juvenile-justice-institute/index.php" target="_blank" rel="noopener">Juvenile Justice Institute</a>'s Evidence-based Nebraska project. Most of these reports were published to agency sites that have since moved or retired them, so titles are listed here and copies are available on request.</p>
+  <p class="pub-area-desc" style="margin-top:0;">Program evaluation is where the methods meet the field: process and outcome evaluations, assessment tools, and research briefs for courts and justice agencies, at the <a href="https://www.ncsc.org" target="_blank" rel="noopener">National Center for State Courts</a> and before that directing research for the <a href="https://www.unomaha.edu/college-of-public-affairs-and-community-service/juvenile-justice-institute/index.php" target="_blank" rel="noopener">Juvenile Justice Institute</a>'s Evidence-based Nebraska project. Most of these reports were published to agency sites that have since moved or retired them, so titles are listed here and copies are available on request.</p>
   <details class="pub-all"><summary>National Center for State Courts: 9 reports</summary>
   <ul class="pub-list" style="--area:#5a6b7a;">
     <li><a class="pub-link" href="NA" target="_blank" rel="noopener">Evaluation of Alaska's Drug/DUI Felony Courts</a> (2025).</li>
@@ -506,12 +506,12 @@ ul.task-list li input[type="checkbox"] {
   </svg>
 </div>
 </section>
-<section id="citation-impact" class="level2 section-heading">
-<h2 class="section-heading anchored" data-anchor-id="citation-impact">Citation Impact</h2>
+<section id="the-paper-trail" class="level2 section-heading">
+<h2 class="section-heading anchored" data-anchor-id="the-paper-trail">The Paper Trail</h2>
 <div class="container" style="max-width: 960px;">
   <div id="citechart-card" class="chart-card">
     <p class="chart-card-tag">Figure · Citations</p>
-    <p class="chart-card-title">The twenty most-cited publications, colored by research area: about 870 citations in all</p>
+    <p class="chart-card-title">The twenty most-cited publications, colored by thread: about 870 citations in all</p>
     <div id="citechart" style="overflow-x:auto; -webkit-overflow-scrolling:touch;"></div>
     <p class="chart-card-note">
       <span id="citechart-swipe-hint" style="display:none;">Swipe the chart to see full bars. </span>
