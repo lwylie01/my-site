@@ -118,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../selected-work/index.html" aria-current="page"> 
-<span class="menu-text">Selected Work</span></a>
+<span class="menu-text">The Plot So Far</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -163,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="page-header container">
   <p class="page-header-label">Publications</p>
-  <h1 class="page-header-title">Selected Work</h1>
+  <h1 class="page-header-title">The Plot So Far</h1>
   <p class="page-header-sub">
     Every published work (articles, law reviews, book chapters, and the
     book) plotted by year and organized into four research areas. Hover
@@ -195,9 +195,22 @@ ul.task-list li input[type="checkbox"] {
 
   const years = PUBS.map(p => p.y);
   const Y0 = Math.min(...years), Y1 = Math.max(...years);
-  const W = 920, PAD_L = 16, PAD_R = 16, PAD_T = 8;
-  const LANE_LABEL_H = 32, TICK_H = 30;
-  const DOT_R = 6, STACK_GAP = 17;
+  // Area labels live in a left gutter and the years axis starts after it, so
+  // label text and data dots occupy separate columns and can never collide.
+  const W = 920, GUT_W = 196, PAD_R = 16, PAD_T = 8, TICK_H = 30;
+  const DOT_R = 6, STACK_GAP = 17, LINE_H = 16;
+
+  // simple word-wrap for the gutter labels
+  const wrapLabel = (label, max) => {
+    const lines = [];
+    let cur = "";
+    label.split(" ").forEach(w => {
+      if (cur && (cur + " " + w).length > max) { lines.push(cur); cur = w; }
+      else cur = cur ? cur + " " + w : w;
+    });
+    if (cur) lines.push(cur);
+    return lines;
+  };
 
   const ns = "http://www.w3.org/2000/svg";
   const el = (n, attrs) => {
@@ -205,7 +218,8 @@ ul.task-list li input[type="checkbox"] {
     for (const k in attrs) e.setAttribute(k, attrs[k]);
     return e;
   };
-  const xFor = y => PAD_L + ((y - Y0) / (Y1 - Y0)) * (W - PAD_L - PAD_R);
+  const X0 = GUT_W + 12, X1 = W - PAD_R - 6;
+  const xFor = y => X0 + ((y - Y0) / (Y1 - Y0)) * (X1 - X0);
 
   // lane heights sized to the deepest stack in each thread
   const stacks = {};
@@ -220,11 +234,13 @@ ul.task-list li input[type="checkbox"] {
       .filter(k => k.startsWith(t.key)).map(k => stacks[k]));
   });
 
+  // lane height fits whichever is taller: the dot stack or the wrapped label
   let laneY = PAD_T;
   const lanes = {};
   THREADS.forEach(t => {
-    const h = LANE_LABEL_H + laneMax[t.key] * STACK_GAP + 8;
-    lanes[t.key] = { top: laneY, height: h, ...t };
+    const lines = wrapLabel(t.label, 22);
+    const h = Math.max(laneMax[t.key] * STACK_GAP + 6, lines.length * LINE_H + 6) + 14;
+    lanes[t.key] = { top: laneY, height: h, lines: lines, max: laneMax[t.key], ...t };
     laneY += h;
   });
   const H = laneY + TICK_H;
@@ -249,14 +265,19 @@ ul.task-list li input[type="checkbox"] {
     }
   }
 
-  // lane separators + labels (the identity channel — text in ink, swatch carries color)
+  // lane separators + gutter labels (the identity channel — text in ink,
+  // swatch carries color), vertically centered in each lane
   THREADS.forEach((t, i) => {
     const L = lanes[t.key];
-    if (i > 0) svg.appendChild(el("line", { x1: PAD_L, y1: L.top, x2: W - PAD_R, y2: L.top, stroke: "#eee9e4", "stroke-width": 1 }));
-    svg.appendChild(el("circle", { cx: PAD_L + 6, cy: L.top + 16, r: 6, fill: t.color }));
-    const lbl = el("text", { x: PAD_L + 19, y: L.top + 21, fill: "#3C3C3C", "font-size": 16, "font-weight": 600 });
-    lbl.textContent = t.label;
-    svg.appendChild(lbl);
+    if (i > 0) svg.appendChild(el("line", { x1: 8, y1: L.top, x2: W - PAD_R, y2: L.top, stroke: "#eee9e4", "stroke-width": 1 }));
+    const mid = L.top + L.height / 2;
+    svg.appendChild(el("circle", { cx: 14, cy: mid, r: 6, fill: t.color }));
+    L.lines.forEach((line, k) => {
+      const y = mid + (k - (L.lines.length - 1) / 2) * LINE_H + 5;
+      const lbl = el("text", { x: 27, y: y, fill: "#3C3C3C", "font-size": 14.5, "font-weight": 600 });
+      lbl.textContent = line;
+      svg.appendChild(lbl);
+    });
   });
 
   // dots: series color fill + 2px surface ring; 24px transparent hit target
@@ -282,7 +303,10 @@ ul.task-list li input[type="checkbox"] {
   PUBS.forEach(p => {
     const L = lanes[p.t];
     const cx = xFor(p.y);
-    const cy = L.top + L.height - 12 - p.stackIdx * STACK_GAP;
+    // stacks grow upward from a baseline that centers the deepest stack in
+    // the lane, so single dots sit level with their gutter label
+    const base = L.top + L.height / 2 + ((L.max - 1) * STACK_GAP) / 2;
+    const cy = base - p.stackIdx * STACK_GAP;
     svg.appendChild(el("circle", { cx, cy, r: DOT_R, fill: L.color, stroke: "#ffffff", "stroke-width": 2 }));
     const hit = el("circle", { cx, cy, r: 12, fill: "transparent", tabindex: 0, role: "img",
       "aria-label": `${p.title}. ${p.venue}, ${p.y}. ${p.type}.` });
@@ -349,13 +373,11 @@ ul.task-list li input[type="checkbox"] {
     <li>Brank, E.M., &amp; <strong>Wylie, L.E.</strong> (2021). <a class="pub-link" href="https://doi.org/10.1146/annurev-lawsocsci-021721-091626" target="_blank" rel="noopener">Legal Responsibility Among the Young and the Elderly</a>. <em>Annual Review of Law and Social Science.</em></li>
     <li><strong>Wylie, L.E.</strong>, Knutson, A., &amp; Greene, E. (2018). <a class="pub-link" href="https://www.apa.org/pubs/journals/features/law-law0000161.pdf" target="_blank" rel="noopener">Extraordinary and Compelling: The Use of Compassionate Release Laws in the United States</a>. <em>Psychology, Public Policy, and Law.</em></li>
   </ul>
-  <details class="pub-all"><summary>All 12 publications in this area</summary>
+  <details class="pub-all"><summary>10 more publications in this area</summary>
   <ul class="pub-list" style="--area:#8a4090;">
     <li><strong>Wylie, L.E.</strong>, &amp; Brank, E.M. (2025). <a class="pub-link" href="https://psycnet.apa.org/record/2026-35534-000" target="_blank" rel="noopener">Aging and the Criminal Legal System: Community Services, Courts, Corrections, and Policy</a>. <em>Division 41 American Psychology-Law book series, APA.</em> <span class="pub-type">(book)</span></li>
     <li><strong>Wylie, L.E.</strong>, &amp; Hubner, S. (2023). <a class="pub-link" href="NA" target="_blank" rel="noopener">Aging Prisoners</a>. <em>Handbook of Developmental Psychology and Law.</em> <span class="pub-type">(book chapter)</span></li>
     <li>Masters, J., <strong>Wylie, L.E.</strong>, &amp; Hubner, S. (2021). <a class="pub-link" href="https://doi.org/10.1080/08959420.2021.1926864" target="_blank" rel="noopener">End-of-Life Planning: Normalizing the Process</a>. <em>Journal of Aging &amp; Social Policy.</em></li>
-    <li>Brank, E.M., &amp; <strong>Wylie, L.E.</strong> (2021). <a class="pub-link" href="https://doi.org/10.1146/annurev-lawsocsci-021721-091626" target="_blank" rel="noopener">Legal Responsibility Among the Young and the Elderly</a>. <em>Annual Review of Law and Social Science.</em></li>
-    <li><strong>Wylie, L.E.</strong>, Knutson, A., &amp; Greene, E. (2018). <a class="pub-link" href="https://www.apa.org/pubs/journals/features/law-law0000161.pdf" target="_blank" rel="noopener">Extraordinary and Compelling: The Use of Compassionate Release Laws in the United States</a>. <em>Psychology, Public Policy, and Law.</em></li>
     <li>Hamm, J., <strong>Wylie, L.E.</strong>, &amp; Brank, E.M. (2018). <a class="pub-link" href="https://doi.org/10.1177/0887403415623034" target="_blank" rel="noopener">Measuring Older Adult Confidence in the Courts and Law Enforcement</a>. <em>Criminal Justice Policy Review.</em></li>
     <li><strong>Wylie, L.E.</strong>, Brank, E.M., &amp; Bornstein, B.H. (2015). <a class="pub-link" href="https://psycnet.apa.org/record/2015-55853-002" target="_blank" rel="noopener">“Now Dear, What Do You Remember?” Patronizing Communication Toward Older Adults and Memory Performance</a>. <em>American Journal of Forensic Psychology.</em></li>
     <li><strong>Wylie, L.E.</strong>, Bergt, S., Haby, J., Brank, E.M., &amp; Bornstein, B.L. (2015). <a class="pub-link" href="https://doi.org/10.1080/1068316X.2014.989173" target="_blank" rel="noopener">Age and Lineup Type Differences in the Own-Race Bias</a>. <em>Psychology, Crime &amp; Law.</em></li>
@@ -373,19 +395,15 @@ ul.task-list li input[type="checkbox"] {
     <li><strong>Wylie, L.E.</strong>, Clinkinbeard, S., &amp; Hobbs, A. (2019). <a class="pub-link" href="https://doi.org/10.1177/0093854819859045" target="_blank" rel="noopener">The Application of Risk–Needs Programming in a Juvenile Diversion Program</a>. <em>Criminal Justice and Behavior.</em></li>
     <li><strong>Wylie, L.E.</strong>, &amp; Rufino, K.A. (2018). <a class="pub-link" href="https://doi.org/10.1037/lhb0000311" target="_blank" rel="noopener">The Impact of Victimization and Mental Health Symptoms on Recidivism for Early System-Involved Juvenile Offenders</a>. <em>Law and Human Behavior.</em></li>
   </ul>
-  <details class="pub-all"><summary>All 13 publications in this area</summary>
+  <details class="pub-all"><summary>9 more publications in this area</summary>
   <ul class="pub-list" style="--area:#c75b3f;">
-    <li>Kotlaja, M., &amp; <strong>Wylie, L.E.</strong> (2023). <a class="pub-link" href="https://doi.org/10.1177/00111287231161522" target="_blank" rel="noopener">Electronically Monitored Youth: Stigma and Negative Social Functioning</a>. <em>Crime &amp; Delinquency.</em></li>
     <li>Snyder, K.B., Rasposo-Hadley, A., Evans, C., Farrens, A., Burt, J., Armstrong, G., Garman, J., <strong>Wylie, L.E.</strong>, &amp; Foxall, M. (2022). <a class="pub-link" href="https://doi.org/10.21428/88de04a1.ba7bc0c9" target="_blank" rel="noopener">Defense, Disrespect, and #Deadly: A Qualitative Exploration of Precursors to Youth Violence Informed Through Hospital-Based Violence Prevention Program Follow Up</a>. <em>Journal of Qualitative Criminal Justice &amp; Criminology.</em></li>
-    <li>Deal, T., Cienfuegos, A., &amp; <strong>Wylie, L.E.</strong> (2022). <a class="pub-link" href="https://cdm16501.contentdm.oclc.org/digital/collection/ctadmin/id/2625" target="_blank" rel="noopener">Meeting the Needs of Emerging Adults in the Justice System</a>. <em>Trends in State Courts.</em></li>
     <li>Harris, C., &amp; <strong>Wylie, L.E.</strong> (2021). <a class="pub-link" href="https://doi.org/10.1080/24751979.2021.1952643" target="_blank" rel="noopener">Drug Testing Policies and Practices: Predicting Successful Outcomes Among Juveniles Participating in Pretrial Diversion</a>. <em>Justice Evaluation Journal.</em></li>
     <li>Reidelberger, K., Raposo-Hadley, A., Greenaway, J., Farrens, A., Burt, J., <strong>Wylie, L.E.</strong>, Armstrong, G., Foxall, M., Bauman, Z., &amp; Evans, C. (2021). <a class="pub-link" href="https://pubmed.ncbi.nlm.nih.gov/34337372/" target="_blank" rel="noopener">Perceptions of Violence in Justice-Involved Youth</a>. <em>Surgery Open Science.</em></li>
     <li>Hobbs, A., Cienfuegos, A., &amp; <strong>Wylie, L.E.</strong> (2021). <a class="pub-link" href="https://doi.org/10.1080/15564886.2021.1982097" target="_blank" rel="noopener">Variations in Victim Presence in Restorative Youth Conferencing Programs: The Use of Surrogate Victims Increases Reparation Completion</a>. <em>Victims &amp; Offenders.</em></li>
-    <li><strong>Wylie, L.E.</strong>, Clinkinbeard, S., &amp; Hobbs, A. (2019). <a class="pub-link" href="https://doi.org/10.1177/0093854819859045" target="_blank" rel="noopener">The Application of Risk–Needs Programming in a Juvenile Diversion Program</a>. <em>Criminal Justice and Behavior.</em></li>
     <li>Hobbs, A.H., Kotlaja, M., &amp; <strong>Wylie, L.E.</strong> (2018). <a class="pub-link" href="https://doi.org/10.1080/24751979.2018.1517584" target="_blank" rel="noopener">Absenteeism Interventions: An Approach for Common Definitions in Statewide Program Evaluations</a>. <em>Justice Evaluation Journal.</em></li>
     <li><strong>Wylie, L.E.</strong>, &amp; Armstrong, G. (2018). <a class="pub-link" href="NA" target="_blank" rel="noopener">Child-to-Parent Violence: A Summary of Empirical Findings, Legal Issues, and Directions for Future Research</a>. <em>Contemporary Issues in Criminology.</em> <span class="pub-type">(book chapter)</span></li>
     <li>Armstrong, G.A., Cain, C.M., <strong>Wylie, L.E.</strong>, Muftic, L.R., &amp; Bouffard, L.A. (2018). <a class="pub-link" href="https://www.sciencedirect.com/science/article/abs/pii/S0047235218301107" target="_blank" rel="noopener">Risk Factor Profile of Youth Incarcerated for Child to Parent Violence: A Nationally Representative Sample</a>. <em>Journal of Criminal Justice.</em></li>
-    <li><strong>Wylie, L.E.</strong>, &amp; Rufino, K.A. (2018). <a class="pub-link" href="https://doi.org/10.1037/lhb0000311" target="_blank" rel="noopener">The Impact of Victimization and Mental Health Symptoms on Recidivism for Early System-Involved Juvenile Offenders</a>. <em>Law and Human Behavior.</em></li>
     <li>Brank, E.M., Hoetger, L., Scott, B.L., &amp; <strong>Wylie, L.E.</strong> (2015). <a class="pub-link" href="NA" target="_blank" rel="noopener">Using Mail Surveys to Assess Perceptions of Law Enforcement Officers and Prosecuting Attorneys Regarding Parental Involvement Laws</a>. <em>“There Ought to Be a Law!” (Miller, Ed.).</em> <span class="pub-type">(book chapter)</span></li>
     <li><strong>Wylie, L.E.</strong>, Gibson, C.L., Brank, E.M., Smith, S.W., Fondacaro, M., Brown, V.E., &amp; Miller, S.E. (2010). <a class="pub-link" href="https://doi.org/10.1177/1541204010368641" target="_blank" rel="noopener">Assessing School and Student Predictors of Weapons Reporting</a>. <em>Youth Violence and Juvenile Justice.</em></li>
   </ul>
@@ -396,10 +414,8 @@ ul.task-list li input[type="checkbox"] {
     <li><strong>Wylie, L.E.</strong> (2025). <a class="pub-link" href="https://www.ncsc.org/resources-courts/trends-state-courts" target="_blank" rel="noopener">Cultivating a Court’s Data STORY: A Guide for Court Leaders to Develop Storytelling Skills and Effective Communications</a>. <em>Trends in State Courts.</em></li>
     <li><strong>Wylie, L.E.</strong>, Hoetger, L.A., Hazen, K., Haby, J., &amp; Brank, E.M. (2018). <a class="pub-link" href="https://doi.org/10.1007/s11192-018-2685-y" target="_blank" rel="noopener">Four Decades of the Journal Law and Human Behavior: A Content Analysis</a>. <em>Scientometrics.</em></li>
   </ul>
-  <details class="pub-all"><summary>All 4 publications in this area</summary>
+  <details class="pub-all"><summary>2 more publications in this area</summary>
   <ul class="pub-list" style="--area:#0d8f76;">
-    <li><strong>Wylie, L.E.</strong> (2025). <a class="pub-link" href="https://www.ncsc.org/resources-courts/trends-state-courts" target="_blank" rel="noopener">Cultivating a Court’s Data STORY: A Guide for Court Leaders to Develop Storytelling Skills and Effective Communications</a>. <em>Trends in State Courts.</em></li>
-    <li><strong>Wylie, L.E.</strong>, Hoetger, L.A., Hazen, K., Haby, J., &amp; Brank, E.M. (2018). <a class="pub-link" href="https://doi.org/10.1007/s11192-018-2685-y" target="_blank" rel="noopener">Four Decades of the Journal Law and Human Behavior: A Content Analysis</a>. <em>Scientometrics.</em></li>
     <li>Andersen, J., <strong>Wylie, L.E.</strong>, &amp; Brank, E.M. (2017). <a class="pub-link" href="https://doi.org/10.1080/23311886.2016.1268748" target="_blank" rel="noopener">Public Health Framing and Attribution: Analysis of the First Lady’s Remarks and News Coverage on Childhood Obesity</a>. <em>Cogent Social Sciences.</em></li>
     <li>Brank, E.M., &amp; <strong>Wylie, L.E.</strong> (2013). <a class="pub-link" href="https://files.eric.ed.gov/fulltext/EJ1017045.pdf" target="_blank" rel="noopener">Let’s Discuss: How Teaching About Discussions Can Lead to Better Student Outcomes</a>. <em>Journal of Scholarship of Teaching and Learning.</em></li>
   </ul>
@@ -410,15 +426,13 @@ ul.task-list li input[type="checkbox"] {
     <li>Franck, S., &amp; <strong>Wylie, L.E.</strong> (2015). <a class="pub-link" href="https://scholarship.law.duke.edu/dlj/vol65/iss3/2/" target="_blank" rel="noopener">Predicting Outcomes in Investment Treaty Arbitration</a>. <em>Duke Law Journal.</em> <span class="pub-type">(law review)</span></li>
     <li><strong>Wylie, L.E.</strong>, &amp; Brank, E.M. (2009). <a class="pub-link" href="https://doi.org/10.1111/j.1740-1461.2009.01164.x" target="_blank" rel="noopener">Assuming Elder Care Responsibility: Am I a Caregiver?</a>. <em>Journal of Empirical Legal Studies.</em></li>
   </ul>
-  <details class="pub-all"><summary>All 7 publications in this area</summary>
+  <details class="pub-all"><summary>5 more publications in this area</summary>
   <ul class="pub-list" style="--area:#9a7d10;">
     <li><strong>Wylie, L.E.</strong>, Garman, J., Armstrong, G., Farrens, A., et al. (2022). <a class="pub-link" href="https://www.mdpi.com/2673-866X/2/4/47" target="_blank" rel="noopener">Epidemiological Criminology and COVID: A Transdisciplinary Analysis of Violent Crime and Emergency Department Admissions During COVID</a>. <em>Trauma Care.</em></li>
     <li>Reed, K., Bornstein, B.H., Jeon, A., &amp; <strong>Wylie, L.E.</strong> (2016). <a class="pub-link" href="https://pubmed.ncbi.nlm.nih.gov/27184166/" target="_blank" rel="noopener">Problem Signs in Law School: Fostering Attorney Well-being Early in Professional Training</a>. <em>International Journal of Law and Psychiatry.</em></li>
-    <li>Franck, S., &amp; <strong>Wylie, L.E.</strong> (2015). <a class="pub-link" href="https://scholarship.law.duke.edu/dlj/vol65/iss3/2/" target="_blank" rel="noopener">Predicting Outcomes in Investment Treaty Arbitration</a>. <em>Duke Law Journal.</em> <span class="pub-type">(law review)</span></li>
     <li>King, C.M., <strong>Wylie, L.E.</strong>, Brank, E.M., &amp; Heilbrun, K.S. (2014). <a class="pub-link" href="https://psycnet.apa.org/record/2014-24208-001" target="_blank" rel="noopener">Disputed Paraphilia Diagnoses and Legal Decision Making: A Case Law Survey of Paraphilia NOS, Nonconsent</a>. <em>Psychology, Public Policy, and Law.</em></li>
     <li>Laub, C., <strong>Wylie, L.E.</strong>, &amp; Bornstein, B.H. (2013). <a class="pub-link" href="https://heinonline.org/HOL/LandingPage?handle=hein.journals/lpsyr37&amp;div=7&amp;id=&amp;page=" target="_blank" rel="noopener">Can the Courts Tell an Ear from an Eye? Legal Approaches to Voice Identification Evidence</a>. <em>Law &amp; Psychology Review.</em> <span class="pub-type">(law review)</span></li>
     <li>Moberly, R., &amp; <strong>Wylie, L.E.</strong> (2011). <a class="pub-link" href="NA" target="_blank" rel="noopener">An Empirical Study of Whistleblower Policies in United States Corporate Codes of Ethics</a>. <em>Whistleblowing and Democratic Values.</em> <span class="pub-type">(book chapter)</span></li>
-    <li><strong>Wylie, L.E.</strong>, &amp; Brank, E.M. (2009). <a class="pub-link" href="https://doi.org/10.1111/j.1740-1461.2009.01164.x" target="_blank" rel="noopener">Assuming Elder Care Responsibility: Am I a Caregiver?</a>. <em>Journal of Empirical Legal Studies.</em></li>
   </ul>
   </details>
 </div>
