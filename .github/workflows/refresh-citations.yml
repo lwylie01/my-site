@@ -1,0 +1,48 @@
+# Monthly citation check for the Selected Work page.
+#
+# On the first of each month (and on demand from the Actions tab) this runs
+# selected-work/refresh_citations.R, which updates the OpenAlex reference
+# columns in selected-work/data/citations.csv. If anything changed, it opens a
+# pull request for review; it never pushes to main. The PR body lists which
+# publications moved, as a prompt to also refresh the displayed Google Scholar
+# counts (the `citations` column, which the script never edits; Scholar blocks
+# automated fetching, so those numbers stay maintainer-curated). Merging the PR
+# triggers publish.yml, which re-renders the page.
+name: Refresh citation counts
+
+on:
+  schedule:
+    - cron: "0 6 1 * *"   # 06:00 UTC on the 1st of every month
+  workflow_dispatch:        # manual run from the Actions tab
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Install R packages
+        run: Rscript -e 'install.packages("jsonlite", repos = Sys.getenv("RSPM"))'
+
+      - name: Refresh OpenAlex reference counts
+        run: Rscript selected-work/refresh_citations.R changes.md
+
+      - name: Open a pull request if counts moved
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: bot/citation-refresh
+          add-paths: selected-work/data/citations.csv
+          commit-message: "Refresh OpenAlex citation reference counts"
+          title: "Monthly citation check"
+          body-path: changes.md
+          delete-branch: true

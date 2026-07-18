@@ -45,5 +45,9 @@ _freeze/hiphop/
 # because the essay reads countedwrong/data/*.csv. Keep stray caches out.
 _freeze/countedwrong/
 
+# Selected Work freeze cache: freeze is disabled (selected-work/_metadata.yml)
+# because the page reads selected-work/data/*. Keep stray caches out.
+_freeze/selected-work/
+
 # Internal capacity dashboard freeze cache — never publish (contains project details)
 _freeze/CV/

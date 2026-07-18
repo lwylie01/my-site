@@ -348,6 +348,72 @@ review the `Formats` sheet as content, not code. The reach-as-soft choice is
 also a call, not a law: if a format that only reaches one way should be ruled
 out rather than softened, move its rule's `fail_class` to `Intent`.
 
+## Selected Work (`selected-work/`)
+
+Rebuilt July 2026 from hand-coded JS arrays to a single data source. Before the
+rebuild, the timeline (`PUBS`), the citations chart (`CITES`), and the curated
+lists were three separately hand-written copies, and nine publications had
+drifted to contradictory titles, years, or venues between them.
+
+### The pieces
+
+| File | Role |
+|---|---|
+| `selected-work/data/publications.xlsx` | Source of truth for publication metadata. Sheets: **Publications** (36 rows: id, year, area, type, title, venue, authors, url, short_label, featured, featured_order), **Areas** (4: key, label, legend_key, color, description, order), **Reports** (21 project reports for the Program Evaluations section), **Meta** (citations_source, citations_asof, scholar_url, tail_count, tail_total, ncsc_url, jji_url) |
+| `selected-work/data/citations.csv` | Citation counts, text format on purpose (a bot edits it; a binary xlsx cannot merge). `citations` is the DISPLAYED count (Google Scholar, maintainer-curated); `openalex_id` / `openalex_cited` / `openalex_fetched` are reference columns the monthly workflow refreshes and the page never shows |
+| `selected-work/index.qmd` | One validating R chunk (stopifnot, fail-loud like countedwrong) reads both files and emits `window.SW` JSON for the two chart IIFEs, the research-area sections (curated list + collapsible "All N publications"), the reports section, and the computed citation figure title and footnote. Both figures and every list render from one dataset, so they cannot contradict each other |
+| `selected-work/_metadata.yml` | `freeze: false`; `_freeze/selected-work/` is gitignored |
+| `selected-work/refresh_citations.R` | Updates the OpenAlex reference columns from the API. Never touches `citations` |
+| `.github/workflows/refresh-citations.yml` | Cron, 06:00 UTC on the 1st monthly, plus `workflow_dispatch`. Runs the refresh script and opens a PR (`bot/citation-refresh`) when counts moved; never pushes to main. The PR body lists movers as a prompt to hand-refresh the Scholar numbers and `citations_asof` |
+
+### Two authority rules learned the hard way
+
+**Titles follow the publisher-registered record (Crossref/OpenAlex), not the
+CV.** The July 2026 audit found the CV carries informal or pre-publication
+titles for at least seven works. Verified examples where the published title
+differs from the CV: "Extraordinary and Compelling: The Use of Compassionate
+Release Laws in the United States" (CV says "A review of federal and state
+compassionate release laws"), "Assessing School and Student Predictors of
+Weapons Reporting" (CV: "Individual-Level Predictors"), "Four Decades of the
+Journal Law and Human Behavior" (CV: "Forty years"), "Assuming Elder Care
+Responsibility: Am I a Caregiver?" (CV: "Assuming responsibility"), "End-of-Life
+Planning: Normalizing the Process" (CV carries a completely different working
+title; author list confirms it is the same article), "The Application of
+Risk–Needs Programming in a Juvenile Diversion Program", and "Absenteeism
+Interventions: An Approach for Common Definitions" (CV: "Common Measurement").
+Also the voice-identification law review is 2013, *Law & Psychology Review*
+vol. 37 (CV says 2012, "Psychology and Law Review"). When adding a publication,
+check Crossref (`api.crossref.org/works/DOI`) before trusting any list,
+including the CV.
+
+**Displayed citation counts are Google Scholar's and only Google Scholar's.**
+Scholar blocks automated fetching, and OpenAlex undercounts law-heavy work
+badly (Duke arbitration July 2026: OpenAlex 56 vs Scholar 159; the
+misinformation chapter, Scholar 100, is not indexed at all). Mixing sources in
+one ranked chart would be incoherent, so OpenAlex is reference-only, in the
+CSV, feeding the monthly PR. Do not "simplify" by switching the displayed
+numbers to OpenAlex.
+
+### Update checklist
+
+**Citation refresh (monthly PR or by hand):** edit the `citations` column in
+`citations.csv` from the Scholar profile, update `citations_asof` (Meta sheet),
+merge. The chart order, title, and totals recompute.
+
+**New publication:** row in Publications (id, year, area, type, publisher-record
+title, venue, CV-style authors, url, short_label) + a row in `citations.csv`
+(blank citations until it is cited; openalex_id if OpenAlex has it). Set
+`featured` + `featured_order` if it belongs in the curated list. Nothing else:
+the timeline, lists, and counts recompute.
+
+**New report:** row in the Reports sheet. Link only URLs verified live; every
+report link in the Aug 2025 CV was already dead (NCSC `__data` paths and the
+whole JJI squarespace host 404), which is why rows ship unlinked with the org
+links (Meta) carrying the section's only hyperlinks.
+
+**Area labels use "and", never "&"** (sitewide decision, July 2026); official
+journal names keep their own styling (*Crime & Delinquency* stays).
+
 ## Other site areas
 
 - `barnum/` mirrors the hiphop pattern (Excel → `build_barnum.R` → HTML) and is

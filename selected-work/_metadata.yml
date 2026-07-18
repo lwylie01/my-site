@@ -1,0 +1,7 @@
+# The page reads selected-work/data/publications.xlsx and citations.csv at
+# render time. Quarto's freeze cache only invalidates when the .qmd source
+# changes, so a frozen render would silently serve stale figures after
+# data-only edits (a citation refresh, a new publication row). Always
+# re-execute this document.
+execute:
+  freeze: false
