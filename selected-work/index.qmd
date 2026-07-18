@@ -607,7 +607,7 @@ emit('<div class="container" style="max-width: 960px;">\n',
     taught.
   </p>
 
-  <a class="cv-download" href="../CV/Wylie%20CV%208.2025.pdf" target="_blank" rel="noopener">
+  <a class="cv-download" href="../CV/Wylie%20CV%207.2026.pdf" target="_blank" rel="noopener">
     <span class="cv-download-icon">↓</span> Download CV <span class="cv-download-ext">PDF</span>
   </a>
 

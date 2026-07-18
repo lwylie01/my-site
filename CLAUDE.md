@@ -386,6 +386,14 @@ vol. 37 (CV says 2012, "Psychology and Law Review"). When adding a publication,
 check Crossref (`api.crossref.org/works/DOI`) before trusting any list,
 including the CV.
 
+Resolved 2026-07-17: the CV itself was corrected to the published titles (16
+edits, including the #Deadly title and its venue's official name, *Journal of
+Qualitative Criminal Justice & Criminology*). The corrected source is
+`Wylie CV 7.2026.docx` in the maintainer's Professional Devel folder
+(5.2026 kept untouched as history), and the site serves the matching
+`CV/Wylie CV 7.2026.pdf` (Word-exported). The paragraph above stays as the
+method note: publisher record first, every list second.
+
 **Displayed citation counts are Google Scholar's and only Google Scholar's.**
 Scholar blocks automated fetching, and OpenAlex undercounts law-heavy work
 badly (Duke arbitration July 2026: OpenAlex 56 vs Scholar 159; the

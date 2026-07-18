@@ -37,7 +37,7 @@ project:
     - evalpicker/data/evaluation_approaches.xlsx
     - formatpicker/format_picker.html
     - formatpicker/data/delivery_formats.xlsx
-    - "CV/Wylie CV 8.2025.pdf"
+    - "CV/Wylie CV 7.2026.pdf"
     - CNAME
 
 website:
