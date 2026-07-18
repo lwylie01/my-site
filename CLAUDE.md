@@ -531,9 +531,24 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   repo, public or private, and Git LFS is never the answer; the public
   site gets aggregates only. EAs remote verified clean 2026-07-14 (API
   tree walk + full-history blob scan; the two 312 MB CSVs never landed).
-  One essay detail is from general study knowledge, not repo docs, and is
-  flagged for the maintainer: the "Philadelphia and Phoenix, early 2000s"
-  enrollment sentence.
+  The "Philadelphia and Phoenix, early 2000s" enrollment sentence, once
+  flagged as unverified general knowledge, was checked against the published
+  record 2026-07-18: 1,354 youth, ages 14-17 at offense, enrolled Nov 2000
+  to Jan 2003 in Philadelphia County PA and Maricopa County AZ, baseline
+  plus follow-ups to 84 months. A full value audit the same day verified
+  every prose number against the CSVs.
+  The intro figure (`countedwrong/pics/age_crime_curve_overlay.png`) is the
+  maintainer's own age-crime-curve-over-developmental-arc graphic (navy
+  version; source pptx lives in her NCSC Young Adult Deliverables folder,
+  outside the repo). Its caption deliberately dates the ~19 arrest peak to
+  the study era: the graphic's cited PPI 2018 chart shows a 20-24 bracket
+  peak for violent offenses, and the national peak has drifted older since,
+  so the caption, not the PNG, carries the reconciliation. Wording rule from
+  the audit: 14,894 person-wave records is NOT an interview count (the EAs
+  import imputes age for missed waves, and all of wave 11), so the page says
+  "followed 1,354 people across 11 interview waves" and credits only the
+  12,000+ scored interviews as completed; do not "correct" it back to "gave
+  14,894 interviews".
 - `CV/Wylie_Capacity_Dashboard.qmd` is private: gitignored and excluded from
   rendering. Keep it and `_freeze/CV/` out of the public site.
 - `_freeze/` is tracked except `_freeze/hiphop/` and `_freeze/countedwrong/`

@@ -6,6 +6,7 @@ format:
     toc: true
     toc-depth: 2
 resources:
+  - pics/age_crime_curve_overlay.png
   - data/psmi_by_age.csv
   - data/age_score_counts_maturity.csv
   - data/age_score_counts_self_reliance.csv
@@ -105,10 +106,25 @@ hears the case, which facility takes custody, how long a record follows
 someone. The line is exact. The people crossing it are not.
 
 This page follows 1,354 young people through Pathways to Desistance, a
-study that interviewed them 11 times over seven years after a serious
-offense. At every interview they answered the same questions about
-maturity. The result is a rare thing: a measurement of growing up, taken
-on the same people, spanning the very line the law cares about.
+study that tracked them across 11 interview waves over seven years after
+a serious offense. At every interview they answered the same questions
+about maturity. The result is a rare thing: a measurement of growing up,
+taken on the same people, spanning the very line the law cares about.
+
+Criminology has a famous picture of this window. Arrests climb through the
+teens, peak, and fall as adult life takes hold. I drew that curve over the
+arc of growing up: what builds on the way to adulthood, and what fades.
+The rest of this page tests the growing-up half with data.
+
+::: {.chart-card}
+![](pics/age_crime_curve_overlay.png){fig-alt="Diagram spanning ages 12 to 30. A blue arch runs from a circle labeled Youth to a circle labeled Adult, with supports labeled along it: developing cognitive skills, education, growing independence, increasing social ties, civic engagement, employment, marriage, family. An orange age-crime curve rises to a peak arrest rate near age 19 and falls, with risk factors labeled below: trauma, impulsive acts, peer pressure, risk-taking behavior, reward-seeking behavior. A bracket marks the maturity gap, ages 18 to 25." width="100%"}
+<p class="chart-card-note">The classic age-crime curve, drawn over the
+developmental arc from youth to adult. Arrest rates peaked near 19 when
+this cohort was crossing these ages in the early 2000s; the national peak
+has drifted older since. Sources: FBI UCR arrest data via the Prison
+Policy Initiative; developmental framework from the Emerging Adult Justice
+Project and the Annie E. Casey Foundation.</p>
+:::
 
 ## The Study {.section-heading}
 
@@ -389,10 +405,13 @@ output anything person-shaped.
 - Every published cell covers at least 10 interviews. Smaller cells were
   suppressed at the source, which is why some heatmap cells are blank.
 - The unit is the interview, not the person. Someone interviewed twice
-  while 18 counts twice in the age 18 column. In total, 1,354 people gave
-  14,894 interviews, and more than 12,000 of those carry a maturity score.
+  while 18 counts twice in the age 18 column. In total the study followed
+  1,354 people across 11 interview waves, and more than 12,000 completed
+  interviews carry a maturity score.
 - Ages pool the panel: the age 18 column holds everyone who was 18 at any
-  of their interviews, whichever wave that was.
+  of their interviews, whichever wave that was. In the cohort chart, ages
+  at missed interviews are carried forward from baseline age plus elapsed
+  time, so every wave counts all 1,354 people.
 
 ::: {.callout-note title="Data Ethics: Why Cells Disappear"}
 Ten is not a magic number. It is a promise: no published cell small enough
