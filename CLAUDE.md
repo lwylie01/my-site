@@ -355,6 +355,15 @@ the complete record (title plays on the site name; the navbar entry and the
 homepage link say "The Plot So Far" too). **The folder and URL stay
 `selected-work/`** so nothing external breaks; only displayed names changed.
 
+Section names follow the same register as the Counted Wrong headings (short,
+concrete, a little literary): **The Four Threads** (was "Research Areas"; the
+figures say "by thread" to match), **The Applied Side** (was "Program
+Evaluations and Applied Research"), **The Paper Trail** (was "Citation
+Impact"). **Curriculum Vitae keeps its proper name**, maintainer's choice, as
+did "Writing" and "Projects": a second plot pun in the nav ("Plot Points") or
+renaming Projects to "Exhibits" was judged one step too cute. Keep new names
+in this register and stop before kitsch.
+
 Rebuilt July 2026 from hand-coded JS arrays to a single data source. Before the
 rebuild, the timeline (`PUBS`), the citations chart (`CITES`), and the curated
 lists were three separately hand-written copies, and nine publications had
