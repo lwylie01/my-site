@@ -157,7 +157,10 @@ for (i in seq_len(nrow(areas))) {
   in_area <- pubs[pubs$area == a$key, ]
   feat <- in_area[in_area$featured, ]
   feat <- feat[order(feat$featured_order), ]
-  full <- in_area[order(-in_area$year, in_area$title), ]
+  # The expander holds only what the curated list above it does not already
+  # show, so nothing on the page repeats.
+  rest <- in_area[!in_area$featured, ]
+  rest <- rest[order(-rest$year, rest$title), ]
 
   s <- sprintf('  <h3 class="pub-area-title"><span class="pub-area-dot" style="background:%s;"></span>%s</h3>\n',
                a$color, esc(a$label))
@@ -166,10 +169,13 @@ for (i in seq_len(nrow(areas))) {
   s <- paste0(s, sprintf('  <ul class="pub-list" style="--area:%s;">\n', a$color))
   for (j in seq_len(nrow(feat))) s <- paste0(s, cite_line(feat[j, ], linked = TRUE))
   s <- paste0(s, "  </ul>\n")
-  s <- paste0(s, sprintf('  <details class="pub-all"><summary>All %d publications in this area</summary>\n', nrow(full)))
-  s <- paste0(s, sprintf('  <ul class="pub-list" style="--area:%s;">\n', a$color))
-  for (j in seq_len(nrow(full))) s <- paste0(s, cite_line(full[j, ], linked = TRUE))
-  s <- paste0(s, "  </ul>\n  </details>\n")
+  if (nrow(rest)) {
+    s <- paste0(s, sprintf('  <details class="pub-all"><summary>%d more publication%s in this area</summary>\n',
+                           nrow(rest), if (nrow(rest) == 1) "" else "s"))
+    s <- paste0(s, sprintf('  <ul class="pub-list" style="--area:%s;">\n', a$color))
+    for (j in seq_len(nrow(rest))) s <- paste0(s, cite_line(rest[j, ], linked = TRUE))
+    s <- paste0(s, "  </ul>\n  </details>\n")
+  }
   area_sections <- paste0(area_sections, s)
 }
 
@@ -219,7 +225,7 @@ reports_html <- sprintf(paste0(
 
 <div class="page-header container">
   <p class="page-header-label">Publications</p>
-  <h1 class="page-header-title">Selected Work</h1>
+  <h1 class="page-header-title">The Plot So Far</h1>
   <p class="page-header-sub">
     Every published work (articles, law reviews, book chapters, and the
     book) plotted by year and organized into four research areas. Hover
@@ -259,9 +265,22 @@ emit('<script>window.SW = ', sw_json, ';</script>\n',
 
   const years = PUBS.map(p => p.y);
   const Y0 = Math.min(...years), Y1 = Math.max(...years);
-  const W = 920, PAD_L = 16, PAD_R = 16, PAD_T = 8;
-  const LANE_LABEL_H = 32, TICK_H = 30;
-  const DOT_R = 6, STACK_GAP = 17;
+  // Area labels live in a left gutter and the years axis starts after it, so
+  // label text and data dots occupy separate columns and can never collide.
+  const W = 920, GUT_W = 196, PAD_R = 16, PAD_T = 8, TICK_H = 30;
+  const DOT_R = 6, STACK_GAP = 17, LINE_H = 16;
+
+  // simple word-wrap for the gutter labels
+  const wrapLabel = (label, max) => {
+    const lines = [];
+    let cur = "";
+    label.split(" ").forEach(w => {
+      if (cur && (cur + " " + w).length > max) { lines.push(cur); cur = w; }
+      else cur = cur ? cur + " " + w : w;
+    });
+    if (cur) lines.push(cur);
+    return lines;
+  };
 
   const ns = "http://www.w3.org/2000/svg";
   const el = (n, attrs) => {
@@ -269,7 +288,8 @@ emit('<script>window.SW = ', sw_json, ';</script>\n',
     for (const k in attrs) e.setAttribute(k, attrs[k]);
     return e;
   };
-  const xFor = y => PAD_L + ((y - Y0) / (Y1 - Y0)) * (W - PAD_L - PAD_R);
+  const X0 = GUT_W + 12, X1 = W - PAD_R - 6;
+  const xFor = y => X0 + ((y - Y0) / (Y1 - Y0)) * (X1 - X0);
 
   // lane heights sized to the deepest stack in each thread
   const stacks = {};
@@ -284,11 +304,13 @@ emit('<script>window.SW = ', sw_json, ';</script>\n',
       .filter(k => k.startsWith(t.key)).map(k => stacks[k]));
   });
 
+  // lane height fits whichever is taller: the dot stack or the wrapped label
   let laneY = PAD_T;
   const lanes = {};
   THREADS.forEach(t => {
-    const h = LANE_LABEL_H + laneMax[t.key] * STACK_GAP + 8;
-    lanes[t.key] = { top: laneY, height: h, ...t };
+    const lines = wrapLabel(t.label, 22);
+    const h = Math.max(laneMax[t.key] * STACK_GAP + 6, lines.length * LINE_H + 6) + 14;
+    lanes[t.key] = { top: laneY, height: h, lines: lines, max: laneMax[t.key], ...t };
     laneY += h;
   });
   const H = laneY + TICK_H;
@@ -313,14 +335,19 @@ emit('<script>window.SW = ', sw_json, ';</script>\n',
     }
   }
 
-  // lane separators + labels (the identity channel — text in ink, swatch carries color)
+  // lane separators + gutter labels (the identity channel — text in ink,
+  // swatch carries color), vertically centered in each lane
   THREADS.forEach((t, i) => {
     const L = lanes[t.key];
-    if (i > 0) svg.appendChild(el("line", { x1: PAD_L, y1: L.top, x2: W - PAD_R, y2: L.top, stroke: "#eee9e4", "stroke-width": 1 }));
-    svg.appendChild(el("circle", { cx: PAD_L + 6, cy: L.top + 16, r: 6, fill: t.color }));
-    const lbl = el("text", { x: PAD_L + 19, y: L.top + 21, fill: "#3C3C3C", "font-size": 16, "font-weight": 600 });
-    lbl.textContent = t.label;
-    svg.appendChild(lbl);
+    if (i > 0) svg.appendChild(el("line", { x1: 8, y1: L.top, x2: W - PAD_R, y2: L.top, stroke: "#eee9e4", "stroke-width": 1 }));
+    const mid = L.top + L.height / 2;
+    svg.appendChild(el("circle", { cx: 14, cy: mid, r: 6, fill: t.color }));
+    L.lines.forEach((line, k) => {
+      const y = mid + (k - (L.lines.length - 1) / 2) * LINE_H + 5;
+      const lbl = el("text", { x: 27, y: y, fill: "#3C3C3C", "font-size": 14.5, "font-weight": 600 });
+      lbl.textContent = line;
+      svg.appendChild(lbl);
+    });
   });
 
   // dots: series color fill + 2px surface ring; 24px transparent hit target
@@ -346,7 +373,10 @@ emit('<script>window.SW = ', sw_json, ';</script>\n',
   PUBS.forEach(p => {
     const L = lanes[p.t];
     const cx = xFor(p.y);
-    const cy = L.top + L.height - 12 - p.stackIdx * STACK_GAP;
+    // stacks grow upward from a baseline that centers the deepest stack in
+    // the lane, so single dots sit level with their gutter label
+    const base = L.top + L.height / 2 + ((L.max - 1) * STACK_GAP) / 2;
+    const cy = base - p.stackIdx * STACK_GAP;
     svg.appendChild(el("circle", { cx, cy, r: DOT_R, fill: L.color, stroke: "#ffffff", "stroke-width": 2 }));
     const hit = el("circle", { cx, cy, r: 12, fill: "transparent", tabindex: 0, role: "img",
       "aria-label": `${p.title}. ${p.venue}, ${p.y}. ${p.type}.` });

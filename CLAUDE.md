@@ -348,12 +348,28 @@ review the `Formats` sheet as content, not code. The reach-as-soft choice is
 also a call, not a law: if a format that only reaches one way should be ruled
 out rather than softened, move its rule's `fail_class` to `Intent`.
 
-## Selected Work (`selected-work/`)
+## The Plot So Far (`selected-work/`)
+
+The publications page. Renamed from "Selected Work" July 2026 once it showed
+the complete record (title plays on the site name; the navbar entry and the
+homepage link say "The Plot So Far" too). **The folder and URL stay
+`selected-work/`** so nothing external breaks; only displayed names changed.
 
 Rebuilt July 2026 from hand-coded JS arrays to a single data source. Before the
 rebuild, the timeline (`PUBS`), the citations chart (`CITES`), and the curated
 lists were three separately hand-written copies, and nine publications had
 drifted to contradictory titles, years, or venues between them.
+
+Layout notes from the same pass: the timeline keeps its **area labels in a
+left gutter** (wrapped, vertically centered per lane) with the years axis
+starting after it, because drawing labels inside the plot let dots collide
+with text. Dot stacks grow upward from a baseline that centers the deepest
+stack, so single dots sit level with their label. Each research area shows a
+curated list plus a **"N more publications in this area" expander that holds
+only what the curated list does not already show**; do not change it back to
+an all-inclusive list, repeats were the complaint that prompted it. The
+Writing page's coming-soon essay cards carry **no `href`** (they were
+`href="#"` dead links); give a card its real link when the essay ships.
 
 ### The pieces
 

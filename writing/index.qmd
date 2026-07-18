@@ -18,7 +18,7 @@ toc: false
 
 <div class="essay-grid container">
 
-  <a class="essay-card" href="#">
+  <a class="essay-card">
     <div class="essay-meta">
       <span class="essay-tag">Data Storytelling</span>
       <span class="essay-read">8 min read</span>
@@ -42,7 +42,7 @@ toc: false
     failure has consequences.</p>
   </a>
 
-  <a class="essay-card" href="#">
+  <a class="essay-card">
     <div class="essay-meta">
       <span class="essay-tag">Metrics · Policy</span>
       <span class="essay-read">7 min read</span>
@@ -54,7 +54,7 @@ toc: false
     <span class="essay-status">Coming soon</span>
   </a>
 
-  <a class="essay-card" href="#">
+  <a class="essay-card">
     <div class="essay-meta">
       <span class="essay-tag">Aging and the Law</span>
       <span class="essay-read">9 min read</span>
@@ -67,7 +67,7 @@ toc: false
     <span class="essay-status">Coming soon</span>
   </a>
 
-  <a class="essay-card" href="#">
+  <a class="essay-card">
     <div class="essay-meta">
       <span class="essay-tag">Aging · Measurement</span>
       <span class="essay-read">6 min read</span>
@@ -79,7 +79,7 @@ toc: false
     <span class="essay-status">Coming soon</span>
   </a>
 
-  <a class="essay-card" href="#">
+  <a class="essay-card">
     <div class="essay-meta">
       <span class="essay-tag">Prediction · Risk</span>
       <span class="essay-read">8 min read</span>
@@ -92,7 +92,7 @@ toc: false
     <span class="essay-status">Coming soon</span>
   </a>
 
-  <a class="essay-card" href="#">
+  <a class="essay-card">
     <div class="essay-meta">
       <span class="essay-tag">Data Storytelling · Courts</span>
       <span class="essay-read">7 min read</span>
