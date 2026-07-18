@@ -41,62 +41,147 @@ The six ideas I come back to most often:
 
 ## Teaching Materials {.section-heading}
 
-### The Hip-Hop Periodic Table: Data Storytelling Module
+Every one below is live and self-contained. Open it and try it: each is built to
+start an argument, not settle one.
 
-A complete 90-minute session built around a dataset of 173 hip-hop acts,
-each scored on five parts of lyricism. Designed for professional and
-graduate audiences.
+```{=html}
+<div class="project-grid container">
 
-**Covers:** all six ideas above.
+  <div class="project-card">
+    <span class="project-card-tag">Data Storytelling · Teaching Module</span>
+    <p class="project-card-title">The Hip-Hop Periodic Table</p>
+    <p class="project-card-desc">
+      A 90-minute session built on a dataset of 173 hip-hop acts, each scored on
+      five parts of lyricism. It opens with a quick gut rating of a favorite
+      artist, then spends the next 45 minutes on the real question: what did you
+      just measure? By the end the room is debating construct validity using its
+      own performance measures.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Full session</span>
+    </div>
+    <br>
+    <a href="../hiphop/hiphop_periodic_table.html" style="font-weight:600; color:#8C6A8D;">
+      Explore the periodic table →
+    </a>
+    <p style="font-size:0.85rem; margin-top:0.5rem; color:#6b7280;">
+      Companion materials:
+      <a href="../hiphop/hiphop_dashboard.html">analytics dashboard</a> ·
+      <a href="../hiphop/data_dictionary.html">data dictionary</a>
+    </p>
+  </div>
 
-**The materials:**
+  <div class="project-card">
+    <span class="project-card-tag">Measurement · Cold Open</span>
+    <p class="project-card-title">The Barnum Test</p>
+    <p class="project-card-desc">
+      A short exercise that builds a personalized profile, asks how accurate it
+      feels, then reveals that everyone got the same profile and the ratings were
+      never used at all. The point is not that people were fooled. It is that a
+      measure everyone scores high on has not measured anyone. Works as a cold
+      open before the longer session, or on its own.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>HTML / JS</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Construct validity</span>
+    </div>
+    <br>
+    <a href="../barnum/barnum_test.html" style="font-weight:600; color:#8C6A8D;">
+      Take the Barnum Test →
+    </a>
+  </div>
 
-- [Interactive periodic table](../hiphop/hiphop_periodic_table.html): the branded, filterable artist table
-- [Analytics dashboard](../hiphop/hiphop_dashboard.html): a companion Quarto dashboard with charts
-- [Data dictionary](../hiphop/data_dictionary.html): what each score means, how scores were assigned, how much to trust them, and known biases
-- Excel workbook: the full dataset (Artist Database, Confidence Guide, and Data Dictionary sheets)
+  <div class="project-card">
+    <span class="project-card-tag">Measurement · Aging</span>
+    <p class="project-card-title">How Old Is Old?</p>
+    <p class="project-card-desc">
+      Set a slider to the age at which someone becomes "old," "a senior," "too old
+      to drive," or "too old to start over." The answers show how little we agree,
+      and how the law pins hard numbers (18, 50, 65) onto a boundary nature never
+      drew. A study in turning a fuzzy idea into an exact number.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>HTML / JS</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Short exercise</span>
+    </div>
+    <br>
+    <a href="../howold/how_old_is_old.html" style="font-weight:600; color:#8C6A8D;">
+      Try How Old Is Old? →
+    </a>
+  </div>
+
+  <div class="project-card">
+    <span class="project-card-tag">Prediction · Risk</span>
+    <p class="project-card-title">Trust Your Gut?</p>
+    <p class="project-card-desc">
+      Review realistic case files, predict who returns to court, then see your
+      accuracy scored against a simple two-variable rule that beats nearly
+      everyone. A lesson in why expert intuition keeps losing to a checklist.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>HTML / JS</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Short exercise</span>
+    </div>
+    <br>
+    <a href="../gut/trust_your_gut.html" style="font-weight:600; color:#8C6A8D;">
+      Trust your gut? →
+    </a>
+  </div>
+
+  <div class="project-card">
+    <span class="project-card-tag">Evaluation Practice · Decision Tool</span>
+    <p class="project-card-title">Which Evaluation Should We Do?</p>
+    <p class="project-card-desc">
+      Say what you have and what you want to know, and every evaluation approach
+      lands in one of three piles: what fits, what is the wrong tool and why, and
+      what is close, with the gap named and the work to close it spelled out.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Decision tool</span>
+      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
+    </div>
+    <br>
+    <a href="../evalpicker/eval_picker.html" style="font-weight:600; color:#E98973;">
+      Open the evaluation picker →
+    </a>
+  </div>
+
+  <div class="project-card">
+    <span class="project-card-tag">Data Storytelling · Decision Tool</span>
+    <p class="project-card-title">Which Format Fits Best?</p>
+    <p class="project-card-desc">
+      Say who you are trying to reach and what you want the work to do, and every
+      delivery format sorts into three piles: the ones that fit, the ones that
+      could work with a tweak, and the ones that are the wrong tool here and why.
+    </p>
+    <div class="project-card-meta">
+      <span><span class="project-card-accent" style="background:#4F6B33;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#B0791C;"></span>Decision tool</span>
+      <span><span class="project-card-accent" style="background:#BC4634;"></span>Interactive</span>
+    </div>
+    <br>
+    <a href="../formatpicker/format_picker.html" style="font-weight:600; color:#4F6B33;">
+      Open the format picker →
+    </a>
+  </div>
+
+</div>
+```
 
 ::: {.callout-tip title="Session Design Note"}
-The session opens with a quick exercise: rate a favorite artist's lyricism
-on a scale of 1 to 10, right away, no second-guessing. Then comes the real
-question. What did you just measure? Working that out takes a good 45
-minutes, and by the end people are debating construct validity using
-their own performance measures as examples.
+The Hip-Hop session opens with a quick exercise: rate a favorite artist's
+lyricism on a scale of 1 to 10, right away, no second-guessing. Then comes the
+real question. What did you just measure? For the Barnum Test, ask for the
+accuracy ratings out loud before the reveal. People commit to a number in front
+of the room, and the reveal lands harder than it does when they rate it
+privately.
 :::
-
-### The Barnum Test: Construct Validity in 90 Seconds
-
-A short exercise that builds a personalized profile, asks how accurate it
-feels, then shows that everyone gets the same profile and that the answers
-were never used at all. Works as a cold open before the longer session, or
-on its own.
-
-**Covers:** construct validity, and why face validity is not evidence.
-
-**The materials:**
-
-- [Take the Barnum Test](../barnum/barnum_test.html): the exercise itself
-- Excel workbook: the statement bank, the research notes, and the rating
-  distribution
-
-::: {.callout-tip title="Session design note"}
-Ask for the accuracy ratings out loud before the reveal. People commit to a
-number in front of the room, and the reveal lands harder than it does when
-they rate it privately. The point is not that they were fooled. It is that a
-measure everyone scores high on has not measured anyone.
-:::
-
-### Two Shorter Exercises
-
-- **[How Old Is Old?](../howold/how_old_is_old.html)** Set a slider to the age
-  at which someone becomes "old," "a senior," "too old to drive," or "too old
-  to start over." The answers show how little we agree, and how the law pins
-  hard numbers (18, 50, 65) onto a boundary nature never drew. A study in
-  turning fuzzy ideas into exact numbers.
-- **[Trust Your Gut?](../gut/trust_your_gut.html)** Review realistic case
-  files, predict who returns to court, then see your accuracy scored against a
-  simple two-variable rule that beats nearly everyone. A lesson in why expert
-  intuition keeps losing to a checklist.
 
 ---
 
