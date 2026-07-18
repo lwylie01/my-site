@@ -9,59 +9,13 @@ toc: false
   <p class="page-header-label">Work</p>
   <h1 class="page-header-title">Projects</h1>
   <p class="page-header-sub">
-    Applied research, decision tools, and documented datasets. Each one is built
-    around a real measurement question. The short classroom exercises live on the
-    <a href="../teaching/">teaching page</a>.
+    Applied research and documented datasets, each built around a real
+    measurement question. The interactive tools and classroom exercises live on
+    the <a href="../teaching/">teaching page</a>.
   </p>
 </div>
 
 <div class="project-grid container">
-
-  <div class="project-card">
-    <span class="project-card-tag">Evaluation Practice · Decision Tool</span>
-    <p class="project-card-title">Which Evaluation Should We Do?</p>
-    <p class="project-card-desc">
-      Say who needs to act on the findings, what the evaluation is for, how long
-      the program has run, what data you can get, whether you have a comparison
-      group, what you want to know, and whether the program follows an
-      evidence-based model. Every approach then lands in one of three piles: what
-      fits, what is the wrong tool and why, and what is close, with the gap named
-      and the work to close it spelled out. It will tell you that cost-benefit is
-      three steps away, and name the three steps.
-    </p>
-    <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Excel / readxl</span>
-      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
-    </div>
-    <br>
-    <a href="../evalpicker/eval_picker.html" style="font-weight:600; color:#E98973;">
-      Open the evaluation picker →
-    </a>
-  </div>
-
-  <div class="project-card">
-    <span class="project-card-tag">Data Storytelling · Decision Tool</span>
-    <p class="project-card-title">Which Format Fits Best?</p>
-    <p class="project-card-desc">
-      Say who you need to reach, how far the work has to travel, and what you need
-      it to do. Every delivery format then lands in one of three piles: the ones
-      that fit, the ones that could work once you adapt them, and the ones that
-      are the wrong tool here and why. Built from the delivery-formats tree in
-      "Cultivating a Court's Data STORY."
-    </p>
-    <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#4F6B33;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#BC4634;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#C9A24B;"></span>Excel / readxl</span>
-      <span><span class="project-card-accent" style="background:#B0791C;"></span>Interactive</span>
-    </div>
-    <br>
-    <a href="../formatpicker/format_picker.html" style="font-weight:600; color:#4F6B33;">
-      Open the format picker →
-    </a>
-  </div>
 
   <div class="project-card">
     <span class="project-card-tag">Data Storytelling · Teaching Module</span>

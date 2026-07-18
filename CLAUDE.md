@@ -194,7 +194,7 @@ bare floor.
 | `evalpicker/data/evaluation_approaches.xlsx` | Source of truth. Sheets: **Rules** (one row per rule, 8 rows over 7 axes), **Levels** (allowed values per axis, 35 rows), **Approaches** (7), **TMFs** (2; theories, models and frameworks), **Prerequisites** (what must come first, 5), **Copy** (UI strings + one `reason_*` per rule, 62). Copy went 38 to 62 in the July 2026 pass: ~15 strings were welded into the template (both empty states, the tab labels, `Any` / `Clear` / `Already done`, the stats words, the gap leads, the chain annotations) so the "words live in Excel" premise was only half true. Check 5b now enforces it. Text is HTML-escaped on every path, so no markup or links can live in a Copy string. The `<h1>` stays hardcoded like barnum's and howold's: its `<span>` cannot survive escaping, which is why `page_title` was deleted rather than wired |
 | `evalpicker/build_eval.R` | Quarto pre-render step. Validates the workbook (see below), then serializes all six sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__APPROACHES_DATA__`, `__TMFS_DATA__`, `__PREREQS_DATA__` and `__COPY_DATA__` in the template, producing `evalpicker/eval_picker.html` (gitignored; built in CI; never edit the output directly) |
 | `evalpicker/app/_template.html` | The picker's look and matching logic |
-| `index.qmd`, `projects/index.qmd` | Both link `evalpicker/eval_picker.html`. The homepage card also needs `pics/thumb-evalpicker.jpg` |
+| `index.qmd`, `teaching/index.qmd` | Both link `evalpicker/eval_picker.html` (the homepage as a featured card with `pics/thumb-evalpicker.jpg`, Teaching as a tool card). Moved off `projects/index.qmd` in the July 2026 section reshuffle: the pickers are teaching tools, so Projects now holds only the research work |
 
 ### The rules live in the workbook, not the code
 
@@ -327,7 +327,7 @@ under the private working folder, not in this repo.
 | `formatpicker/data/delivery_formats.xlsx` | Source of truth. Sheets: **Rules** (3, one per question), **Levels** (13), **Formats** (14), **Copy** (41: UI strings plus one `reason_`/`short_` per rule). Editable in Excel |
 | `formatpicker/build_format.R` | Pre-render step. Validates the workbook (checks 1-5b from `build_eval.R`, minus the prerequisite checks 6-8), serializes the four sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__FORMATS_DATA__`, `__COPY_DATA__`, producing `formatpicker/format_picker.html` (gitignored; built in CI; never edit the output) |
 | `formatpicker/app/_template.html` | The picker's look + matching logic |
-| `index.qmd`, `projects/index.qmd` | Both link `formatpicker/format_picker.html`. The homepage card also needs `pics/thumb-formatpicker.jpg` (1150x430) |
+| `index.qmd`, `teaching/index.qmd` | Both link `formatpicker/format_picker.html` (homepage featured card with `pics/thumb-formatpicker.jpg` at 1150x430; Teaching as a tool card). Like the evaluation picker, it moved off `projects/index.qmd` in the July 2026 reshuffle |
 
 ### The model
 
@@ -356,9 +356,14 @@ out rather than softened, move its rule's `fail_class` to `Intent`.
   follow it. Each is a
   `build_*.R` pre-render step plus `app/_template.html` plus `data/*.xlsx`,
   with a gitignored HTML output: edit the xlsx, CI rebuilds. howold and gut
-  shipped July 2026 (reveal punch lines maintainer-approved 2026-07), and the
-  Teaching page links both under "Two Shorter Exercises" (2026-07-15; they sat
-  there unlinked as "in development" until then). How Old Is Old? and Counted
+  shipped July 2026 (reveal punch lines maintainer-approved 2026-07). The July
+  2026 reshuffle turned the Teaching page from prose into a card grid (matching
+  Projects/Writing): it keeps the "How I Teach" intro and concept pills, then a
+  `.project-grid` of six tool cards (the Hip-Hop module cross-listed from
+  Projects, Barnum, howold, gut, and both pickers), then "Topics I Teach". The
+  per-tool session-design callouts were condensed into one after the grid.
+  Before that, howold and gut sat under a prose "Two Shorter Exercises" heading.
+  How Old Is Old? and Counted
   Wrong now link to each other: the howold link was deferred while the essay
   was still coming, so #48 corrected only its tense and #51 added the link once
   the essay was live. The link sits in howold's reveal (`#screen-2`), which is
@@ -391,8 +396,10 @@ out rather than softened, move its rule's `fail_class` to `Intent`.
   load `file://`, so point it at the published page), then convert to JPEG at
   quality 88, which lands in the 42-95 KB band the others sit in:
   `chrome --headless=new --hide-scrollbars --window-size=1150,430 --screenshot=out.png <url>`.
-  The homepage features the periodic table and the picker; Barnum belongs to
-  Teaching now (14e5a48).
+  The homepage "Featured Projects" grid features the periodic table and both
+  pickers (evaluation and format); it is a curated highlight, so it keeps the
+  pickers even though they now live on Teaching. Barnum belongs to Teaching too
+  (14e5a48).
 - **Counted Wrong (`countedwrong/`, shipped 2026-07).** The site's first
   long-form analysis essay, on **Pathways to Desistance** (ICPSR 29961:
   1,354 youth, 11 waves over seven years after a serious offense, ages
