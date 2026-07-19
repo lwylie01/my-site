@@ -1,6 +1,6 @@
 ---
 title: "Maturity Gap"
-subtitle: "Young adults in the legal system, one chart at a time"
+subtitle: "Young adults, the legal system, and the data between them"
 format:
   html:
     toc: true
@@ -143,6 +143,14 @@ legend_below <- function(fig, y = -0.28, b = 95) {
 }
 ```
 
+```{=html}
+<style>
+/* This page runs chart-forward: section prose steps down a size, and the
+   card ledes (styled in site-theme.scss) carry each section's setup. */
+section.level2 > p, main.content > p { font-size: 0.95rem; }
+</style>
+```
+
 An adult at 18. A number that changes everything: which court hears the
 case, which facility takes custody, whether a record follows case
 closure. The line is exact, but the people crossing it are not. And it
@@ -167,12 +175,11 @@ habit may not survive them.
 
 ## The Frame {.section-heading}
 
-What does the field believe happens between 12 and 30? Supports build,
-risks fade, and arrests rise and fall across the same window. I drew the
-two curves together: the arc of growing up laid over the curve of
-desistance.
-
 ::: {.chart-card}
+<p class="chart-card-lede">What does the field believe happens between 12
+and 30? Supports build, risks fade, and arrests rise and fall across the
+same window. I drew the two curves together: the arc of growing up laid
+over the curve of desistance.</p>
 ![](pics/age_crime_curve_overlay.png){fig-alt="Diagram spanning ages 12 to 30. A blue arch runs from a circle labeled Youth to a circle labeled Adult, with supports labeled along it: developing cognitive skills, education, growing independence, increasing social ties, civic engagement, employment, marriage, family. An orange age-crime curve rises to a peak arrest rate near age 19 and falls, with risk factors labeled below: trauma, impulsive acts, peer pressure, risk-taking behavior, reward-seeking behavior. A bracket marks the maturity gap, ages 18 to 25." width="100%"}
 <p class="chart-card-note">Arrest rates peaked near 19 in the years this
 story covers: in 2010, more Americans were arrested at 19 than at any
@@ -187,10 +194,9 @@ measure them. Everything after this point is measured.</p>
 
 ## The Real Curve {.section-heading}
 
-Is the famous curve real? Here it is in arrest data: robbery arrest rates
-by age, drawn for three different years.
-
 ::: {.chart-card}
+<p class="chart-card-lede">Is the famous curve real? Here it is in arrest
+data: robbery arrest rates by age, drawn for three different years.</p>
 ```{r chart-real-curve}
 #| fig-height: 4.6
 #| out-width: "100%"
@@ -240,10 +246,10 @@ lines would read as spaghetti, and spaghetti has no protagonist.</p>
 
 ## Everywhere in the System {.section-heading}
 
-How much of the system is this one age band? Ages 18 to 24 were about one
-in ten Americans, so count them at each stage.
-
 ::: {.chart-card}
+<p class="chart-card-lede">How much of the system is this one age band?
+Ages 18 to 24 were about one in ten Americans, so count them at each
+stage.</p>
 ```{r chart-overrep}
 #| fig-height: 3.6
 #| out-width: "100%"
@@ -292,10 +298,10 @@ else is measured against.</p>
 
 ## The Revolving Door {.section-heading}
 
-Who comes back? Follow everyone released from state prison in 2005 for
-nine years, and split them by how old they were on release day.
-
 ::: {.chart-card}
+<p class="chart-card-lede">Who comes back? Follow everyone released from
+state prison in 2005 for nine years, and split them by how old they were
+on release day.</p>
 ```{r chart-recidivism}
 #| fig-height: 3.8
 #| out-width: "100%"
@@ -349,15 +355,14 @@ each pair by eye.</p>
 
 ## The Study {.section-heading}
 
-The charts above count young adults from the outside. To watch growing up
-happen from the inside, you need the same people measured again and
-again. That is Pathways to Desistance
-([ICPSR study 29961](https://www.icpsr.umich.edu/web/ICPSR/studies/29961)):
-young people enrolled in the early 2000s shortly after each was found
-responsible for a serious offense, then tracked across 11 interview waves
-over seven years.
-
 ::: {.chart-card}
+<p class="chart-card-lede">The charts above count young adults from the
+outside. To watch growing up happen from the inside, you need the same
+people measured again and again. That is Pathways to Desistance
+(<a href="https://www.icpsr.umich.edu/web/ICPSR/studies/29961">ICPSR
+study 29961</a>): young people enrolled in the early 2000s shortly after
+each was found responsible for a serious offense, then tracked across 11
+interview waves over seven years.</p>
 <div style="display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:space-between;">
 <div style="flex:1 1 130px; text-align:center; padding:0.9rem 0.4rem; background:#faf8fa; border-radius:8px;">
 <div style="font-size:1.7rem; font-weight:700; color:#6b4f6c;">1,354</div>
@@ -396,10 +401,10 @@ work.
 
 ## The Curve That Keeps Climbing {.section-heading}
 
-Does maturity finish at 18? Line up all of the interviews by the age the
-person was when they gave one, and take the mean at each age.
-
 ::: {.chart-card}
+<p class="chart-card-lede">Does maturity finish at 18? Line up all of the
+interviews by the age the person was when they gave one, and take the
+mean at each age.</p>
 ```{r chart-curve}
 #| fig-height: 4.8
 #| out-width: "100%"
@@ -445,11 +450,10 @@ open.</p>
 
 ## Four Measures, One Shape {.section-heading}
 
-Do the subscales tell different stories? Almost: identity barely moves
-before 18, then does most of its growing after, but nothing flattens at
-the line.
-
 ::: {.chart-card}
+<p class="chart-card-lede">Do the subscales tell different stories?
+Almost: identity barely moves before 18, then does most of its growing
+after, but nothing flattens at the line.</p>
 ```{r chart-four-measures}
 #| fig-height: 5.6
 #| out-width: "100%"
@@ -487,11 +491,10 @@ share a scale.</p>
 
 ## What Arrives After 18 {.section-heading}
 
-Maturity is not one thing: the study also measured the capacities the
-law's line is supposed to stand for, impulse control, temperance, future
-outlook, and consideration of others.
-
 ::: {.chart-card}
+<p class="chart-card-lede">Maturity is not one thing: the study also
+measured the capacities the law's line is supposed to stand for, impulse
+control, temperance, future outlook, and consideration of others.</p>
 ```{r chart-capacities}
 #| fig-height: 3.6
 #| out-width: "100%"
@@ -532,11 +535,10 @@ the data cannot support.</p>
 
 ## The Spread Inside Every Age {.section-heading}
 
-Means are tidy; people are not. Drop the averaging: each column is an
-age, and each cell shows the share of that age's interviews landing in
-one half-point score bin.
-
 ::: {.chart-card}
+<p class="chart-card-lede">Means are tidy; people are not. Drop the
+averaging: each column is an age, and each cell shows the share of that
+age's interviews landing in one half-point score bin.</p>
 ```{r chart-heatmap}
 #| fig-height: 4.6
 #| out-width: "100%"
@@ -582,11 +584,10 @@ cells encode one magnitude; a rainbow here would encode nothing.</p>
 
 ## Same Climb, Both Sexes {.section-heading}
 
-Most of this cohort is male, 1,170 of the 1,354, so the curves above are
-mostly male curves. Split overall maturity by sex and ask whether the
-climb is a male story.
-
 ::: {.chart-card}
+<p class="chart-card-lede">Most of this cohort is male, 1,170 of the
+1,354, so the curves above are mostly male curves. Split overall maturity
+by sex and ask whether the climb is a male story.</p>
 ```{r chart-sex}
 #| fig-height: 4.6
 #| out-width: "100%"
@@ -631,11 +632,11 @@ went to panels: the series count picks the form.</p>
 
 ## One Cohort, Crossing {.section-heading}
 
-The study did not sample teenagers and adults separately; it watched one
-group cross the line. At the first interview, 92 percent of the cohort
-was under 18, and four years in, no one was.
-
 ::: {.chart-card}
+<p class="chart-card-lede">The study did not sample teenagers and adults
+separately; it watched one group cross the line. At the first interview,
+92 percent of the cohort was under 18, and four years in, no one
+was.</p>
 ```{r chart-ea-area}
 #| fig-height: 4.4
 #| out-width: "100%"
@@ -698,11 +699,11 @@ composition.</p>
 
 ## The Gap, in One Picture {.section-heading}
 
-Put the two halves of the story in one frame. As this cohort aged from 14
-to 24, the share who reported any offending fell while their measured
-maturity rose. The law's line crosses both curves mid-climb.
-
 ::: {.chart-card}
+<p class="chart-card-lede">Put the two halves of the story in one frame.
+As this cohort aged from 14 to 24, the share who reported any offending
+fell while their measured maturity rose. The law's line crosses both
+curves mid-climb.</p>
 ```{r chart-gap}
 #| fig-height: 5.6
 #| out-width: "100%"

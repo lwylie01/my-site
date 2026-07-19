@@ -512,6 +512,13 @@ h2.section-heading::after {
   font-size: 0.8rem;
 }
 
+.chart-card-lede {
+  margin: 0 0 1.1rem;
+  color: #555;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
 /* Featured book: the actual cover art. Panel tint picks up the cover's
    cream, with a faint lavender turn to echo both the art and the brand. */
 .book-feature {
