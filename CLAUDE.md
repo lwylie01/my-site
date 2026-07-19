@@ -529,7 +529,17 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   and always direct-labeled; plum_dark stays for single series. Machinery
   unchanged: `index.qmd` format html + toc, its own `ggplotly_titled()`
   copy, `stopifnot` guards extended to every CSV, `_metadata.yml`
-  (`freeze: false`; `_freeze/countedwrong/` gitignored).
+  (`freeze: false`; `_freeze/countedwrong/` gitignored). Any chart with a
+  legend must also pipe through `legend_below()` (setup chunk): ggplotly
+  parks horizontal legends on top of the x-axis title, which is exactly
+  what hit the dumbbell and stacked-area charts on first render. Voice of
+  the craft notes, maintainer-calibrated 2026-07-18: "measured with one
+  twist", field-literate for court professionals and evaluators (the
+  "maturation is not a threat to validity" line is a deliberate
+  Campbell-and-Stanley wink, as is "only legal here"); nothing cheesy, no
+  costume metaphors. The close cites Brooks et al. 2022 and Joubert,
+  Davis, and Metcalfe 2019 (storytelling as knowledge translation), both
+  verified against the PDFs before citing.
   Data is two kinds with different rules. (1) **Pathways aggregates** from
   the private `lwylie01/EAs` repo (nine tables now: the original seven
   plus `offending_by_age` and `capacities_by_age`, added 2026-07-18;
