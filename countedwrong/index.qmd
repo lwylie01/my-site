@@ -1,5 +1,5 @@
 ---
-title: "The Maturity Gap"
+title: "Maturity Gap"
 subtitle: "Young adults in the legal system, one chart at a time"
 format:
   html:
