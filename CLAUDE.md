@@ -71,12 +71,12 @@ truth**; everything else derives from it.
 | `hiphop/build_table.R` | Quarto pre-render step. Serializes the Artist Database sheet to JSON and injects it at `__RAW_DATA__` in `hiphop/table/_template.html`, producing `hiphop/hiphop_periodic_table.html` (gitignored; built in CI; never edit the output directly) |
 | `hiphop/table/_template.html` | The interactive table's look and behavior: filters, legend, tiles, modal, plus the header nav linking Home / Teaching / Dashboard / Codebook. Serializes **all** workbook columns, so new columns flow through automatically. `STYLE_COLORS` is a four-family palette (hue = lane, shade = style within it: corals = street, jades = message, purples = left field, golds = crowd; CVD-validated) shared with the dashboard's style palette |
 | `hiphop/hiphop_dashboard.qmd` | 8-page teaching dashboard (Elements only). Pages: 1 measurement, 2 sampling/bias, 3 dimensions vs composite, 4 uncertainty, 5 viz design, 6 one-more-variable (encoding-channel ladder + canon map + style fingerprints), 7 careers & longevity, 8 full data table |
-| `hiphop/data_dictionary.qmd` | Public codebook; renders the Data Dictionary sheet directly (auto-updates when the sheet changes). Also carries the how-anchors-create-scores method prose and the **Contested Calls** log (the 8 split rulings); add to that log when a coding call is genuinely arguable |
+| `hiphop/data_dictionary.qmd` | Public codebook; renders the Data Dictionary sheet directly (auto-updates when the sheet changes). Also carries the how-anchors-create-scores method prose and the **Contested Calls** log (12 split rulings as of 2026-07); add to that log when a coding call is genuinely arguable |
 | `hiphop/_metadata.yml` | `freeze: false` so data-only Excel edits still re-render the dashboard/codebook in CI. Do not remove |
 | `hiphop/data/_accuracy_worklist.md` | Internal changelog + counts. Update its header counts, style table, and Done list with every data change |
-| `projects/index.qmd` | Project card hardcodes the act counts ("173 hip-hop acts (129 solo artists and 44 groups)"). Update when counts change: nothing recomputes it. It read 130/43 from #45 to #47, but not from neglect: main had already corrected it and the #45 merge reverted the fix (see the merge hazard above) |
+| `projects/index.qmd` | Project card hardcodes the act counts ("187 hip-hop acts (143 solo artists and 44 groups)"). Update when counts change: nothing recomputes it. It read 130/43 from #45 to #47, but not from neglect: main had already corrected it and the #45 merge reverted the fix (see the merge hazard above). `teaching/index.qmd`'s session card hardcodes the total too ("a dataset of 187 hip-hop acts") |
 
-### Artist Database schema (columns A–X, one row per act)
+### Artist Database schema (columns A–Y, one row per act)
 
 `#` (next integer), `Symbol` (unique, ≤4 chars), `Artist Name` (unique),
 `Region`, `Era`, `Style`, `Production Style`, `Label`, `Debut Year`,
@@ -88,7 +88,12 @@ truth**; everything else derives from it.
 (Male/Female/Mixed), `Scene` (NYC/Philly/LA/Bay Area/South/Midwest),
 `Signature Work` ("Title (Year)"; blank only if none exists),
 `Active Through` (final active year; blank = still active),
-`Birth Year` (Elements only; Compounds blank).
+`Birth Year` (Elements only; Compounds blank),
+`Member Of` (Elements only: the Compound(s) the act belongs to when the group
+also has a row, semicolon-separated exact Compound names; in-table pairs only,
+so blank = no bond, not no group history. Stored once, on the Element side;
+the table modal derives each Compound's member list and cross-links both
+directions).
 
 Fixed vocabularies: Era = Old School / Golden Age / Late 90s / 2000s / 2010s /
 2020s, and it is derived, not judged: Era = the bracket holding the Signature
@@ -102,9 +107,9 @@ method (no NLP); anchors: Rakim rhyme=10, Aesop Rock vocab=10, Scarface
 story=10, Lil Wayne metaphor=10, Kendrick concept=10. US-scene acts only
 (sampling frame).
 
-Current state (2026-07): 173 acts = 129 Elements + 44 Compounds; 24 female
-Elements (19%); median age at signature work 25. (Every figure in this
-section re-verified against the workbook and rendered pages 2026-07-19.)
+Current state (2026-07): 187 acts = 143 Elements + 44 Compounds; 32 female
+Elements (22%); median age at signature work 25; 15 bonds. (Every figure in
+this section re-verified against the workbook and rendered pages 2026-07-19.)
 
 ### Update checklist: what to touch for each kind of change
 
@@ -113,8 +118,9 @@ section re-verified against the workbook and rendered pages 2026-07-19.)
    equal the recomputed mean; Era must equal the signature-year bracket;
    sanity: debut ≤ signature year ≤ Active Through; ages 13–45).
 2. `_accuracy_worklist.md`: header counts, style-distribution table, Done item.
-3. `projects/index.qmd`: the act counts in the project card.
-4. Dashboard bias-table gender line (currently "~19% female") if the share moves.
+3. `projects/index.qmd`: the act counts in the project card; the total is also
+   hardcoded on the `teaching/index.qmd` session card.
+4. Dashboard bias-table gender line (currently "~22% female") if the share moves.
 5. Everything else (sidebar counts, charts, table page) recomputes from data.
 
 **Adding a column (schema change):**

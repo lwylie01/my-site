@@ -278,6 +278,20 @@
     border: 1px solid var(--accent);
   }
 
+  /* Bonds: in-table group membership, both directions. Chips are real buttons
+     (keyboard-focusable); text is --link (#6b4f6c), the site's AA-safe plum. */
+  .modal-bonds { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.45rem; align-items: center; }
+  .bonds-label {
+    font-size: 0.66rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0.15rem;
+  }
+  .bond-chip {
+    font-size: 0.68rem; font-weight: 600; padding: 0.15rem 0.5rem;
+    border-radius: 10px; background: var(--light-bg); color: #6b4f6c;
+    border: 1px solid var(--accent); cursor: pointer; font-family: inherit;
+  }
+  .bond-chip:hover, .bond-chip:focus-visible { background: #6b4f6c; color: white; border-color: #6b4f6c; }
+
   #modal-body { padding: 0 1.4rem 1.2rem; }
 
   .modal-desc {
@@ -490,6 +504,7 @@
         <h2 id="modal-name"></h2>
         <div class="modal-meta" id="modal-meta"></div>
         <div class="modal-tags" id="modal-tags"></div>
+        <div class="modal-bonds" id="modal-bonds"></div>
       </div>
     </div>
     <div id="modal-body">
@@ -543,6 +558,13 @@ const CONF_COLOR = { 'H': '#2ecc71', 'M': '#f39c12', 'L': '#e74c3c' };
 function regionLabel(a) {
   const scene = a['Scene'];
   return scene && scene !== a['Region'] ? `${a['Region']} (${scene})` : a['Region'];
+}
+
+// Bonds are stored once, on the Element side ("Member Of" = Compound names,
+// semicolon-separated); a Compound's member list is derived here by scanning.
+// Only in-table pairs are recorded, so blank means no bond, not no history.
+function splitBonds(v) {
+  return v ? String(v).split(';').map(s => s.trim()).filter(Boolean) : [];
 }
 
 // ─── LAYOUT BUILDER ────────────────────────────────────────────────────────
@@ -763,6 +785,28 @@ function populateModal(id) {
     `${sigSeg}Active ${a['Debut Year']}–${spanEnd}`;
   document.getElementById('modal-tags').innerHTML = `<span class="modal-tag">${a['Style']}</span><span class="modal-tag">${a['Region']}</span><span class="modal-tag">${a['Era']}</span>`;
   document.getElementById('modal-desc').textContent = a['Description'];
+
+  const bondsWrap = document.getElementById('modal-bonds');
+  bondsWrap.innerHTML = '';
+  const bondNames = a['Type'] === 'Compound'
+    ? elements.filter(e => splitBonds(e['Member Of']).includes(a['Artist Name'])).map(e => e['Artist Name'])
+    : splitBonds(a['Member Of']);
+  if(bondNames.length) {
+    const lbl = document.createElement('span');
+    lbl.className = 'bonds-label';
+    lbl.textContent = a['Type'] === 'Compound' ? 'Bonds · members on this table' : 'Bonds · member of';
+    bondsWrap.appendChild(lbl);
+    bondNames.forEach(name => {
+      const t = artists.find(x => x['Artist Name'] === name);
+      if(!t) return;
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'bond-chip';
+      chip.textContent = `${t['Symbol']} · ${name}`;
+      chip.addEventListener('click', () => openModal(t['#']));
+      bondsWrap.appendChild(chip);
+    });
+  }
 
   const scoresHtml = SCORE_COLORS.map((dim, i) => {
     const val = a[dim] || 0;

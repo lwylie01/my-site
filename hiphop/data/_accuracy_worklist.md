@@ -1,6 +1,6 @@
 # Hip-Hop Periodic Table — Worklist
 
-`hiphop/data/hiphop_artists.xlsx`. **173 acts** = 129 Elements + 44 Compounds.
+`hiphop/data/hiphop_artists.xlsx`. **187 acts** = 143 Elements + 44 Compounds.
 (Underscore-prefixed so Quarto does not publish this internal doc.)
 
 ## Visual encoding (current)
@@ -31,6 +31,8 @@
 - [x] Dashboard page 6 "One More Variable" (2026-07): encoding-channel ladder (2-var scatter, +style color, +era facets, then the deliberate 5-var kitchen sink with the which-channel-would-you-drop prompt) plus two payoff charts (canon map: era×style dot grid, size = acts, color = mean composite; style fingerprints: diverging style×dimension deviation heatmap); style_pal added to the setup chunk mirroring the template's STYLE_COLORS (8 hues validated 2026-07: past the CVD-safe edge, worst pair Trap/Drill vs Political under protanopia, so tooltips always carry the style name); Careers renumbered to 7, Full Data Table to 8; Jazz-Rap absent from the page by design (all four acts are Compounds)
 - [x] Style taxonomy defined (2026-07): STYLE TAXONOMY block appended to the Data Dictionary sheet (8 one-line definitions with anchor acts + the pen-first vs form-first tiebreak: Abstract = strangeness in the words, Experimental = strangeness in the sound or form); Jazz-Rap defined as the era-bound early-90s movement; Trap/Drill defined as the 808-era sound family, so Rod Wave recoded Experimental→Trap/Drill (17/7 now); Smino stays Experimental with description fixed jazz-rap→soul-rap hybrid; codebook page renders the block as "The eight styles"
 - [x] Dictionary completeness pass (2026-07): last four gaps closed. Metaphor/Imagery gains its anchor (Lil Wayne = 10; was the only unanchored dimension); Type row now states the duo/trio rule (duos and trios are Compounds, including MC+producer duos); Confidence Note now states the requirement (required for every M and L act); Debut Year clarified to first release under the act's own billing (guest features do not count). All 24 columns now carry a written rule. Codebook Scoring method section now explains how anchors create scores (comparison to a fixed exemplar, not absolute rating; calibrates scorers, dimensions, and future entries; ordinal with a calibrated ceiling)
+- [x] Expansion batch 3 (+14, gap-targeted, 2026-07): Trap/Drill 7→12 (Pop Smoke, 21 Savage, Young Dolph, Sexyy Red, Ice Spice), the 2020s era 13→22, female elements 24→32 (22%; adds Sexyy Red, Ice Spice, Flo Milli, Doja Cat, Rah Digga, Gangsta Boo, Young M.A, Kamaiyah), Detroit/Chicago/St. Louis depth (Babyface Ray, King Von, Sexyy Red). All facts web-verified. Maintainer rulings logged in the codebook Contested Calls: 21 Savage → Savage Mode II, Carti → Whole Lotta Red, Ice Spice → Y2K! (album-over-EP, GloRilla precedent), Doja Cat in with Planet Her. Procedure picks without a genuine split: Pop Smoke → Meet the Woo 2 (the drill statement over the posthumous #1), Young Dolph → King of Memphis. King Von coded Gangsta/Street not Trap/Drill (story-first, the Lil Durk precedent), Carti Experimental (form-first, the Young Thug precedent). Median signature age holds at 25
+- [x] Member Of column + bonds (2026-07): column Y records the Compound(s) an Element belongs to when both have rows (semicolon-separated; in-table pairs only, so blank = no bond, not no history). 15 bonds across 14 Elements and 10 Compounds, incl. El-P's double (Company Flow; Run The Jewels), Scarface → The Geto Boys, Benny → Griselda, Aceyalone → Freestyle Fellowship, Gangsta Boo → Three 6 Mafia. Stored on the Element side only; the table modal derives each Compound's member list at render time and cross-links both directions with clickable chips (real buttons, `--link` plum on light-bg for AA). Data Dictionary row added after Birth Year
 
 ## Region shapes
 
@@ -41,11 +43,11 @@
 
 | Style | Count |
 |---|---|
-| Gangsta/Street | 47 |
-| Conscious/Lyrical | 47 |
-| Party/Pop | 26 |
-| Experimental | 17 |
+| Gangsta/Street | 51 |
+| Conscious/Lyrical | 48 |
+| Party/Pop | 29 |
+| Experimental | 18 |
 | Abstract | 13 |
 | Political | 12 |
-| Trap/Drill | 7 |
+| Trap/Drill | 12 |
 | Jazz-Rap | 4 |

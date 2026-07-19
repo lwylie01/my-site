@@ -411,7 +411,7 @@ plot_ly(conf_counts,
 bias_df <- tribble(
   ~"Bias type",        ~"Direction",                              ~"Practical implication",
   "Prestige",         "Over-represents critically acclaimed artists", "Commercial artists scored lower; vibe-first artists may be underrated",
-  "Gender",           "~19% female vs. ~50% of rap audience",    "Female artists face different critical frameworks; scores may not be comparable",
+  "Gender",           "~22% female vs. ~50% of rap audience",    "Female artists face different critical frameworks; scores may not be comparable",
   "Geography",        "East Coast + Golden Age disproportionate", "Southern and international artists underrepresented in critical canon used for scoring",
   "Language",         "English-language, US-based frame only",    "International and non-English rap is excluded from the sampling frame entirely, a documented scope decision rather than an oversight",
   "Survivorship",     "Only artists who entered critical canon",  "Regionally significant artists without national coverage are absent",
