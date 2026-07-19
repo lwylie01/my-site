@@ -508,10 +508,14 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   2026 naming pass) features the periodic table and both pickers (evaluation
   and format); it is a curated highlight, so it keeps the pickers even though
   they now live on Teaching. Barnum belongs to Teaching too (14e5a48).
-- **The Maturity Gap (`countedwrong/`; shipped 2026-07 as the essay
+- **Maturity Gap (`countedwrong/`; shipped 2026-07 as the essay
   "Counted Wrong", rebuilt 2026-07-18 as a chart-forward data story).** The
   folder and URL stay `countedwrong/` so nothing external breaks; only
-  displayed names changed (same rule as selected-work). The page's two
+  displayed names changed (same rule as selected-work). The title carries
+  **no "The"** anywhere on the site (maintainer, 2026-07-18): "The Maturity
+  Gap: The Line at 18" doubled the article and wrapped the projects card to
+  two lines on her laptop, so the page is "Maturity Gap" and the card is
+  "Maturity Gap: A Line at 18" ("A", not "The", in the subtitle too). The page's two
   objectives, maintainer-stated: teach about young adults and the
   developmental framework in the criminal legal system implicitly through
   the figures, and demonstrate chart diversity, viz best practices, and
@@ -574,7 +578,7 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   (`countedwrong/pics/age_crime_curve_overlay.png`) is the maintainer's
   own graphic (navy version; source pptx in her NCSC Young Adult
   Deliverables folder, outside the repo). Cross-links renamed with the
-  page: the projects card ("The Maturity Gap: The Line at 18"), the
+  page: the projects card ("Maturity Gap: A Line at 18"), the
   Writing card (stays, described as a data story, maintainer's choice),
   and howold's reveal link. The close still links How Old Is Old? and the
   phrase "count some people wrong" stays as the echo of the old name.
