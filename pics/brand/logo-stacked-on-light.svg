@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><g transform="translate(100,4)">
+  <g fill="none">
+    <circle cx="18" cy="68" r="4" fill="#A98BB8"></circle>
+    <circle cx="28" cy="84" r="4" fill="#A98BB8"></circle>
+    <circle cx="32" cy="52" r="4" fill="#A98BB8"></circle>
+    <circle cx="44" cy="26" r="4" fill="#A98BB8"></circle>
+    <circle cx="52" cy="46" r="4" fill="#A98BB8"></circle>
+    <circle cx="40" cy="42" r="4" fill="#B23A28"></circle>
+    <path d="M10,80 C26,80 30,34 50,34 C58,34 58,42 62,46" stroke="#2E1A47" stroke-width="3.5" stroke-linecap="round"></path>
+    <g transform="translate(62,46) rotate(45)" stroke="#2E1A47" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0,0 L-9,-20 Q0,-27 9,-20 Z"></path>
+      <line x1="0" y1="-4" x2="0" y2="-13"></line>
+      <circle cx="0" cy="-16.5" r="2.2"></circle>
+      <rect x="-7.5" y="-44" width="15" height="22" rx="6"></rect>
+    </g>
+  </g></g><text x="150" y="158" text-anchor="middle" font-family="Spectral,Georgia,serif" font-size="34" font-weight="600" fill="#2E1A47">Data <tspan font-style="italic" font-weight="400" fill="#B23A28">with a</tspan> Plot</text>
+</svg>

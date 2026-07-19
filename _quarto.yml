@@ -38,6 +38,8 @@ project:
     - formatpicker/format_picker.html
     - formatpicker/data/delivery_formats.xlsx
     - "CV/Wylie CV 7.2026.pdf"
+    - pics/brand/og-image.png
+    - pics/brand/mark-on-light.svg
     - CNAME
 
 website:
@@ -45,9 +47,10 @@ website:
   description: "Lindsey E. Wylie, J.D., Ph.D."
   favicon: favicon.svg
   site-url: https://datawithaplot.org
+  image: /pics/brand/og-image.png
 
   navbar:
-    logo: pics/logoW-clear.png
+    logo: pics/brand/mark-on-light.svg
     logo-alt: "Data with a Plot"
     title: false
     left:

@@ -107,7 +107,7 @@ reactable(
   ),
   striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
   theme = reactableTheme(
-    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
+    headerStyle = list(background = "#2E1A47", color = "#ffffff", fontWeight = "600")
   )
 )
 ```
@@ -137,7 +137,7 @@ reactable(
   ),
   striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
   theme = reactableTheme(
-    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
+    headerStyle = list(background = "#2E1A47", color = "#ffffff", fontWeight = "600")
   )
 )
 ```
@@ -175,7 +175,7 @@ reactable(
   ),
   striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
   theme = reactableTheme(
-    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
+    headerStyle = list(background = "#2E1A47", color = "#ffffff", fontWeight = "600")
   )
 )
 ```
@@ -195,7 +195,7 @@ reactable(
   ),
   striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
   theme = reactableTheme(
-    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
+    headerStyle = list(background = "#2E1A47", color = "#ffffff", fontWeight = "600")
   )
 )
 ```

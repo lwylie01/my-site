@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,600;1,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #2E1A47; }
+  /* 1200x630 — the standard Open Graph card. Regenerate with:
+     chrome --headless=new --hide-scrollbars --window-size=1200,630
+            --virtual-time-budget=2500 --screenshot=og-image.png
+            file:///.../og-image-source.html
+     Tagline note: the em dash from the staged kit image was replaced with a
+     period to match the site voice rule (no em dashes) and the homepage hero. */
+  .og {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    background: #2E1A47;
+    overflow: hidden;
+    padding: 96px 90px;
+  }
+  /* faint scatter, right side */
+  .dot { position: absolute; border-radius: 50%; background: #A98BB8; }
+  .d1 { top: 96px;  right: 300px; width: 12px; height: 12px; opacity: 0.42; }
+  .d2 { top: 150px; right: 110px; width: 20px; height: 20px; opacity: 0.55; }
+  .d3 { top: 250px; right: 205px; width: 14px; height: 14px; opacity: 0.35; }
+  .d4 { top: 300px; right: 70px;  width: 11px; height: 11px; opacity: 0.45; }
+  .d5 { top: 360px; right: 320px; width: 16px; height: 16px; opacity: 0.30; }
+  .d6 { top: 470px; right: 150px; width: 13px; height: 13px; opacity: 0.40; }
+
+  .logo { width: 560px; height: auto; display: block; }
+  .tagline {
+    position: absolute;
+    left: 90px;
+    top: 355px;
+    width: 1010px;
+    font-family: "Spectral", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 43px;
+    line-height: 1.38;
+    color: #F7F2EC;
+  }
+  .credit {
+    position: absolute;
+    left: 92px;
+    bottom: 74px;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 500;
+    font-size: 21px;
+    letter-spacing: 0.02em;
+    color: #A98BB8;
+  }
+</style>
+</head>
+<body>
+<div class="og">
+  <span class="dot d1"></span>
+  <span class="dot d2"></span>
+  <span class="dot d3"></span>
+  <span class="dot d4"></span>
+  <span class="dot d5"></span>
+  <span class="dot d6"></span>
+
+  <svg class="logo" viewBox="0 0 470 110" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(5,5)">
+      <g fill="none">
+        <circle cx="18" cy="68" r="4" fill="#A98BB8"></circle>
+        <circle cx="28" cy="84" r="4" fill="#A98BB8"></circle>
+        <circle cx="32" cy="52" r="4" fill="#A98BB8"></circle>
+        <circle cx="44" cy="26" r="4" fill="#A98BB8"></circle>
+        <circle cx="52" cy="46" r="4" fill="#A98BB8"></circle>
+        <circle cx="40" cy="42" r="4" fill="#F4715C"></circle>
+        <path d="M10,80 C26,80 30,34 50,34 C58,34 58,42 62,46" stroke="#F7F2EC" stroke-width="3.5" stroke-linecap="round"></path>
+        <g transform="translate(62,46) rotate(45)" stroke="#F7F2EC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M0,0 L-9,-20 Q0,-27 9,-20 Z"></path>
+          <line x1="0" y1="-4" x2="0" y2="-13"></line>
+          <circle cx="0" cy="-16.5" r="2.2"></circle>
+          <rect x="-7.5" y="-44" width="15" height="22" rx="6"></rect>
+        </g>
+      </g>
+    </g>
+    <text x="120" y="72" font-family="Spectral,Georgia,serif" font-size="44" font-weight="600" fill="#F7F2EC">Data <tspan font-style="italic" font-weight="400" fill="#F4715C">with a</tspan> Plot</text>
+  </svg>
+
+  <p class="tagline">Adult at 18. Senior at 65. Every bright line misses the ones in between. I tell their stories with data.</p>
+  <p class="credit">Lindsey E. Wylie, J.D., Ph.D.&nbsp;&nbsp;·&nbsp;&nbsp;datawithaplot.org</p>
+</div>
+</body>
+</html>
