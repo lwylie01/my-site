@@ -546,7 +546,19 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   Campbell-and-Stanley wink, as is "only legal here"); nothing cheesy, no
   costume metaphors. The close cites Brooks et al. 2022 and Joubert,
   Davis, and Metcalfe 2019 (storytelling as knowledge translation), both
-  verified against the PDFs before citing.
+  verified against the PDFs before citing. The narrative prose follows
+  the maintainer's own register (she supplied the intro herself,
+  2026-07-18): full sentences joined with conjunctions or semicolons
+  rather than staccato fragments (she rewrote "The line is exact. The
+  people crossing it are not." to "...exact, but..."). Her intro history
+  paragraph was lightly corrected before publishing and must stay
+  correct: the 26th Amendment lowered the VOTING age (proposed March
+  1971, ratified July 1971, the fastest ratification ever), it did not
+  define an age of majority; the age-21 default came from English common
+  law, echoed in the Fourteenth Amendment's voting text; states, not the
+  Constitution, set the age of majority and most lowered it to 18 after
+  1971. Do not revert to "signed into law" or "the Constitution defined
+  the age of majority".
   Data is two kinds with different rules. (1) **Pathways aggregates** from
   the private `lwylie01/EAs` repo (nine tables now: the original seven
   plus `offending_by_age` and `capacities_by_age`, added 2026-07-18;

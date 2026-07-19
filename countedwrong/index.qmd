@@ -143,9 +143,21 @@ legend_below <- function(fig, y = -0.28, b = 95) {
 }
 ```
 
-Adult at 18. Two words in a statute, and everything changes: which court
-hears the case, which facility takes custody, how long a record follows
-someone. The line is exact. The people crossing it are not.
+An adult at 18. A number that changes everything: which court hears the
+case, which facility takes custody, whether a record follows case
+closure. The line is exact, but the people crossing it are not. And it
+wasn't drawn because 18-year-olds present any noted difference; the age
+of majority is a legal definition, not a biological one.
+
+The line at 18, as it turns out, is younger than it looks. For most of
+American history the age of majority sat at 21, inherited from English
+common law; twenty-one is also the age the Fourteenth Amendment wrote
+into its voting provisions. Following the war drafts of WWII and
+Vietnam, public and political sentiment shifted toward voting at 18, the
+same age a person could be drafted to war. Congress proposed the 26th
+Amendment in March 1971, the states ratified it by July, faster than any
+amendment before or since, and most states soon lowered their age of
+majority to match.
 
 Each section below asks one question about young adults in the legal
 system and answers it with a chart picked for that job. Most of us pick
@@ -229,7 +241,7 @@ lines would read as spaghetti, and spaghetti has no protagonist.</p>
 ## Everywhere in the System {.section-heading}
 
 How much of the system is this one age band? Ages 18 to 24 were about one
-in ten Americans. Then count them at each stage.
+in ten Americans, so count them at each stage.
 
 ::: {.chart-card}
 ```{r chart-overrep}
@@ -377,7 +389,7 @@ in this data it runs through age 24.
 ::: {.callout-warning title="Who Is in These Numbers"}
 Everyone here was enrolled after a serious offense, in the juvenile and
 adult systems of two large metro areas (Philadelphia and Phoenix). This
-is not a portrait of all young people. It is the group the justice system
+is not a portrait of all young people; it is the group the justice system
 actually handles, which is exactly where the line at 18 does its heaviest
 work.
 :::
@@ -434,7 +446,7 @@ open.</p>
 ## Four Measures, One Shape {.section-heading}
 
 Do the subscales tell different stories? Almost: identity barely moves
-before 18, then does most of its growing after. But nothing flattens at
+before 18, then does most of its growing after, but nothing flattens at
 the line.
 
 ::: {.chart-card}
@@ -475,8 +487,8 @@ share a scale.</p>
 
 ## What Arrives After 18 {.section-heading}
 
-Maturity is not one thing. The study also measured the capacities the
-law's line is supposed to stand for: impulse control, temperance, future
+Maturity is not one thing: the study also measured the capacities the
+law's line is supposed to stand for, impulse control, temperance, future
 outlook, and consideration of others.
 
 ::: {.chart-card}
@@ -520,7 +532,7 @@ the data cannot support.</p>
 
 ## The Spread Inside Every Age {.section-heading}
 
-Means are tidy. People are not. Drop the averaging: each column is an
+Means are tidy; people are not. Drop the averaging: each column is an
 age, and each cell shows the share of that age's interviews landing in
 one half-point score bin.
 
@@ -619,9 +631,9 @@ went to panels: the series count picks the form.</p>
 
 ## One Cohort, Crossing {.section-heading}
 
-The study did not sample teenagers and adults separately. It watched one
+The study did not sample teenagers and adults separately; it watched one
 group cross the line. At the first interview, 92 percent of the cohort
-was under 18. Four years in, no one was.
+was under 18, and four years in, no one was.
 
 ::: {.chart-card}
 ```{r chart-ea-area}
@@ -687,8 +699,8 @@ composition.</p>
 ## The Gap, in One Picture {.section-heading}
 
 Put the two halves of the story in one frame. As this cohort aged from 14
-to 24, the share who reported any offending fell. Their measured maturity
-rose. The law's line crosses both curves mid-climb.
+to 24, the share who reported any offending fell while their measured
+maturity rose. The law's line crosses both curves mid-climb.
 
 ::: {.chart-card}
 ```{r chart-gap}
