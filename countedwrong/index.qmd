@@ -28,6 +28,7 @@ mean_age    <- read.csv("data/mean_age_by_wave.csv", fileEncoding = "UTF-8")
 score_grid  <- read.csv("data/age_score_counts_maturity.csv", fileEncoding = "UTF-8")
 offending   <- read.csv("data/offending_by_age.csv", fileEncoding = "UTF-8")
 capacities  <- read.csv("data/capacities_by_age.csv", fileEncoding = "UTF-8")
+psmi_sex    <- read.csv("data/psmi_by_age_sex.csv", fileEncoding = "UTF-8")
 public_bm   <- read.csv("data/public_age_benchmarks.csv", fileEncoding = "UTF-8")
 
 measure_levels <- c("maturity", "self_reliance", "identity", "work_orient")
@@ -77,6 +78,9 @@ stopifnot(
   all(offending$share_any >= 0 & offending$share_any <= 1),
   nrow(caps) == 44, !anyNA(caps$measure_f), all(caps$n >= 10),
   all(caps$mean >= 1 & caps$mean <= 5),
+  nrow(psmi_sex) == 21, all(psmi_sex$n >= 10),
+  all(psmi_sex$sex %in% c("Male", "Female")),
+  all(psmi_sex$mean >= 1 & psmi_sex$mean <= 4),
   nrow(curve_bm) == 60, !anyNA(curve_bm$age), !anyNA(curve_bm$rate),
   all(curve_bm$year %in% c("1990", "2000", "2010")),
   nrow(overrep_bm) == 4,
@@ -562,6 +566,55 @@ before this page ever saw the data, a privacy promise made visible.</p>
 because the question is distribution and a heatmap shows every age's
 whole spread at once. One sequential hue, light to dark, because the
 cells encode one magnitude; a rainbow here would encode nothing.</p>
+:::
+
+## Same Climb, Both Sexes {.section-heading}
+
+Most of this cohort is male, 1,170 of the 1,354, so the curves above are
+mostly male curves. Split overall maturity by sex and ask whether the
+climb is a male story.
+
+::: {.chart-card}
+```{r chart-sex}
+#| fig-height: 4.6
+#| out-width: "100%"
+sex_cols <- c("Male" = plum_series, "Female" = coral_dark)
+
+p_sex <- ggplot(psmi_sex, aes(x = age, y = mean, color = sex, group = sex)) +
+  geom_vline(xintercept = 18, linetype = "dotted",
+             color = "#555555", linewidth = 0.5) +
+  geom_line(linewidth = 0.9) +
+  geom_point(aes(text = paste0(
+    "<b>", sex, ", age ", age, "</b><br>",
+    "Mean score: ", sprintf("%.2f", mean), "<br>",
+    "Standard deviation: ", sprintf("%.2f", sd), "<br>",
+    "Interviews: ", format(n, big.mark = ",")
+  )), size = 1.9) +
+  annotate("text", x = 24.25, y = 3.35, label = "Male",
+           hjust = 0, size = 3.3, color = plum_series) +
+  annotate("text", x = 23.25, y = 3.44, label = "Female",
+           hjust = 0, size = 3.3, color = coral_dark) +
+  scale_color_manual(values = sex_cols, name = NULL) +
+  scale_x_continuous(breaks = seq(14, 24, 2), limits = c(14, 25.4)) +
+  scale_y_continuous(limits = c(2.85, 3.52)) +
+  labs(
+    title = "Both sexes keep climbing past 18",
+    subtitle = "Mean overall maturity by age at interview and sex; the dotted line is 18",
+    x = "Age at interview",
+    y = "Mean PSMI score"
+  ) +
+  theme_cw()
+
+ggplotly_titled(p_sex, tooltip = "text") |> clear_bg() |> legend_below()
+```
+<p class="chart-card-note">From 16 to 23 the male mean climbs from 3.06
+to 3.27 and the female mean from 3.12 to 3.37. The 184 women are
+outnumbered more than six to one, so their line runs noisier, and their
+age-24 cell fell below the ten-interview floor and is suppressed.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> two lines in
+one panel, because here the comparison is the question and both series
+share one scale. One line took a band, a pair shares a frame, and four
+went to panels: the series count picks the form.</p>
 :::
 
 ## One Cohort, Crossing {.section-heading}
