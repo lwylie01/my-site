@@ -505,9 +505,9 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   quality 88, which lands in the 42-95 KB band the others sit in:
   `chrome --headless=new --hide-scrollbars --window-size=1150,430 --screenshot=out.png <url>`.
   The homepage "Start Here" grid (headed "Featured Projects" until the July
-  2026 naming pass) features the periodic table and both pickers (evaluation
-  and format); it is a curated highlight, so it keeps the pickers even though
-  they now live on Teaching. Barnum belongs to Teaching too (14e5a48).
+  2026 naming pass) features the periodic table, both pickers (evaluation
+  and format), and Maturity Gap (card added 2026-07-18); it is a curated
+  highlight, so it keeps the pickers even though they now live on Teaching. Barnum belongs to Teaching too (14e5a48).
 - **Maturity Gap (`countedwrong/`; shipped 2026-07 as the essay
   "Counted Wrong", rebuilt 2026-07-18 as a chart-forward data story).** The
   folder and URL stay `countedwrong/` so nothing external breaks; only
@@ -521,11 +521,14 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   the figures, and demonstrate chart diversity, viz best practices, and
   chart selection in data storytelling. So each section is one question,
   one chart form, and a `chart-card-note` beginning "**Why this chart:**"
-  (two sentences: why this form, one best-practice point). Eleven forms:
+  (two sentences: why this form, one best-practice point). Twelve forms:
   the maintainer's diagram, emphasized-line-with-gray-context, dot plot,
   dumbbell, stat tiles, line+band, small multiples, free-scale slope
-  multiples, sequential heatmap, stacked area, and a two-panel shared-x
-  centerpiece (the dual-axis refusal). Teaching Prompt callouts, the
+  multiples, sequential heatmap, two-line sex comparison (Same Climb,
+  Both Sexes; from `psmi_by_age_sex`, added 2026-07-18; its 18-line is
+  dotted gray, not coral, because coral is the Female series there, the
+  same precedent the stacked area set), stacked area, and a two-panel
+  shared-x centerpiece (the dual-axis refusal). Teaching Prompt callouts, the
   reactable table, and the CSV download links were removed deliberately
   (maintainer: no teaching-activity framing, no public table links); do
   not reintroduce them. Multi-series colors are the validated pair
@@ -580,7 +583,9 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   Deliverables folder, outside the repo). Cross-links renamed with the
   page: the projects card ("Maturity Gap: A Line at 18"), the
   Writing card (stays, described as a data story, maintainer's choice),
-  and howold's reveal link. The close still links How Old Is Old? and the
+  and howold's reveal link. Since 2026-07-18 the page is also a homepage
+  Start Here card (`pics/thumb-maturitygap.jpg`, 1150x430 header
+  screenshot, JPEG q85, 87 KB). The close still links How Old Is Old? and the
   phrase "count some people wrong" stays as the echo of the old name.
 - `CV/Wylie_Capacity_Dashboard.qmd` is private: gitignored and excluded from
   rendering. Keep it and `_freeze/CV/` out of the public site.
