@@ -176,8 +176,9 @@ The Signature Work column drives Era, so it carries real weight, and for a
 handful of acts the critical record genuinely splits between two candidate
 releases. Those calls are not hidden: the 2026-07 audit reviewed every pick
 against the documented procedure, changed ten where the consensus clearly
-pointed elsewhere, and resolved the genuine splits by maintainer ruling. The
-rulings are logged here so the judgment is inspectable.
+pointed elsewhere, and resolved the genuine splits by maintainer ruling. New
+splits get the same treatment as acts are added. The rulings are logged here
+so the judgment is inspectable.
 
 | Act | The split | Ruling | Why |
 |---|---|---|---|
@@ -189,6 +190,10 @@ rulings are logged here so the judgment is inspectable.
 | Roc Marciano | *Marcberg* (2010) vs *Reloaded* (2012) | *Reloaded* | The refined peak edges the blueprint on critic scores |
 | Little Brother | *The Listening* (2003) vs *The Minstrel Show* (2005) | *The Minstrel Show* | The fan-canon favorite |
 | Xzibit | *At the Speed of Life* (1996) vs *40 Dayz & 40 Nightz* (1998) | *40 Dayz & 40 Nightz* | The album most often called his best |
+| 21 Savage | *i am > i was* (2018) vs *Savage Mode II* (2020) | *Savage Mode II* | His best-reviewed work; the joint billing with Metro Boomin is fine by the Madvillainy precedent |
+| Playboi Carti | *Die Lit* (2018) vs *Whole Lotta Red* (2020) | *Whole Lotta Red* | Divisive at release, canon now; the record the rage sound grew from |
+| Ice Spice | *Like..?* EP (2023) vs *Y2K!* (2024) | *Y2K!* | The EP is the consensus moment, but the candidate pool is full-length projects: the same album-over-EP ruling as GloRilla |
+| Doja Cat | In the frame at all, then *Hot Pink* (2019) vs *Planet Her* (2021) vs *Scarlet* (2023) | In; *Planet Her* | She raps on most songs with a national critical record, so she is in; the defining run beats the bars-forward flex |
 
 If you would rule differently on any of these, that disagreement is the
 point: the pick is documented, so the argument has something to grab.
