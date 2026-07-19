@@ -4,16 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Periodic Table of Hip-Hop Artists · datawithaplot.org</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --primary: #8C6A8D;
-    --secondary: #E98973;
-    --accent: #D2B1A3;
-    --light-bg: #F8F7F4;
-    --dark: #2a1f2b;
-    --text: #3a2d3b;
-    --muted: #7a6a7b;
+    --primary: #2E1A47;      /* Ink Plum: buttons, active, chrome */
+    --secondary: #F4715C;    /* Coral: accent on the dark header (h1 span, nav hover) */
+    --eyebrow: #B23A28;      /* Deep Coral: accent text/links on LIGHT */
+    --accent: #A98BB8;       /* Mauve: decorative borders */
+    --on-dark: #F7F2EC;      /* Cream: text on the dark header */
+    --light-bg: #F7F2EC;
+    --dark: #2E1A47;
+    --text: #2E1A47;
+    --muted: #6A5F72;
 
+    /* Confidence encoding (data, not chrome): keep */
     --conf-h: #2ecc71;
     --conf-m: #f39c12;
     --conf-l: #e74c3c;
@@ -22,7 +28,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Spectral', Georgia, serif;
     background: var(--light-bg);
     color: var(--text);
     min-height: 100vh;
@@ -31,7 +37,7 @@
   /* ── Header ─────────────────────────────────────────── */
   header {
     background: var(--dark);
-    color: #f0e8f0;
+    color: var(--on-dark);
     padding: 1.2rem 2rem;
     display: flex;
     align-items: center;
@@ -45,10 +51,10 @@
     letter-spacing: 0.03em;
   }
   header h1 span { color: var(--secondary); }
-  header p { font-size: 0.8rem; color: var(--accent); margin-top: 0.1rem; }
+  header p { font-size: 0.8rem; color: var(--on-dark); margin-top: 0.1rem; }
   header nav { display: flex; gap: 1.1rem; align-items: center; flex-wrap: wrap; }
   header nav a {
-    color: var(--accent);
+    color: var(--on-dark);
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 600;
@@ -67,7 +73,7 @@
     gap: 0.75rem;
     align-items: center;
   }
-  #filters label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  #filters label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.72rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
   #filters select, #filters input[type="text"] {
     border: 1.5px solid var(--accent);
     border-radius: 6px;
@@ -106,10 +112,10 @@
     gap: 0.6rem;
     align-items: center;
     background: var(--light-bg);
-    border-bottom: 1px solid #e0d8e0;
+    border-bottom: 1px solid #E7DED0;
     font-size: 0.73rem;
   }
-  #legend .legend-label { font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0.2rem; }
+  #legend .legend-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0.2rem; }
   .legend-item {
     display: flex; align-items: center; gap: 0.3rem;
     padding: 0.15rem 0.5rem;
@@ -127,9 +133,9 @@
   .section-divider {
     margin: 1.2rem 1rem 0;
     padding-top: 0.7rem;
-    border-top: 2px solid #e6d8e6;
+    border-top: 2px solid #E7DED0;
   }
-  .section-divider h2 { margin: 0; font-size: 1.15rem; color: #6a4a6a; }
+  .section-divider h2 { margin: 0; font-size: 1.15rem; color: #2E1A47; }
   .section-divider h2 span { color: var(--muted); font-weight: 400; font-size: 0.8rem; }
 
   #table-area, #compounds-area {
@@ -172,8 +178,9 @@
   .legend-shape { font-size: 0.72rem; color: var(--text); font-weight: 600; }
 
   .tile-symbol {
-    font-size: 1.35rem;
-    font-weight: 800;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 1.3rem;
+    font-weight: 700;
     color: white;
     line-height: 1;
     text-align: center;
@@ -221,7 +228,7 @@
     width: 72px;
     height: 88px;
     border-radius: 6px;
-    background: rgba(140,106,141,0.08);
+    background: rgba(46,26,71,0.06);
     border: 1.5px dashed var(--accent);
     text-align: center;
     line-height: 1.2;
@@ -232,7 +239,7 @@
   /* ── Modal ───────────────────────────────────────────── */
   #modal-overlay {
     position: fixed; inset: 0;
-    background: rgba(30,20,30,0.7);
+    background: rgba(46,26,71,0.72);
     z-index: 9000;
     display: none;
     align-items: center;
@@ -263,7 +270,7 @@
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-size: 2.2rem;
-    font-weight: 800;
+    font-weight: 700;
     color: white;
     flex-shrink: 0;
   }
@@ -279,18 +286,20 @@
   }
 
   /* Bonds: in-table group membership, both directions. Chips are real buttons
-     (keyboard-focusable); text is --link (#6b4f6c), the site's AA-safe plum. */
+     (keyboard-focusable); text is --eyebrow (Deep Coral #B23A28), AA-safe on
+     the cream chip; hover fills to Ink Plum. */
   .modal-bonds { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.45rem; align-items: center; }
   .bonds-label {
-    font-size: 0.66rem; font-weight: 700; color: var(--muted);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.66rem; font-weight: 500; color: var(--muted);
     text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0.15rem;
   }
   .bond-chip {
     font-size: 0.68rem; font-weight: 600; padding: 0.15rem 0.5rem;
-    border-radius: 10px; background: var(--light-bg); color: #6b4f6c;
+    border-radius: 10px; background: var(--light-bg); color: #B23A28;
     border: 1px solid var(--accent); cursor: pointer; font-family: inherit;
   }
-  .bond-chip:hover, .bond-chip:focus-visible { background: #6b4f6c; color: white; border-color: #6b4f6c; }
+  .bond-chip:hover, .bond-chip:focus-visible { background: #2E1A47; color: white; border-color: #2E1A47; }
 
   #modal-body { padding: 0 1.4rem 1.2rem; }
 
@@ -299,13 +308,13 @@
     color: var(--text);
     line-height: 1.55;
     padding: 0.7rem 0;
-    border-top: 1px solid #f0e8f0;
-    border-bottom: 1px solid #f0e8f0;
+    border-top: 1px solid #E7DED0;
+    border-bottom: 1px solid #E7DED0;
     margin-bottom: 0.8rem;
     font-style: italic;
   }
 
-  .scores-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+  .scores-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.7rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
 
   .score-row {
     display: grid;
@@ -317,7 +326,7 @@
   .score-row-label { font-size: 0.78rem; font-weight: 600; color: var(--text); }
   .score-track {
     height: 8px;
-    background: #f0e8f0;
+    background: #EFEAF4;
     border-radius: 4px;
     overflow: hidden;
   }
@@ -338,7 +347,7 @@
     align-items: center;
   }
   .modal-composite span:first-child { font-size: 0.78rem; font-weight: 600; color: var(--muted); }
-  .modal-composite .composite-val { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
+  .modal-composite .composite-val { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
 
   #modal-footer {
     padding: 0.8rem 1.4rem;
