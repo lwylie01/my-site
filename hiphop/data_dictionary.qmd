@@ -16,16 +16,20 @@ library(reactable)
 dict_raw <- read_excel("data/hiphop_artists.xlsx", sheet = "Data Dictionary")
 
 # The sheet has the variable table first, then a "SAMPLING FRAME & SCOPE RULES"
-# block, then a "STYLE TAXONOMY" block; split on the markers so each renders
-# in its own section.
+# block, then a "STYLE TAXONOMY" block, then a "SCORING LADDERS" block; split on
+# the markers so each renders in its own section.
 marker  <- which(dict_raw[[1]] == "SAMPLING FRAME & SCOPE RULES")
 smarker <- which(dict_raw[[1]] == "STYLE TAXONOMY")
+lmarker <- which(dict_raw[[1]] == "SCORING LADDERS")
 vars  <- dict_raw[seq_len(marker - 1), ] |> filter(!is.na(Variable))
 frame <- dict_raw[(marker + 1):(smarker - 1), 1:2] |>
   setNames(c("Rule", "Definition")) |> filter(!is.na(Rule))
 style_rule <- dict_raw[[2]][smarker]
-styles <- dict_raw[(smarker + 1):nrow(dict_raw), 1:2] |>
+styles <- dict_raw[(smarker + 1):(lmarker - 1), 1:2] |>
   setNames(c("Style", "Definition")) |> filter(!is.na(Style))
+ladder_rule <- dict_raw[[2]][lmarker]
+ladders <- dict_raw[(lmarker + 1):nrow(dict_raw), 1:2] |>
+  setNames(c("Dimension", "Ladder")) |> filter(!is.na(Dimension))
 ```
 
 This page documents every variable in the [Hip-Hop Periodic
@@ -77,10 +81,36 @@ module's core discussion prompts.
   not the gaps between scores, so this is ordinal measurement with a
   calibrated ceiling; and the choice of anchor quietly defines the
   construct itself (Rakim makes rhyme density mean innovation and internal
-  complexity rather than speed). The judgment does not disappear. It moves
-  to one visible place.
+  complexity rather than speed). The scoring ladders below extend the same
+  idea down the scale: named rungs at 8, 6, and 4, and a defined floor.
+  The judgment does not disappear. It moves to one visible place.
 - **Confidence flag:** every act carries an H/M/L rating of how much to trust
   its scores, based on the depth of its critical record (rubric below).
+
+## The Scoring Ladders
+
+An anchor alone defines only the top of a scale. Each dimension therefore
+carries a ladder: the anchor at 10, calibration rungs at 8, 6, and 4 naming
+acts from this table whose stored score equals the rung, and a written floor
+at 1. Scoring an act means placing it on the ladder, between rungs when the
+record says between. The floor is defined but empty on purpose: the sampling
+frame requires a national critical record, which excludes each construct's
+true bottom, so the lowest occupied scores sit near 2 and 3, not 1.
+
+```{r ladders-table}
+#| echo: false
+reactable(
+  ladders,
+  columns = list(
+    Dimension = colDef(minWidth = 130, style = list(fontWeight = "600")),
+    Ladder = colDef(minWidth = 420)
+  ),
+  striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
+  theme = reactableTheme(
+    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
+  )
+)
+```
 
 ## Confidence Rubric
 
