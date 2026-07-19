@@ -4,17 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trust Your Gut? · datawithaplot.org</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --primary: #8C6A8D;
-    --secondary: #E98973;
-    --accent: #D2B1A3;
-    --light-bg: #F8F7F4;
-    --dark: #2a1f2b;
-    --text: #3a2d3b;
-    --muted: #7a6a7b;
-    --card: #ffffff;
-    --line: #e8e0e8;
+    --primary: #2E1A47;      /* Ink Plum: buttons, active, focus, values */
+    --secondary: #F4715C;    /* Coral: accent on DARK + decorative fills */
+    --eyebrow: #B23A28;      /* Deep Coral: accent text on LIGHT */
+    --accent: #A98BB8;       /* Mauve: decorative borders/chips only */
+    --on-dark: #F7F2EC;      /* Cream: text on the dark header */
+    --light-bg: #F7F2EC;
+    --dark: #2E1A47;
+    --text: #2E1A47;
+    --muted: #6A5F72;
+    --card: #FDFBF7;
+    --line: #E7DED0;
     --good: #2ecc71;
     --bad: #d9534f;
   }
@@ -22,7 +27,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Spectral', Georgia, serif;
     background: var(--light-bg);
     color: var(--text);
     min-height: 100vh;
@@ -32,7 +37,7 @@
   /* ── Header ─────────────────────────────────────────── */
   header {
     background: var(--dark);
-    color: #f0e8f0;
+    color: var(--on-dark);
     padding: 1.2rem 2rem;
     display: flex;
     align-items: center;
@@ -42,9 +47,9 @@
   }
   header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.03em; }
   header h1 span { color: var(--secondary); }
-  header p { font-size: 0.8rem; color: var(--accent); margin-top: 0.1rem; }
-  header a { color: var(--accent); font-size: 0.8rem; text-decoration: none; font-weight: 600; }
-  header a:hover { color: #fff; }
+  header p { font-size: 0.8rem; color: var(--on-dark); margin-top: 0.1rem; }
+  header a { color: var(--on-dark); font-size: 0.8rem; text-decoration: none; font-weight: 600; }
+  header a:hover { color: var(--secondary); }
 
   /* ── Progress ───────────────────────────────────────── */
   #progress {
@@ -75,8 +80,9 @@
   @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
   .eyebrow {
-    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.12em; color: var(--secondary); margin-bottom: 0.6rem;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.72rem; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--eyebrow); margin-bottom: 0.6rem;
   }
   h2 { font-size: 1.85rem; line-height: 1.2; color: var(--dark); margin-bottom: 0.9rem; font-weight: 700; }
   h3 { font-size: 1.25rem; color: var(--dark); margin: 2rem 0 0.8rem; font-weight: 700; }
@@ -100,7 +106,7 @@
   .btn:hover { opacity: 0.9; }
   .btn:active { transform: translateY(1px); }
   .btn-primary { background: var(--primary); color: #fff; }
-  .btn-secondary { background: var(--secondary); color: #fff; }
+  .btn-secondary { background: var(--eyebrow); color: #fff; }
   .btn-outline { background: #fff; color: var(--primary); border: 1.5px solid var(--primary); }
   .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
@@ -116,12 +122,12 @@
     border-radius: 12px; overflow: hidden; margin-bottom: 1.2rem;
   }
   .file-strip {
-    background: #f3ecf3; color: var(--primary);
+    background: #F3EEF7; color: var(--primary);
     font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
     padding: 0.45rem 1.5rem; display: flex; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;
   }
   .file-body { padding: 1.4rem 1.5rem 1.5rem; }
-  .f-name { font-size: 1.3rem; font-weight: 800; color: var(--dark); }
+  .f-name { font-size: 1.3rem; font-weight: 700; color: var(--dark); }
   .f-meta { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
   .f-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 1.4rem; margin-bottom: 1rem; }
   .f-field .fl {
@@ -142,25 +148,25 @@
 
   /* ── Reveal ─────────────────────────────────────────── */
   .punch {
-    font-size: 1.5rem; font-weight: 800; color: var(--dark);
+    font-size: 1.5rem; font-weight: 700; color: var(--dark);
     line-height: 1.25; margin-bottom: 1.2rem;
   }
-  .punch b { color: var(--secondary); }
+  .punch b { color: var(--eyebrow); }
 
   .statrow { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.2rem 0; }
   .stat {
     flex: 1; min-width: 150px; background: var(--card); border: 1px solid var(--line);
     border-radius: 10px; padding: 1.1rem 1rem; text-align: center;
   }
-  .stat .big { font-size: 2.1rem; font-weight: 800; color: var(--primary); line-height: 1; }
+  .stat .big { font-size: 2.1rem; font-weight: 700; color: var(--primary); line-height: 1; }
   .stat .lab { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.04em; }
-  .stat.you .big { color: var(--secondary); }
+  .stat.you .big { color: var(--eyebrow); }
 
   .rule-card {
-    background: linear-gradient(135deg, #fff 0%, #faf6fa 100%);
+    background: linear-gradient(135deg, #FDFBF7 0%, #F5EFF5 100%);
     border: 1px solid var(--primary); border-radius: 12px;
     padding: 1.5rem 1.6rem; margin: 1rem 0 1.5rem;
-    box-shadow: 0 6px 24px rgba(140,106,141,0.10);
+    box-shadow: 0 6px 24px rgba(46,26,71,0.10);
   }
   .rule-card .rq { font-weight: 700; color: var(--dark); margin-bottom: 0.15rem; }
   .rule-card .rwhy { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.9rem; }
@@ -177,22 +183,22 @@
   .rv-charge { font-size: 0.78rem; color: var(--muted); }
   .rv-calls { display: flex; gap: 1.4rem; flex-wrap: wrap; font-size: 0.82rem; margin-bottom: 0.45rem; }
   .rv-calls .who { color: var(--muted); text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.05em; display: block; }
-  .rv-calls .ok { color: var(--good); font-weight: 800; }
-  .rv-calls .no { color: var(--bad); font-weight: 800; }
+  .rv-calls .ok { color: var(--good); font-weight: 700; }
+  .rv-calls .no { color: var(--bad); font-weight: 700; }
   .rv-lure { font-size: 0.84rem; color: var(--muted); margin-bottom: 0; }
 
   .callout {
-    border-left: 4px solid var(--secondary); background: #fdf3ef;
+    border-left: 4px solid var(--eyebrow); background: #FCEAE5;
     padding: 1.1rem 1.3rem; border-radius: 0 10px 10px 0; margin: 1.5rem 0;
   }
-  .callout .ct { font-weight: 800; color: var(--dark); margin-bottom: 0.4rem; }
+  .callout .ct { font-weight: 700; color: var(--dark); margin-bottom: 0.4rem; }
   .callout p { margin-bottom: 0; font-size: 0.95rem; }
 
   .sources { font-size: 0.82rem; color: var(--muted); }
   .sources li { margin-bottom: 0.7rem; list-style: none; padding-left: 1rem; text-indent: -1rem; }
   .sources li .find { display: block; font-size: 0.78rem; color: var(--muted); text-indent: 0; padding-left: 0; margin-top: 0.1rem; font-style: italic; }
   .note {
-    font-size: 0.8rem; color: var(--muted); background: #f4eff4;
+    font-size: 0.8rem; color: var(--muted); background: #EFEAF4;
     border-radius: 8px; padding: 0.9rem 1.1rem; margin-top: 1rem;
   }
 
