@@ -67,11 +67,11 @@ truth**; everything else derives from it.
 
 | File | Role |
 |---|---|
-| `hiphop/data/hiphop_artists.xlsx` | Source of truth. Sheets: **Artist Database** (the data), **Confidence Guide** (H/M/L rubric + method notes), **Data Dictionary** (variable definitions + sampling frame; must stay in sync with the columns) |
+| `hiphop/data/hiphop_artists.xlsx` | Source of truth. Sheets: **Artist Database** (the data), **Confidence Guide** (H/M/L rubric + method notes), **Data Dictionary** (three blocks: variable definitions, SAMPLING FRAME & SCOPE RULES, STYLE TAXONOMY with an anchor act per style; must stay in sync with the columns) |
 | `hiphop/build_table.R` | Quarto pre-render step. Serializes the Artist Database sheet to JSON and injects it at `__RAW_DATA__` in `hiphop/table/_template.html`, producing `hiphop/hiphop_periodic_table.html` (gitignored; built in CI; never edit the output directly) |
-| `hiphop/table/_template.html` | The interactive table's look and behavior: filters, legend, tiles, modal. Serializes **all** workbook columns, so new columns flow through automatically |
+| `hiphop/table/_template.html` | The interactive table's look and behavior: filters, legend, tiles, modal, plus the header nav linking Home / Teaching / Dashboard / Codebook. Serializes **all** workbook columns, so new columns flow through automatically. `STYLE_COLORS` is a four-family palette (hue = lane, shade = style within it: corals = street, jades = message, purples = left field, golds = crowd; CVD-validated) shared with the dashboard's style palette |
 | `hiphop/hiphop_dashboard.qmd` | 8-page teaching dashboard (Elements only). Pages: 1 measurement, 2 sampling/bias, 3 dimensions vs composite, 4 uncertainty, 5 viz design, 6 one-more-variable (encoding-channel ladder + canon map + style fingerprints), 7 careers & longevity, 8 full data table |
-| `hiphop/data_dictionary.qmd` | Public codebook; renders the Data Dictionary sheet directly (auto-updates when the sheet changes) |
+| `hiphop/data_dictionary.qmd` | Public codebook; renders the Data Dictionary sheet directly (auto-updates when the sheet changes). Also carries the how-anchors-create-scores method prose and the **Contested Calls** log (the 8 split rulings); add to that log when a coding call is genuinely arguable |
 | `hiphop/_metadata.yml` | `freeze: false` so data-only Excel edits still re-render the dashboard/codebook in CI. Do not remove |
 | `hiphop/data/_accuracy_worklist.md` | Internal changelog + counts. Update its header counts, style table, and Done list with every data change |
 | `projects/index.qmd` | Project card hardcodes the act counts ("173 hip-hop acts (129 solo artists and 44 groups)"). Update when counts change: nothing recomputes it. It read 130/43 from #45 to #47, but not from neglect: main had already corrected it and the #45 merge reverted the fix (see the merge hazard above) |
@@ -103,7 +103,8 @@ story=10, Lil Wayne metaphor=10, Kendrick concept=10. US-scene acts only
 (sampling frame).
 
 Current state (2026-07): 173 acts = 129 Elements + 44 Compounds; 24 female
-Elements (19%); median age at signature work 25.
+Elements (19%); median age at signature work 25. (Every figure in this
+section re-verified against the workbook and rendered pages 2026-07-19.)
 
 ### Update checklist: what to touch for each kind of change
 
@@ -125,7 +126,11 @@ Elements (19%); median age at signature work 25.
 **Changing category values (Era/Region/Style):**
 Template filter dropdowns + legend + `REGION_SHAPE`/`STYLE_COLORS` maps;
 dashboard factor levels + palettes; Data Dictionary allowed-values text;
-worklist shapes section.
+worklist shapes section. A new Style also needs a STYLE TAXONOMY row in the
+dictionary sheet (definition + anchor act) and a shade inside one of the four
+palette lanes, not a new hue. Era is not edited directly: it follows the
+Signature Work year's bracket, so era "changes" happen by re-picking the
+signature work.
 
 ### Workbook editing and gotchas
 
