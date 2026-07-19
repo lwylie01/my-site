@@ -427,7 +427,7 @@ reactable(
   ),
   striped = TRUE, highlight = TRUE, bordered = TRUE,
   theme = reactableTheme(
-    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
+    headerStyle = list(background = "#2E1A47", color = "#ffffff", fontWeight = "600")
   )
 )
 ```
@@ -687,7 +687,7 @@ reactable(
   ),
   searchable = TRUE, striped = TRUE, highlight = TRUE, bordered = TRUE,
   theme = reactableTheme(
-    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
+    headerStyle = list(background = "#2E1A47", color = "#ffffff", fontWeight = "600")
   )
 )
 ```
@@ -1117,7 +1117,7 @@ display_data <- artists |>
 reactable(
   display_data,
   columns = list(
-    Symbol    = colDef(maxWidth = 65, style = list(fontWeight = "700", color = "#6b4f6c")),
+    Symbol    = colDef(maxWidth = 65, style = list(fontWeight = "700", color = "#2E1A47")),
     Artist    = colDef(minWidth = 150, style = list(fontWeight = "600")),
     Region    = colDef(maxWidth = 110),
     Era       = colDef(maxWidth = 110),
@@ -1138,7 +1138,7 @@ reactable(
     Concept   = colDef(maxWidth = 75,
       style = function(v) list(background = colorRampPalette(c("#f8f3e4","#7a5f22"))(10)[max(1,v)],
                                 color = if(v >= 7) "#fff" else "#000")),
-    Composite = colDef(maxWidth = 85, style = list(fontWeight = "700", background = "#2a1f2b", color = "#fff")),
+    Composite = colDef(maxWidth = 85, style = list(fontWeight = "700", background = "#2E1A47", color = "#fff")),
     Conf      = colDef(maxWidth = 55,
       style = function(v) {
         color <- switch(v, H = "#41ab5d", M = "#c8a000", L = "#e08214", "#000")
@@ -1149,7 +1149,7 @@ reactable(
   striped = TRUE, highlight = TRUE, bordered = TRUE,
   defaultPageSize = 25, showPageSizeOptions = TRUE,
   theme = reactableTheme(
-    headerStyle = list(background = "#2a1f2b", color = "#ffffff", fontWeight = "600")
+    headerStyle = list(background = "#2E1A47", color = "#ffffff", fontWeight = "600")
   )
 )
 ```

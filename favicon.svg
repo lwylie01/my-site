@@ -1,18 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Data with a Plot">
-  <rect width="64" height="64" rx="14" fill="#8C6A8D"/>
-  <!-- rising trend line connecting the data points up to the pen nib -->
-  <polyline points="15,48 28,42 40,33 46,24" fill="none"
-            stroke="#F6EFEA" stroke-width="3" stroke-linecap="round"
-            stroke-linejoin="round" opacity="0.7"/>
-  <!-- data points -->
-  <circle cx="15" cy="48" r="5"   fill="#F8F7F4"/>
-  <circle cx="28" cy="42" r="5"   fill="#D2B1A3"/>
-  <circle cx="40" cy="33" r="5.5" fill="#E98973"/>
-  <!-- fountain pen, nib pointing down-left at the end of the trend line -->
-  <g transform="translate(46,24) rotate(45)">
-    <rect x="-3.5" y="-18" width="7" height="11" rx="3" fill="#C9A6CA"/>
-    <rect x="-3.5" y="-8"  width="7" height="2.5" fill="#4A3A4B"/>
-    <polygon points="-3.5,-7 3.5,-7 0,0" fill="#3C3C3C"/>
-    <line x1="0" y1="-6" x2="0" y2="-1.5" stroke="#C9A6CA" stroke-width="0.8"/>
-  </g>
+<?xml version="1.0"?>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#2E1A47"></rect><g transform="translate(9,9) scale(0.82)">
+  <g fill="none">
+    <circle cx="30" cy="56" r="6" fill="#A98BB8"></circle>
+    <circle cx="44" cy="26" r="6" fill="#F4715C"></circle>
+    <path d="M10,80 C26,80 30,34 50,34 C58,34 58,42 62,46" stroke="#F7F2EC" stroke-width="5" stroke-linecap="round"></path>
+    <g transform="translate(62,46) rotate(45)" stroke="#F7F2EC" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0,0 L-9,-20 Q0,-27 9,-20 Z"></path>
+      <rect x="-7.5" y="-44" width="15" height="22" rx="6"></rect>
+    </g>
+  </g></g>
 </svg>

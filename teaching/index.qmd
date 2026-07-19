@@ -12,7 +12,7 @@ toc: false
     Numbers do not speak for themselves. Someone has to understand the
     audience and communicate so they listen and act.
   </p>
-  <p style="color:#6b7280; font-size:0.9rem; margin-top:0.75rem;">
+  <p style="color:#6A5F72; font-size:0.9rem; margin-top:0.75rem;">
     More in <a href="https://www.ncsc.org/sites/default/files/media/document/NCSC-Trends-2025.pdf"><em>Telling
     Your Court's Data Story</em></a>, Trends in State Courts, 2025. Presented
     at the National Association for Court Management.
@@ -29,12 +29,12 @@ their own metrics.
 The six ideas I come back to most often:
 
 ::: {.concept-list}
-<span class="concept-pill" style="background:#f3edf3; border-color:#8C6A8D; color:#6b4f6c;">Construct validity</span>
-<span class="concept-pill" style="background:#fdf0ec; border-color:#E98973; color:#c96b52;">Sampling and bias</span>
-<span class="concept-pill" style="background:#f8f5f0; border-color:#D2B1A3; color:#2B2D42;">Multidimensional measurement</span>
-<span class="concept-pill" style="background:#f3edf3; border-color:#6b4f6c; color:#6b4f6c;">Uncertainty communication</span>
-<span class="concept-pill" style="background:#fdf0ec; border-color:#c96b52; color:#c96b52;">Visualization design</span>
-<span class="concept-pill" style="background:#F8F7F4; border-color:#888; color:#333;">Narrative framing</span>
+<span class="concept-pill" style="background:#F3EEF7; border-color:#A98BB8; color:#2E1A47;">Construct validity</span>
+<span class="concept-pill" style="background:#FCEAE5; border-color:#F4715C; color:#B23A28;">Sampling and bias</span>
+<span class="concept-pill" style="background:#FDFBF7; border-color:#A98BB8; color:#2E1A47;">Multidimensional measurement</span>
+<span class="concept-pill" style="background:#EFEAF4; border-color:#2E1A47; color:#2E1A47;">Uncertainty communication</span>
+<span class="concept-pill" style="background:#FCEAE5; border-color:#B23A28; color:#B23A28;">Visualization design</span>
+<span class="concept-pill" style="background:#FDFBF7; border-color:#6A5F72; color:#2E1A47;">Narrative framing</span>
 :::
 
 ---
@@ -58,15 +58,15 @@ start an argument, not settle one.
       own performance measures.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Full session</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Full session</span>
     </div>
     <br>
-    <a href="../hiphop/hiphop_periodic_table.html" style="font-weight:600; color:#8C6A8D;">
+    <a href="../hiphop/hiphop_periodic_table.html" style="font-weight:600; color:#B23A28;">
       Explore the periodic table →
     </a>
-    <p style="font-size:0.85rem; margin-top:0.5rem; color:#6b7280;">
+    <p style="font-size:0.85rem; margin-top:0.5rem; color:#6A5F72;">
       Companion materials:
       <a href="../hiphop/hiphop_dashboard.html">analytics dashboard</a> ·
       <a href="../hiphop/data_dictionary.html">data dictionary</a>
@@ -84,12 +84,12 @@ start an argument, not settle one.
       open before the longer session, or on its own.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Construct validity</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>HTML / JS</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Construct validity</span>
     </div>
     <br>
-    <a href="../barnum/barnum_test.html" style="font-weight:600; color:#8C6A8D;">
+    <a href="../barnum/barnum_test.html" style="font-weight:600; color:#B23A28;">
       Take the Barnum Test →
     </a>
   </div>
@@ -104,12 +104,12 @@ start an argument, not settle one.
       drew. A study in turning a fuzzy idea into an exact number.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Short exercise</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>HTML / JS</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Short exercise</span>
     </div>
     <br>
-    <a href="../howold/how_old_is_old.html" style="font-weight:600; color:#8C6A8D;">
+    <a href="../howold/how_old_is_old.html" style="font-weight:600; color:#B23A28;">
       Try How Old Is Old? →
     </a>
   </div>
@@ -123,12 +123,12 @@ start an argument, not settle one.
       everyone. A lesson in why expert intuition keeps losing to a checklist.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Short exercise</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>HTML / JS</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Short exercise</span>
     </div>
     <br>
-    <a href="../gut/trust_your_gut.html" style="font-weight:600; color:#8C6A8D;">
+    <a href="../gut/trust_your_gut.html" style="font-weight:600; color:#B23A28;">
       Trust your gut? →
     </a>
   </div>
@@ -142,12 +142,12 @@ start an argument, not settle one.
       what is close, with the gap named and the work to close it spelled out.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Decision tool</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Decision tool</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
     </div>
     <br>
-    <a href="../evalpicker/eval_picker.html" style="font-weight:600; color:#E98973;">
+    <a href="../evalpicker/eval_picker.html" style="font-weight:600; color:#B23A28;">
       Open the evaluation picker →
     </a>
   </div>
@@ -161,12 +161,12 @@ start an argument, not settle one.
       could work with a tweak, and the ones that are the wrong tool here and why.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#4F6B33;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#B0791C;"></span>Decision tool</span>
-      <span><span class="project-card-accent" style="background:#BC4634;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Decision tool</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
     </div>
     <br>
-    <a href="../formatpicker/format_picker.html" style="font-weight:600; color:#4F6B33;">
+    <a href="../formatpicker/format_picker.html" style="font-weight:600; color:#B23A28;">
       Open the format picker →
     </a>
   </div>

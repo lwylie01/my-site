@@ -28,13 +28,13 @@ toc: false
       using a subject people genuinely argue about.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Excel / readxl</span>
-      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>HTML / JS</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Excel / readxl</span>
+      <span><span class="project-card-accent" style="background:#6A5F72;"></span>Interactive</span>
     </div>
     <br>
-    <a href="../hiphop/hiphop_periodic_table.html" style="font-weight:600; color:#8C6A8D;">
+    <a href="../hiphop/hiphop_periodic_table.html" style="font-weight:600; color:#B23A28;">
       Explore the periodic table →
     </a>
   </div>
@@ -50,13 +50,13 @@ toc: false
       development does not, and every chart picks the form built to show it.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>Longitudinal data</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Developmental measurement</span>
-      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Law &amp; policy</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>Longitudinal data</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Developmental measurement</span>
+      <span><span class="project-card-accent" style="background:#6A5F72;"></span>Law &amp; policy</span>
     </div>
     <br>
-    <a href="../countedwrong/index.html" style="font-weight:600; color:#8C6A8D;">
+    <a href="../countedwrong/index.html" style="font-weight:600; color:#B23A28;">
       Read the data story →
     </a>
   </div>
@@ -74,10 +74,10 @@ toc: false
       about how a system measures mercy.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>50-state legal review</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Aging &amp; corrections</span>
-      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Law &amp; policy</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>50-state legal review</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Aging &amp; corrections</span>
+      <span><span class="project-card-accent" style="background:#6A5F72;"></span>Law &amp; policy</span>
     </div>
     <br>
     <span class="essay-status">Coming soon</span>
@@ -85,7 +85,7 @@ toc: false
 
 </div>
 
-<p style="text-align: center; padding: 3rem 0 1rem; color: #6b7280; font-size: 0.9rem;">
+<p style="text-align: center; padding: 3rem 0 1rem; color: #6A5F72; font-size: 0.9rem;">
 More projects in progress.
 </p>
 ```

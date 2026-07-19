@@ -14,6 +14,41 @@ working premise (codebook intro). When drafting copy, offer the maintainer 2-3
 options and let her pick and tune: never present drafted copy as her quote,
 and never attribute words to a publication without reading it.
 
+Brand kit (adopted 2026-07-19): the site runs the "Data with a Plot" brand.
+The sheet is `pics/brand/BRAND.md`; the assets (logo/mark SVGs, favicon,
+og-image, and its regeneration source) live in `pics/brand/`. Six palette
+tokens: **Ink Plum #2E1A47** (primary dark: headings, body on light), **Cream
+#F7F2EC** (page background), **Paper #FDFBF7** (cards, navbar, panels), **Coral
+#F4715C** (accent ON DARK only, 5.1:1 on ink; decorative anywhere), **Deep Coral
+#B23A28** (text/links ON LIGHT, 5.4:1 on cream), **Mauve #A98BB8** (decorative
+only, never body text). One derived neutral, **muted-ink #6A5F72** (~5.3:1 on
+cream), carries muted text. The operating rule for every new colour choice: coral
+is Coral on dark and Deep Coral on light (coral-on-cream is 2.7:1 and fails);
+mauve never carries text. Fonts: **Spectral** (headings 600, body 400, italic for
+emphasis and the wordmark's "with a"; fallback Georgia, serif) and **JetBrains
+Mono** for eyebrows/labels/captions/data labels (11-13px, letter-spacing
+0.08-0.12em; fallback monospace), both from Google Fonts, imported in
+`site-theme.scss` + `custom.scss` and linked in the standalone templates.
+Motif: one rise-and-fall **arc** (stroke 3-5px, round caps, no axes) through a
+**scatter** of 4-7 mauve dots plus **exactly one coral dot** (the outlier the
+line misses); a line-art pen at 45deg touches the arc end (omit below ~40px).
+The section dividers (`index.qmd`, `selected-work/index.qmd`) are one canonical
+block carrying **no `<defs>` and no ids** (arc + inline-fill scatter): keep it
+id-free, because the old gradient dividers were the source of the
+`divider-line-3` duplicate-id merge bug. The hero wordmark is inlined as SVG (an
+`<img>`-referenced SVG can't load Spectral and falls back to Georgia); the navbar
+uses the text-free `mark-on-light.svg`. Section headings carry a numbered
+mono-caps eyebrow via a `data-eyebrow` attribute rendered by a CSS `::before`
+(source strings stay sentence case, CSS uppercases them), so title-case headings
+and mono-caps eyebrows coexist. og-image is regenerated from
+`pics/brand/og-image-source.html` (headless Chrome, 1200x630) so its tagline
+obeys the no-em-dash rule; `_quarto.yml` wires it via `website: image`.
+Deliberately NOT brand chrome (these are data, keep their own colours): the
+hip-hop `STYLE_COLORS`/`SCORE_HUES`/`CONF_COLOR` and every dashboard `*_pal`
+(CVD-validated encodings), the Counted Wrong chart constants
+(plum_dark/plum/plum_series/coral_dark/gray_ctx), and the `publications.xlsx`
+Areas colours.
+
 Maintainer workflow (learned 2026-07): PRs merge within minutes of opening.
 One PR per batch of work. Immediately before every push, check whether the
 branch's PR just merged; if it did, restart the branch from origin/main (same
@@ -318,12 +353,16 @@ Shipped 2026-07. A sibling of the evaluation picker for a different question:
 you say who you are trying to reach, how far the work must travel, and what you
 want it to do, and every delivery format sorts into three piles (fits / could
 work with a tweak / not the tool here). Same Excel-to-R-to-one-HTML shape, no
-prerequisite or TMF machinery. It wears the **orchard palette** from the source
-graphic (sage green, gold, slate blue, warm brown, apple red) so it reads as a
-distinct page, not a recolour of the plum/coral picker. Every text/border pair
-was checked against AA on `--light-bg` (#F7F5EF); the apple red `--secondary`
-(#BC4634) was tuned to clear 4.5:1 as the eyebrow on light **and** 3.0:1 as the
-`<h1>` span on the dark header at once.
+prerequisite or TMF machinery. It shipped in a distinct **orchard palette**
+(sage green, gold, apple red) drawn from the source graphic, but the 2026-07-19
+rebrand pulled it into the shared brand family with its siblings (maintainer's
+call): `--primary` Ink Plum, `--secondary` Coral on dark / Deep Coral on light,
+`--accent` Mauve, on Cream/Paper. The reason-sentence `plabel()` machinery and
+the length / illustration-to-text card chips are unchanged; only the chrome
+palette and fonts moved. History: the old apple-red `--secondary` (#BC4634) had
+been AA-tuned on the orchard `--light-bg` (#F7F5EF) as both a light eyebrow and a
+dark-header `<h1>` span; Deep Coral now serves the on-light role and Coral the
+on-dark one, the same split as every other page.
 
 Built from **Figure 2** (the delivery-formats tree: circle size = length, colour
 = illustration-to-text ratio, branch position = external reach) and **Figure 3**
@@ -495,16 +534,18 @@ journal names keep their own styling (*Crime & Delinquency* stays).
 - The standalone templates carry their own CSS and had no inline prose link
   until #51, so there is no generic `a` rule to inherit and a bare `<a>` in body
   copy renders browser-default blue. Style it, and measure against the rendered
-  page rather than against white: the background is `--light-bg` (#F8F7F4),
-  which is exactly what sinks the obvious choice. `--primary` reaches only
-  4.3:1 there and misses AA at body size, so links take `--link` (#6b4f6c, the
-  site's deeper plum, `plum_dark` in the Counted Wrong palette) at 6.6:1.
-  Underline them: `--link` and `--muted` differ by 1.4:1, so color alone does
-  not mark a link. Hover darkens to `--dark` (14.8:1); brightening to
-  `--secondary` would fail at 2.4:1, and a hover state has to clear AA too.
-  Known and unfixed, flagged 2026-07-16: the project card links on `index.qmd`
-  and `projects/index.qmd` use #E98973 on white at about 2.4:1, under AA for
-  their size. That is a design call, not a bug fix.
+  page rather than against white: the background is `--light-bg` (#F7F2EC after
+  the 2026-07-19 rebrand, #F8F7F4 before), which is exactly what sinks the
+  obvious choice. Links take `--link` (**Deep Coral #B23A28**) at 5.4:1;
+  underline them, because `--link` and `--muted` alone do not differ enough to
+  mark a link by colour. Hover darkens to `--dark` (Ink Plum #2E1A47); the
+  on-dark Coral #F4715C must never be the on-light link, because coral on cream
+  is 2.7:1, which is the whole reason on-light text is Deep Coral, not Coral.
+  (Before the rebrand the link was the old deeper plum #6b4f6c at 6.6:1; the
+  lesson carries, not the hex.)
+  Resolved 2026-07-19: the project card links on `index.qmd` and
+  `projects/index.qmd` that used #E98973 on white at about 2.4:1 are now Deep
+  Coral #B23A28, clearing AA. The rebrand closed that gap.
 - Homepage project cards (`index.qmd`) each carry a thumbnail at
   `pics/thumb-<name>.jpg`: 1150x430, a screenshot of that page's own header.
   That size is the aspect `.project-card-thumb img` crops to
@@ -515,6 +556,9 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   load `file://`, so point it at the published page), then convert to JPEG at
   quality 88, which lands in the 42-95 KB band the others sit in:
   `chrome --headless=new --hide-scrollbars --window-size=1150,430 --screenshot=out.png <url>`.
+  A theme rebrand goes stale here: every `thumb-*.jpg` is a screenshot of a
+  page's own header, so after any chrome change regenerate all four from the
+  published pages (a follow-up PR, because the new header must deploy first).
   The homepage "Start Here" grid (headed "Featured Projects" until the July
   2026 naming pass) features the periodic table, both pickers (evaluation
   and format), and Maturity Gap (card added 2026-07-18); it is a curated

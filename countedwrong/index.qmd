@@ -364,20 +364,20 @@ study 29961</a>): young people enrolled in the early 2000s shortly after
 each was found responsible for a serious offense, then tracked across 11
 interview waves over seven years.</p>
 <div style="display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:space-between;">
-<div style="flex:1 1 130px; text-align:center; padding:0.9rem 0.4rem; background:#faf8fa; border-radius:8px;">
-<div style="font-size:1.7rem; font-weight:700; color:#6b4f6c;">1,354</div>
+<div style="flex:1 1 130px; text-align:center; padding:0.9rem 0.4rem; background:#FDFBF7; border-radius:8px;">
+<div style="font-size:1.7rem; font-weight:700; color:#2E1A47;">1,354</div>
 <div style="font-size:0.8rem; color:#666;">people followed</div>
 </div>
-<div style="flex:1 1 130px; text-align:center; padding:0.9rem 0.4rem; background:#faf8fa; border-radius:8px;">
-<div style="font-size:1.7rem; font-weight:700; color:#6b4f6c;">11</div>
+<div style="flex:1 1 130px; text-align:center; padding:0.9rem 0.4rem; background:#FDFBF7; border-radius:8px;">
+<div style="font-size:1.7rem; font-weight:700; color:#2E1A47;">11</div>
 <div style="font-size:0.8rem; color:#666;">interview waves</div>
 </div>
-<div style="flex:1 1 130px; text-align:center; padding:0.9rem 0.4rem; background:#faf8fa; border-radius:8px;">
-<div style="font-size:1.7rem; font-weight:700; color:#6b4f6c;">7</div>
+<div style="flex:1 1 130px; text-align:center; padding:0.9rem 0.4rem; background:#FDFBF7; border-radius:8px;">
+<div style="font-size:1.7rem; font-weight:700; color:#2E1A47;">7</div>
 <div style="font-size:0.8rem; color:#666;">years of follow-up</div>
 </div>
-<div style="flex:1 1 130px; text-align:center; padding:0.9rem 0.4rem; background:#faf8fa; border-radius:8px;">
-<div style="font-size:1.7rem; font-weight:700; color:#6b4f6c;">14 to 26</div>
+<div style="flex:1 1 130px; text-align:center; padding:0.9rem 0.4rem; background:#FDFBF7; border-radius:8px;">
+<div style="font-size:1.7rem; font-weight:700; color:#2E1A47;">14 to 26</div>
 <div style="font-size:0.8rem; color:#666;">ages observed</div>
 </div>
 </div>

@@ -2,6 +2,7 @@
 title: ""
 page-layout: full
 toc: true
+image: /pics/brand/og-image.png
 editor:
   markdown:
     wrap: 72
@@ -11,7 +12,26 @@ editor:
 <div class="hero-section container">
   <div class="row align-items-center">
     <div class="col-md-9">
-      <img class="hero-logo" src="pics/logoW-clear.png" alt="Data with a Plot · Lindsey E. Wylie, J.D., Ph.D." />
+      <svg class="hero-logo" viewBox="0 0 470 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Data with a Plot · Lindsey E. Wylie, J.D., Ph.D.">
+        <g transform="translate(5,5)">
+          <g fill="none">
+            <circle cx="18" cy="68" r="4" fill="#A98BB8"/>
+            <circle cx="28" cy="84" r="4" fill="#A98BB8"/>
+            <circle cx="32" cy="52" r="4" fill="#A98BB8"/>
+            <circle cx="44" cy="26" r="4" fill="#A98BB8"/>
+            <circle cx="52" cy="46" r="4" fill="#A98BB8"/>
+            <circle cx="40" cy="42" r="4" fill="#B23A28"/>
+            <path d="M10,80 C26,80 30,34 50,34 C58,34 58,42 62,46" stroke="#2E1A47" stroke-width="3.5" stroke-linecap="round"/>
+            <g transform="translate(62,46) rotate(45)" stroke="#2E1A47" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M0,0 L-9,-20 Q0,-27 9,-20 Z"/>
+              <line x1="0" y1="-4" x2="0" y2="-13"/>
+              <circle cx="0" cy="-16.5" r="2.2"/>
+              <rect x="-7.5" y="-44" width="15" height="22" rx="6"/>
+            </g>
+          </g>
+        </g>
+        <text x="120" y="72" font-family="Spectral,Georgia,serif" font-size="44" font-weight="600" fill="#2E1A47">Data <tspan font-style="italic" font-weight="400" fill="#B23A28">with a</tspan> Plot</text>
+      </svg>
       <p class="hero-tagline">Lindsey E. Wylie, J.D., Ph.D.</p>
       <p class="hero-intro">
         Adult at 18. Senior at 65. High risk, moderate, or low. The law
@@ -26,24 +46,18 @@ editor:
 ```{=html}
 <div class="section-divider" aria-hidden="true">
   <svg viewBox="0 0 220 34" aria-hidden="true" focusable="false">
-    <defs>
-      <linearGradient id="divider-line-1" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#8C6A8D"/>
-        <stop offset="1" stop-color="#E98973"/>
-      </linearGradient>
-    </defs>
-    <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#divider-line-1)" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"/>
-    <circle cx="58" cy="28" r="3.2" fill="#9d7397"/>
-    <circle cx="96" cy="20" r="3.2" fill="#b07d90"/>
-    <circle cx="132" cy="22" r="3.2" fill="#c48389"/>
-    <circle cx="168" cy="12" r="3.2" fill="#d78681"/>
-    <circle cx="204" cy="10" r="3.2" fill="#E98973"/>
+    <path d="M8,27 C48,27 70,7 110,7 C150,7 178,24 212,26" fill="none" stroke="#2E1A47" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="30" cy="22" r="3.2" fill="#A98BB8"/>
+    <circle cx="66" cy="14" r="3.2" fill="#A98BB8"/>
+    <circle cx="104" cy="12" r="3.2" fill="#A98BB8"/>
+    <circle cx="142" cy="16" r="3.2" fill="#A98BB8"/>
+    <circle cx="186" cy="27" r="3.2" fill="#A98BB8"/>
+    <circle cx="122" cy="4" r="3.6" fill="#B23A28"/>
   </svg>
 </div>
 ```
 
-## The Premise {#about .section-heading}
+## The Premise {#about .section-heading data-eyebrow="01 · where this starts"}
 
 ```{=html}
 <div class="bio-block">
@@ -78,24 +92,18 @@ editor:
 ```{=html}
 <div class="section-divider" aria-hidden="true">
   <svg viewBox="0 0 220 34" aria-hidden="true" focusable="false">
-    <defs>
-      <linearGradient id="divider-line-2" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#8C6A8D"/>
-        <stop offset="1" stop-color="#E98973"/>
-      </linearGradient>
-    </defs>
-    <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#divider-line-2)" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"/>
-    <circle cx="58" cy="28" r="3.2" fill="#9d7397"/>
-    <circle cx="96" cy="20" r="3.2" fill="#b07d90"/>
-    <circle cx="132" cy="22" r="3.2" fill="#c48389"/>
-    <circle cx="168" cy="12" r="3.2" fill="#d78681"/>
-    <circle cx="204" cy="10" r="3.2" fill="#E98973"/>
+    <path d="M8,27 C48,27 70,7 110,7 C150,7 178,24 212,26" fill="none" stroke="#2E1A47" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="30" cy="22" r="3.2" fill="#A98BB8"/>
+    <circle cx="66" cy="14" r="3.2" fill="#A98BB8"/>
+    <circle cx="104" cy="12" r="3.2" fill="#A98BB8"/>
+    <circle cx="142" cy="16" r="3.2" fill="#A98BB8"/>
+    <circle cx="186" cy="27" r="3.2" fill="#A98BB8"/>
+    <circle cx="122" cy="4" r="3.6" fill="#B23A28"/>
   </svg>
 </div>
 ```
 
-## Start Here {#featured .section-heading}
+## Start Here {#featured .section-heading data-eyebrow="02 · featured work"}
 
 ```{=html}
 <div class="project-grid">
@@ -111,12 +119,12 @@ editor:
       argue about.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
-      <span><span class="project-card-accent" style="background:#D2B1A3;"></span>Teaching module</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Teaching module</span>
     </div>
     <br>
-    <a href="hiphop/hiphop_periodic_table.html" style="font-weight:600; color:#E98973;">
+    <a href="hiphop/hiphop_periodic_table.html" style="font-weight:600; color:#B23A28;">
       Explore the periodic table →
     </a>
   </div>
@@ -133,12 +141,12 @@ editor:
       what is close, with the gap named and the work to close it spelled out.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Decision tool</span>
-      <span><span class="project-card-accent" style="background:#E98973;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Decision tool</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
     </div>
     <br>
-    <a href="evalpicker/eval_picker.html" style="font-weight:600; color:#E98973;">
+    <a href="evalpicker/eval_picker.html" style="font-weight:600; color:#B23A28;">
       Open the evaluation picker →
     </a>
   </div>
@@ -156,12 +164,12 @@ editor:
       chart form got the job.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#8C6A8D;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#c96b52;"></span>Data story</span>
-      <span><span class="project-card-accent" style="background:#6b4f6c;"></span>Chart selection</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#B23A28;"></span>Data story</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Chart selection</span>
     </div>
     <br>
-    <a href="countedwrong/index.html" style="font-weight:600; color:#E98973;">
+    <a href="countedwrong/index.html" style="font-weight:600; color:#B23A28;">
       Read the data story →
     </a>
   </div>
@@ -178,12 +186,12 @@ editor:
       could work with a tweak, and the ones that are the wrong tool here and why.
     </p>
     <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#4F6B33;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#B0791C;"></span>Decision tool</span>
-      <span><span class="project-card-accent" style="background:#BC4634;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Decision tool</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
     </div>
     <br>
-    <a href="formatpicker/format_picker.html" style="font-weight:600; color:#4F6B33;">
+    <a href="formatpicker/format_picker.html" style="font-weight:600; color:#B23A28;">
       Open the format picker →
     </a>
   </div>
@@ -193,29 +201,23 @@ editor:
 ```{=html}
 <div class="section-divider" aria-hidden="true">
   <svg viewBox="0 0 220 34" aria-hidden="true" focusable="false">
-    <defs>
-      <linearGradient id="divider-line-3" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#8C6A8D"/>
-        <stop offset="1" stop-color="#E98973"/>
-      </linearGradient>
-    </defs>
-    <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#divider-line-3)" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"/>
-    <circle cx="58" cy="28" r="3.2" fill="#9d7397"/>
-    <circle cx="96" cy="20" r="3.2" fill="#b07d90"/>
-    <circle cx="132" cy="22" r="3.2" fill="#c48389"/>
-    <circle cx="168" cy="12" r="3.2" fill="#d78681"/>
-    <circle cx="204" cy="10" r="3.2" fill="#E98973"/>
+    <path d="M8,27 C48,27 70,7 110,7 C150,7 178,24 212,26" fill="none" stroke="#2E1A47" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="30" cy="22" r="3.2" fill="#A98BB8"/>
+    <circle cx="66" cy="14" r="3.2" fill="#A98BB8"/>
+    <circle cx="104" cy="12" r="3.2" fill="#A98BB8"/>
+    <circle cx="142" cy="16" r="3.2" fill="#A98BB8"/>
+    <circle cx="186" cy="27" r="3.2" fill="#A98BB8"/>
+    <circle cx="122" cy="4" r="3.6" fill="#B23A28"/>
   </svg>
 </div>
 ```
 
-## The Method {#whatIdo .section-heading}
+## The Method {#whatIdo .section-heading data-eyebrow="03 · how i work"}
 
 ```{=html}
 <div class="focus-grid">
 
-  <div class="focus-card" style="--accent:#8C6A8D;">
+  <div class="focus-card" style="--accent:#2E1A47;">
     <span class="focus-card-icon" aria-hidden="true">
       <svg viewBox="0 0 28 26">
         <path d="M4.5 22.5h19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
@@ -234,7 +236,7 @@ editor:
     </div>
   </div>
 
-  <div class="focus-card" style="--accent:#E98973;">
+  <div class="focus-card" style="--accent:#F4715C;">
     <span class="focus-card-icon" aria-hidden="true">
       <svg viewBox="0 0 28 26">
         <path d="M7.5 8.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
@@ -255,7 +257,7 @@ editor:
     </div>
   </div>
 
-  <div class="focus-card" style="--accent:#6b4f6c;">
+  <div class="focus-card" style="--accent:#A98BB8;">
     <span class="focus-card-icon" aria-hidden="true">
       <svg viewBox="0 0 28 26">
         <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none">
@@ -277,7 +279,7 @@ editor:
     </div>
   </div>
 
-  <div class="focus-card" style="--accent:#B5835A;">
+  <div class="focus-card" style="--accent:#B23A28;">
     <span class="focus-card-icon" aria-hidden="true">
       <svg viewBox="0 0 28 26">
         <path d="M4 6a2.5 2.5 0 0 1 2.5-2.5h15A2.5 2.5 0 0 1 24 6v10a2.5 2.5 0 0 1-2.5 2.5H12l-5 4v-4H6.5A2.5 2.5 0 0 1 4 16z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
@@ -301,19 +303,13 @@ editor:
 ```{=html}
 <div class="section-divider" aria-hidden="true">
   <svg viewBox="0 0 220 34" aria-hidden="true" focusable="false">
-    <defs>
-      <linearGradient id="divider-line-4" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#8C6A8D"/>
-        <stop offset="1" stop-color="#E98973"/>
-      </linearGradient>
-    </defs>
-    <path d="M 6 28 C 60 26, 120 18, 214 6" fill="none" stroke="url(#divider-line-4)" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="22" cy="24" r="3.2" fill="#8C6A8D"/>
-    <circle cx="58" cy="28" r="3.2" fill="#9d7397"/>
-    <circle cx="96" cy="20" r="3.2" fill="#b07d90"/>
-    <circle cx="132" cy="22" r="3.2" fill="#c48389"/>
-    <circle cx="168" cy="12" r="3.2" fill="#d78681"/>
-    <circle cx="204" cy="10" r="3.2" fill="#E98973"/>
+    <path d="M8,27 C48,27 70,7 110,7 C150,7 178,24 212,26" fill="none" stroke="#2E1A47" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="30" cy="22" r="3.2" fill="#A98BB8"/>
+    <circle cx="66" cy="14" r="3.2" fill="#A98BB8"/>
+    <circle cx="104" cy="12" r="3.2" fill="#A98BB8"/>
+    <circle cx="142" cy="16" r="3.2" fill="#A98BB8"/>
+    <circle cx="186" cy="27" r="3.2" fill="#A98BB8"/>
+    <circle cx="122" cy="4" r="3.6" fill="#B23A28"/>
   </svg>
 </div>
 ```
