@@ -35,8 +35,8 @@ toc: false
       <span class="essay-tag">Criminal Justice · Measurement</span>
       <span class="essay-read">8 min read</span>
     </div>
-    <p class="essay-title">Maturity Gap: Young Adults in the Legal
-    System, One Chart at a Time</p>
+    <p class="essay-title">Maturity Gap: Young Adults, the Legal System,
+    and the Data Between Them</p>
     <p class="essay-desc">A data story in a dozen chart forms: the system's
     busiest years are exactly the years the capacities the law assumes at 18
     are still arriving.</p>

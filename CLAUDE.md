@@ -515,7 +515,17 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   **no "The"** anywhere on the site (maintainer, 2026-07-18): "The Maturity
   Gap: The Line at 18" doubled the article and wrapped the projects card to
   two lines on her laptop, so the page is "Maturity Gap" and the card is
-  "Maturity Gap: A Line at 18" ("A", not "The", in the subtitle too). The page's two
+  "Maturity Gap: A Line at 18" ("A", not "The", in the subtitle too). The
+  page subtitle is "Young adults, the legal system, and the data between
+  them" (maintainer-picked 2026-07-18; "one chart at a time" was judged to
+  verge on snarky and the Writing card changed with it). Each chart
+  section's setup prose lives INSIDE its chart card as a
+  `chart-card-lede` (styled in `site-theme.scss` next to the other
+  chart-card classes), and a page-scoped style block steps
+  `section.level2 > p` down to 0.95rem: the maintainer found the page
+  text-heavy, so sections read as self-contained exhibits. New chart
+  sections should follow the lede-in-card pattern, not a paragraph above
+  the card. The page's two
   objectives, maintainer-stated: teach about young adults and the
   developmental framework in the criminal legal system implicitly through
   the figures, and demonstrate chart diversity, viz best practices, and
