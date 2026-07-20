@@ -47,15 +47,35 @@ reason_theme <- fed_reason |>
 
 funnel   <- util |> filter(chart == "funnel")   |> arrange(stage)
 tracking <- util |> filter(chart == "tracking") |> arrange(stage)
+notice   <- util |> filter(chart == "notice")
 
 age_span  <- ages |> filter(measure == "minimum_age")
 age_count <- ages |> filter(measure == "count")
 
+# The age-span chart draws directly from the CSV rows, so a re-coded state
+# layer changes the chart without touching this file.
+span_df <- age_span |>
+  mutate(y = 1, lab = paste0(state, "\n", value))
+
 pol_types <- pol_types |>
   mutate(policy_type_f = factor(policy_type, levels = rev(policy_type)))
 
+# Wrap the longest requirement names so the icon array keeps its width for
+# the dots rather than the axis labels.
+wrap_lab <- function(s, width) {
+  vapply(s, function(x) paste(strwrap(x, width = width), collapse = "\n"),
+         character(1), USE.NAMES = FALSE)
+}
+
 reqs <- reqs |>
-  mutate(requirement_f = factor(requirement, levels = rev(requirement)))
+  mutate(requirement_f = factor(requirement, levels = rev(requirement),
+                                labels = wrap_lab(rev(requirement), 16)))
+
+# One row per state per requirement: 46 units, filled while unit <= n. The
+# icon array reads from these.
+req_units <- reqs |>
+  uncount(46, .id = "unit") |>
+  mutate(met = unit <= n)
 
 wi <- wi |> arrange(sort_year)
 
@@ -81,11 +101,13 @@ stopifnot(
   nrow(pol_types) == 7, !anyNA(pol_types$policy_type_f),
   nrow(reqs) == 8, !anyNA(reqs$requirement_f),
   all(reqs$n <= 46), all(reqs$pct > 0 & reqs$pct <= 100),
+  nrow(req_units) == 8 * 46, sum(req_units$met) == sum(reqs$n),
 
   nrow(funnel) == 3, nrow(tracking) == 3,
   funnel$value[1] == 5932, funnel$value[2] == 2751, funnel$value[3] == 802,
   all(diff(funnel$value) < 0),
   all(tracking$value <= 49),
+  nrow(notice) == 1, notice$value[1] == 2,
 
   nrow(age_span) == 2, nrow(age_count) == 2,
   min(age_span$value) == 55, max(age_span$value) == 70,
@@ -148,6 +170,21 @@ legend_below <- function(fig, y = -0.28, b = 95) {
   layout(fig,
          legend = list(orientation = "h", x = 0, y = y, yanchor = "top"),
          margin = list(b = b))
+}
+
+# ggplotly drops a constant hjust on geom_text: textposition comes back null
+# and plotly centers each label on its anchor, which runs labels into bars,
+# dots, and each other. Re-anchor every text trace after conversion; the sign
+# of the anchor x picks the side. Pipe any chart whose geom_text sets hjust
+# through this; charts with centered labels stay off it.
+anchor_text <- function(fig) {
+  fig$x$data <- lapply(fig$x$data, function(tr) {
+    if (!is.null(tr$mode) && grepl("text", tr$mode, fixed = TRUE)) {
+      tr$textposition <- if (tr$x[[1]] > 0) "middle right" else "middle left"
+    }
+    tr
+  })
+  fig
 }
 ```
 
@@ -214,7 +251,8 @@ ggplotly_titled(p_types, tooltip = "text") |> clear_bg()
 <p class="chart-card-note">Forty-six states had a compassionate release
 mechanism; four did not (Illinois, Iowa, Nebraska, and Utah). Counts sum
 to more than fifty because a state can hold more than one kind of policy,
-so read these as policy types rather than as a partition of the states.
+so read these as counts of policy types, not as the fifty states sorted
+into piles.
 Source: Holland, Prost, Hoffmann, and Dickinson (2020), <em>OMEGA</em>
 81(4), figure 1 at p. 613.</p>
 <p class="chart-card-note">Two of those four have since acted. Illinois
@@ -237,36 +275,38 @@ Across the states that had a policy, what did those policies require?</p>
 ```{r chart-requirements}
 #| fig-height: 3.9
 #| out-width: "100%"
-p_req <- ggplot(reqs, aes(x = pct, y = requirement_f)) +
-  geom_segment(aes(x = 0, xend = pct, yend = requirement_f),
-               color = "#dcd5dc", linewidth = 0.9) +
-  geom_point(aes(text = paste0(
+p_req <- ggplot(req_units, aes(x = unit, y = requirement_f)) +
+  geom_point(aes(color = met, text = paste0(
     "<b>", requirement, " requirement</b><br>",
     n, " of 46 states (", pct, "%)<br>",
     "Source: ", source
-  )), color = plum_dark, size = 4) +
-  geom_text(aes(label = paste0(pct, "%")), nudge_x = 4.5,
-            size = 3.3, color = "#3C3C3C") +
-  scale_x_continuous(limits = c(0, 112), labels = function(x) paste0(x, "%")) +
+  )), size = 2) +
+  geom_text(data = reqs, aes(x = 48, y = requirement_f, label = n),
+            inherit.aes = FALSE, hjust = 0, size = 3.3, color = "#3C3C3C") +
+  scale_color_manual(values = c(`TRUE` = plum_dark, `FALSE` = "#e2dbe2"),
+                     guide = "none") +
+  scale_x_continuous(limits = c(0, 54), breaks = NULL) +
   labs(
     title = "Nearly all required a diagnosis; two thirds required a risk finding",
-    subtitle = "Share of the 46 states with a policy that imposed each requirement, as of 2016",
-    x = "Share of states with a policy", y = NULL
+    subtitle = "Each dot is one of the 46 states with a policy; filled dots imposed the requirement, as of 2016",
+    x = NULL, y = NULL
   ) +
-  theme_cr()
+  theme_cr() +
+  theme(panel.grid.major = element_blank())
 
-ggplotly_titled(p_req, tooltip = "text") |> clear_bg()
+ggplotly_titled(p_req, tooltip = "text") |> clear_bg() |> anchor_text()
 ```
 <p class="chart-card-note">Source: Holland, Prost, Hoffmann, and Dickinson
 (2020), <em>OMEGA</em> 81(4), table 1 at p. 612. One caution carried from
 the source: the table reports age restrictions in nine states and the
 article text reports ten. The chart follows the table and flags the
 difference rather than quietly picking a side.</p>
-<p class="chart-card-note"><strong>Why this chart:</strong> the same form
-twice in a row, on purpose. Two questions with the same structure (how many
-states do X) should look the same, so the reader compares content instead
-of relearning a layout. Sorting by prevalence rather than alphabetically
-turns a list into a finding.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> an icon array,
+the form risk communication research keeps reaching for when a share has
+to stay countable. Each dot is a state, so 45 of 46 reads as one state shy
+of everyone rather than as a long bar, and the denominator never leaves
+the picture. Sorting by prevalence rather than alphabetically turns a list
+of requirements into a finding.</p>
 :::
 
 ## How Old Is Old Enough {.section-heading}
@@ -277,18 +317,13 @@ number. States did not pick the same one.</p>
 ```{r chart-age-span}
 #| fig-height: 2.4
 #| out-width: "100%"
-span_df <- data.frame(
-  x = c(55, 70), y = c(1, 1),
-  state = c("Alabama", "South Carolina"),
-  lab   = c("Alabama\n55", "South Carolina\n70")
-)
-
-p_age <- ggplot(span_df, aes(x = x, y = y)) +
-  geom_segment(x = 55, xend = 70, y = 1, yend = 1,
+p_age <- ggplot(span_df, aes(x = value, y = y)) +
+  geom_segment(x = min(span_df$value), xend = max(span_df$value),
+               y = 1, yend = 1,
                color = "#dcd5dc", linewidth = 1.6) +
   geom_point(aes(text = paste0(
-    "<b>", state, "</b><br>Minimum age ", x,
-    "<br>Source: Holland et al. (2020), p. 614"
+    "<b>", state, "</b><br>Minimum age ", value,
+    "<br>Source: Holland et al. (2020), ", source_detail
   )), color = plum_dark, size = 5) +
   geom_text(aes(label = lab), nudge_y = 0.42, size = 3.4,
             color = "#3C3C3C", lineheight = 0.95) +
@@ -323,7 +358,7 @@ that fifty-five is somehow less than seventy in a way that matters.</p>
 ## Eligible, Applied, Released {.section-heading}
 
 ::: {.chart-card}
-<p class="chart-card-lede">Now the use. Following everyone the states
+<p class="chart-card-lede">Now the use: following everyone the states
 themselves counted as eligible over three years, how many made it to a
 release?</p>
 ```{r chart-funnel}
@@ -333,7 +368,11 @@ fun <- funnel |>
   mutate(
     category_f = factor(category, levels = rev(category)),
     pct_of_elig = value / max(value),
-    lab = paste0(comma(value), "  (", percent(pct_of_elig, accuracy = 0.1), ")")
+    # The eligible bar is its own denominator, so its label skips the trivial
+    # 100.0% and leaves room for the label at phone widths.
+    lab = ifelse(stage == 1, comma(value),
+                 paste0(comma(value), "  (",
+                        percent(pct_of_elig, accuracy = 0.1), ")"))
   )
 
 p_fun <- ggplot(fun, aes(x = value, y = category_f)) +
@@ -341,8 +380,9 @@ p_fun <- ggplot(fun, aes(x = value, y = category_f)) +
     "<b>", category, "</b><br>", comma(value), " people<br>",
     percent(pct_of_elig, accuracy = 0.1), " of those eligible<br>",
     "Source: ", source
-  )), fill = c(coral_dark, plum, plum_dark), width = 0.62) +
-  geom_text(aes(label = lab), hjust = -0.06, size = 3.4, color = "#3C3C3C") +
+  )), fill = c("#e2dbe2", plum, plum_dark), width = 0.62) +
+  geom_text(aes(label = lab), hjust = 0, nudge_x = 90,
+            size = 3.4, color = "#3C3C3C") +
   scale_x_continuous(limits = c(0, 7600), labels = comma) +
   labs(
     title = "Of everyone eligible, one in seven got out",
@@ -351,7 +391,7 @@ p_fun <- ggplot(fun, aes(x = value, y = category_f)) +
   ) +
   theme_cr()
 
-ggplotly_titled(p_fun, tooltip = "text") |> clear_bg()
+ggplotly_titled(p_fun, tooltip = "text") |> clear_bg() |> anchor_text()
 ```
 <p class="chart-card-note">Source: Holland, Prost, Hoffmann, and Dickinson
 (2021), <em>Mortality</em> 26(1), pp. 55 to 56. Denominators are reporting
@@ -364,7 +404,8 @@ denial rate.</p>
 as plain nested bars on a shared axis, because each stage is a subset of
 the one above it and the reader should be able to measure the drop, not
 just sense it. Tapered funnel graphics encode the same numbers as areas
-that no one can compare.</p>
+that no one can compare. The shading deepens as the pool narrows, the same
+part-in-whole grammar the federal chart below uses.</p>
 :::
 
 ## Does Anyone Have to Count? {.section-heading}
@@ -387,7 +428,7 @@ whether a law functions is finding out whether anyone kept the record.</p>
 <div style="font-size:0.8rem; color:#666;">tracked how many people were eligible</div>
 </div>
 <div style="flex:1 1 150px; min-width:150px; text-align:center; padding:0.95rem 0.5rem; background:#FDFBF7; border-radius:8px;">
-<div style="font-size:1.8rem; font-weight:700; color:#B23A28;">2 of 50</div>
+<div style="font-size:1.8rem; font-weight:700; color:#B23A28;">`r notice$value[1]` of 50</div>
 <div style="font-size:0.8rem; color:#666;">required that incarcerated people be told the policy exists</div>
 </div>
 </div>
@@ -413,7 +454,8 @@ last.</p>
 ::: {.chart-card}
 <p class="chart-card-lede">Federal law runs on a different track: since
 2018 people can file their own motions, and a judge rather than a prison
-official decides. Nearly four years of that docket, month by month.</p>
+official decides. Here are nearly four years of that docket, month by
+month.</p>
 ```{r chart-federal-monthly}
 #| fig-height: 3.6
 #| out-width: "100%"
@@ -427,7 +469,7 @@ p_fed <- ggplot(fed_month, aes(x = date)) +
     "<b>", label, "</b><br>",
     granted, " granted of ", comma(total), " (", granted_pct, "%)"
   )), fill = plum_dark, width = 26) +
-  scale_x_date(date_breaks = "6 months", date_labels = "%b %Y") +
+  scale_x_date(date_breaks = "1 year", date_labels = "%b %Y") +
   scale_y_continuous(labels = comma) +
   labs(
     title = "The pandemic surge receded; the grant rate did not",
@@ -477,13 +519,17 @@ p_rt <- ggplot(rt, aes(x = share, y = theme_f, fill = outcome_f)) +
   facet_wrap(~ outcome_f, ncol = 2) +
   scale_fill_manual(values = c(Granted = plum_series, Denied = coral_dark),
                     guide = "none") +
-  scale_x_continuous(labels = percent_format(accuracy = 1)) +
+  scale_x_continuous(breaks = seq(0, 0.4, 0.2), limits = c(0, 0.47),
+                     labels = function(x) 100 * x) +
   labs(
     title = "Sentence length wins release more often than illness does",
     subtitle = "Themes among reasons cited by federal courts, fiscal year 2025 through the third quarter",
-    x = "Share of reasons cited for that outcome", y = NULL
+    x = "Percent of reasons cited for that outcome", y = NULL
   ) +
-  theme_cr()
+  theme_cr() +
+  # Widen the gutter so the two facets' percent ticks stay apart at phone
+  # widths.
+  theme(panel.spacing.x = grid::unit(1.4, "lines"))
 
 # No legend here on purpose: the facet strips already say Granted and Denied,
 # so a legend would encode the same thing twice.
@@ -550,39 +596,45 @@ wrong pile.</p>
 no. Any single state's version arrived in pieces, and Wisconsin's is a
 clear case: a statute, a rollback, a rule, a set of forms, a policy.</p>
 ```{r chart-wi-timeline}
-#| fig-height: 3.4
+#| fig-height: 5.4
 #| out-width: "100%"
 wi_p <- wi |>
   mutate(
     lane = rep(c(1, -1), length.out = n()),
-    kind_f = factor(kind, levels = c("Statute", "Rule", "Forms", "Policy"))
+    kind_f = factor(kind, levels = c("Statute", "Rule", "Forms", "Policy")),
+    lab = paste0(period, "\n", wrap_lab(event, 20))
   )
 
-p_wi <- ggplot(wi_p, aes(x = sort_year, y = 0)) +
-  geom_hline(yintercept = 0, color = "#dcd5dc", linewidth = 1.1) +
-  geom_segment(aes(xend = sort_year, yend = lane * 0.28),
+p_wi <- ggplot(wi_p, aes(x = 0, y = sort_year)) +
+  geom_vline(xintercept = 0, color = "#dcd5dc", linewidth = 1.1) +
+  geom_segment(aes(xend = lane * 0.05, yend = sort_year),
                color = "#dcd5dc", linewidth = 0.5) +
   geom_point(aes(text = paste0(
     "<b>", period, ": ", event, "</b><br>",
     detail, "<br>Source: ", source, " (", source_detail, ")"
   ), color = kind_f), size = 4.2) +
-  geom_text(aes(y = lane * 0.42, label = paste0(period, "\n", event)),
-            size = 2.9, color = "#3C3C3C", lineheight = 0.95) +
+  geom_text(data = filter(wi_p, lane > 0),
+            aes(x = 0.09, label = lab), hjust = 0,
+            size = 3, color = "#3C3C3C", lineheight = 1.05) +
+  geom_text(data = filter(wi_p, lane < 0),
+            aes(x = -0.09, label = lab), hjust = 1,
+            size = 3, color = "#3C3C3C", lineheight = 1.05) +
   scale_color_manual(values = c(Statute = plum_dark, Rule = plum_series,
                                 Forms = gray_ctx, Policy = coral_dark)) +
-  scale_x_continuous(breaks = seq(1995, 2025, 5), limits = c(1994, 2027)) +
-  scale_y_continuous(limits = c(-0.72, 0.72)) +
+  scale_x_continuous(limits = c(-1, 1), breaks = NULL) +
+  scale_y_reverse(limits = c(2027, 1994), breaks = NULL) +
   labs(
     title = "A release mechanism assembled over twenty-seven years",
-    subtitle = "Wisconsin medical, geriatric, and extraordinary health condition release",
+    subtitle = "Wisconsin medical, geriatric, and extraordinary health condition release, 1997 to 2024",
     x = NULL, y = NULL, color = NULL
   ) +
   theme_cr() +
-  theme(axis.text.y = element_blank(), panel.grid.major.y = element_blank())
+  theme(axis.text = element_blank(), panel.grid.major = element_blank())
 
 ggplotly_titled(p_wi, tooltip = "text") |>
   clear_bg() |>
-  legend_below(y = -0.30, b = 105)
+  legend_below(y = -0.06, b = 70) |>
+  anchor_text()
 ```
 <p class="chart-card-note">Sources are the instruments themselves: 1997
 Wis. Act 283, 2001 Wis. Act 109, 2009 Wis. Act 28 creating Wis. Stat.
@@ -593,12 +645,14 @@ operate together and the sentencing court makes the final call.</p>
 <p class="chart-card-note">Notice the 2011 entry. A release mechanism does
 not only get built, it gets narrowed, and a chart that only recorded
 expansions would have shown a straight line up.</p>
-<p class="chart-card-note"><strong>Why this chart:</strong> a timeline with
-events alternating above and below the axis, because eight labels on one
-side collide and the reader loses the order. Colour marks the kind of
-instrument, which is the point most easily missed: what looks like one law
-is a statute, a rule, a form, and an internal policy, each changeable by a
-different body on a different schedule.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> a timeline set
+vertically, events alternating sides of the spine, because these labels
+are phrases and phrases need horizontal room; along a horizontal axis each
+label gets only the width of its own gap, and eight of them collide.
+Color marks the kind of instrument, which is the point most easily
+missed: what looks like one law is a statute, a rule, a form, and an
+internal policy, each changeable by a different body on a different
+schedule.</p>
 :::
 
 ## What This Cannot Tell You {.section-heading}
