@@ -527,10 +527,37 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   the essay was live. The link sits in howold's reveal (`#screen-2`), which is
   `display:none` until the exercise is done, so drive the sliders and both
   buttons to see it.
-  The only coming-soon project card left: "A Right That Exists on Paper"
-  (compassionate release, 50-state review) still needs the maintainer's
-  dataset. Re-checked 2026-07-15: `projects/index.qmd` has four cards, with the
-  picker, the periodic table and Counted Wrong live and that one still pending.
+  No coming-soon project card remains: "A Right That Exists on Paper"
+  (`compassionaterelease/`, bullet below) shipped 2026-07-19 (#74) and retired
+  the last one, so `projects/index.qmd` has four live cards.
+- **A Right That Exists on Paper (`compassionaterelease/`; shipped 2026-07-19
+  in #74, review pass 2026-07-19).** Chart-forward data story on compassionate
+  release, the qualitative-data sibling of Maturity Gap on the same machinery:
+  `index.qmd` with `ggplotly_titled()`, `legend_below()`, `stopifnot` guards
+  over every CSV, `_metadata.yml` freeze: false, `_freeze/compassionaterelease/`
+  gitignored. Public documents only (USSC Compassionate Release Data Report
+  FY2025 Q3 tables 1/10/11; Holland et al. 2020 *OMEGA* and 2021 *Mortality*;
+  Wisconsin's own statutes, rule, forms, and policy); every CSV row carries
+  `source` + `source_detail` and the guard refuses to render without them.
+  Nine exhibits, one form each: lollipop, icon array, span, nested-bar funnel,
+  stat tiles, part-in-whole monthly bars, faceted bars, codebook table,
+  vertical timeline. The review pass (maintainer: "too many dumb bells") cut
+  the dot-on-a-stick forms from three to two, requirements became the icon
+  array, and the Wisconsin timeline went vertical because its labels are
+  phrases and phrases need horizontal room; keep one lollipop and one span,
+  no more. **`anchor_text()` exists because ggplotly drops a constant `hjust`
+  on `geom_text`** (textposition comes back null, so plotly centers every
+  label on its anchor; that was the timeline's label collision and it also
+  put the funnel's dark-bar label on the bar). Pipe any chart whose geom_text
+  sets hjust through it; the same drop hits `annotate("text", hjust = ...)`.
+  Facet tick labels that must survive 280px phone panels are bare numbers
+  with the unit in the axis title (the reasons chart). The reason themes are
+  the maintainer's own coding over the Commission's codes and the codebook
+  table is the contract: change one, change both. Quarterly USSC update =
+  extend `federal_motions_monthly.csv` and `federal_reasons.csv`, then the
+  stopifnot sums and the totals in the notes prose. The state layer is
+  Holland's 2016 coding, a decade old, and the page says so; re-coding from
+  current statutes is the named next piece of work.
 - The standalone templates carry their own CSS and had no inline prose link
   until #51, so there is no generic `a` rule to inherit and a bare `<a>` in body
   copy renders browser-default blue. Style it, and measure against the rendered
