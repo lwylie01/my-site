@@ -1,0 +1,5 @@
+measure,state,value,unit,source,source_detail,data_year
+minimum_age,Alabama,55,years,"Holland, Prost, Hoffmann, and Dickinson (2020), OMEGA 81(4), 607-626","p. 614; youngest minimum age of any state policy",2016
+minimum_age,South Carolina,70,years,"Holland, Prost, Hoffmann, and Dickinson (2020), OMEGA 81(4), 607-626","p. 614; oldest minimum age of any state policy",2016
+count,States using age at all,10,states,"Holland, Prost, Hoffmann, and Dickinson (2020), OMEGA 81(4), 607-626","p. 614; table 1 at p. 612 lists 9",2016
+count,States where age alone suffices,3,states,"Holland, Prost, Hoffmann, and Dickinson (2020), OMEGA 81(4), 607-626","p. 614",2016

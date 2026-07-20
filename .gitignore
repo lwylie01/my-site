@@ -49,5 +49,10 @@ _freeze/countedwrong/
 # because the page reads selected-work/data/*. Keep stray caches out.
 _freeze/selected-work/
 
+# Compassionate release freeze cache: freeze is disabled
+# (compassionaterelease/_metadata.yml) because the page reads
+# compassionaterelease/data/*.csv. Keep stray caches out.
+_freeze/compassionaterelease/
+
 # Internal capacity dashboard freeze cache — never publish (contains project details)
 _freeze/CV/

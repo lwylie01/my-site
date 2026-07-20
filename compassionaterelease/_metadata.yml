@@ -1,0 +1,7 @@
+# The page reads the CSVs in compassionaterelease/data/ at render time.
+# Quarto's freeze cache only invalidates when the .qmd source changes, so a
+# frozen render would silently serve stale results after data-only CSV
+# updates (a new USSC quarterly report, or a re-coded state layer). Always
+# re-execute these documents.
+execute:
+  freeze: false
