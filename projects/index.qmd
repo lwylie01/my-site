@@ -67,20 +67,22 @@ toc: false
     <p class="project-card-desc">
       Nearly every state and the federal system has a compassionate or medical
       release law on the books: a way to release people who are dying, seriously
-      ill, or simply too old to pose a risk. Almost none are used.
-      Drawing on a fifty-state review and the data behind <em>Aging and the Criminal
-      Legal System</em> (APA, 2025), this project measures the gap between a law
-      that exists and a law that gets used, and asks what an unused law says
-      about how a system measures mercy.
+      ill, or simply too old to pose a risk. Almost none are used. A data story
+      that charts the gap between a law that exists and a law that gets used,
+      built from federal sentencing records and published fifty-state policy
+      research, and treating statutes as what they are: qualitative data that
+      can be counted.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#F4715C;"></span>50-state legal review</span>
+      <span><span class="project-card-accent" style="background:#F4715C;"></span>Statutory review</span>
       <span><span class="project-card-accent" style="background:#2E1A47;"></span>Aging &amp; corrections</span>
       <span><span class="project-card-accent" style="background:#6A5F72;"></span>Law &amp; policy</span>
     </div>
     <br>
-    <span class="essay-status">Coming soon</span>
+    <a href="../compassionaterelease/index.html" style="font-weight:600; color:#B23A28;">
+      Read the data story →
+    </a>
   </div>
 
 </div>

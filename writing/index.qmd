@@ -54,17 +54,17 @@ toc: false
     <span class="essay-status">Coming soon</span>
   </a>
 
-  <a class="essay-card">
+  <a class="essay-card" href="../compassionaterelease/index.html">
     <div class="essay-meta">
       <span class="essay-tag">Aging and the Law</span>
       <span class="essay-read">9 min read</span>
     </div>
-    <p class="essay-title">The Mercy We Wrote Down and Never Used</p>
+    <p class="essay-title">A Right That Exists on Paper: Compassionate
+    Release</p>
     <p class="essay-desc">Compassionate release is on the books in almost
-    every state and almost never used. What an unused law tells us about
-    the difference between writing a policy and checking whether it
-    works.</p>
-    <span class="essay-status">Coming soon</span>
+    every state and almost never used. A data story on the distance between
+    a law and its use, and on charting statutes as the qualitative data
+    they are.</p>
   </a>
 
   <a class="essay-card">

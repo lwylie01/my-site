@@ -1,0 +1,682 @@
+---
+title: "A Right That Exists on Paper"
+subtitle: "Compassionate release, and the distance between a law and its use"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+---
+
+```{r setup}
+#| include: false
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(plotly)
+library(scales)
+
+# Every figure on this page comes from a public document: federal sentencing
+# reports, published state-policy research, and state statutes. Each CSV row
+# carries its own source and the specific table or page it came from, and the
+# guard below refuses to render if any row is missing one. No case file, no
+# person-level record, and no unpublished data feeds anything here.
+fed_month  <- read.csv("data/federal_motions_monthly.csv", fileEncoding = "UTF-8")
+fed_reason <- read.csv("data/federal_reasons.csv", fileEncoding = "UTF-8")
+pol_types  <- read.csv("data/state_policy_types.csv", fileEncoding = "UTF-8")
+reqs       <- read.csv("data/state_requirements.csv", fileEncoding = "UTF-8")
+util       <- read.csv("data/state_utilization.csv", fileEncoding = "UTF-8")
+ages       <- read.csv("data/state_age_thresholds.csv", fileEncoding = "UTF-8")
+wi         <- read.csv("data/wisconsin_timeline.csv", fileEncoding = "UTF-8")
+
+fed_month <- fed_month |>
+  mutate(
+    date  = as.Date(sprintf("%d-%02d-01", year, month_num)),
+    label = paste0(substr(month, 1, 3), " ", year)
+  ) |>
+  arrange(date)
+
+# The reason codes are the Sentencing Commission's own. The theme grouping on
+# top of them is mine, and the codebook section on this page spells out every
+# assignment so a reader can disagree with a specific one.
+reason_theme <- fed_reason |>
+  group_by(outcome, theme) |>
+  summarise(n = sum(n), .groups = "drop") |>
+  group_by(outcome) |>
+  mutate(share = n / sum(n)) |>
+  ungroup()
+
+funnel   <- util |> filter(chart == "funnel")   |> arrange(stage)
+tracking <- util |> filter(chart == "tracking") |> arrange(stage)
+
+age_span  <- ages |> filter(measure == "minimum_age")
+age_count <- ages |> filter(measure == "count")
+
+pol_types <- pol_types |>
+  mutate(policy_type_f = factor(policy_type, levels = rev(policy_type)))
+
+reqs <- reqs |>
+  mutate(requirement_f = factor(requirement, levels = rev(requirement)))
+
+wi <- wi |> arrange(sort_year)
+
+# Fail the CI render loudly rather than publish a wrong page (a failed publish
+# leaves the previous version of the site live). The totals below are the ones
+# the source documents state for themselves, so a transcription slip in any
+# single row breaks the sum and stops the build.
+stopifnot(
+  nrow(fed_month) == 45,
+  !anyNA(fed_month$date), !anyNA(fed_month$total),
+  sum(fed_month$total) == 13614, sum(fed_month$granted) == 1866,
+  all(fed_month$granted + fed_month$denied == fed_month$total),
+  all(fed_month$granted_pct >= 0 & fed_month$granted_pct <= 100),
+
+  nrow(fed_reason) == 42,
+  all(fed_reason$outcome %in% c("Granted", "Denied")),
+  sum(fed_reason$n[fed_reason$outcome == "Granted"]) == 457,
+  sum(fed_reason$n[fed_reason$outcome == "Denied"]) == 3703,
+  all(fed_reason$n > 0),
+  nrow(reason_theme) == 13,
+  all(abs(tapply(reason_theme$share, reason_theme$outcome, sum) - 1) < 1e-9),
+
+  nrow(pol_types) == 7, !anyNA(pol_types$policy_type_f),
+  nrow(reqs) == 8, !anyNA(reqs$requirement_f),
+  all(reqs$n <= 46), all(reqs$pct > 0 & reqs$pct <= 100),
+
+  nrow(funnel) == 3, nrow(tracking) == 3,
+  funnel$value[1] == 5932, funnel$value[2] == 2751, funnel$value[3] == 802,
+  all(diff(funnel$value) < 0),
+  all(tracking$value <= 49),
+
+  nrow(age_span) == 2, nrow(age_count) == 2,
+  min(age_span$value) == 55, max(age_span$value) == 70,
+
+  nrow(wi) == 8, !anyNA(wi$sort_year), all(diff(wi$sort_year) > 0),
+
+  # Every row on this page must be able to say where it came from.
+  !any(fed_month$source == ""), !any(fed_reason$source == ""),
+  !any(pol_types$source == ""), !any(reqs$source == ""),
+  !any(util$source == ""), !any(ages$source == ""), !any(wi$source == ""),
+  !anyNA(c(fed_reason$source_detail, reqs$source_detail, wi$source_detail))
+)
+
+plum_dark   <- "#6b4f6c"
+plum        <- "#8C6A8D"
+plum_series <- "#774379"   # chroma-bumped plum: only for multi-series charts
+coral_dark  <- "#c96b52"
+gray_ctx    <- "#8a8a8a"   # de-emphasized context; always direct-labeled
+
+theme_cr <- function() {
+  theme_minimal(base_family = "sans", base_size = 12) +
+    theme(
+      plot.title    = element_text(size = 14, face = "bold", color = "#3C3C3C"),
+      plot.subtitle = element_text(size = 11, color = "#555555"),
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(color = "#eeeeee"),
+      axis.text     = element_text(color = "#444444"),
+      legend.position = "bottom",
+      legend.title  = element_text(size = 10, face = "bold"),
+      strip.text    = element_text(face = "bold", color = "#333333")
+    )
+}
+
+# ggplotly() drops ggplot subtitles. Fold each subtitle into the plotly title
+# as a smaller <br><sup> second line so it survives the conversion. Pipe every
+# chart through this instead of bare ggplotly().
+ggplotly_titled <- function(p, ...) {
+  fig <- ggplotly(p, ...)
+  sub <- p$labels$subtitle
+  if (is.null(sub) || !nzchar(sub)) return(fig)
+  fig |>
+    layout(
+      title = list(text = paste0(
+        "<b>", p$labels$title, "</b><br><sup>", sub, "</sup>"
+      )),
+      margin = list(t = 70)
+    )
+}
+
+clear_bg <- function(fig) {
+  layout(fig, paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+}
+
+# ggplotly parks a horizontal legend on top of the x-axis title. Anchor it
+# below the title and pad the bottom margin. Pipe every chart that has a
+# legend through this; legend-free charts do not need it. The y offset is
+# relative to plot height, so shorter charts need a deeper y (and more b)
+# to clear the title by the same number of pixels.
+legend_below <- function(fig, y = -0.28, b = 95) {
+  layout(fig,
+         legend = list(orientation = "h", x = 0, y = y, yanchor = "top"),
+         margin = list(b = b))
+}
+```
+
+```{=html}
+<style>
+/* This page runs chart-forward: section prose steps down a size, and the
+   card ledes (styled in site-theme.scss) carry each section's setup. */
+section.level2 > p, main.content > p { font-size: 0.95rem; }
+/* The codebook table is wider than a phone. Let it scroll inside its own
+   box so the page body never does. */
+.table-scroll { overflow-x: auto; }
+.table-scroll table { font-size: 0.86rem; }
+</style>
+```
+
+Almost every state has a law that lets it release people who are dying,
+gravely ill, or old enough that the risk they once posed has passed. The
+laws have different names and different tests, but they share a premise:
+that a sentence can outlive its purpose, and that a system should be able
+to say so.
+
+Almost none of them get used. That gap, between a right that exists and a
+right that operates, is the subject here.
+
+This page is also an argument about method. Statutes and case decisions
+are qualitative data, and they are usually written up rather than charted.
+That habit costs something, because the questions people actually ask
+about a law are comparative: how many states require this, how far apart
+are the thresholds, what reasons do courts give, what changed and when.
+Those are chart questions. So each section below asks one of them, answers
+it with a form built for categorical and legal evidence, and carries a
+note on why that form won.
+
+## Nearly Everywhere on Paper {.section-heading}
+
+::: {.chart-card}
+<p class="chart-card-lede">Start with the premise. When researchers last
+coded all fifty states, how many had any mechanism at all, and what did
+those mechanisms look like?</p>
+```{r chart-policy-types}
+#| fig-height: 3.8
+#| out-width: "100%"
+p_types <- ggplot(pol_types, aes(x = n, y = policy_type_f)) +
+  geom_segment(aes(x = 0, xend = n, yend = policy_type_f),
+               color = "#dcd5dc", linewidth = 0.9) +
+  geom_point(aes(text = paste0(
+    "<b>", policy_type, "</b><br>",
+    n, " states<br>",
+    "Source: ", source, "<br>Policies as of ", data_year
+  )),
+  size = 4,
+  color = ifelse(pol_types$policy_type == "No mechanism", coral_dark, plum_dark)) +
+  geom_text(aes(label = n), nudge_x = 1.6, size = 3.4, color = "#3C3C3C") +
+  scale_x_continuous(limits = c(0, 36)) +
+  labs(
+    title = "Four states had nothing; the rest had something",
+    subtitle = "Types of release mechanism identified across the fifty states, policies as of 2016",
+    x = "Number of states", y = NULL
+  ) +
+  theme_cr()
+
+ggplotly_titled(p_types, tooltip = "text") |> clear_bg()
+```
+<p class="chart-card-note">Forty-six states had a compassionate release
+mechanism; four did not (Illinois, Iowa, Nebraska, and Utah). Counts sum
+to more than fifty because a state can hold more than one kind of policy,
+so read these as policy types rather than as a partition of the states.
+Source: Holland, Prost, Hoffmann, and Dickinson (2020), <em>OMEGA</em>
+81(4), figure 1 at p. 613.</p>
+<p class="chart-card-note">Two of those four have since acted. Illinois
+passed the Joe Coleman Medical Release Act in 2022, and Nebraska took up
+release for terminal illness and permanent incapacity the same year. That
+is the trouble with a decade-old map: it is the best one that exists, and
+it is already wrong.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> a lollipop
+rather than a bar, because the quantity is a count of states and the bar
+area would add ink without adding information. The one category that is an
+absence, not a policy, is the only one in coral, so the eye finds the
+exception before it reads the labels.</p>
+:::
+
+## What You Have to Prove {.section-heading}
+
+::: {.chart-card}
+<p class="chart-card-lede">A law that exists still has to be satisfied.
+Across the states that had a policy, what did those policies require?</p>
+```{r chart-requirements}
+#| fig-height: 3.9
+#| out-width: "100%"
+p_req <- ggplot(reqs, aes(x = pct, y = requirement_f)) +
+  geom_segment(aes(x = 0, xend = pct, yend = requirement_f),
+               color = "#dcd5dc", linewidth = 0.9) +
+  geom_point(aes(text = paste0(
+    "<b>", requirement, " requirement</b><br>",
+    n, " of 46 states (", pct, "%)<br>",
+    "Source: ", source
+  )), color = plum_dark, size = 4) +
+  geom_text(aes(label = paste0(pct, "%")), nudge_x = 4.5,
+            size = 3.3, color = "#3C3C3C") +
+  scale_x_continuous(limits = c(0, 112), labels = function(x) paste0(x, "%")) +
+  labs(
+    title = "Nearly all required a diagnosis; two thirds required a risk finding",
+    subtitle = "Share of the 46 states with a policy that imposed each requirement, as of 2016",
+    x = "Share of states with a policy", y = NULL
+  ) +
+  theme_cr()
+
+ggplotly_titled(p_req, tooltip = "text") |> clear_bg()
+```
+<p class="chart-card-note">Source: Holland, Prost, Hoffmann, and Dickinson
+(2020), <em>OMEGA</em> 81(4), table 1 at p. 612. One caution carried from
+the source: the table reports age restrictions in nine states and the
+article text reports ten. The chart follows the table and flags the
+difference rather than quietly picking a side.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> the same form
+twice in a row, on purpose. Two questions with the same structure (how many
+states do X) should look the same, so the reader compares content instead
+of relearning a layout. Sorting by prevalence rather than alphabetically
+turns a list into a finding.</p>
+:::
+
+## How Old Is Old Enough {.section-heading}
+
+::: {.chart-card}
+<p class="chart-card-lede">Where age appears in these laws, it appears as a
+number. States did not pick the same one.</p>
+```{r chart-age-span}
+#| fig-height: 2.4
+#| out-width: "100%"
+span_df <- data.frame(
+  x = c(55, 70), y = c(1, 1),
+  state = c("Alabama", "South Carolina"),
+  lab   = c("Alabama\n55", "South Carolina\n70")
+)
+
+p_age <- ggplot(span_df, aes(x = x, y = y)) +
+  geom_segment(x = 55, xend = 70, y = 1, yend = 1,
+               color = "#dcd5dc", linewidth = 1.6) +
+  geom_point(aes(text = paste0(
+    "<b>", state, "</b><br>Minimum age ", x,
+    "<br>Source: Holland et al. (2020), p. 614"
+  )), color = plum_dark, size = 5) +
+  geom_text(aes(label = lab), nudge_y = 0.42, size = 3.4,
+            color = "#3C3C3C", lineheight = 0.95) +
+  scale_x_continuous(limits = c(50, 75), breaks = seq(50, 75, 5)) +
+  scale_y_continuous(limits = c(0.55, 1.75)) +
+  labs(
+    title = "Fifteen years separate the youngest cutoff from the oldest",
+    subtitle = "Minimum qualifying age among state policies that set one, as of 2016",
+    x = "Age", y = NULL
+  ) +
+  theme_cr() +
+  theme(axis.text.y = element_blank(), panel.grid.major.y = element_blank())
+
+ggplotly_titled(p_age, tooltip = "text") |> clear_bg()
+```
+<p class="chart-card-note">Ten states used age as a factor at all, and in
+only three could age decide the question on its own. Wyoming's policy set
+no number, requiring instead that a person be "incapacitated by age."
+Source: Holland, Prost, Hoffmann, and Dickinson (2020), <em>OMEGA</em>
+81(4), p. 614.</p>
+<p class="chart-card-note">The same boundary problem shows up whenever a
+law puts a number on a fuzzy category, which is the subject of a short
+exercise on this site:
+<a href="../howold/how_old_is_old.html">How Old Is Old?</a></p>
+<p class="chart-card-note"><strong>Why this chart:</strong> a span, not a
+bar chart of two values. The finding is the distance between the endpoints,
+so the distance is what gets drawn. Two bars would have invited the reader
+to compare their heights, which is not the point and would have implied
+that fifty-five is somehow less than seventy in a way that matters.</p>
+:::
+
+## Eligible, Applied, Released {.section-heading}
+
+::: {.chart-card}
+<p class="chart-card-lede">Now the use. Following everyone the states
+themselves counted as eligible over three years, how many made it to a
+release?</p>
+```{r chart-funnel}
+#| fig-height: 3
+#| out-width: "100%"
+fun <- funnel |>
+  mutate(
+    category_f = factor(category, levels = rev(category)),
+    pct_of_elig = value / max(value),
+    lab = paste0(comma(value), "  (", percent(pct_of_elig, accuracy = 0.1), ")")
+  )
+
+p_fun <- ggplot(fun, aes(x = value, y = category_f)) +
+  geom_col(aes(text = paste0(
+    "<b>", category, "</b><br>", comma(value), " people<br>",
+    percent(pct_of_elig, accuracy = 0.1), " of those eligible<br>",
+    "Source: ", source
+  )), fill = c(coral_dark, plum, plum_dark), width = 0.62) +
+  geom_text(aes(label = lab), hjust = -0.06, size = 3.4, color = "#3C3C3C") +
+  scale_x_continuous(limits = c(0, 7600), labels = comma) +
+  labs(
+    title = "Of everyone eligible, one in seven got out",
+    subtitle = "State compassionate release, 2013 to 2015, among states that reported each stage",
+    x = "People", y = NULL
+  ) +
+  theme_cr()
+
+ggplotly_titled(p_fun, tooltip = "text") |> clear_bg()
+```
+<p class="chart-card-note">Source: Holland, Prost, Hoffmann, and Dickinson
+(2021), <em>Mortality</em> 26(1), pp. 55 to 56. Denominators are reporting
+states only, so this is the funnel among systems that could produce the
+number at all. Note also what the last bar is not: the share who were
+refused. People leave this process by dying before a decision and by
+withdrawing, so the gap between applying and release is wider than any
+denial rate.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> a funnel drawn
+as plain nested bars on a shared axis, because each stage is a subset of
+the one above it and the reader should be able to measure the drop, not
+just sense it. Tapered funnel graphics encode the same numbers as areas
+that no one can compare.</p>
+:::
+
+## Does Anyone Have to Count? {.section-heading}
+
+::: {.chart-card}
+<p class="chart-card-lede">Every number in the section above depends on a
+state having written something down. Most of the work of finding out
+whether a law functions is finding out whether anyone kept the record.</p>
+<div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin:0.4rem 0 1rem;">
+<div style="flex:1 1 150px; min-width:150px; text-align:center; padding:0.95rem 0.5rem; background:#FDFBF7; border-radius:8px;">
+<div style="font-size:1.8rem; font-weight:700; color:#2E1A47;">`r tracking$value[1]` of 49</div>
+<div style="font-size:0.8rem; color:#666;">tracked how many people they released</div>
+</div>
+<div style="flex:1 1 150px; min-width:150px; text-align:center; padding:0.95rem 0.5rem; background:#FDFBF7; border-radius:8px;">
+<div style="font-size:1.8rem; font-weight:700; color:#2E1A47;">`r tracking$value[2]` of 49</div>
+<div style="font-size:0.8rem; color:#666;">tracked how many people applied</div>
+</div>
+<div style="flex:1 1 150px; min-width:150px; text-align:center; padding:0.95rem 0.5rem; background:#FDFBF7; border-radius:8px;">
+<div style="font-size:1.8rem; font-weight:700; color:#2E1A47;">`r tracking$value[3]` of 49</div>
+<div style="font-size:0.8rem; color:#666;">tracked how many people were eligible</div>
+</div>
+<div style="flex:1 1 150px; min-width:150px; text-align:center; padding:0.95rem 0.5rem; background:#FDFBF7; border-radius:8px;">
+<div style="font-size:1.8rem; font-weight:700; color:#B23A28;">2 of 50</div>
+<div style="font-size:0.8rem; color:#666;">required that incarcerated people be told the policy exists</div>
+</div>
+</div>
+<p class="chart-card-note">Tracking counts are from Holland et al. (2021),
+<em>Mortality</em> 26(1), p. 55, across the forty-nine state systems that
+responded to a public records request. The notification figure is from
+Holland et al. (2020), <em>OMEGA</em> 81(4), p. 616: only Alabama and New
+Mexico required that people in their custody be informed that the policy
+existed.</p>
+<p class="chart-card-note">Those two findings belong together. A right
+nobody is told about, in a system that does not count who was eligible for
+it, will look underused and unwanted in exactly the same way it would look
+if it were simply not offered.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> tiles, because
+four numbers with different denominators cannot share an axis, and forcing
+them onto one would invent a comparison the data does not support. The
+last tile is the one that changes how the first three read, so it goes
+last.</p>
+:::
+
+## The Federal Docket {.section-heading}
+
+::: {.chart-card}
+<p class="chart-card-lede">Federal law runs on a different track: since
+2018 people can file their own motions, and a judge rather than a prison
+official decides. Nearly four years of that docket, month by month.</p>
+```{r chart-federal-monthly}
+#| fig-height: 3.6
+#| out-width: "100%"
+p_fed <- ggplot(fed_month, aes(x = date)) +
+  geom_col(aes(y = total, text = paste0(
+    "<b>", label, "</b><br>",
+    comma(total), " motions decided<br>",
+    granted, " granted (", granted_pct, "%)"
+  )), fill = "#e2dbe2", width = 26) +
+  geom_col(aes(y = granted, text = paste0(
+    "<b>", label, "</b><br>",
+    granted, " granted of ", comma(total), " (", granted_pct, "%)"
+  )), fill = plum_dark, width = 26) +
+  scale_x_date(date_breaks = "6 months", date_labels = "%b %Y") +
+  scale_y_continuous(labels = comma) +
+  labs(
+    title = "The pandemic surge receded; the grant rate did not",
+    subtitle = "Federal compassionate release motions decided each month, granted portion in dark",
+    x = NULL, y = "Motions decided"
+  ) +
+  theme_cr()
+
+ggplotly_titled(p_fed, tooltip = "text") |> clear_bg()
+```
+<p class="chart-card-note">Across the full period, courts decided 13,614
+motions and granted 1,866 of them, or 13.7 percent. Monthly volume fell
+from 584 in October 2021 to 207 in June 2025, while the share granted rose
+from 9.2 percent to 15.9 percent. Source: U.S. Sentencing Commission,
+Compassionate Release Data Report, 3rd Quarter FY2025, table 1. Fiscal
+year 2025 figures are preliminary and cumulative through the third
+quarter.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> one bar nested
+inside another, rather than two lines on two axes. Grants are a part of
+motions decided, not a separate series, and drawing a part inside its whole
+keeps the reader from reading a rising rate as a rising count. They moved
+in opposite directions here, which is exactly the confusion a second axis
+would have manufactured.</p>
+:::
+
+## Why Courts Say Yes, and Why They Say No {.section-heading}
+
+::: {.chart-card}
+<p class="chart-card-lede">Courts record their reasons, and the reasons are
+the most direct evidence there is of what this law has come to mean in
+practice. Grouped into themes, what does the federal docket say?</p>
+```{r chart-reasons}
+#| fig-height: 4.3
+#| out-width: "100%"
+rt <- reason_theme |>
+  mutate(
+    outcome_f = factor(outcome, levels = c("Granted", "Denied")),
+    theme_f   = reorder(theme, share)
+  )
+
+p_rt <- ggplot(rt, aes(x = share, y = theme_f, fill = outcome_f)) +
+  geom_col(aes(text = paste0(
+    "<b>", theme, "</b><br>",
+    outcome, ": ", comma(n), " reasons cited<br>",
+    percent(share, accuracy = 0.1), " of reasons for that outcome"
+  )), width = 0.68) +
+  facet_wrap(~ outcome_f, ncol = 2) +
+  scale_fill_manual(values = c(Granted = plum_series, Denied = coral_dark),
+                    guide = "none") +
+  scale_x_continuous(labels = percent_format(accuracy = 1)) +
+  labs(
+    title = "Sentence length wins release more often than illness does",
+    subtitle = "Themes among reasons cited by federal courts, fiscal year 2025 through the third quarter",
+    x = "Share of reasons cited for that outcome", y = NULL
+  ) +
+  theme_cr()
+
+# No legend here on purpose: the facet strips already say Granted and Denied,
+# so a legend would encode the same thing twice.
+ggplotly_titled(p_rt, tooltip = "text") |> clear_bg()
+```
+<p class="chart-card-note">Among granted motions, reasons about sentence
+length and changes in law accounted for 33.7 percent of citations and
+medical reasons for 25.2 percent. Among denials, the largest theme by far
+was the general sentencing factors at section 3553(a), a discretionary
+weighing rather than a finding about health. Courts may cite several
+reasons per case: 457 reasons across 299 granted cases, and 3,703 across
+1,766 denied. Source: U.S. Sentencing Commission, Compassionate Release
+Data Report, 3rd Quarter FY2025, tables 10 and 11.</p>
+<p class="chart-card-note">One procedural line is worth reading on its
+own. Failure to exhaust administrative remedies was cited 325 times, which
+is a paperwork step rather than a judgment about whether release was
+warranted.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> small multiples
+sharing one x scale, so grants and denials are read side by side without
+either being subtracted from the other. They are not complements: a case
+can be denied for four reasons and granted for two, so a single diverging
+bar would have implied an arithmetic that does not exist.</p>
+:::
+
+## From Statute to Data {.section-heading}
+
+:::: {.chart-card}
+<p class="chart-card-lede">The chart above depends on a step that is easy
+to skip past. The Sentencing Commission publishes reason codes; the themes
+are mine. Here is the whole assignment, so the grouping can be argued
+with.</p>
+::: {.table-scroll}
+```{r table-codebook}
+#| output: asis
+cb <- fed_reason |>
+  arrange(outcome, theme, desc(n)) |>
+  transmute(
+    Outcome = outcome,
+    `Theme (my coding)` = theme,
+    `Reason code (the Commission's)` = reason,
+    Cited = comma(n)
+  )
+
+knitr::kable(cb, align = c("l", "l", "l", "r"))
+```
+:::
+<p class="chart-card-note">Two judgment calls in there are worth naming.
+"Young age at time of offense" sits under sentence and law change rather
+than under anything medical, because it is an argument about whether the
+original sentence still fits. "Rehabilitation" is kept apart from both
+health and sentence length, because the Commission notes it never appears
+alone in a granted case: it always arrives alongside another reason.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> a table, which
+is the right chart when the reader's question is "what exactly did you
+do." A chart of a coding scheme shows its shape; the scheme itself has to
+be legible line by line, or nobody can tell you that you put a code in the
+wrong pile.</p>
+::::
+
+## One State, Thirty Years {.section-heading}
+
+::: {.chart-card}
+<p class="chart-card-lede">National counts flatten a law into a yes or a
+no. Any single state's version arrived in pieces, and Wisconsin's is a
+clear case: a statute, a rollback, a rule, a set of forms, a policy.</p>
+```{r chart-wi-timeline}
+#| fig-height: 3.4
+#| out-width: "100%"
+wi_p <- wi |>
+  mutate(
+    lane = rep(c(1, -1), length.out = n()),
+    kind_f = factor(kind, levels = c("Statute", "Rule", "Forms", "Policy"))
+  )
+
+p_wi <- ggplot(wi_p, aes(x = sort_year, y = 0)) +
+  geom_hline(yintercept = 0, color = "#dcd5dc", linewidth = 1.1) +
+  geom_segment(aes(xend = sort_year, yend = lane * 0.28),
+               color = "#dcd5dc", linewidth = 0.5) +
+  geom_point(aes(text = paste0(
+    "<b>", period, ": ", event, "</b><br>",
+    detail, "<br>Source: ", source, " (", source_detail, ")"
+  ), color = kind_f), size = 4.2) +
+  geom_text(aes(y = lane * 0.42, label = paste0(period, "\n", event)),
+            size = 2.9, color = "#3C3C3C", lineheight = 0.95) +
+  scale_color_manual(values = c(Statute = plum_dark, Rule = plum_series,
+                                Forms = gray_ctx, Policy = coral_dark)) +
+  scale_x_continuous(breaks = seq(1995, 2025, 5), limits = c(1994, 2027)) +
+  scale_y_continuous(limits = c(-0.72, 0.72)) +
+  labs(
+    title = "A release mechanism assembled over twenty-seven years",
+    subtitle = "Wisconsin medical, geriatric, and extraordinary health condition release",
+    x = NULL, y = NULL, color = NULL
+  ) +
+  theme_cr() +
+  theme(axis.text.y = element_blank(), panel.grid.major.y = element_blank())
+
+ggplotly_titled(p_wi, tooltip = "text") |>
+  clear_bg() |>
+  legend_below(y = -0.30, b = 105)
+```
+<p class="chart-card-note">Sources are the instruments themselves: 1997
+Wis. Act 283, 2001 Wis. Act 109, 2009 Wis. Act 28 creating Wis. Stat.
+sec. 302.113(9g), 2011 Wis. Act 38, Wis. Admin. Code DOC sec. 302.41,
+Wisconsin Court System forms CR-254 through CR-256, DAI Policy 302.00.13,
+and a 2023 amendment to the notice provision. Today all three layers
+operate together and the sentencing court makes the final call.</p>
+<p class="chart-card-note">Notice the 2011 entry. A release mechanism does
+not only get built, it gets narrowed, and a chart that only recorded
+expansions would have shown a straight line up.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> a timeline with
+events alternating above and below the axis, because eight labels on one
+side collide and the reader loses the order. Colour marks the kind of
+instrument, which is the point most easily missed: what looks like one law
+is a statute, a rule, a form, and an internal policy, each changeable by a
+different body on a different schedule.</p>
+:::
+
+## What This Cannot Tell You {.section-heading}
+
+Everything above is the law as written and the decisions as recorded. Both
+are real, and both stop short of the question people actually care about,
+which is why a law that exists so widely operates so rarely.
+
+The records cannot answer it because the deciding happens before anything
+gets written down. A prison official weighs whether to forward a petition.
+A physician decides how confidently to put a prognosis in writing. A board
+or a judge weighs a small, quiet benefit against a rare, loud risk. Those
+are judgments made under uncertainty, and the file records the outcome, not
+the reasoning that produced it.
+
+That is where I think the useful work is. A few questions I would want
+answered before claiming to know why these laws sit unused:
+
+- Does what the policy is called change who applies and who is approved?
+  The federal statute says "extraordinary and compelling." Most states have
+  moved to medical or geriatric parole, medical release, or conditional
+  medical release. Only New Jersey and Utah still use compassionate release
+  as the exclusive title, and the words carry different promises: mercy in
+  one, clinical necessity in the other.
+- Does telling people the policy exists change the number who apply? Two
+  states required it as of 2016, which is close enough to a natural
+  experiment to be worth running.
+- Do clearer medical criteria move decisions, or only move where the
+  argument happens?
+- When a deadline is written into the statute, does the decision arrive
+  sooner, and does the effect survive the first few years?
+
+None of those are answered here, and none of them can be answered from
+statutes alone. They need the decisions, the timing, and the people who
+made them.
+
+## Where the Numbers Come From {.section-heading}
+
+Every figure on this page is drawn from a public document, and each data
+file carries its own citation on every row.
+
+**Federal decisions.** U.S. Sentencing Commission, Compassionate Release
+Data Report, 3rd Quarter FY2025 (tables 1, 10, and 11). Fiscal year 2025
+data is preliminary and cumulative through the third quarter. These are
+federal court decisions under 18 U.S.C. sec. 3582(c)(1)(A), which since the
+First Step Act of 2018 may be sought by a sentenced person directly.
+
+**State policy content.** Holland, Prost, Hoffmann, and Dickinson (2020),
+"U.S. Department of Corrections Compassionate Release Policies: A Content
+Analysis and Call to Action," <em>OMEGA: Journal of Death and Dying</em>
+81(4), 607 to 626. Their coding covers all fifty states from policies
+collected in 2016, which makes it the most complete state-level source
+available and, by now, a decade old. Counts here are cited to it; the
+figures are drawn fresh rather than reproduced.
+
+**State utilization.** Holland, Prost, Hoffmann, and Dickinson (2021),
+"Access and Utilization of Compassionate Release in State Departments of
+Corrections," <em>Mortality</em> 26(1), 49 to 65, built from public records
+requests covering 2013 to 2015.
+
+**Wisconsin.** The statutes, administrative rule, court forms, and
+department policy named in that section.
+
+Two things this page does not do. It does not mix the federal and state
+figures into a single national rate, because they count different things
+over different periods under different law. And it does not report a denial
+rate, because the published sources do not support one: people leave these
+processes by dying and by withdrawing, not only by being refused.
+
+The state layer is the weak link, and it is weak in a specific way: it is
+the best fifty-state coding anyone has published, and it describes a world
+two of its four empty states have already left. Re-coding it from current
+statutes is the next piece of work.
+
+<p style="margin-top:2.2rem; font-size:0.95rem;">
+Related on this site:
+<a href="../howold/how_old_is_old.html">How Old Is Old?</a>, a short
+exercise on putting numbers to a fuzzy category, and
+<a href="../countedwrong/index.html">Maturity Gap</a>, which asks the same
+kind of question at the other end of a life.
+</p>

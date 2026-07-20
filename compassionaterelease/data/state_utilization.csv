@@ -1,0 +1,7 @@
+chart,stage,category,value,unit,source,source_detail,data_year
+funnel,1,Eligible,5932,persons,"Holland, Prost, Hoffmann, and Dickinson (2021), Mortality 26(1), 49-65","p. 55; reporting states only",2013-2015
+funnel,2,Applied,2751,persons,"Holland, Prost, Hoffmann, and Dickinson (2021), Mortality 26(1), 49-65","p. 55; 46.4 percent of those eligible",2013-2015
+funnel,3,Released,802,persons,"Holland, Prost, Hoffmann, and Dickinson (2021), Mortality 26(1), 49-65","p. 56; 29 percent of applicants and 13.5 percent of those eligible",2013-2015
+tracking,1,Tracked releases,39,states,"Holland, Prost, Hoffmann, and Dickinson (2021), Mortality 26(1), 49-65","p. 55; of 49 responding state systems",2013-2015
+tracking,2,Tracked applications,32,states,"Holland, Prost, Hoffmann, and Dickinson (2021), Mortality 26(1), 49-65","p. 55; of 49 responding state systems",2013-2015
+tracking,3,Tracked eligibility,17,states,"Holland, Prost, Hoffmann, and Dickinson (2021), Mortality 26(1), 49-65","p. 55; of 49 responding state systems",2013-2015
