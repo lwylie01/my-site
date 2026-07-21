@@ -291,8 +291,8 @@ law" on any given point is several documents, kept by different offices.
 ::: {.chart-card}
 <p class="chart-card-lede">Start with what exists on paper. When
 researchers last read all fifty states' policies in one pass, in 2016,
-what kinds of release mechanism did they find, and how many states had
-none?</p>
+what kinds of release policy did they find, and how many states had none
+on file?</p>
 ```{r chart-policy-types}
 #| fig-height: 3.8
 #| out-width: "100%"
@@ -305,12 +305,12 @@ p_types <- ggplot(pol_types, aes(x = n, y = policy_type_f)) +
     "Source: ", source, "<br>Policies as of ", data_year
   )),
   size = 4,
-  color = ifelse(pol_types$policy_type == "No mechanism", coral_dark, plum_dark)) +
+  color = ifelse(pol_types$policy_type == "No policy", coral_dark, plum_dark)) +
   geom_text(aes(label = n), nudge_x = 1.6, size = 3.4, color = "#3C3C3C") +
   scale_x_continuous(limits = c(0, 36)) +
   labs(
-    title = "Four states had nothing; the rest had something",
-    subtitle = "Types of release mechanism identified across the fifty states, policies as of 2016",
+    title = "Forty-six had a policy on file; four had none",
+    subtitle = "Policy types across the fifty state corrections departments, as of 2016",
     x = "Number of states", y = NULL
   ) +
   theme_cr()
@@ -318,10 +318,12 @@ p_types <- ggplot(pol_types, aes(x = n, y = policy_type_f)) +
 ggplotly_titled(p_types, tooltip = "text") |> clear_bg()
 ```
 <p class="chart-card-note">Forty-six states had a compassionate release
-mechanism; four did not (Illinois, Iowa, Nebraska, and Utah). Counts sum
-to more than fifty because a state can hold more than one kind of policy,
-so read these as counts of policy types, not as the fifty states sorted
-into piles.
+policy on their corrections department's books; four did not. The unit is
+the department policy, not the state's every door: release can also run
+through a parole board or a governor's clemency power without the
+department holding a policy of its own. Counts sum to more than fifty
+because a state can hold more than one kind of policy, so read these as
+counts of policy types, not as the fifty states sorted into piles.
 Source: Holland, Prost, Hoffmann, and Dickinson (2020), <em>OMEGA</em>
 81(4), figure 1 at p. 613.</p>
 <p class="chart-card-note">The picture has since shifted. Illinois passed
@@ -750,11 +752,12 @@ That is where I think the useful work is. A few questions I would want
 answered before claiming to know why these laws sit unused:
 
 - Does what the policy is called change who applies and who is approved?
-  The federal statute says "extraordinary and compelling." Most states have
-  moved to medical or geriatric parole, medical release, or conditional
-  medical release. Only New Jersey and Utah still use compassionate release
-  as the exclusive title, and the words carry different promises: mercy in
-  one, clinical necessity in the other.
+  The federal statute says "extraordinary and compelling." Most states name
+  their laws for the condition instead: medical or geriatric parole,
+  medical release, conditional medical release. New Jersey went the other
+  way and made compassionate release the statutory title in 2020, and
+  Utah's parole board uses the same name. The words carry different
+  promises: mercy in one, clinical necessity in the other.
 - Does telling people the policy exists change the number who apply? Two
   states required it as of 2016, which is close enough to a natural
   experiment to be worth running.
