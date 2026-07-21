@@ -154,7 +154,7 @@ start an argument, not settle one.
 
   <div class="project-card">
     <span class="project-card-tag">Data Storytelling · Decision Tool</span>
-    <p class="project-card-title">Which Format Fits Best?</p>
+    <p class="project-card-title">Which Deliverable Fits?</p>
     <p class="project-card-desc">
       Say who you are trying to reach and what you want the work to do, and every
       delivery format sorts into three piles: the ones that fit, the ones that
