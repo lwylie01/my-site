@@ -606,7 +606,16 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   A linked "Data Sources" section leads the page, directly after the intro
   (maintainer's call: the public sources are part of the showcase; verify
   every link live before shipping), and the closing boundaries paragraphs
-  live at the end of "What This Cannot Tell You".
+  live at the end of "What This Cannot Tell You". Visual pass 2026-07-21
+  (maintainer-picked): Data Sources renders as a `.source-grid` of four
+  cards with `.chip-link` buttons (styles in site-theme.scss next to the
+  chart-card family; the Wisconsin card's eyebrow dot is the palette's one
+  coral outlier), each chart card opens with a mono `chart-card-tag`
+  ("Exhibit 01 · Lollipop" through "Exhibit 09 · Vertical Timeline"), the
+  codebook table folds behind `<details class="codebook-fold">`, one
+  canonical section divider sits before What This Cannot Tell You, and a
+  page-scoped rule renders the "Why this chart:" strong leads as mono-caps
+  labels (page-scoped so countedwrong and selected-work stay untouched).
   Nine exhibits, one form each: lollipop, icon array, span, nested-bar funnel,
   stat tiles, part-in-whole monthly bars, faceted bars, codebook table,
   vertical timeline. The review pass (maintainer: "too many dumb bells") cut
