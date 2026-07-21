@@ -224,6 +224,16 @@ section.level2 > p, main.content > p { font-size: 0.95rem; }
    box so the page body never does. */
 .table-scroll { overflow-x: auto; }
 .table-scroll table { font-size: 0.86rem; }
+/* Page-scoped: the nine "Why this chart:" leads read as mono-caps labels
+   (kept off site-theme.scss so the sibling pages are untouched). */
+.chart-card-note strong {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #B23A28;
+}
 </style>
 ```
 
@@ -246,49 +256,55 @@ to categorical and legal evidence, and notes why that form got the job.
 
 ## Data Sources {.section-heading}
 
-Everything here comes from documents that are public, and part of the
-point is to show how far public records can carry a question like this
-one. Each data file behind the charts names its source on every row, and
-the build refuses to render a row that does not.
+Everything here comes from public documents. Each data file names its
+source on every row, and the build refuses to render a row that does not.
 
-**Federal decisions.** U.S. Sentencing Commission, [Compassionate Release
-Data Reports](https://www.ussc.gov/research/data-reports/compassionate-release-data-reports):
-the [Fiscal Year 2025 report](https://www.ussc.gov/sites/default/files/pdf/research-and-publications/federal-sentencing-statistics/compassionate-release/FY25-Compassionate-Release.pdf)
-(tables 1, 10, and 11) and the [2nd Quarter FY2026 report](https://www.ussc.gov/sites/default/files/pdf/research-and-publications/federal-sentencing-statistics/compassionate-release/FY26Q2-Compassionate-Release.pdf)
-(table 1). These are court decisions under 18 U.S.C. sec. 3582(c)(1)(A),
-which since the First Step Act of 2018 may be sought by a sentenced person
-directly; they feed the monthly docket chart and the reasons analysis.
-Closed fiscal years follow the full-year report, and fiscal year 2026 data
-is preliminary and cumulative through the second quarter.
-
-**State policy content.** Holland, Prost, Hoffmann, and Dickinson (2020),
-["U.S. Department of Corrections Compassionate Release Policies: A Content
-Analysis and Call to Action"](https://doi.org/10.1177/0030222818791708),
-<em>OMEGA: Journal of Death and Dying</em> 81(4), 607 to 626. Their coding
-covers all fifty states from policies collected in 2016, which makes it
-both the most complete state-level source available and, by now, a decade
-old. It feeds the policy-type, requirement, and age charts; counts are
-cited to it, and the figures are drawn fresh rather than reproduced.
-
-**State utilization.** Holland, Prost, Hoffmann, and Dickinson (2021),
-["Access and Utilization of Compassionate Release in State Departments of
-Corrections"](https://doi.org/10.1080/13576275.2020.1750357),
-<em>Mortality</em> 26(1), 49 to 65, built from public records requests
-covering 2013 to 2015. It feeds the eligible-to-released funnel and the
-record-keeping tiles.
-
-**Wisconsin.** The instruments themselves: [Wis. Stat. sec.
-302.113(9g)](https://docs.legis.wisconsin.gov/statutes/statutes/302/113/9g),
-[Wis. Admin. Code DOC sec. 302.41](https://docs.legis.wisconsin.gov/document/administrativecode/DOC%20302.41),
-court form [CR-254](https://www.wicourts.gov/forms/CR-254.pdf) and its
-companion orders, and [DAI Policy
-302.00.13](https://doc.wi.gov/DepartmentPoliciesDAI/3020013.pdf). They
-feed the one-state timeline, and they are a tidy demonstration that "the
-law" on any given point is several documents, kept by different offices.
+```{=html}
+<div class="source-grid">
+  <div class="source-card">
+    <p class="source-eyebrow"><span class="source-dot"></span>Federal docket</p>
+    <p class="source-name">U.S. Sentencing Commission</p>
+    <p class="source-desc">Motions decided and reasons given, by month, fiscal 2022 through 2026 Q2 (preliminary).</p>
+    <p class="source-chips">
+      <a class="chip-link" href="https://www.ussc.gov/research/data-reports/compassionate-release-data-reports">All reports<span class="chip-ext">&#8599;</span></a>
+      <a class="chip-link" href="https://www.ussc.gov/sites/default/files/pdf/research-and-publications/federal-sentencing-statistics/compassionate-release/FY25-Compassionate-Release.pdf">FY2025 PDF<span class="chip-ext">&#8599;</span></a>
+      <a class="chip-link" href="https://www.ussc.gov/sites/default/files/pdf/research-and-publications/federal-sentencing-statistics/compassionate-release/FY26Q2-Compassionate-Release.pdf">FY26 Q2 PDF<span class="chip-ext">&#8599;</span></a>
+    </p>
+  </div>
+  <div class="source-card">
+    <p class="source-eyebrow"><span class="source-dot"></span>State policies</p>
+    <p class="source-name">Holland et al. 2020, <em>OMEGA</em></p>
+    <p class="source-desc">Fifty-state coding of corrections department policies, collected 2016.</p>
+    <p class="source-chips">
+      <a class="chip-link" href="https://doi.org/10.1177/0030222818791708" title="U.S. Department of Corrections Compassionate Release Policies: A Content Analysis and Call to Action">DOI<span class="chip-ext">&#8599;</span></a>
+    </p>
+  </div>
+  <div class="source-card">
+    <p class="source-eyebrow"><span class="source-dot"></span>State utilization</p>
+    <p class="source-name">Holland et al. 2021, <em>Mortality</em></p>
+    <p class="source-desc">Eligibility, applications, and releases from public records requests, 2013 to 2015.</p>
+    <p class="source-chips">
+      <a class="chip-link" href="https://doi.org/10.1080/13576275.2020.1750357" title="Access and Utilization of Compassionate Release in State Departments of Corrections">DOI<span class="chip-ext">&#8599;</span></a>
+    </p>
+  </div>
+  <div class="source-card">
+    <p class="source-eyebrow"><span class="source-dot source-dot-coral"></span>Wisconsin law</p>
+    <p class="source-name">The instruments themselves</p>
+    <p class="source-desc">Statute, rule, forms, and policy behind the timeline.</p>
+    <p class="source-chips">
+      <a class="chip-link" href="https://docs.legis.wisconsin.gov/statutes/statutes/302/113/9g">Statute 302.113(9g)<span class="chip-ext">&#8599;</span></a>
+      <a class="chip-link" href="https://docs.legis.wisconsin.gov/document/administrativecode/DOC%20302.41">DOC 302.41<span class="chip-ext">&#8599;</span></a>
+      <a class="chip-link" href="https://www.wicourts.gov/forms/CR-254.pdf">Form CR-254<span class="chip-ext">&#8599;</span></a>
+      <a class="chip-link" href="https://doc.wi.gov/DepartmentPoliciesDAI/3020013.pdf">DAI 302.00.13<span class="chip-ext">&#8599;</span></a>
+    </p>
+  </div>
+</div>
+```
 
 ## Nearly Everywhere on Paper {.section-heading}
 
 ::: {.chart-card}
+<p class="chart-card-tag">Exhibit 01 · Lollipop</p>
 <p class="chart-card-lede">Start with what exists on paper. When
 researchers last read all fifty states' policies in one pass, in 2016,
 what kinds of release policy did they find, and how many states had none
@@ -342,6 +358,7 @@ visible before the labels are read.</p>
 ## What You Have to Prove {.section-heading}
 
 ::: {.chart-card}
+<p class="chart-card-tag">Exhibit 02 · Icon Array</p>
 <p class="chart-card-lede">Having a policy is one thing; qualifying under
 it is another. Across the forty-six states with a policy, what did the
 policies require?</p>
@@ -385,6 +402,7 @@ of requirements into a finding.</p>
 ## How Old Is Old Enough {.section-heading}
 
 ::: {.chart-card}
+<p class="chart-card-tag">Exhibit 03 · Span</p>
 <p class="chart-card-lede">Where age enters these laws, it enters as a
 specific number, and states did not pick the same one.</p>
 ```{r chart-age-span}
@@ -431,6 +449,7 @@ the question.</p>
 ## Eligible, Applied, Released {.section-heading}
 
 ::: {.chart-card}
+<p class="chart-card-tag">Exhibit 04 · Nested Bars</p>
 <p class="chart-card-lede">From the law to its use: of everyone the states
 themselves counted as eligible over three years, how many applied, and how
 many were released?</p>
@@ -484,6 +503,7 @@ part-in-whole grammar the federal chart below uses.</p>
 ## Does Anyone Have to Count? {.section-heading}
 
 ::: {.chart-card}
+<p class="chart-card-tag">Exhibit 05 · Stat Tiles</p>
 <p class="chart-card-lede">Every number in the section above depends on a
 state having written something down. Most of the work of finding out
 whether a law functions is finding out whether anyone kept the record.</p>
@@ -524,6 +544,7 @@ last.</p>
 ## The Federal Docket {.section-heading}
 
 ::: {.chart-card}
+<p class="chart-card-tag">Exhibit 06 · Part-in-Whole Bars</p>
 <p class="chart-card-lede">Federal law runs on a different track: since
 2018 people can file their own motions, and a judge rather than a prison
 official decides. Here are four and a half years of that docket, month by
@@ -571,6 +592,7 @@ would have manufactured.</p>
 ## Why Courts Say Yes, and Why They Say No {.section-heading}
 
 ::: {.chart-card}
+<p class="chart-card-tag">Exhibit 07 · Small Multiples</p>
 <p class="chart-card-lede">Courts record their reasons, and the reasons are
 the most direct evidence there is of what this law has come to mean in
 practice. Grouped into themes, what does the federal docket say?</p>
@@ -630,11 +652,15 @@ bar would have implied an arithmetic that does not exist.</p>
 ## From Statute to Data {.section-heading}
 
 :::: {.chart-card}
+<p class="chart-card-tag">Exhibit 08 · Codebook Table</p>
 <p class="chart-card-lede">The chart above depends on a step that is easy
 to skip past. The Sentencing Commission publishes reason codes; the themes
 are mine, and the code labels are lightly shortened from the Commission's
 wording. Here is the whole assignment, so the grouping can be argued
 with.</p>
+<details class="codebook-fold">
+<summary>Open the codebook: every code, its theme, and its count</summary>
+
 ::: {.table-scroll}
 ```{r table-codebook}
 #| output: asis
@@ -650,6 +676,8 @@ cb <- fed_reason |>
 knitr::kable(cb, align = c("l", "l", "l", "r"))
 ```
 :::
+
+</details>
 <p class="chart-card-note">Two judgment calls in there are worth naming.
 "Young age at time of offense" sits under sentence and law change rather
 than under anything medical, because it is an argument about whether the
@@ -671,6 +699,7 @@ wrong pile.</p>
 ## One State, Thirty Years {.section-heading}
 
 ::: {.chart-card}
+<p class="chart-card-tag">Exhibit 09 · Vertical Timeline</p>
 <p class="chart-card-lede">National counts flatten a law into a yes or a
 no. Any single state's version arrived in pieces, and Wisconsin's is a
 clear case: a statute, a rollback, a rule, a set of forms, a policy.</p>
@@ -734,6 +763,20 @@ missed: what looks like one law is a statute, a rule, a form, and an
 internal policy, each changeable by a different body on a different
 schedule.</p>
 :::
+
+```{=html}
+<div class="section-divider" aria-hidden="true">
+  <svg viewBox="0 0 220 34" aria-hidden="true" focusable="false">
+    <path d="M8,27 C48,27 70,7 110,7 C150,7 178,24 212,26" fill="none" stroke="#2E1A47" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="30" cy="22" r="3.2" fill="#A98BB8"/>
+    <circle cx="66" cy="14" r="3.2" fill="#A98BB8"/>
+    <circle cx="104" cy="12" r="3.2" fill="#A98BB8"/>
+    <circle cx="142" cy="16" r="3.2" fill="#A98BB8"/>
+    <circle cx="186" cy="27" r="3.2" fill="#A98BB8"/>
+    <circle cx="122" cy="4" r="3.6" fill="#B23A28"/>
+  </svg>
+</div>
+```
 
 ## What This Cannot Tell You {.section-heading}
 

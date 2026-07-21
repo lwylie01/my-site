@@ -525,6 +525,115 @@ h2.section-heading[data-eyebrow]::before {
   line-height: 1.55;
 }
 
+/* Source cards: a Data Sources section as a linked grid (compassionate
+   release). Eyebrow dot reuses the accent-dot device; chips are the
+   concept-pill shape carrying external links. */
+.source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0 1.75rem;
+}
+
+.source-card {
+  background: $paper;
+  border: 1px solid #E7DED0;
+  border-radius: 12px;
+  padding: 0.9rem 1rem 0.85rem;
+}
+
+.source-eyebrow {
+  font-family: $font-family-monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $deep-coral;
+  margin: 0 0 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.source-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: $mauve;
+  flex: 0 0 auto;
+}
+
+.source-dot-coral { background: $deep-coral; }
+
+.source-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: $ink-plum;
+  margin: 0 0 0.25rem;
+}
+
+.source-desc {
+  font-size: 0.8rem;
+  color: $muted-ink;
+  line-height: 1.5;
+  margin: 0 0 0.6rem;
+}
+
+.source-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+a.chip-link {
+  font-family: $font-family-monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: $deep-coral;
+  background: $paper;
+  border: 1px solid #E1D5C3;
+  border-radius: 100px;
+  padding: 0.22rem 0.65rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+a.chip-link:hover {
+  color: $ink-plum;
+  border-color: $ink-plum;
+  text-decoration: none;
+}
+
+a.chip-link:focus-visible {
+  outline: 2px solid $deep-coral;
+  outline-offset: 2px;
+}
+
+.chip-ext {
+  opacity: 0.75;
+  margin-left: 0.15rem;
+}
+
+/* Codebook fold: the long kable table sits behind a mono summary line. */
+details.codebook-fold { margin: 0.4rem 0 0.8rem; }
+
+details.codebook-fold > summary {
+  cursor: pointer;
+  list-style: none;
+  font-family: $font-family-monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $deep-coral;
+  padding: 0.55rem 0.2rem;
+}
+
+details.codebook-fold > summary::-webkit-details-marker { display: none; }
+details.codebook-fold > summary::before { content: "\25B8\00A0"; }
+details.codebook-fold[open] > summary::before { content: "\25BE\00A0"; }
+
 /* Featured book: the actual cover art. Panel tint picks up the cover's
    cream with a faint mauve turn to echo the brand. */
 .book-feature {
