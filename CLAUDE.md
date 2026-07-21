@@ -406,9 +406,9 @@ and never claim to be: their `source` cells read "Added from practice (2026)",
 and both places that promised tree-only were reworded the same day (the
 `intro_note` Copy string now says "plus three from practice"; the template
 footer says "plus three added from practice"). All three use existing families,
-so `GROUP_COLORS` needed nothing. Open content call, offered and not yet
-decided: `BRIEF` lacks Expert in `audience_ok`, though a technical brief for
-an expert reader is a real thing the practice ships.
+so `GROUP_COLORS` needed nothing. A same-day follow-up added Expert to
+`BRIEF`'s `audience_ok` (a technical brief for an expert reader is a real
+thing the practice ships), closing the crosswalk's last gap.
 
 ## The Plot So Far (`selected-work/`)
 
