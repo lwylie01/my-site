@@ -415,13 +415,21 @@ renamed from "Which Format Fits Best?" to **"Which Deliverable Fits?"** ("Best"
 over-promised a single winner the tool refuses to name, and "deliverable" is the
 maintainer's own word from the RSD handout). The hardcoded `<h1>` plus the
 `page_sub`, `intro_title`, and `intro_note` Copy strings all moved. The top-bar
-h1 and the intro-screen headline are now deliberately different ("Which
-Deliverable Fits?" vs. "No format is best for everything.") so the landing view
+h1 and the intro-screen headline are deliberately different so the landing view
 does not repeat one phrase twice; keep them distinct. `intro_note` dropped its
-provenance clause for a privacy-plus-never-hidden line ("Nothing you enter
-leaves your browser. Every format gets sorted, never hidden."), since the footer
-already carries the sourcing. The RSD handout's footer link text was reprinted
-to match the new name.
+provenance clause (the footer already carries the sourcing), and the RSD
+handout's footer link text was reprinted to match the new name.
+
+The intro prose was re-registered the same day: the maintainer found the first
+cut ("No format is best for everything." plus clipped fragments) too
+slogan-like, so `intro_title`, `intro_lead`, and `intro_note` were rewritten to
+her academic-practical "measured, one dry twist" voice, the register
+countedwrong is calibrated to (measured, field-literate, full sentences joined
+with conjunctions or semicolons, one subtle dry turn, no punchy fragments). The
+current headline is "There is no single best format, and that is the point." The
+homepage and Teaching card descriptions mirror the lead's premise sentence, so
+revise them together. This page is deliberately quieter than the site's hero
+voice; do not "punch it up."
 
 ## The Plot So Far (`selected-work/`)
 
