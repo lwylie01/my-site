@@ -79,6 +79,12 @@ req_units <- reqs |>
 
 wi <- wi |> arrange(sort_year)
 
+# The tooltips quote source_detail from every file, so a blank one would
+# render as an empty citation.
+detail_all <- c(fed_month$source_detail, fed_reason$source_detail,
+                pol_types$source_detail, reqs$source_detail,
+                util$source_detail, ages$source_detail, wi$source_detail)
+
 # Fail the CI render loudly rather than publish a wrong page (a failed publish
 # leaves the previous version of the site live). The totals below are the ones
 # the source documents state for themselves, so a transcription slip in any
@@ -118,7 +124,7 @@ stopifnot(
   !any(fed_month$source == ""), !any(fed_reason$source == ""),
   !any(pol_types$source == ""), !any(reqs$source == ""),
   !any(util$source == ""), !any(ages$source == ""), !any(wi$source == ""),
-  !anyNA(c(fed_reason$source_detail, reqs$source_detail, wi$source_detail))
+  !anyNA(detail_all), !any(detail_all == "")
 )
 
 plum_dark   <- "#6b4f6c"
@@ -255,9 +261,10 @@ so read these as counts of policy types, not as the fifty states sorted
 into piles.
 Source: Holland, Prost, Hoffmann, and Dickinson (2020), <em>OMEGA</em>
 81(4), figure 1 at p. 613.</p>
-<p class="chart-card-note">Two of those four have since acted. Illinois
-passed the Joe Coleman Medical Release Act in 2022, and Nebraska took up
-release for terminal illness and permanent incapacity the same year. That
+<p class="chart-card-note">The picture has since shifted. Illinois passed
+the Joe Coleman Medical Release Act in 2021, effective at the start of
+2022. Nebraska, where medical parole for terminal illness or permanent
+incapacity has existed since 2005, added geriatric parole in 2023. That
 is the trouble with a decade-old map: it is the best one that exists, and
 it is already wrong.</p>
 <p class="chart-card-note"><strong>Why this chart:</strong> a lollipop
@@ -537,9 +544,9 @@ ggplotly_titled(p_rt, tooltip = "text") |> clear_bg()
 ```
 <p class="chart-card-note">Among granted motions, reasons about sentence
 length and changes in law accounted for 33.7 percent of citations and
-medical reasons for 25.2 percent. Among denials, the largest theme by far
-was the general sentencing factors at section 3553(a), a discretionary
-weighing rather than a finding about health. Courts may cite several
+medical reasons for 25.2 percent. Among denials, the single most cited
+reason by far was the general sentencing factors at section 3553(a), a
+discretionary weighing rather than a finding about health. Courts may cite several
 reasons per case: 457 reasons across 299 granted cases, and 3,703 across
 1,766 denied. Source: U.S. Sentencing Commission, Compassionate Release
 Data Report, 3rd Quarter FY2025, tables 10 and 11.</p>
@@ -559,7 +566,8 @@ bar would have implied an arithmetic that does not exist.</p>
 :::: {.chart-card}
 <p class="chart-card-lede">The chart above depends on a step that is easy
 to skip past. The Sentencing Commission publishes reason codes; the themes
-are mine. Here is the whole assignment, so the grouping can be argued
+are mine, and the code labels are lightly shortened from the Commission's
+wording. Here is the whole assignment, so the grouping can be argued
 with.</p>
 ::: {.table-scroll}
 ```{r table-codebook}
@@ -637,11 +645,12 @@ ggplotly_titled(p_wi, tooltip = "text") |>
   anchor_text()
 ```
 <p class="chart-card-note">Sources are the instruments themselves: 1997
-Wis. Act 283, 2001 Wis. Act 109, 2009 Wis. Act 28 creating Wis. Stat.
-sec. 302.113(9g), 2011 Wis. Act 38, Wis. Admin. Code DOC sec. 302.41,
-Wisconsin Court System forms CR-254 through CR-256, DAI Policy 302.00.13,
-and a 2023 amendment to the notice provision. Today all three layers
-operate together and the sentencing court makes the final call.</p>
+Wis. Act 283, 2001 Wis. Act 109 creating Wis. Stat. sec. 302.113(9g),
+2009 Wis. Act 28, 2011 Wis. Act 38, Wis. Admin. Code DOC sec. 302.41,
+Wisconsin Court System forms CR-254 through CR-256, DAI Policy 302.00.13
+(reissued effective June 22, 2026), and 2023 Wis. Act 230 on victim
+statements. Today all four layers operate together and the sentencing
+court makes the final call.</p>
 <p class="chart-card-note">Notice the 2011 entry. A release mechanism does
 not only get built, it gets narrowed, and a chart that only recorded
 expansions would have shown a straight line up.</p>
