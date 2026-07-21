@@ -374,7 +374,7 @@ under the private working folder, not in this repo.
 
 | File | Role |
 |---|---|
-| `formatpicker/data/delivery_formats.xlsx` | Source of truth. Sheets: **Rules** (3, one per question), **Levels** (13), **Formats** (14), **Copy** (41: UI strings plus one `reason_`/`short_` per rule). Editable in Excel |
+| `formatpicker/data/delivery_formats.xlsx` | Source of truth. Sheets: **Rules** (3, one per question), **Levels** (13), **Formats** (17), **Copy** (41: UI strings plus one `reason_`/`short_` per rule). Editable in Excel |
 | `formatpicker/build_format.R` | Pre-render step. Validates the workbook (checks 1-5b from `build_eval.R`, minus the prerequisite checks 6-8), serializes the four sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__FORMATS_DATA__`, `__COPY_DATA__`, producing `formatpicker/format_picker.html` (gitignored; built in CI; never edit the output) |
 | `formatpicker/app/_template.html` | The picker's look + matching logic |
 | `index.qmd`, `teaching/index.qmd` | Both link `formatpicker/format_picker.html` (homepage featured card with `pics/thumb-formatpicker.jpg` at 1150x430; Teaching as a tool card). Like the evaluation picker, it moved off `projects/index.qmd` in the July 2026 reshuffle |
@@ -397,6 +397,18 @@ value still passes every check, it just sorts a format into the wrong pile. So
 review the `Formats` sheet as content, not code. The reach-as-soft choice is
 also a call, not a law: if a format that only reaches one way should be ruled
 out rather than softened, move its rule's `fail_class` to `Intent`.
+
+Three formats were added from practice 2026-07-20 (maintainer's call, from a
+crosswalk against her real deliverables): `INTERACT` Interactive Report
+(Digital & interactive), `VIDEO` Video or Documentary (Outreach & media),
+`GUIDE` How-To Guide (Written report). They are not in the Trends Fig. 2 tree
+and never claim to be: their `source` cells read "Added from practice (2026)",
+and both places that promised tree-only were reworded the same day (the
+`intro_note` Copy string now says "plus three from practice"; the template
+footer says "plus three added from practice"). All three use existing families,
+so `GROUP_COLORS` needed nothing. Open content call, offered and not yet
+decided: `BRIEF` lacks Expert in `audience_ok`, though a technical brief for
+an expert reader is a real thing the practice ships.
 
 ## The Plot So Far (`selected-work/`)
 
