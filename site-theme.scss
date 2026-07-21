@@ -350,6 +350,18 @@ h2.section-heading[data-eyebrow]::before {
   line-height: 1.25;
 }
 
+/* The title carries the card's link (the thumbnail is a decorative duplicate),
+   so it must read as the heading, not a default-blue link. */
+.project-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+.project-card-title a:hover {
+  color: $deep-coral;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .project-card-desc {
   font-size: 0.75rem;
   color: #574B62;
