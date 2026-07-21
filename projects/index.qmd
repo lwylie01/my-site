@@ -15,6 +15,78 @@ toc: false
   </p>
 </div>
 
+<div class="container">
+  <h2 class="section-heading" style="margin-top: 2.5rem;">The Method</h2>
+  <div class="focus-grid">
+
+    <div class="focus-card" style="--accent:#2E1A47;">
+      <span class="focus-card-icon" aria-hidden="true">
+        <svg viewBox="0 0 28 26">
+          <path d="M4.5 22.5h19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <rect x="7" y="14" width="4" height="8.5" rx="1.2" fill="currentColor"/>
+          <rect x="12.5" y="8.5" width="4" height="14" rx="1.2" fill="currentColor" opacity="0.55"/>
+          <rect x="18" y="11.5" width="4" height="11" rx="1.2" fill="currentColor"/>
+        </svg>
+      </span>
+      <div class="focus-card-body">
+        <p class="focus-card-label">Applied Research Methods and Design</p>
+        <p class="focus-card-text">Randomized and quasi-experimental designs across law, psychology, and public policy, matched to the question and to real-world limits.</p>
+      </div>
+    </div>
+
+    <div class="focus-card" style="--accent:#F4715C;">
+      <span class="focus-card-icon" aria-hidden="true">
+        <svg viewBox="0 0 28 26">
+          <path d="M7.5 8.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <circle cx="7.5" cy="8.5" r="2.4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="18.5" cy="8.5" r="2.6" fill="currentColor"/>
+          <path d="M7.5 17.5h7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <circle cx="7.5" cy="17.5" r="2.4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="15" cy="17.5" r="2.6" fill="currentColor"/>
+        </svg>
+      </span>
+      <div class="focus-card-body">
+        <p class="focus-card-label">Tailored Program Evaluation and Recommendations</p>
+        <p class="focus-card-text">Process and outcome evaluations of courts, diversion, and pretrial programs, with recommendations they can act on.</p>
+      </div>
+    </div>
+
+    <div class="focus-card" style="--accent:#A98BB8;">
+      <span class="focus-card-icon" aria-hidden="true">
+        <svg viewBox="0 0 28 26">
+          <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none">
+            <path d="M7 7v12M5 7h4M5 19h4"/>
+            <path d="M14 4.5v10M12 4.5h4M12 14.5h4"/>
+            <path d="M21 10.5v11M19 10.5h4M19 21.5h4"/>
+          </g>
+          <circle cx="7" cy="13" r="2.2" fill="currentColor"/>
+          <circle cx="14" cy="9.5" r="2.2" fill="currentColor"/>
+          <circle cx="21" cy="16" r="2.2" fill="currentColor"/>
+        </svg>
+      </span>
+      <div class="focus-card-body">
+        <p class="focus-card-label">Tests of Measurement Validity and Reliability</p>
+        <p class="focus-card-text">Screening tools and rating scales, tested for whether they measure what they claim to, consistently.</p>
+      </div>
+    </div>
+
+    <div class="focus-card" style="--accent:#B23A28;">
+      <span class="focus-card-icon" aria-hidden="true">
+        <svg viewBox="0 0 28 26">
+          <path d="M4 6a2.5 2.5 0 0 1 2.5-2.5h15A2.5 2.5 0 0 1 24 6v10a2.5 2.5 0 0 1-2.5 2.5H12l-5 4v-4H6.5A2.5 2.5 0 0 1 4 16z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M8.5 13.5l3.5-3 2.8 1.6 4-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="18.8" cy="7.6" r="1.9" fill="currentColor"/>
+        </svg>
+      </span>
+      <div class="focus-card-body">
+        <p class="focus-card-label">Practical Storytelling with Data</p>
+        <p class="focus-card-text">Teaching that turns careful analysis into work a judge, funder, or community will read and remember.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <div class="project-grid container">
 
   <div class="project-card">
