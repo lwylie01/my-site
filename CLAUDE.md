@@ -387,7 +387,7 @@ under the private working folder, not in this repo.
 
 | File | Role |
 |---|---|
-| `formatpicker/data/delivery_formats.xlsx` | Source of truth. Sheets: **Rules** (3, one per question), **Levels** (13), **Formats** (17), **Copy** (41: UI strings plus one `reason_`/`short_` per rule). Editable in Excel |
+| `formatpicker/data/delivery_formats.xlsx` | Source of truth. Sheets: **Rules** (3, one per question), **Levels** (13), **Formats** (21), **Copy** (41: UI strings plus one `reason_`/`short_` per rule). Editable in Excel |
 | `formatpicker/build_format.R` | Pre-render step. Validates the workbook (checks 1-5b from `build_eval.R`, minus the prerequisite checks 6-8), serializes the four sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__FORMATS_DATA__`, `__COPY_DATA__`, producing `formatpicker/format_picker.html` (gitignored; built in CI; never edit the output) |
 | `formatpicker/app/_template.html` | The picker's look + matching logic |
 | `index.qmd`, `teaching/index.qmd` | Both link `formatpicker/format_picker.html` (homepage featured card with `pics/thumb-formatpicker.jpg` at 1150x430; Teaching as a tool card). Like the evaluation picker, it moved off `projects/index.qmd` in the July 2026 reshuffle |
@@ -414,14 +414,30 @@ out rather than softened, move its rule's `fail_class` to `Intent`.
 Three formats were added from practice 2026-07-20 (maintainer's call, from a
 crosswalk against her real deliverables): `INTERACT` Interactive Report
 (Digital & interactive), `VIDEO` Video or Documentary (Outreach & media),
-`GUIDE` How-To Guide (Written report). They are not in the Trends Fig. 2 tree
-and never claim to be: their `source` cells read "Added from practice (2026)",
-and the template footer names them ("plus three added from practice"; the
-intro screen's note carried the provenance too until the 2026-07-21 voice pass
-moved it to the footer alone). All three use existing families,
-so `GROUP_COLORS` needed nothing. A same-day follow-up added Expert to
-`BRIEF`'s `audience_ok` (a technical brief for an expert reader is a real
-thing the practice ships), closing the crosswalk's last gap.
+`GUIDE` How-To Guide (Written report). Four more followed 2026-07-21, from a
+methods-and-references review (the page read as if it all came from the
+maintainer's own Trends chapter): `WORKSHOP` Workshop and `WEBINAR` Webinar
+(kept separate at her request: Workshop is internal and decision-facilitating,
+Webinar reaches outward to raise awareness), `POSTER` Research Poster (those
+three Presentation), and `OPED` Op-ed or Commentary (Outreach & media). None
+are in the Trends Fig. 2 tree and never claim to be: every `source` cell reads
+"Added from practice (2026)", and the footer names them collectively ("seven
+formats added from practice"; the intro screen's note carried the provenance
+too until the 2026-07-21 voice pass moved it to the footer alone). All seven
+use existing families, so `GROUP_COLORS` needed nothing. A same-day follow-up
+(2026-07-20) added Expert to `BRIEF`'s `audience_ok` (a technical brief for an
+expert reader is a real thing the practice ships), closing the crosswalk's last
+gap.
+
+The same 2026-07-21 review reworked the footer from a figure-only credit into a
+knowledge-translation framing (maintainer picked it from three offered options),
+naming the scholarship the picker's three axes actually rest on: audience
+subgroups from Tabak, Khoong, Chambers and Brownson (2013); objectives from
+COSCA (2024); method from Duarte, Nussbaumer Knaflic, and Segel and Heer (2010),
+framed by Lavis and colleagues' (2003) knowledge-translation questions. All are
+already footnoted in the maintainer's own chapter, so the fix surfaced the
+chapter's pedigree rather than inventing sources. Do not revert the footer to
+the figure-only credit.
 
 Voice pass 2026-07-21 (maintainer-approved from offered options): the page was
 renamed from "Which Format Fits Best?" to **"Which Deliverable Fits?"** ("Best"
@@ -452,8 +468,9 @@ homepage link say "The Plot So Far" too). **The folder and URL stay
 `selected-work/`** so nothing external breaks; only displayed names changed.
 
 Section names follow the same register as the Counted Wrong headings (short,
-concrete, a little literary): **The Four Threads** (was "Research Areas"; the
-figures say "by thread" to match), **The Applied Side** (was "Program
+concrete, a little literary): **The Plot Thickens** (was "Research Areas" then
+"The Four Threads"; the figures say "by thread" to match, and "plot threads"
+keeps the pun), **The Applied Side** (was "Program
 Evaluations and Applied Research"), **The Paper Trail** (was "Citation
 Impact"). **Curriculum Vitae keeps its proper name**, maintainer's choice, as
 did "Writing" and "Projects": a second plot pun in the nav ("Plot Points") or

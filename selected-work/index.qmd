@@ -415,7 +415,7 @@ emit('<script>window.SW = ', sw_json, ';</script>\n',
 </div>
 ```
 
-## The Four Threads {.section-heading}
+## The Plot Thickens {.section-heading}
 
 ```{r area-sections}
 #| results: asis
