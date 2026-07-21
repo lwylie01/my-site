@@ -547,8 +547,9 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   release, the qualitative-data sibling of Maturity Gap on the same machinery:
   `index.qmd` with `ggplotly_titled()`, `legend_below()`, `stopifnot` guards
   over every CSV, `_metadata.yml` freeze: false, `_freeze/compassionaterelease/`
-  gitignored. Public documents only (USSC Compassionate Release Data Report
-  FY2025 Q3 tables 1/10/11; Holland et al. 2020 *OMEGA* and 2021 *Mortality*;
+  gitignored. Public documents only (USSC Compassionate Release Data Reports,
+  FY2025 full year tables 1/10/11 plus FY2026 Q2 table 1; Holland et al. 2020
+  *OMEGA* and 2021 *Mortality*;
   Wisconsin's own statutes, rule, forms, and policy); every CSV row carries
   `source` + `source_detail` and the guard refuses to render without them.
   Nine exhibits, one form each: lollipop, icon array, span, nested-bar funnel,
@@ -566,8 +567,12 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   with the unit in the axis title (the reasons chart). The reason themes are
   the maintainer's own coding over the Commission's codes and the codebook
   table is the contract: change one, change both. Quarterly USSC update =
-  extend `federal_motions_monthly.csv` and `federal_reasons.csv`, then the
-  stopifnot sums and the totals in the notes prose. The state layer is
+  extend the open fiscal year's rows in `federal_motions_monthly.csv` from the
+  latest quarterly report (closed fiscal years stay on their final full-year
+  report; USSC removes superseded quarterlies from its landing page but the
+  PDFs survive at their URLs), swap `federal_reasons.csv` to the new full-year
+  tables 10/11 when a year closes, then the stopifnot sums and the totals in
+  the notes prose. The state layer is
   Holland's 2016 coding, a decade old, and the page says so; re-coding from
   current statutes is the named next piece of work.
 - The standalone templates carry their own CSS and had no inline prose link

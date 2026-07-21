@@ -90,16 +90,16 @@ detail_all <- c(fed_month$source_detail, fed_reason$source_detail,
 # the source documents state for themselves, so a transcription slip in any
 # single row breaks the sum and stops the build.
 stopifnot(
-  nrow(fed_month) == 45,
+  nrow(fed_month) == 54,
   !anyNA(fed_month$date), !anyNA(fed_month$total),
-  sum(fed_month$total) == 13614, sum(fed_month$granted) == 1866,
+  sum(fed_month$total) == 15265, sum(fed_month$granted) == 2088,
   all(fed_month$granted + fed_month$denied == fed_month$total),
   all(fed_month$granted_pct >= 0 & fed_month$granted_pct <= 100),
 
-  nrow(fed_reason) == 42,
+  nrow(fed_reason) == 45,
   all(fed_reason$outcome %in% c("Granted", "Denied")),
-  sum(fed_reason$n[fed_reason$outcome == "Granted"]) == 457,
-  sum(fed_reason$n[fed_reason$outcome == "Denied"]) == 3703,
+  sum(fed_reason$n[fed_reason$outcome == "Granted"]) == 631,
+  sum(fed_reason$n[fed_reason$outcome == "Denied"]) == 5067,
   all(fed_reason$n > 0),
   nrow(reason_theme) == 13,
   all(abs(tapply(reason_theme$share, reason_theme$outcome, sum) - 1) < 1e-9),
@@ -461,7 +461,7 @@ last.</p>
 ::: {.chart-card}
 <p class="chart-card-lede">Federal law runs on a different track: since
 2018 people can file their own motions, and a judge rather than a prison
-official decides. Here are nearly four years of that docket, month by
+official decides. Here are four and a half years of that docket, month by
 month.</p>
 ```{r chart-federal-monthly}
 #| fig-height: 3.6
@@ -487,13 +487,14 @@ p_fed <- ggplot(fed_month, aes(x = date)) +
 
 ggplotly_titled(p_fed, tooltip = "text") |> clear_bg()
 ```
-<p class="chart-card-note">Across the full period, courts decided 13,614
-motions and granted 1,866 of them, or 13.7 percent. Monthly volume fell
-from 584 in October 2021 to 207 in June 2025, while the share granted rose
-from 9.2 percent to 15.9 percent. Source: U.S. Sentencing Commission,
-Compassionate Release Data Report, 3rd Quarter FY2025, table 1. Fiscal
-year 2025 figures are preliminary and cumulative through the third
-quarter.</p>
+<p class="chart-card-note">Across the full period, courts decided 15,265
+motions and granted 2,088 of them, or 13.7 percent. Monthly volume fell
+from 586 in October 2021 to 140 in March 2026, while the share granted
+rose from 9.2 percent to 16.4 percent. Source: U.S. Sentencing Commission,
+Compassionate Release Data Reports: fiscal years 2022 through 2025 from
+the Fiscal Year 2025 report, fiscal year 2026 from the 2nd Quarter FY2026
+report, table 1 in each. Fiscal year 2026 figures are preliminary and
+cumulative through the second quarter.</p>
 <p class="chart-card-note"><strong>Why this chart:</strong> one bar nested
 inside another, rather than two lines on two axes. Grants are a part of
 motions decided, not a separate series, and drawing a part inside its whole
@@ -530,7 +531,7 @@ p_rt <- ggplot(rt, aes(x = share, y = theme_f, fill = outcome_f)) +
                      labels = function(x) 100 * x) +
   labs(
     title = "Sentence length wins release more often than illness does",
-    subtitle = "Themes among reasons cited by federal courts, fiscal year 2025 through the third quarter",
+    subtitle = "Themes among reasons cited by federal courts, fiscal year 2025",
     x = "Percent of reasons cited for that outcome", y = NULL
   ) +
   theme_cr() +
@@ -543,15 +544,15 @@ p_rt <- ggplot(rt, aes(x = share, y = theme_f, fill = outcome_f)) +
 ggplotly_titled(p_rt, tooltip = "text") |> clear_bg()
 ```
 <p class="chart-card-note">Among granted motions, reasons about sentence
-length and changes in law accounted for 33.7 percent of citations and
-medical reasons for 25.2 percent. Among denials, the single most cited
+length and changes in law accounted for 35.0 percent of citations and
+medical reasons for 23.0 percent. Among denials, the single most cited
 reason by far was the general sentencing factors at section 3553(a), a
-discretionary weighing rather than a finding about health. Courts may cite several
-reasons per case: 457 reasons across 299 granted cases, and 3,703 across
-1,766 denied. Source: U.S. Sentencing Commission, Compassionate Release
-Data Report, 3rd Quarter FY2025, tables 10 and 11.</p>
+discretionary weighing rather than a finding about health. Courts may cite
+several reasons per case: 631 reasons across 394 granted cases, and 5,067
+across 2,401 denied. Source: U.S. Sentencing Commission, Compassionate
+Release Data Report, Fiscal Year 2025, tables 10 and 11.</p>
 <p class="chart-card-note">One procedural line is worth reading on its
-own. Failure to exhaust administrative remedies was cited 325 times, which
+own. Failure to exhaust administrative remedies was cited 447 times, which
 is a paperwork step rather than a judgment about whether release was
 warranted.</p>
 <p class="chart-card-note"><strong>Why this chart:</strong> small multiples
@@ -589,7 +590,12 @@ knitr::kable(cb, align = c("l", "l", "l", "r"))
 than under anything medical, because it is an argument about whether the
 original sentence still fits. "Rehabilitation" is kept apart from both
 health and sentence length, because the Commission notes it never appears
-alone in a granted case: it always arrives alongside another reason.</p>
+alone in a granted case: it always arrives alongside another reason. Three
+codes are new in the full-year report: mandatory nature of the guideline
+at sentencing, guideline amendment not yet in effect, and conviction or
+sentencing errors. All three sit under sentence and law change, because
+each is an argument about the sentence rather than the person's
+condition.</p>
 <p class="chart-card-note"><strong>Why this chart:</strong> a table, which
 is the right chart when the reader's question is "what exactly did you
 do." A chart of a coding scheme shows its shape; the scheme itself has to
@@ -704,10 +710,12 @@ Every figure on this page is drawn from a public document, and each data
 file carries its own citation on every row.
 
 **Federal decisions.** U.S. Sentencing Commission, Compassionate Release
-Data Report, 3rd Quarter FY2025 (tables 1, 10, and 11). Fiscal year 2025
-data is preliminary and cumulative through the third quarter. These are
-federal court decisions under 18 U.S.C. sec. 3582(c)(1)(A), which since the
-First Step Act of 2018 may be sought by a sentenced person directly.
+Data Reports: the Fiscal Year 2025 report (tables 1, 10, and 11) and the
+2nd Quarter FY2026 report (table 1). Closed fiscal years follow the
+full-year report; fiscal year 2026 data is preliminary and cumulative
+through the second quarter. These are federal court decisions under 18
+U.S.C. sec. 3582(c)(1)(A), which since the First Step Act of 2018 may be
+sought by a sentenced person directly.
 
 **State policy content.** Holland, Prost, Hoffmann, and Dickinson (2020),
 "U.S. Department of Corrections Compassionate Release Policies: A Content
