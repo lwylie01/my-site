@@ -11,8 +11,12 @@ Eight Styles"); statistical n and vs. stay lowercase. Hero and section intros
 run short and punchy (the homepage hero is fragments plus two sentences; the
 How I Teach section is two sentences). "Clarity is kindness" is the site's
 working premise (codebook intro). When drafting copy, offer the maintainer 2-3
-options and let her pick and tune: never present drafted copy as her quote,
-and never attribute words to a publication without reading it.
+options and let her pick and tune, and get her pick before the copy ships, not
+after: PRs merge within minutes, so any user-facing string flagged "tune later"
+goes live unreviewed (the picker intro headline did exactly that in July 2026
+and had to be redone). This applies to every user-facing string, not just the
+marquee headline. Never present drafted copy as her quote, and never attribute
+words to a publication without reading it.
 
 Brand kit (adopted 2026-07-19): the site runs the "Data with a Plot" brand.
 The sheet is `pics/brand/BRAND.md`; the assets (logo/mark SVGs, favicon,
