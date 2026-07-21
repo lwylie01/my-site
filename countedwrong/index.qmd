@@ -114,17 +114,38 @@ theme_cw <- function() {
 # ggplotly() drops ggplot subtitles. Fold each subtitle into the plotly
 # title as a smaller <br><sup> second line so it survives the conversion.
 # Pipe every chart through this instead of bare ggplotly().
+# The tail fixes a sizing failure: plotly falls back to a fixed 700px when
+# its container has no width at draw time (a background tab, a layout still
+# settling), and nothing re-draws until a window resize, so the chart sits
+# cropped inside the card's overflow: hidden. config(responsive) re-draws on
+# window resizes; the ResizeObserver re-draws when the container gets its
+# real width without one.
 ggplotly_titled <- function(p, ...) {
   fig <- ggplotly(p, ...)
   sub <- p$labels$subtitle
-  if (is.null(sub) || !nzchar(sub)) return(fig)
+  if (!is.null(sub) && nzchar(sub)) {
+    fig <- fig |>
+      layout(
+        title = list(text = paste0(
+          "<b>", p$labels$title, "</b><br><sup>", sub, "</sup>"
+        )),
+        margin = list(t = 70)
+      )
+  }
   fig |>
-    layout(
-      title = list(text = paste0(
-        "<b>", p$labels$title, "</b><br><sup>", sub, "</sup>"
-      )),
-      margin = list(t = 70)
-    )
+    config(responsive = TRUE) |>
+    htmlwidgets::onRender("
+      function(el) {
+        if (!window.ResizeObserver) return;
+        new ResizeObserver(function() {
+          var w = el.parentElement.getBoundingClientRect().width;
+          if (w > 0 && el._fullLayout &&
+              Math.abs(w - el._fullLayout.width) > 1) {
+            Plotly.Plots.resize(el);
+          }
+        }).observe(el.parentElement);
+      }
+    ")
 }
 
 clear_bg <- function(fig) {
@@ -780,7 +801,7 @@ translation literature, where storytelling is not decoration but delivery
 ([Brooks et al., 2022](https://doi.org/10.1186/s43058-022-00282-6);
 [Joubert, Davis, and Metcalfe, 2019](https://doi.org/10.22323/2.18050501)).
 
-## Where the Numbers Come From {.section-heading}
+## Data Sources {.section-heading}
 
 Two kinds of numbers share this page, and they follow different rules.
 

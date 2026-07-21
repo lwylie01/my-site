@@ -150,17 +150,38 @@ theme_cr <- function() {
 # ggplotly() drops ggplot subtitles. Fold each subtitle into the plotly title
 # as a smaller <br><sup> second line so it survives the conversion. Pipe every
 # chart through this instead of bare ggplotly().
+# The tail fixes a sizing failure: plotly falls back to a fixed 700px when its
+# container has no width at draw time (a background tab, a layout still
+# settling), and nothing re-draws until a window resize, so the chart sits
+# cropped inside the card's overflow: hidden. config(responsive) re-draws on
+# window resizes; the ResizeObserver re-draws when the container gets its
+# real width without one.
 ggplotly_titled <- function(p, ...) {
   fig <- ggplotly(p, ...)
   sub <- p$labels$subtitle
-  if (is.null(sub) || !nzchar(sub)) return(fig)
+  if (!is.null(sub) && nzchar(sub)) {
+    fig <- fig |>
+      layout(
+        title = list(text = paste0(
+          "<b>", p$labels$title, "</b><br><sup>", sub, "</sup>"
+        )),
+        margin = list(t = 70)
+      )
+  }
   fig |>
-    layout(
-      title = list(text = paste0(
-        "<b>", p$labels$title, "</b><br><sup>", sub, "</sup>"
-      )),
-      margin = list(t = 70)
-    )
+    config(responsive = TRUE) |>
+    htmlwidgets::onRender("
+      function(el) {
+        if (!window.ResizeObserver) return;
+        new ResizeObserver(function() {
+          var w = el.parentElement.getBoundingClientRect().width;
+          if (w > 0 && el._fullLayout &&
+              Math.abs(w - el._fullLayout.width) > 1) {
+            Plotly.Plots.resize(el);
+          }
+        }).observe(el.parentElement);
+      }
+    ")
 }
 
 clear_bg <- function(fig) {
@@ -206,30 +227,72 @@ section.level2 > p, main.content > p { font-size: 0.95rem; }
 </style>
 ```
 
-Almost every state has a law that lets it release people who are dying,
-gravely ill, or old enough that the risk they once posed has passed. The
-laws have different names and different tests, but they share a premise:
-that a sentence can outlive its purpose, and that a system should be able
-to say so.
+Almost every state has a law for releasing people from prison when they
+are dying, seriously ill, or old enough that the risk they once posed has
+passed. The names and tests vary, but the premise is shared: a sentence
+can outlive its purpose, and the law should have a way to say so.
 
-Almost none of them get used. That gap, between a right that exists and a
-right that operates, is the subject here.
+Almost none of these laws see much use. This page measures the distance
+between the right on paper and the right in practice, and it does so
+entirely from public records.
 
-This page is also an argument about method. Statutes and case decisions
-are qualitative data, and they are usually written up rather than charted.
-That habit costs something, because the questions people actually ask
-about a law are comparative: how many states require this, how far apart
-are the thresholds, what reasons do courts give, what changed and when.
-Those are chart questions. So each section below asks one of them, answers
-it with a form built for categorical and legal evidence, and carries a
-note on why that form won.
+It is also a working demonstration of a method. Statutes and case
+decisions are qualitative data, and the usual way to present them is a
+memo. But most questions people bring to a law are comparative: how many
+states require a diagnosis, how far apart are the age cutoffs, what
+reasons do courts actually give, what changed and when. Those are chart
+questions, so each section asks one, answers it with a chart form suited
+to categorical and legal evidence, and notes why that form got the job.
+
+## Data Sources {.section-heading}
+
+Everything here comes from documents that are public, and part of the
+point is to show how far public records can carry a question like this
+one. Each data file behind the charts names its source on every row, and
+the build refuses to render a row that does not.
+
+**Federal decisions.** U.S. Sentencing Commission, [Compassionate Release
+Data Reports](https://www.ussc.gov/research/data-reports/compassionate-release-data-reports):
+the [Fiscal Year 2025 report](https://www.ussc.gov/sites/default/files/pdf/research-and-publications/federal-sentencing-statistics/compassionate-release/FY25-Compassionate-Release.pdf)
+(tables 1, 10, and 11) and the [2nd Quarter FY2026 report](https://www.ussc.gov/sites/default/files/pdf/research-and-publications/federal-sentencing-statistics/compassionate-release/FY26Q2-Compassionate-Release.pdf)
+(table 1). These are court decisions under 18 U.S.C. sec. 3582(c)(1)(A),
+which since the First Step Act of 2018 may be sought by a sentenced person
+directly; they feed the monthly docket chart and the reasons analysis.
+Closed fiscal years follow the full-year report, and fiscal year 2026 data
+is preliminary and cumulative through the second quarter.
+
+**State policy content.** Holland, Prost, Hoffmann, and Dickinson (2020),
+["U.S. Department of Corrections Compassionate Release Policies: A Content
+Analysis and Call to Action"](https://doi.org/10.1177/0030222818791708),
+<em>OMEGA: Journal of Death and Dying</em> 81(4), 607 to 626. Their coding
+covers all fifty states from policies collected in 2016, which makes it
+both the most complete state-level source available and, by now, a decade
+old. It feeds the policy-type, requirement, and age charts; counts are
+cited to it, and the figures are drawn fresh rather than reproduced.
+
+**State utilization.** Holland, Prost, Hoffmann, and Dickinson (2021),
+["Access and Utilization of Compassionate Release in State Departments of
+Corrections"](https://doi.org/10.1080/13576275.2020.1750357),
+<em>Mortality</em> 26(1), 49 to 65, built from public records requests
+covering 2013 to 2015. It feeds the eligible-to-released funnel and the
+record-keeping tiles.
+
+**Wisconsin.** The instruments themselves: [Wis. Stat. sec.
+302.113(9g)](https://docs.legis.wisconsin.gov/statutes/statutes/302/113/9g),
+[Wis. Admin. Code DOC sec. 302.41](https://docs.legis.wisconsin.gov/document/administrativecode/DOC%20302.41),
+court form [CR-254](https://www.wicourts.gov/forms/CR-254.pdf) and its
+companion orders, and [DAI Policy
+302.00.13](https://doc.wi.gov/DepartmentPoliciesDAI/3020013.pdf). They
+feed the one-state timeline, and they are a tidy demonstration that "the
+law" on any given point is several documents, kept by different offices.
 
 ## Nearly Everywhere on Paper {.section-heading}
 
 ::: {.chart-card}
-<p class="chart-card-lede">Start with the premise. When researchers last
-coded all fifty states, how many had any mechanism at all, and what did
-those mechanisms look like?</p>
+<p class="chart-card-lede">Start with what exists on paper. When
+researchers last read all fifty states' policies in one pass, in 2016,
+what kinds of release mechanism did they find, and how many states had
+none?</p>
 ```{r chart-policy-types}
 #| fig-height: 3.8
 #| out-width: "100%"
@@ -270,15 +333,16 @@ it is already wrong.</p>
 <p class="chart-card-note"><strong>Why this chart:</strong> a lollipop
 rather than a bar, because the quantity is a count of states and the bar
 area would add ink without adding information. The one category that is an
-absence, not a policy, is the only one in coral, so the eye finds the
-exception before it reads the labels.</p>
+absence rather than a policy is the only one in coral, so the exception is
+visible before the labels are read.</p>
 :::
 
 ## What You Have to Prove {.section-heading}
 
 ::: {.chart-card}
-<p class="chart-card-lede">A law that exists still has to be satisfied.
-Across the states that had a policy, what did those policies require?</p>
+<p class="chart-card-lede">Having a policy is one thing; qualifying under
+it is another. Across the forty-six states with a policy, what did the
+policies require?</p>
 ```{r chart-requirements}
 #| fig-height: 3.9
 #| out-width: "100%"
@@ -319,8 +383,8 @@ of requirements into a finding.</p>
 ## How Old Is Old Enough {.section-heading}
 
 ::: {.chart-card}
-<p class="chart-card-lede">Where age appears in these laws, it appears as a
-number. States did not pick the same one.</p>
+<p class="chart-card-lede">Where age enters these laws, it enters as a
+specific number, and states did not pick the same one.</p>
 ```{r chart-age-span}
 #| fig-height: 2.4
 #| out-width: "100%"
@@ -355,19 +419,19 @@ Source: Holland, Prost, Hoffmann, and Dickinson (2020), <em>OMEGA</em>
 law puts a number on a fuzzy category, which is the subject of a short
 exercise on this site:
 <a href="../howold/how_old_is_old.html">How Old Is Old?</a></p>
-<p class="chart-card-note"><strong>Why this chart:</strong> a span, not a
-bar chart of two values. The finding is the distance between the endpoints,
-so the distance is what gets drawn. Two bars would have invited the reader
-to compare their heights, which is not the point and would have implied
-that fifty-five is somehow less than seventy in a way that matters.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> a span rather
+than a bar chart of two values, because the finding is the distance
+between the endpoints, so the distance is what gets drawn. Two bars would
+have asked the reader to compare heights, and the height comparison is not
+the question.</p>
 :::
 
 ## Eligible, Applied, Released {.section-heading}
 
 ::: {.chart-card}
-<p class="chart-card-lede">Now the use: following everyone the states
-themselves counted as eligible over three years, how many made it to a
-release?</p>
+<p class="chart-card-lede">From the law to its use: of everyone the states
+themselves counted as eligible over three years, how many applied, and how
+many were released?</p>
 ```{r chart-funnel}
 #| fig-height: 3
 #| out-width: "100%"
@@ -445,10 +509,9 @@ responded to a public records request. The notification figure is from
 Holland et al. (2020), <em>OMEGA</em> 81(4), p. 616: only Alabama and New
 Mexico required that people in their custody be informed that the policy
 existed.</p>
-<p class="chart-card-note">Those two findings belong together. A right
-nobody is told about, in a system that does not count who was eligible for
-it, will look underused and unwanted in exactly the same way it would look
-if it were simply not offered.</p>
+<p class="chart-card-note">Those two findings travel together: a policy
+nobody is told about, tracked by nobody, will look underused whether or
+not anyone would have used it.</p>
 <p class="chart-card-note"><strong>Why this chart:</strong> tiles, because
 four numbers with different denominators cannot share an axis, and forcing
 them onto one would invent a comparison the data does not support. The
@@ -658,7 +721,7 @@ Wisconsin Court System forms CR-254 through CR-256, DAI Policy 302.00.13
 statements. Today all four layers operate together and the sentencing
 court makes the final call.</p>
 <p class="chart-card-note">Notice the 2011 entry. A release mechanism does
-not only get built, it gets narrowed, and a chart that only recorded
+not only get built; it gets narrowed, and a chart that recorded only
 expansions would have shown a straight line up.</p>
 <p class="chart-card-note"><strong>Why this chart:</strong> a timeline set
 vertically, events alternating sides of the spine, because these labels
@@ -704,45 +767,16 @@ None of those are answered here, and none of them can be answered from
 statutes alone. They need the decisions, the timing, and the people who
 made them.
 
-## Where the Numbers Come From {.section-heading}
-
-Every figure on this page is drawn from a public document, and each data
-file carries its own citation on every row.
-
-**Federal decisions.** U.S. Sentencing Commission, Compassionate Release
-Data Reports: the Fiscal Year 2025 report (tables 1, 10, and 11) and the
-2nd Quarter FY2026 report (table 1). Closed fiscal years follow the
-full-year report; fiscal year 2026 data is preliminary and cumulative
-through the second quarter. These are federal court decisions under 18
-U.S.C. sec. 3582(c)(1)(A), which since the First Step Act of 2018 may be
-sought by a sentenced person directly.
-
-**State policy content.** Holland, Prost, Hoffmann, and Dickinson (2020),
-"U.S. Department of Corrections Compassionate Release Policies: A Content
-Analysis and Call to Action," <em>OMEGA: Journal of Death and Dying</em>
-81(4), 607 to 626. Their coding covers all fifty states from policies
-collected in 2016, which makes it the most complete state-level source
-available and, by now, a decade old. Counts here are cited to it; the
-figures are drawn fresh rather than reproduced.
-
-**State utilization.** Holland, Prost, Hoffmann, and Dickinson (2021),
-"Access and Utilization of Compassionate Release in State Departments of
-Corrections," <em>Mortality</em> 26(1), 49 to 65, built from public records
-requests covering 2013 to 2015.
-
-**Wisconsin.** The statutes, administrative rule, court forms, and
-department policy named in that section.
-
-Two things this page does not do. It does not mix the federal and state
-figures into a single national rate, because they count different things
-over different periods under different law. And it does not report a denial
-rate, because the published sources do not support one: people leave these
+Two boundaries are deliberate. The page does not mix the federal and state
+figures into one national rate, because they count different things over
+different periods under different law. And it does not report a denial
+rate, because the published sources cannot support one: people leave these
 processes by dying and by withdrawing, not only by being refused.
 
 The state layer is the weak link, and it is weak in a specific way: it is
 the best fifty-state coding anyone has published, and it describes a world
-two of its four empty states have already left. Re-coding it from current
-statutes is the next piece of work.
+that has kept moving since 2016. Re-coding it from current statutes is the
+next piece of work.
 
 <p style="margin-top:2.2rem; font-size:0.95rem;">
 Related on this site:

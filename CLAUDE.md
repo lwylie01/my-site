@@ -10,13 +10,22 @@ Construct Validity"). Headings are title case sitewide ("How I Teach", "The
 Eight Styles"); statistical n and vs. stay lowercase. Hero and section intros
 run short and punchy (the homepage hero is fragments plus two sentences; the
 How I Teach section is two sentences). "Clarity is kindness" is the site's
-working premise (codebook intro). When drafting copy, offer the maintainer 2-3
-options and let her pick and tune, and get her pick before the copy ships, not
-after: PRs merge within minutes, so any user-facing string flagged "tune later"
-goes live unreviewed (the picker intro headline did exactly that in July 2026
-and had to be redone). This applies to every user-facing string, not just the
-marquee headline. Never present drafted copy as her quote, and never attribute
-words to a publication without reading it.
+working premise (codebook intro). The narrative register, maintainer-stated
+2026-07-21: **academic practical with subtle one-liners**. In narrative prose
+that means full sentences joined with conjunctions or semicolons, not staccato
+fragments (the homepage hero keeps its fragments) and not oracular
+pronouncements; method detail belongs in the prose ("which is what the FBI
+data gives"); at most one dry line per section, placed at the end of a note
+("spaghetti has no protagonist" is the benchmark); first person wherever the
+maintainer made the call; field-literate winks welcome. Maturity Gap's
+narration is the calibration standard; the compassionate release page was
+swept to this register 2026-07-21. When drafting copy, offer the maintainer
+2-3 options and let her pick and tune, and get her pick before the copy ships,
+not after: PRs merge within minutes, so any user-facing string flagged "tune
+later" goes live unreviewed (the picker intro headline did exactly that in
+July 2026 and had to be redone). This applies to every user-facing string, not
+just the marquee headline. Never present drafted copy as her quote, and never
+attribute words to a publication without reading it.
 
 Brand kit (adopted 2026-07-19): the site runs the "Data with a Plot" brand.
 The sheet is `pics/brand/BRAND.md`; the assets (logo/mark SVGs, favicon,
@@ -568,7 +577,7 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   (`compassionaterelease/`, bullet below) shipped 2026-07-19 (#74) and retired
   the last one, so `projects/index.qmd` has four live cards.
 - **A Right That Exists on Paper (`compassionaterelease/`; shipped 2026-07-19
-  in #74, review pass 2026-07-19).** Chart-forward data story on compassionate
+  in #74, review pass 2026-07-19, sources-and-voice pass 2026-07-21).** Chart-forward data story on compassionate
   release, the qualitative-data sibling of Maturity Gap on the same machinery:
   `index.qmd` with `ggplotly_titled()`, `legend_below()`, `stopifnot` guards
   over every CSV, `_metadata.yml` freeze: false, `_freeze/compassionaterelease/`
@@ -577,6 +586,10 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   *OMEGA* and 2021 *Mortality*;
   Wisconsin's own statutes, rule, forms, and policy); every CSV row carries
   `source` + `source_detail` and the guard refuses to render without them.
+  A linked "Data Sources" section leads the page, directly after the intro
+  (maintainer's call: the public sources are part of the showcase; verify
+  every link live before shipping), and the closing boundaries paragraphs
+  live at the end of "What This Cannot Tell You".
   Nine exhibits, one form each: lollipop, icon array, span, nested-bar funnel,
   stat tiles, part-in-whole monthly bars, faceted bars, codebook table,
   vertical timeline. The review pass (maintainer: "too many dumb bells") cut
@@ -673,7 +686,15 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   (`freeze: false`; `_freeze/countedwrong/` gitignored). Any chart with a
   legend must also pipe through `legend_below()` (setup chunk): ggplotly
   parks horizontal legends on top of the x-axis title, which is exactly
-  what hit the dumbbell and stacked-area charts on first render. Voice of
+  what hit the dumbbell and stacked-area charts on first render. Since
+  2026-07-21 `ggplotly_titled()` (both copies: here and compassionaterelease)
+  also pipes every chart through `config(responsive = TRUE)` plus an
+  `htmlwidgets::onRender` ResizeObserver calling `Plotly.Plots.resize`:
+  plotly draws at a fixed 700px when its container has no width at draw time
+  (a background tab), never re-draws without a window resize, and the
+  `.chart-card` overflow: hidden then crops the right edge. The sources
+  section is headed "Data Sources" (renamed from "Where the Numbers Come
+  From" 2026-07-21, matching compassionaterelease). Voice of
   the craft notes, maintainer-calibrated 2026-07-18: "measured with one
   twist", field-literate for court professionals and evaluators (the
   "maturation is not a threat to validity" line is a deliberate
