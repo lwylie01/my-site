@@ -253,7 +253,7 @@ bare floor.
 | `evalpicker/data/evaluation_approaches.xlsx` | Source of truth. Sheets: **Rules** (one row per rule, 8 rows over 7 axes), **Levels** (allowed values per axis, 35 rows), **Approaches** (7), **TMFs** (2; theories, models and frameworks), **Prerequisites** (what must come first, 5), **Copy** (UI strings + one `reason_*` per rule, 62). Copy went 38 to 62 in the July 2026 pass: ~15 strings were welded into the template (both empty states, the tab labels, `Any` / `Clear` / `Already done`, the stats words, the gap leads, the chain annotations) so the "words live in Excel" premise was only half true. Check 5b now enforces it. Text is HTML-escaped on every path, so no markup or links can live in a Copy string. The `<h1>` stays hardcoded like barnum's and howold's: its `<span>` cannot survive escaping, which is why `page_title` was deleted rather than wired |
 | `evalpicker/build_eval.R` | Quarto pre-render step. Validates the workbook (see below), then serializes all six sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__APPROACHES_DATA__`, `__TMFS_DATA__`, `__PREREQS_DATA__` and `__COPY_DATA__` in the template, producing `evalpicker/eval_picker.html` (gitignored; built in CI; never edit the output directly) |
 | `evalpicker/app/_template.html` | The picker's look and matching logic |
-| `index.qmd`, `teaching/index.qmd` | Both link `evalpicker/eval_picker.html` (the homepage as a featured card with `pics/thumb-evalpicker.jpg`, Teaching as a tool card). Moved off `projects/index.qmd` in the July 2026 section reshuffle: the pickers are teaching tools, so Projects now holds only the research work |
+| `teaching/index.qmd` | Links `evalpicker/eval_picker.html` as a tool card, now its only link: it was a homepage featured card (`pics/thumb-evalpicker.jpg`) until the 2026-07-21 homepage declutter dropped both picker cards. Moved off `projects/index.qmd` in the July 2026 section reshuffle: the pickers are teaching tools, so Projects holds only the research work |
 
 ### The rules live in the workbook, not the code
 
@@ -390,7 +390,7 @@ under the private working folder, not in this repo.
 | `formatpicker/data/delivery_formats.xlsx` | Source of truth. Sheets: **Rules** (3, one per question), **Levels** (13), **Formats** (21), **Copy** (41: UI strings plus one `reason_`/`short_` per rule). Editable in Excel |
 | `formatpicker/build_format.R` | Pre-render step. Validates the workbook (checks 1-5b from `build_eval.R`, minus the prerequisite checks 6-8), serializes the four sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__FORMATS_DATA__`, `__COPY_DATA__`, producing `formatpicker/format_picker.html` (gitignored; built in CI; never edit the output) |
 | `formatpicker/app/_template.html` | The picker's look + matching logic |
-| `index.qmd`, `teaching/index.qmd` | Both link `formatpicker/format_picker.html` (homepage featured card with `pics/thumb-formatpicker.jpg` at 1150x430; Teaching as a tool card). Like the evaluation picker, it moved off `projects/index.qmd` in the July 2026 reshuffle |
+| `teaching/index.qmd` | Links `formatpicker/format_picker.html` as a tool card, now its only link: it was a homepage featured card (`pics/thumb-formatpicker.jpg`, 1150x430) until the 2026-07-21 homepage declutter dropped both picker cards. Like the evaluation picker, it moved off `projects/index.qmd` in the July 2026 reshuffle |
 
 ### The model
 
@@ -479,9 +479,10 @@ in this register and stop before kitsch.
 
 The same naming pass reached the other pages (all July 2026, maintainer-picked
 from offered options): homepage sections are **The Premise** (was "What I Do",
-over the bio), **Start Here** (was "Featured Projects"), and **The Method**
-(was "How I Do It"); the html anchor ids (#about, #featured, #whatIdo) kept
-their old names on purpose, so links do not break. Teaching's topics section
+over the bio) and **Start Here** (was "Featured Projects"); the html anchor ids
+(#about, #featured) kept their old names on purpose, so links do not break. (A
+third section, **The Method** / "How I Do It" / #whatIdo, lived on the homepage
+until the 2026-07-21 declutter relocated it to the Projects page, below.) Teaching's topics section
 is **The Usual Subjects** (was "Topics I Teach and Write About"; a rejected
 candidate was "On the Syllabus"). "How I Teach" and "Teaching Materials" stay:
 already in voice.
@@ -665,12 +666,24 @@ journal names keep their own styling (*Crime & Delinquency* stays).
   quality 88, which lands in the 42-95 KB band the others sit in:
   `chrome --headless=new --hide-scrollbars --window-size=1150,430 --screenshot=out.png <url>`.
   A theme rebrand goes stale here: every `thumb-*.jpg` is a screenshot of a
-  page's own header, so after any chrome change regenerate all four from the
-  published pages (a follow-up PR, because the new header must deploy first).
+  page's own header, so after any chrome change regenerate the live homepage
+  thumbnails from the published pages (a follow-up PR, because the new header
+  must deploy first). Since the 2026-07-21 declutter that is just
+  `thumb-periodic.jpg` and `thumb-maturitygap.jpg`; the two picker thumbnails
+  are no longer used.
   The homepage "Start Here" grid (headed "Featured Projects" until the July
-  2026 naming pass) features the periodic table, both pickers (evaluation
-  and format), and Maturity Gap (card added 2026-07-18); it is a curated
-  highlight, so it keeps the pickers even though they now live on Teaching. Barnum belongs to Teaching too (14e5a48).
+  2026 naming pass) featured the periodic table, both pickers, and Maturity
+  Gap until the **2026-07-21 homepage declutter** cut it to the two signature
+  pieces, **the periodic table and Maturity Gap only**. Both picker cards were
+  dropped (they live on Teaching); the two survivors lost their meta chips and
+  duplicate bottom link, with the title now carrying the link
+  (`.project-card-title a`, styled to read as the heading); the four repeated
+  arc-and-scatter dividers collapsed to one signature mark; and **The Method**
+  moved off the homepage to the Projects page as a condensed band (#88-91 era).
+  Do not re-add the picker cards here: Start Here is deliberately the two
+  signature pieces now. With both pickers gone from the homepage,
+  `thumb-formatpicker.jpg` and `thumb-evalpicker.jpg` are no longer referenced
+  anywhere. Barnum belongs to Teaching too (14e5a48).
 - **Maturity Gap (`countedwrong/`; shipped 2026-07 as the essay
   "Counted Wrong", rebuilt 2026-07-18 as a chart-forward data story).** The
   folder and URL stay `countedwrong/` so nothing external breaks; only
