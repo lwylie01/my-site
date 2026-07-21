@@ -179,7 +179,7 @@ editor:
       <img src="pics/thumb-formatpicker.jpg" alt="" loading="lazy" />
     </a>
     <span class="project-card-tag">Data Storytelling</span>
-    <p class="project-card-title">Which Format Fits Best?</p>
+    <p class="project-card-title">Which Deliverable Fits?</p>
     <p class="project-card-desc">
       Say who you are trying to reach and what you want the work to do, and every
       delivery format sorts into three piles: the ones that fit, the ones that

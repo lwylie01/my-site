@@ -403,12 +403,25 @@ crosswalk against her real deliverables): `INTERACT` Interactive Report
 (Digital & interactive), `VIDEO` Video or Documentary (Outreach & media),
 `GUIDE` How-To Guide (Written report). They are not in the Trends Fig. 2 tree
 and never claim to be: their `source` cells read "Added from practice (2026)",
-and both places that promised tree-only were reworded the same day (the
-`intro_note` Copy string now says "plus three from practice"; the template
-footer says "plus three added from practice"). All three use existing families,
+and the template footer names them ("plus three added from practice"; the
+intro screen's note carried the provenance too until the 2026-07-21 voice pass
+moved it to the footer alone). All three use existing families,
 so `GROUP_COLORS` needed nothing. A same-day follow-up added Expert to
 `BRIEF`'s `audience_ok` (a technical brief for an expert reader is a real
 thing the practice ships), closing the crosswalk's last gap.
+
+Voice pass 2026-07-21 (maintainer-approved from offered options): the page was
+renamed from "Which Format Fits Best?" to **"Which Deliverable Fits?"** ("Best"
+over-promised a single winner the tool refuses to name, and "deliverable" is the
+maintainer's own word from the RSD handout). The hardcoded `<h1>` plus the
+`page_sub`, `intro_title`, and `intro_note` Copy strings all moved. The top-bar
+h1 and the intro-screen headline are now deliberately different ("Which
+Deliverable Fits?" vs. "No format is best for everything.") so the landing view
+does not repeat one phrase twice; keep them distinct. `intro_note` dropped its
+provenance clause for a privacy-plus-never-hidden line ("Nothing you enter
+leaves your browser. Every format gets sorted, never hidden."), since the footer
+already carries the sourcing. The RSD handout's footer link text was reprinted
+to match the new name.
 
 ## The Plot So Far (`selected-work/`)
 
