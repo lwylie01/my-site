@@ -75,7 +75,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 <meta property="og:title" content="– Data with a Plot">
-<meta property="og:description" content="Lindsey E. Wylie, J.D., Ph.D.">
 <meta property="og:image" content="https://datawithaplot.org/pics/brand/og-image.png">
 <meta property="og:site_name" content="Data with a Plot">
 <meta property="og:image:height" content="630">
@@ -109,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../teaching/index.html" aria-current="page"> 
+    <a class="nav-link" href="../teaching/index.html"> 
 <span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
@@ -121,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">The Plot So Far</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../swag/index.html"> 
+    <a class="nav-link active" href="../swag/index.html" aria-current="page"> 
 <span class="menu-text">Swag</span></a>
   </li>  
 </ul>
@@ -154,184 +153,195 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="page-header container">
-  <p class="page-header-label">Education</p>
-  <h1 class="page-header-title">Teaching</h1>
-  <p class="page-header-sub" style="font-style:italic;">
-    Numbers do not speak for themselves. These are the tools I use to get
-    judges, funders, and colleagues arguing with the data instead of nodding
-    at it.
-  </p>
-  <p style="color:#6A5F72; font-size:0.9rem; margin-top:0.75rem;">
-    More in <a href="https://www.ncsc.org/sites/default/files/media/document/NCSC-Trends-2025.pdf"><em>Telling
-    Your Court's Data Story</em></a>, Trends in State Courts, 2025. Presented
-    at the National Association for Court Management.
-  </p>
+<style>
+/* ---- Swag page (page-scoped; shared card classes come from site-theme.scss) ---- */
+.swag-header{position:relative}
+.swag-host{position:absolute;top:3.5rem;right:0;width:150px;text-align:center}
+.swag-host-slot{width:118px;height:118px;border-radius:50%;border:2px dashed #C9BCA6;background:#FDFBF7;display:grid;place-items:center;margin:0 auto .5rem}
+.swag-host-cap{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#6A5F72;line-height:1.4}
+@media (max-width:640px){.swag-host{position:static;width:auto;margin:1.2rem 0 0}}
+
+.swag-eyebrow{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#B23A28;margin:0 0 .4rem}
+.swag-h2{font-size:1.7rem;font-weight:600;color:#2E1A47;margin:0 0 .5rem}
+.swag-lead{font-size:1rem;color:#574B62;max-width:640px;line-height:1.6;margin:0 0 .4rem}
+.swag-note{font-size:.85rem;color:#6A5F72;max-width:640px;line-height:1.55;margin:.2rem 0 1.2rem;font-style:italic}
+.swag-act{margin:2.4rem 0}
+
+/* preview well: whole design shown (contain), not cropped like a thumb */
+.swag-art{display:grid;place-items:center;margin:-1.75rem -1.5rem 1.1rem;aspect-ratio:3/2;
+  background:#F7F2EC;border-radius:10px 10px 0 0;border-bottom:1px solid #E7DED0;overflow:hidden;padding:1rem}
+.swag-art--dark{background:#2E1A47}
+.swag-art svg,.swag-art img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block}
+.swag-art--wide{aspect-ratio:16/10;padding:1.4rem}
+.swag-cap{font-family:'Spectral',Georgia,serif;fill:#2E1A47;font-weight:600}
+.swag-sub{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);fill:#6A5F72;font-weight:500;letter-spacing:.14em}
+.swag-svg text{dominant-baseline:middle}
+
+.swag-divider{display:flex;align-items:center;gap:1.5rem;margin:3.2rem 0 2.6rem}
+.swag-divider .r{flex:1;height:1px;background:#E5DCCF}
+.swag-showcase-note{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#6A5F72;align-self:center}
+.swag-foot{font-size:.92rem;color:#6A5F72;line-height:1.6;font-style:italic;max-width:660px;margin:3rem auto 1rem;text-align:center}
+</style>
+
+<div class="page-header container swag-header">
+  <p class="page-header-label">Downloads · No Store</p>
+  <h1 class="page-header-title">Swag</h1>
+  <p class="page-header-sub">The arc, the scatter, and the one dot the line misses, put on things. Grab the digital ones; the rest are mockups you are welcome to enjoy.</p>
+  <div class="swag-host">
+    <div class="swag-host-slot">
+      <svg width="66" height="66" viewbox="0 0 100 100" fill="none"><circle cx="30" cy="56" r="6" fill="#A98BB8"></circle><circle cx="44" cy="26" r="7" fill="#F4715C"></circle><path d="M10,80 C26,80 30,34 50,34 C58,34 58,42 62,46" stroke="#2E1A47" stroke-width="5" stroke-linecap="round"></path><g transform="translate(62,46) rotate(45)" stroke="#2E1A47" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0,0 L-9,-20 Q0,-27 9,-20 Z"></path><rect x="-7.5" y="-44" width="15" height="22" rx="6"></rect></g></svg>
+    </div>
+    <div class="swag-host-cap">Mascot<br>coming soon</div>
+  </div>
 </div>
-<section id="the-hook" class="level2 section-heading">
-<h2 class="section-heading anchored" data-anchor-id="the-hook">The Hook</h2>
-<p>I hand a room a number worth arguing about, then let the argument do the work. It usually starts with a rap score and ends with people questioning their own metrics.</p>
-<p>The six ideas I come back to most often:</p>
-<div class="concept-list">
-<p><span class="concept-pill" style="background:#F3EEF7; border-color:#A98BB8; color:#2E1A47;">Construct validity</span> <span class="concept-pill" style="background:#FCEAE5; border-color:#F4715C; color:#B23A28;">Sampling and bias</span> <span class="concept-pill" style="background:#FDFBF7; border-color:#A98BB8; color:#2E1A47;">Multidimensional measurement</span> <span class="concept-pill" style="background:#EFEAF4; border-color:#2E1A47; color:#2E1A47;">Uncertainty communication</span> <span class="concept-pill" style="background:#FCEAE5; border-color:#B23A28; color:#B23A28;">Visualization design</span> <span class="concept-pill" style="background:#FDFBF7; border-color:#6A5F72; color:#2E1A47;">Narrative framing</span></p>
-</div>
-<hr>
+
+<div class="container">
+
+<section class="swag-act">
+  <p class="swag-eyebrow">01 · Grab and Go</p>
+  <h2 class="swag-h2 anchored">Downloads</h2>
+  <p class="swag-lead">Stickers and wallpapers, yours to take. The digital designs download as real files.</p>
+  <p class="swag-note">No store, no checkout: if it is a sticker or a wallpaper, the link hands you the file.</p>
+  <div class="project-grid">
+
+    <div class="project-card">
+      <span class="swag-art" style="padding:1.4rem"><img src="pics/stickers.png" alt="A sheet of Data with a Plot stickers"></span>
+      <span class="project-card-tag">Stickers · Download</span>
+      <p class="project-card-title">The Sticker Sheet</p>
+      <p class="project-card-desc">The outlier the line misses, Clarity Is Kindness, the bare marks, the mascot, and more, on one sheet.</p>
+      <p class="source-chips"><a class="chip-link" href="downloads/sticker-sheet.png" download="">Sticker sheet (PNG)</a></p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/wallpaper-phone.png" alt="Phone wallpaper: the arc climbing an ink-plum screen"></span>
+      <span class="project-card-tag">Wallpaper · Download</span>
+      <p class="project-card-title">Phone Wallpaper</p>
+      <p class="project-card-desc">The arc climbing an ink-plum screen, with one coral outlier near the top.</p>
+      <p class="source-chips"><a class="chip-link" href="downloads/wallpaper-phone-1170x2532.png" download="">Phone · 1170 × 2532</a></p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/wallpaper-desktop.png" alt="Desktop wallpaper: the rise-and-fall arc, wide"></span>
+      <span class="project-card-tag">Wallpaper · Download</span>
+      <p class="project-card-title">Desktop Wallpaper</p>
+      <p class="project-card-desc">The same rise and fall, wide, with room for your icons in the quiet corners.</p>
+      <p class="source-chips"><a class="chip-link" href="downloads/wallpaper-desktop-1920x1080.png" download="">Desktop · 1920 × 1080</a></p>
+    </div>
+
+  </div>
 </section>
-<section id="contrivances" class="level2 section-heading">
-<h2 class="section-heading anchored" data-anchor-id="contrivances">Contrivances</h2>
-<p>Every one below is live and self-contained. Open it and try it: each is built to start an argument, not settle one.</p>
-<div class="project-grid container">
 
-  <div class="project-card">
-    <span class="project-card-tag">Data Storytelling · Teaching Module</span>
-    <p class="project-card-title">The Hip-Hop Periodic Table</p>
-    <p class="project-card-desc">
-      A dataset of 187 hip-hop acts, each scored on five parts of lyricism. It
-      opens with a fast gut rating of a favorite artist, then turns to the real
-      question: what did you just measure? People end up debating construct
-      validity using their own performance measures.
-    </p>
-    <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
-      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Measurement</span>
-    </div>
-    <br>
-    <a href="../hiphop/hiphop_periodic_table.html" style="font-weight:600; color:#B23A28;">
-      Explore the periodic table →
-    </a>
-    <p style="font-size:0.85rem; margin-top:0.5rem; color:#6A5F72;">
-      Companion materials:
-      <a href="../hiphop/hiphop_dashboard.html">analytics dashboard</a> ·
-      <a href="../hiphop/data_dictionary.html">data dictionary</a>
-    </p>
-  </div>
-
-  <div class="project-card">
-    <span class="project-card-tag">Measurement · Cold Open</span>
-    <p class="project-card-title">The Barnum Test</p>
-    <p class="project-card-desc">
-      A short exercise that builds a personalized profile, asks how accurate it
-      feels, then reveals that everyone got the same profile and the ratings were
-      never used at all. The point is not that people were fooled. It is that a
-      measure everyone scores high on has not measured anyone. Works as a cold
-      open or on its own.
-    </p>
-    <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#A98BB8;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
-      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Construct validity</span>
-    </div>
-    <br>
-    <a href="../barnum/barnum_test.html" style="font-weight:600; color:#B23A28;">
-      Take the Barnum Test →
-    </a>
-  </div>
-
-  <div class="project-card">
-    <span class="project-card-tag">Measurement · Aging</span>
-    <p class="project-card-title">How Old Is Old?</p>
-    <p class="project-card-desc">
-      Set a slider to the age at which someone becomes "old," "a senior," "too old
-      to drive," or "too old to start over." The answers show how little we agree,
-      and how the law pins hard numbers (18, 50, 65) onto a boundary nature never
-      drew. A study in turning a fuzzy idea into an exact number.
-    </p>
-    <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#A98BB8;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
-      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Short exercise</span>
-    </div>
-    <br>
-    <a href="../howold/how_old_is_old.html" style="font-weight:600; color:#B23A28;">
-      Try How Old Is Old? →
-    </a>
-  </div>
-
-  <div class="project-card">
-    <span class="project-card-tag">Prediction · Risk</span>
-    <p class="project-card-title">Trust Your Gut?</p>
-    <p class="project-card-desc">
-      Review realistic case files, predict who returns to court, then see your
-      accuracy scored against a simple two-variable rule that beats nearly
-      everyone. A lesson in why expert intuition keeps losing to a checklist.
-    </p>
-    <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#A98BB8;"></span>HTML / JS</span>
-      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
-      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Short exercise</span>
-    </div>
-    <br>
-    <a href="../gut/trust_your_gut.html" style="font-weight:600; color:#B23A28;">
-      Trust your gut? →
-    </a>
-  </div>
-
-  <div class="project-card">
-    <span class="project-card-tag">Evaluation Practice · Decision Tool</span>
-    <p class="project-card-title">Which Evaluation Should We Do?</p>
-    <p class="project-card-desc">
-      Say what you have and what you want to know, and every evaluation approach
-      lands in one of three piles: what fits, what is the wrong tool and why, and
-      what is close, with the gap named and the work to close it spelled out.
-    </p>
-    <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Decision tool</span>
-      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
-    </div>
-    <br>
-    <a href="../evalpicker/eval_picker.html" style="font-weight:600; color:#B23A28;">
-      Open the evaluation picker →
-    </a>
-  </div>
-
-  <div class="project-card">
-    <span class="project-card-tag">Data Storytelling · Decision Tool</span>
-    <p class="project-card-title">Which Deliverable Fits?</p>
-    <p class="project-card-desc">
-      One set of findings can become a two-page brief, a formal report, a
-      dashboard, or a documentary, and the right choice turns on who it is for,
-      how far it has to travel, and what you need it to do.
-    </p>
-    <div class="project-card-meta">
-      <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Decision tool</span>
-      <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
-    </div>
-    <br>
-    <a href="../formatpicker/format_picker.html" style="font-weight:600; color:#B23A28;">
-      Open the format picker →
-    </a>
-  </div>
-
+<div class="swag-divider">
+  <span class="r"></span>
+  <svg width="42" height="42" viewbox="0 0 100 100" fill="none"><circle cx="18" cy="68" r="4" fill="#A98BB8"></circle><circle cx="28" cy="84" r="4" fill="#A98BB8"></circle><circle cx="32" cy="52" r="4" fill="#A98BB8"></circle><circle cx="44" cy="26" r="4" fill="#A98BB8"></circle><circle cx="52" cy="46" r="4" fill="#A98BB8"></circle><circle cx="40" cy="42" r="4" fill="#B23A28"></circle><path d="M10,80 C26,80 30,34 50,34 C58,34 58,42 62,46" stroke="#2E1A47" stroke-width="3.5" stroke-linecap="round"></path><g transform="translate(62,46) rotate(45)" stroke="#2E1A47" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0,0 L-9,-20 Q0,-27 9,-20 Z"></path><line x1="0" y1="-4" x2="0" y2="-13"></line><circle cx="0" cy="-16.5" r="2.2"></circle><rect x="-7.5" y="-44" width="15" height="22" rx="6"></rect></g></svg>
+  <span class="r"></span>
 </div>
-<hr>
+
+<section class="swag-act">
+  <p class="swag-eyebrow">02 · The Brand on Real Things</p>
+  <h2 class="swag-h2 anchored">Branding in the Wild</h2>
+  <p class="swag-lead">The shirt designs as flat print art, plus the kit on real objects. Physical mockups, so the merch is imaginary but the art is yours to grab.</p>
+  <p class="source-chips" style="margin:0 0 1.2rem"><a class="chip-link" href="downloads/shirt-designs.png" download="">Download all six shirt designs (PNG)</a></p>
+  <div class="project-grid">
+
+    <div class="project-card">
+      <span class="swag-art swag-svg"><svg viewbox="0 0 300 250" fill="none">
+        <path d="M40,150 C90,150 108,82 150,78 C198,74 214,120 260,148" stroke="#2E1A47" stroke-width="5" stroke-linecap="round"></path>
+        <g fill="#A98BB8"><circle cx="66" cy="146" r="6"></circle><circle cx="102" cy="112" r="6"></circle><circle cx="150" cy="78" r="6"></circle><circle cx="196" cy="104" r="6"></circle><circle cx="236" cy="128" r="6"></circle></g>
+        <line x1="130" y1="66" x2="130" y2="160" stroke="#B23A28" stroke-width="4" stroke-linecap="round"></line>
+        <circle cx="172" cy="58" r="8" fill="#F4715C"></circle>
+        <text class="swag-sub" x="130" y="174" font-size="12" text-anchor="middle">AGE 18</text>
+        <text class="swag-cap" x="150" y="206" font-size="27" text-anchor="middle">The Line at 18</text>
+        <text class="swag-sub" x="150" y="230" font-size="11" text-anchor="middle">DATA WITH A PLOT</text>
+      </svg></span>
+      <span class="project-card-tag">Tee · Print</span>
+      <p class="project-card-title">The Line at 18</p>
+      <p class="project-card-desc">The maturity curve, the bright line at 18, and the one point sitting just past it.</p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art swag-svg"><svg viewbox="0 0 300 250" fill="none">
+        <path d="M46,120 C86,120 100,84 150,84 C196,84 206,104 258,98" stroke="#2E1A47" stroke-width="5" stroke-linecap="round"></path>
+        <g fill="#A98BB8"><circle cx="64" cy="118" r="6"></circle><circle cx="102" cy="94" r="6"></circle><circle cx="150" cy="84" r="6"></circle><circle cx="196" cy="92" r="6"></circle><circle cx="234" cy="98" r="6"></circle></g>
+        <circle cx="176" cy="52" r="8" fill="#F4715C"></circle>
+        <text class="swag-cap" x="150" y="162" font-size="25" text-anchor="middle">I Tell Their Stories</text>
+        <text class="swag-cap" x="150" y="192" font-size="25" text-anchor="middle">With Data</text>
+        <text class="swag-sub" x="150" y="222" font-size="11" text-anchor="middle">DATA WITH A PLOT</text>
+      </svg></span>
+      <span class="project-card-tag">Tee · Print</span>
+      <p class="project-card-title">I Tell Their Stories With Data</p>
+      <p class="project-card-desc">Your tagline from the site's own social card, under the arc and the one it misses.</p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art swag-svg"><svg viewbox="0 0 300 250" fill="none">
+        <text class="swag-cap" x="150" y="96" font-size="44" text-anchor="middle">Clarity Is</text>
+        <text class="swag-cap" x="150" y="146" font-size="44" text-anchor="middle">Kindness</text>
+        <path d="M78,180 C116,170 176,170 214,180" stroke="#B23A28" stroke-width="4" stroke-linecap="round"></path>
+        <circle cx="224" cy="178" r="6.5" fill="#F4715C"></circle>
+        <text class="swag-sub" x="150" y="214" font-size="11" text-anchor="middle">DATA WITH A PLOT</text>
+      </svg></span>
+      <span class="project-card-tag">Tee · Print</span>
+      <p class="project-card-title">Clarity Is Kindness</p>
+      <p class="project-card-desc">Your working premise, set plain. The one that reads from across a room.</p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art swag-art--dark swag-svg"><svg viewbox="0 0 300 250" fill="none">
+        <g transform="translate(150,86) scale(1.4) translate(-50,-50)">
+          <circle cx="18" cy="68" r="4" fill="#A98BB8"></circle><circle cx="28" cy="84" r="4" fill="#A98BB8"></circle><circle cx="32" cy="52" r="4" fill="#A98BB8"></circle><circle cx="44" cy="26" r="4" fill="#A98BB8"></circle><circle cx="52" cy="46" r="4" fill="#A98BB8"></circle><circle cx="40" cy="42" r="4" fill="#F4715C"></circle>
+          <path d="M10,80 C26,80 30,34 50,34 C58,34 58,42 62,46" stroke="#F7F2EC" stroke-width="3.5" stroke-linecap="round"></path>
+          <g transform="translate(62,46) rotate(45)" stroke="#F7F2EC" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0,0 L-9,-20 Q0,-27 9,-20 Z"></path><line x1="0" y1="-4" x2="0" y2="-13"></line><circle cx="0" cy="-16.5" r="2.2"></circle><rect x="-7.5" y="-44" width="15" height="22" rx="6"></rect></g>
+        </g>
+        <text x="150" y="200" font-size="30" font-weight="600" fill="#F7F2EC" font-family="Spectral,Georgia,serif" text-anchor="middle">Data <tspan font-style="italic" font-weight="400" fill="#F4715C">with a</tspan> Plot</text>
+      </svg></span>
+      <span class="project-card-tag">Hoodie · Print</span>
+      <p class="project-card-title">The Wordmark</p>
+      <p class="project-card-desc">The mark and the wordmark, cream on ink. The one a slogan-averse colleague will actually wear.</p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art swag-svg"><svg viewbox="0 0 300 250" fill="none">
+        <g fill="#A98BB8"><circle cx="96" cy="128" r="6"></circle><circle cx="132" cy="140" r="6"></circle><circle cx="174" cy="126" r="6"></circle><circle cx="200" cy="144" r="6"></circle></g>
+        <circle cx="166" cy="74" r="15" fill="#F4715C"></circle>
+        <circle cx="166" cy="74" r="24" fill="none" stroke="#F4715C" stroke-width="2" opacity=".45"></circle>
+        <text class="swag-cap" x="150" y="176" font-size="24" text-anchor="middle">Small Sample,</text>
+        <text class="swag-cap" x="150" y="204" font-size="24" text-anchor="middle">Significant Effect</text>
+        <text class="swag-sub" x="150" y="230" font-size="11" text-anchor="middle">DATA WITH A PLOT</text>
+      </svg></span>
+      <span class="project-card-tag">Tee · Print</span>
+      <p class="project-card-title">Small Sample, Significant Effect</p>
+      <p class="project-card-desc">A few dots, one large result. One person can move the estimate.</p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art swag-svg"><svg viewbox="0 0 300 250" fill="none">
+        <g fill="#A98BB8"><circle cx="92" cy="96" r="7"></circle><circle cx="126" cy="84" r="7"></circle><circle cx="194" cy="90" r="7"></circle><circle cx="228" cy="100" r="7"></circle></g>
+        <circle cx="160" cy="78" r="11" fill="#F4715C"></circle>
+        <text class="swag-cap" x="150" y="150" font-size="34" text-anchor="middle">Women in STEM</text>
+        <text class="swag-sub" x="150" y="186" font-size="11" text-anchor="middle">THE OUTLIER THE LINE MISSES</text>
+      </svg></span>
+      <span class="project-card-tag">Tee · Print</span>
+      <p class="project-card-title">Women in STEM</p>
+      <p class="project-card-desc">The one coral dot among the rest, the outlier the default line keeps missing.</p>
+    </div>
+
+  </div>
+
+  <div class="project-card" style="margin-top:1.5rem">
+    <span class="swag-art swag-art--wide"><img src="pics/kit.png" alt="The Data with a Plot brand kit applied to a tote, business card, mug, laptop, and slide template"></span>
+    <span class="project-card-tag">Applied Kit · Mockups</span>
+    <p class="project-card-title">The Kit, in the Wild</p>
+    <p class="project-card-desc">Your own Claude-design set: the "n = 1 website" sticker, the "story is in the scatter" tote, the coffee mug, the laptop decal, the slide template, and a business card. The art is yours to reuse; the card stays yours.</p>
+    <p class="source-chips"><span class="swag-showcase-note">Showcase · art on request</span></p>
+  </div>
 </section>
-<section id="the-usual-subjects" class="level2 section-heading">
-<h2 class="section-heading anchored" data-anchor-id="the-usual-subjects">The Usual Subjects</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Measurement and metrics</strong></p>
-<ul>
-<li>Building performance measures that hold up</li>
-<li>When composite scores help and when they mislead</li>
-<li>Communicating confidence and uncertainty to non-technical stakeholders</li>
-<li>The politics of how organizational metrics get designed</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>Data visualization</strong></p>
-<ul>
-<li>Choosing chart types that match your argument</li>
-<li>Designing for uncertainty, not false precision</li>
-<li>Interactive vs.&nbsp;static, and when to use each</li>
-<li>Common visualization mistakes in stakeholder reporting</li>
-</ul>
-</div>
+
+<p class="swag-foot">Everything here is yours to grab. Stickers and wallpapers download as real files; the shirts, mugs, and the rest are mockups, so the art is yours even when the merch is imaginary.</p>
+
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
