@@ -64,6 +64,8 @@ website:
         text: Writing
       - href: selected-work/index.qmd
         text: The Plot So Far
+      - href: swag/index.qmd
+        text: Swag
     right:
       - icon: github
         href: https://github.com/lwylie01
