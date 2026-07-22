@@ -184,12 +184,45 @@ resources:
 
   </div>
 
-  <div class="project-card" style="margin-top:1.5rem">
-    <span class="swag-art swag-art--wide"><img src="pics/kit.png" alt="The Data with a Plot brand kit applied to a tote, business card, mug, laptop, and slide template"></span>
-    <span class="project-card-tag">Applied Kit · Mockups</span>
-    <p class="project-card-title">The Kit, in the Wild</p>
-    <p class="project-card-desc">Your own Claude-design set: the "n = 1 website" sticker, the "story is in the scatter" tote, the coffee mug, the laptop decal, the slide template, and a business card. The art is yours to reuse; the card stays yours.</p>
-    <p class="source-chips"><span class="swag-showcase-note">Showcase · art on request</span></p>
+  <p class="swag-eyebrow" style="margin-top:2.6rem">The Applied Kit</p>
+  <div class="project-grid">
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/kit-tote.png" alt="Tote bag with the mark and 'the story is in the scatter'"></span>
+      <span class="project-card-tag">Tote · Mockup</span>
+      <p class="project-card-title">Field Tote</p>
+      <p class="project-card-desc">The mark and wordmark on canvas, with "the story is in the scatter" underneath.</p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/kit-mug.png" alt="Mug reading 'not statistically significant before coffee'"></span>
+      <span class="project-card-tag">Mug · Mockup</span>
+      <p class="project-card-title">The Coffee Mug</p>
+      <p class="project-card-desc">"Not statistically significant before coffee." The honest one.</p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/kit-laptop.png" alt="Laptop lid decal reading 'n = 1 website, may not generalize'"></span>
+      <span class="project-card-tag">Laptop · Mockup</span>
+      <p class="project-card-title">Laptop Decal</p>
+      <p class="project-card-desc">The mark and "n = 1 website. May not generalize." for your lid.</p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/kit-card.png" alt="Business card, front and back"></span>
+      <span class="project-card-tag">Business Card · Mockup</span>
+      <p class="project-card-title">The Business Card</p>
+      <p class="project-card-desc">The identity on a card: "bright lines vs. the people in between."</p>
+      <p class="source-chips"><span class="swag-showcase-note">Showcase only</span></p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/kit-slides.png" alt="Slide template: a title slide and a content slide"></span>
+      <span class="project-card-tag">Slides · Mockup</span>
+      <p class="project-card-title">Slide Template</p>
+      <p class="project-card-desc">A title and content slide in the brand: "The stories bright lines miss."</p>
+    </div>
+
   </div>
 </section>
 
