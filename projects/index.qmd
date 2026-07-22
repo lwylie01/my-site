@@ -10,7 +10,7 @@ toc: false
   <h1 class="page-header-title">Projects</h1>
   <p class="page-header-sub">
     Applied research and documented datasets, each built around a real
-    measurement question. The interactive tools and classroom exercises live on
+    measurement question. The interactive tools and exercises live on
     the <a href="../teaching/">teaching page</a>.
   </p>
 </div>
