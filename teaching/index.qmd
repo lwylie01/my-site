@@ -21,7 +21,7 @@ toc: false
 </div>
 ```
 
-## The Setup {.section-heading}
+## The Hook {.section-heading}
 
 I hand a room a number worth arguing about, then let the argument do the work.
 It usually starts with a rap score and ends with people questioning their own
@@ -40,7 +40,7 @@ The six ideas I come back to most often:
 
 ---
 
-## The Toolkit {.section-heading}
+## Contrivances {.section-heading}
 
 Every one below is live and self-contained. Open it and try it: each is built to
 start an argument, not settle one.
