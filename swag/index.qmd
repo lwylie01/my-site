@@ -68,12 +68,12 @@ resources:
   <h3 class="swag-subhead">Character Stickers</h3>
   <p class="swag-subnote">Click any sticker to download the transparent PNG, or take the whole sheet at once.</p>
   <div class="swag-gallery">
-    <a href="pics/sticker-data-plot.png" download><img src="pics/sticker-data-plot.png" alt="Sticker: the mascot beside the Data with a Plot wordmark" loading="lazy" decoding="async"><span class="cap">Data With a Plot</span></a>
-    <a href="pics/sticker-you-got-this.png" download><img src="pics/sticker-you-got-this.png" alt="Sticker: the mascot giving a thumbs up, 'You Got This'" loading="lazy" decoding="async"><span class="cap">You Got This</span></a>
-    <a href="pics/sticker-plot-twist.png" download><img src="pics/sticker-plot-twist.png" alt="Sticker: the mascot and a little monitor, 'Plot Twist'" loading="lazy" decoding="async"><span class="cap">Plot Twist</span></a>
-    <a href="pics/sticker-good-idea.png" download><img src="pics/sticker-good-idea.png" alt="Sticker: the mascot with a lightbulb, 'Good Idea'" loading="lazy" decoding="async"><span class="cap">Good Idea</span></a>
-    <a href="pics/sticker-coffee-fuel.png" download><img src="pics/sticker-coffee-fuel.png" alt="Sticker: the mascot holding a mug, 'Coffee = Fuel'" loading="lazy" decoding="async"><span class="cap">Coffee = Fuel</span></a>
-    <a href="pics/sticker-thinking.png" download><img src="pics/sticker-thinking.png" alt="Sticker: the mascot thinking, 'Thinking...'" loading="lazy" decoding="async"><span class="cap">Thinking…</span></a>
+    <a href="pics/sticker-data-plot.png" download><img src="pics/thumbs/sticker-data-plot.png" alt="Sticker: the mascot beside the Data with a Plot wordmark" loading="lazy" decoding="async"><span class="cap">Data With a Plot</span></a>
+    <a href="pics/sticker-you-got-this.png" download><img src="pics/thumbs/sticker-you-got-this.png" alt="Sticker: the mascot giving a thumbs up, 'You Got This'" loading="lazy" decoding="async"><span class="cap">You Got This</span></a>
+    <a href="pics/sticker-plot-twist.png" download><img src="pics/thumbs/sticker-plot-twist.png" alt="Sticker: the mascot and a little monitor, 'Plot Twist'" loading="lazy" decoding="async"><span class="cap">Plot Twist</span></a>
+    <a href="pics/sticker-good-idea.png" download><img src="pics/thumbs/sticker-good-idea.png" alt="Sticker: the mascot with a lightbulb, 'Good Idea'" loading="lazy" decoding="async"><span class="cap">Good Idea</span></a>
+    <a href="pics/sticker-coffee-fuel.png" download><img src="pics/thumbs/sticker-coffee-fuel.png" alt="Sticker: the mascot holding a mug, 'Coffee = Fuel'" loading="lazy" decoding="async"><span class="cap">Coffee = Fuel</span></a>
+    <a href="pics/sticker-thinking.png" download><img src="pics/thumbs/sticker-thinking.png" alt="Sticker: the mascot thinking, 'Thinking...'" loading="lazy" decoding="async"><span class="cap">Thinking…</span></a>
   </div>
   <p class="source-chips" style="margin:0 0 .4rem"><a class="chip-link" href="downloads/sticker-sheet.png" download>Download the whole sticker sheet (PNG)</a></p>
 
