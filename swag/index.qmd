@@ -13,8 +13,8 @@ resources:
 /* ---- Swag page (page-scoped; shared card classes come from site-theme.scss) ---- */
 .swag-header{position:relative}
 .swag-host{position:absolute;top:3.5rem;right:0;width:150px;text-align:center}
-.swag-host-slot{width:134px;height:134px;border-radius:50%;overflow:hidden;margin:0 auto .5rem;border:3px solid #F4715C;box-shadow:0 6px 18px rgba(46,26,71,.16);background:#FDFBF7}
-.swag-host-slot img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.5);transform-origin:50% 18%}
+.swag-host-slot{width:122px;height:122px;border-radius:50%;overflow:hidden;margin:0 auto .5rem;border:2px solid #F4715C;box-shadow:0 4px 14px rgba(46,26,71,.12);background:#FDFBF7}
+.swag-host-slot img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.12);transform-origin:50% 20%}
 .swag-host-cap{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#6A5F72;line-height:1.4}
 @media (max-width:640px){.swag-host{position:static;width:auto;margin:1.2rem 0 0}}
 
@@ -99,7 +99,7 @@ resources:
   </div>
 
   <h3 class="swag-subhead">Shirt Art</h3>
-  <p class="swag-subnote">Six flat print designs. The tees and hoodie are mockups, but the art downloads as one pack.</p>
+  <p class="swag-subnote">Six flat print designs. The tees and hoodie are mockups, but grab any design on its own, or take the whole pack.</p>
   <p class="source-chips" style="margin:0 0 1.1rem"><a class="chip-link" href="downloads/shirt-designs.png" download>Download all six shirt designs (PNG)</a></p>
   <div class="project-grid">
 
@@ -116,6 +116,7 @@ resources:
       <span class="project-card-tag">Tee · Print Art</span>
       <p class="project-card-title">The Line at 18</p>
       <p class="project-card-desc">The maturity curve, the bright line at 18, and the one point sitting just past it.</p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-the-line-at-18.png" download>PNG (transparent)</a></p>
     </div>
 
     <div class="project-card">
@@ -130,6 +131,7 @@ resources:
       <span class="project-card-tag">Tee · Print Art</span>
       <p class="project-card-title">I Tell Their Stories With Data</p>
       <p class="project-card-desc">Your tagline from the site's own social card, under the arc and the one it misses.</p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-i-tell-their-stories-with-data.png" download>PNG (transparent)</a></p>
     </div>
 
     <div class="project-card">
@@ -143,6 +145,7 @@ resources:
       <span class="project-card-tag">Tee · Print Art</span>
       <p class="project-card-title">Clarity Is Kindness</p>
       <p class="project-card-desc">Your working premise, set plain. The one that reads from across a room.</p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-clarity-is-kindness.png" download>PNG (transparent)</a></p>
     </div>
 
     <div class="project-card">
@@ -157,6 +160,7 @@ resources:
       <span class="project-card-tag">Hoodie · Print Art</span>
       <p class="project-card-title">The Wordmark</p>
       <p class="project-card-desc">The mark and the wordmark, cream on ink. The one a slogan-averse colleague will actually wear.</p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-the-wordmark.png" download>PNG (on ink)</a></p>
     </div>
 
     <div class="project-card">
@@ -171,6 +175,7 @@ resources:
       <span class="project-card-tag">Tee · Print Art</span>
       <p class="project-card-title">Small Sample, Significant Effect</p>
       <p class="project-card-desc">A few dots, one large result. One person can move the estimate.</p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-small-sample-significant-effect.png" download>PNG (transparent)</a></p>
     </div>
 
     <div class="project-card">
@@ -183,6 +188,7 @@ resources:
       <span class="project-card-tag">Tee · Print Art</span>
       <p class="project-card-title">Women in STEM</p>
       <p class="project-card-desc">The one coral dot among the rest, the outlier the default line keeps missing.</p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-women-in-stem.png" download>PNG (transparent)</a></p>
     </div>
 
   </div>
