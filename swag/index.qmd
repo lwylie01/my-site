@@ -13,7 +13,8 @@ resources:
 /* ---- Swag page (page-scoped; shared card classes come from site-theme.scss) ---- */
 .swag-header{position:relative}
 .swag-host{position:absolute;top:3.5rem;right:0;width:150px;text-align:center}
-.swag-host-slot{width:118px;height:118px;border-radius:50%;border:2px dashed #C9BCA6;background:#FDFBF7;display:grid;place-items:center;margin:0 auto .5rem}
+.swag-host-slot{width:134px;height:134px;border-radius:50%;overflow:hidden;margin:0 auto .5rem;border:3px solid #F4715C;box-shadow:0 6px 18px rgba(46,26,71,.16);background:#FDFBF7}
+.swag-host-slot img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.5);transform-origin:50% 18%}
 .swag-host-cap{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#6A5F72;line-height:1.4}
 @media (max-width:640px){.swag-host{position:static;width:auto;margin:1.2rem 0 0}}
 
@@ -44,10 +45,8 @@ resources:
   <h1 class="page-header-title">Swag</h1>
   <p class="page-header-sub">The arc, the scatter, and the one dot the line misses, put on things. Grab the digital ones; the rest are mockups you are welcome to enjoy.</p>
   <div class="swag-host">
-    <div class="swag-host-slot">
-      <svg width="66" height="66" viewBox="0 0 100 100" fill="none"><circle cx="30" cy="56" r="6" fill="#A98BB8"/><circle cx="44" cy="26" r="7" fill="#F4715C"/><path d="M10,80 C26,80 30,34 50,34 C58,34 58,42 62,46" stroke="#2E1A47" stroke-width="5" stroke-linecap="round"/><g transform="translate(62,46) rotate(45)" stroke="#2E1A47" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0,0 L-9,-20 Q0,-27 9,-20 Z"/><rect x="-7.5" y="-44" width="15" height="22" rx="6"/></g></svg>
-    </div>
-    <div class="swag-host-cap">Mascot<br>coming soon</div>
+    <div class="swag-host-slot"><img src="pics/mascot-headshot.png" alt="Cartoon avatar of Lindsey Wylie"></div>
+    <div class="swag-host-cap">Your host</div>
   </div>
 </div>
 
@@ -58,6 +57,55 @@ resources:
   <h2 class="swag-h2">Downloads</h2>
   <p class="swag-lead">Stickers and wallpapers, yours to take. The digital designs download as real files.</p>
   <p class="swag-note">No store, no checkout: if it is a sticker or a wallpaper, the link hands you the file.</p>
+
+  <p class="swag-eyebrow" style="margin-top:.6rem">Character Stickers</p>
+  <div class="project-grid">
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/sticker-data-plot.png" alt="Sticker: the mascot beside the Data with a Plot wordmark" loading="lazy"></span>
+      <span class="project-card-tag">Sticker · Download</span>
+      <p class="project-card-title">Data With a Plot</p>
+      <p class="source-chips"><a class="chip-link" href="pics/sticker-data-plot.png" download>PNG (transparent)</a></p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/sticker-you-got-this.png" alt="Sticker: the mascot giving a thumbs up, 'You Got This'" loading="lazy"></span>
+      <span class="project-card-tag">Sticker · Download</span>
+      <p class="project-card-title">You Got This</p>
+      <p class="source-chips"><a class="chip-link" href="pics/sticker-you-got-this.png" download>PNG (transparent)</a></p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/sticker-plot-twist.png" alt="Sticker: the mascot and a little monitor, 'Plot Twist'" loading="lazy"></span>
+      <span class="project-card-tag">Sticker · Download</span>
+      <p class="project-card-title">Plot Twist</p>
+      <p class="source-chips"><a class="chip-link" href="pics/sticker-plot-twist.png" download>PNG (transparent)</a></p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/sticker-good-idea.png" alt="Sticker: the mascot with a lightbulb, 'Good Idea'" loading="lazy"></span>
+      <span class="project-card-tag">Sticker · Download</span>
+      <p class="project-card-title">Good Idea</p>
+      <p class="source-chips"><a class="chip-link" href="pics/sticker-good-idea.png" download>PNG (transparent)</a></p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/sticker-coffee-fuel.png" alt="Sticker: the mascot holding a mug, 'Coffee = Fuel'" loading="lazy"></span>
+      <span class="project-card-tag">Sticker · Download</span>
+      <p class="project-card-title">Coffee = Fuel</p>
+      <p class="source-chips"><a class="chip-link" href="pics/sticker-coffee-fuel.png" download>PNG (transparent)</a></p>
+    </div>
+
+    <div class="project-card">
+      <span class="swag-art"><img src="pics/sticker-thinking.png" alt="Sticker: the mascot thinking, 'Thinking...'" loading="lazy"></span>
+      <span class="project-card-tag">Sticker · Download</span>
+      <p class="project-card-title">Thinking…</p>
+      <p class="source-chips"><a class="chip-link" href="pics/sticker-thinking.png" download>PNG (transparent)</a></p>
+    </div>
+
+  </div>
+
+  <p class="swag-eyebrow" style="margin-top:2.4rem">Motifs and Wallpapers</p>
   <div class="project-grid">
 
     <div class="project-card">
