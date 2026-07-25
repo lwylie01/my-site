@@ -44,6 +44,15 @@ resources:
 .swag-sub{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);fill:#6A5F72;font-weight:500;letter-spacing:.14em}
 .swag-svg text{dominant-baseline:middle}
 
+/* character stickers fold: quiet by default, mirrors details.codebook-fold */
+.swag-fold{margin:.2rem 0 .6rem;border-top:1px solid #E5DCCF;padding-top:.4rem}
+.swag-fold>summary{cursor:pointer;list-style:none;font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#B23A28;padding:.55rem .2rem}
+.swag-fold>summary::-webkit-details-marker{display:none}
+.swag-fold>summary::before{content:"\25B8\00A0"}
+.swag-fold[open]>summary::before{content:"\25BE\00A0"}
+.swag-fold>summary:focus-visible{outline:2px solid #B23A28;outline-offset:2px;border-radius:4px}
+.swag-fold .swag-gallery{margin-top:.4rem}
+
 .swag-divider{display:flex;align-items:center;gap:1.5rem;margin:3.2rem 0 2.6rem}
 .swag-divider .r{flex:1;height:1px;background:#E5DCCF}
 </style>
@@ -51,7 +60,7 @@ resources:
 <div class="page-header container swag-header">
   <p class="page-header-label">Downloads · No Store</p>
   <h1 class="page-header-title">Swag</h1>
-  <p class="page-header-sub">The arc, the scatter, and the one dot the line misses, put on things. Stickers and wallpapers download as real files; the shirts and the rest are mockups, statistically insignificant as merch but the art is yours to keep.</p>
+  <p class="page-header-sub">The arc, the scatter, and the one dot the line misses, put on things. The stickers download as real files; the shirts and the rest are mockups, statistically insignificant as merch but the art is yours to keep.</p>
   <div class="swag-host">
     <div class="swag-host-slot"><img src="pics/mascot-headshot.png" alt="Cartoon avatar of Lindsey Wylie"></div>
     <div class="swag-host-cap">Your host</div>
@@ -63,40 +72,32 @@ resources:
 <section class="swag-act">
   <p class="swag-eyebrow">01 · Grab and Go</p>
   <h2 class="swag-h2">Downloads</h2>
-  <p class="swag-lead">Stickers, wallpapers, and the shirt art, yours to take. Every design in this section hands you a real file.</p>
+  <p class="swag-lead">Stickers and shirt art, yours to take. Every design in this section hands you a real file.</p>
 
-  <h3 class="swag-subhead">Character Stickers</h3>
+  <h3 class="swag-subhead">Quote Stickers</h3>
   <p class="swag-subnote">Click any sticker to download the transparent PNG, or take the whole sheet at once.</p>
   <div class="swag-gallery">
+    <a href="downloads/stickers/sticker-spaghetti-has-no-protagonist.png" download><img src="downloads/stickers/sticker-spaghetti-has-no-protagonist.png" alt="Sticker: tangled multi-colour lines, 'Spaghetti Has No Protagonist'" loading="lazy" decoding="async"><span class="cap">Spaghetti Has No Protagonist</span></a>
+    <a href="downloads/stickers/sticker-practically-significant.png" download><img src="downloads/stickers/sticker-practically-significant.png" alt="Sticker: 'p &lt; .05, Practically Significant'" loading="lazy" decoding="async"><span class="cap">Practically Significant</span></a>
+    <a href="downloads/stickers/sticker-the-outlier-the-line-misses.png" download><img src="downloads/stickers/sticker-the-outlier-the-line-misses.png" alt="Sticker: the arc past a coral dot, 'The Outlier the Line Misses'" loading="lazy" decoding="async"><span class="cap">The Outlier the Line Misses</span></a>
+    <a href="downloads/stickers/sticker-be-the-outlier.png" download><img src="downloads/stickers/sticker-be-the-outlier.png" alt="Sticker: a coral badge with a face, 'Be the Outlier'" loading="lazy" decoding="async"><span class="cap">Be the Outlier</span></a>
+    <a href="downloads/stickers/sticker-clarity-is-kindness.png" download><img src="downloads/stickers/sticker-clarity-is-kindness.png" alt="Sticker: 'Clarity Is Kindness' over a coral underline" loading="lazy" decoding="async"><span class="cap">Clarity Is Kindness</span></a>
+  </div>
+  <p class="source-chips" style="margin:0 0 .4rem"><a class="chip-link" href="downloads/sticker-sheet.png" download>Download the whole sticker sheet (PNG)</a></p>
+
+  <details class="swag-fold">
+    <summary>More stickers: the characters and the bare marks</summary>
+    <div class="swag-gallery">
     <a href="pics/sticker-data-plot.png" download><img src="pics/thumbs/sticker-data-plot.png" alt="Sticker: the mascot beside the Data with a Plot wordmark" loading="lazy" decoding="async"><span class="cap">Data With a Plot</span></a>
     <a href="pics/sticker-you-got-this.png" download><img src="pics/thumbs/sticker-you-got-this.png" alt="Sticker: the mascot giving a thumbs up, 'You Got This'" loading="lazy" decoding="async"><span class="cap">You Got This</span></a>
     <a href="pics/sticker-plot-twist.png" download><img src="pics/thumbs/sticker-plot-twist.png" alt="Sticker: the mascot and a little monitor, 'Plot Twist'" loading="lazy" decoding="async"><span class="cap">Plot Twist</span></a>
     <a href="pics/sticker-good-idea.png" download><img src="pics/thumbs/sticker-good-idea.png" alt="Sticker: the mascot with a lightbulb, 'Good Idea'" loading="lazy" decoding="async"><span class="cap">Good Idea</span></a>
     <a href="pics/sticker-coffee-fuel.png" download><img src="pics/thumbs/sticker-coffee-fuel.png" alt="Sticker: the mascot holding a mug, 'Coffee = Fuel'" loading="lazy" decoding="async"><span class="cap">Coffee = Fuel</span></a>
     <a href="pics/sticker-thinking.png" download><img src="pics/thumbs/sticker-thinking.png" alt="Sticker: the mascot thinking, 'Thinking...'" loading="lazy" decoding="async"><span class="cap">Thinking…</span></a>
-  </div>
-  <p class="source-chips" style="margin:0 0 .4rem"><a class="chip-link" href="downloads/sticker-sheet.png" download>Download the whole sticker sheet (PNG)</a></p>
-
-  <h3 class="swag-subhead">Wallpapers</h3>
-  <div class="project-grid">
-
-    <div class="project-card">
-      <span class="swag-art"><img src="downloads/wallpaper-phone-1170x2532.png" alt="Phone wallpaper: the arc climbing an ink-plum screen" loading="lazy" decoding="async"></span>
-      <span class="project-card-tag">Wallpaper · Download</span>
-      <p class="project-card-title">Phone Wallpaper</p>
-      <p class="project-card-desc">The arc climbing an ink-plum screen, with one coral outlier near the top.</p>
-      <p class="source-chips"><a class="chip-link" href="downloads/wallpaper-phone-1170x2532.png" download>Phone · 1170 × 2532</a></p>
+  <a href="downloads/stickers/sticker-the-mark.png" download><img src="downloads/stickers/sticker-the-mark.png" alt="Sticker: the bare arc-and-pen mark" loading="lazy" decoding="async"><span class="cap">The Mark</span></a>
+  <a href="downloads/stickers/sticker-the-mark-and-scatter.png" download><img src="downloads/stickers/sticker-the-mark-and-scatter.png" alt="Sticker: the arc-and-pen mark through a scatter of dots" loading="lazy" decoding="async"><span class="cap">The Mark and Scatter</span></a>
     </div>
-
-    <div class="project-card">
-      <span class="swag-art"><img src="downloads/wallpaper-desktop-1920x1080.png" alt="Desktop wallpaper: the rise-and-fall arc, wide" loading="lazy" decoding="async"></span>
-      <span class="project-card-tag">Wallpaper · Download</span>
-      <p class="project-card-title">Desktop Wallpaper</p>
-      <p class="project-card-desc">The same rise and fall, wide, with room for your icons in the quiet corners.</p>
-      <p class="source-chips"><a class="chip-link" href="downloads/wallpaper-desktop-1920x1080.png" download>Desktop · 1920 × 1080</a></p>
-    </div>
-
-  </div>
+  </details>
 
   <h3 class="swag-subhead">Shirt Art</h3>
   <p class="swag-subnote">Six flat print designs. The tees and hoodie are mockups, but grab any design on its own, or take the whole pack.</p>
@@ -227,19 +228,7 @@ resources:
       <p class="project-card-desc">The mark and "n = 1 website. May not generalize." for your lid.</p>
     </div>
 
-    <div class="project-card">
-      <span class="swag-art"><img src="pics/kit-card.png" alt="Business card, front and back" loading="lazy" decoding="async"></span>
-      <span class="project-card-tag">Business Card · Mockup</span>
-      <p class="project-card-title">The Business Card</p>
-      <p class="project-card-desc">The identity on a card: "bright lines vs. the people in between."</p>
-    </div>
 
-    <div class="project-card">
-      <span class="swag-art"><img src="pics/kit-slides.png" alt="Slide template: a title slide and a content slide" loading="lazy" decoding="async"></span>
-      <span class="project-card-tag">Slides · Mockup</span>
-      <p class="project-card-title">Slide Template</p>
-      <p class="project-card-desc">A title and content slide in the brand: "The stories bright lines miss."</p>
-    </div>
 
   </div>
 </section>
