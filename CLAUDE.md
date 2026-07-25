@@ -653,13 +653,11 @@ they have to be supplied directly. When they arrive, add them to
 `downloads/stickers/` and to the Quote Stickers gallery; nothing else needs
 touching.
 
-Two smaller pieces are agreed and not yet done: regenerating
-`sticker-sheet.png` from the seven crops (its eyebrow still reads "DRAFTS" and
-about the bottom third of the 1440x1020 canvas is empty), and adding a swag
-cross-link to `teaching/index.qmd`, since the page is currently reachable only
-from the navbar. The cross-link needs the maintainer's pick on the card copy
-first. A homepage card is not the answer: Start Here is deliberately the two
-signature pieces.
+**Swag is reached from the navbar and nowhere else, on purpose.** A cross-link
+card on Teaching or Projects was drafted and turned down (maintainer,
+2026-07-25), in the same spirit as the 2026-07-21 declutter: Teaching's grid is
+teaching tools, Projects holds the research work, and Start Here is deliberately
+the two signature pieces. Do not add a swag card to any of them.
 
 ### Update checklist
 
