@@ -570,6 +570,113 @@ links (Meta) carrying the section's only hyperlinks.
 **Area labels use "and", never "&"** (sitewide decision, July 2026); official
 journal names keep their own styling (*Crime & Delinquency* stays).
 
+## Swag (`swag/`)
+
+The brand-merch page: stickers and shirt art you can actually download, plus
+mockups of things that do not exist. Shipped July 2026, reorganised 2026-07-25.
+Pure static HTML in one `{=html}` block, no build step, no `_metadata.yml`,
+nothing renders from it, so freeze never enters into it. Linked only from the
+navbar (`_quarto.yml`).
+
+Two sections, and the split is the point: **01 Downloads** is everything that
+hands you a real file (quote stickers, character stickers, shirt art), **02 The
+Merch Table** is mockups only. That distinction is carried by the structure and
+stated once in the header intro; it used to be repeated four times, which is
+most of what made the first version read as cluttered.
+
+### The pieces
+
+| File | Role |
+|---|---|
+| `swag/index.qmd` | The whole page. Page-scoped `<style>` block plus shared card classes from `site-theme.scss` (`.project-card`, `.source-chips`, `.chip-link`, `.page-header`) |
+| `swag/downloads/stickers/*.png` | Seven individual quote stickers, transparent (five quotes plus the two bare marks) |
+| `swag/downloads/sticker-sheet.png` | The original flat sheet, offered as the whole-set download |
+| `swag/downloads/shirts/*.png` | Six individual shirt designs |
+| `swag/downloads/shirt-designs.png` | Six-up contact sheet of the shirt designs |
+| `swag/pics/sticker-*.png` | Six full-resolution character stickers (the download targets) |
+| `swag/pics/thumbs/sticker-*.png` | ~300px previews of the same six (what the gallery displays) |
+| `swag/pics/kit-*.png` | Mockup images for The Merch Table (tote, mug, laptop) |
+| `swag/pics/mascot-headshot.png` | The "Your host" avatar in the page header |
+
+### Where the art comes from
+
+The quote stickers existed only flattened into `sticker-sheet.png`, so there was
+nothing to feature until they were separated. The seven files in
+`downloads/stickers/` were cut out of that sheet losslessly by a pure-Python PNG
+decode (there is no PIL, ImageMagick or pngquant in the CCR sandbox, and pip
+times out), then the outer cream was flood-filled to transparent from the crop
+border. The sheet itself stays as the download for the whole set.
+
+The shirt PNGs are rasterised from the inline SVGs in `index.qmd` with headless
+Chromium (`/opt/pw-browsers/chromium`). **Spectral and JetBrains Mono must be
+inlined as base64 `@font-face` data URIs** or the type silently falls back to
+Georgia; fetch them from Google Fonts, which the proxy allows. Five render on
+transparent backgrounds; **The Wordmark renders on its ink background** because
+its art is cream and would otherwise be invisible. `shirt-designs.png` is built
+from those six files and cropped to content: the version before 2026-07-25
+truncated its bottom row of three designs by 79px against a hard canvas edge, so
+if you rebuild it, decode the result and assert the content is inset from every
+edge. The same rebuild has a second trap: a `figure` laid out with flex and
+`justify-content` silently dropped the second row's captions, so use
+`display:block` with `padding-top` on the `figcaption` and verify a caption band
+exists under every row.
+
+### Rules that are decisions, not accidents
+
+- **The character stickers stay folded.** The funny quote stickers are the
+  focus; the six stickers of the maintainer sit inside `<details
+  class="swag-fold">`, styled after `details.codebook-fold`. Do not promote them
+  back to the top level. The default view is five tiles, not fourteen.
+- **Gallery previews are the thumbnails, downloads are the originals.** The six
+  character stickers are 438-672 KB each; pointing the previews at them put
+  about 3.6 MB on first paint. Preview from `pics/thumbs/`, link to `pics/`.
+- **Wallpapers were removed** (2026-07-25) and should not return.
+- **The Merch Table is three mockups.** The business card and slide template were
+  removed; do not re-add them.
+- **Shirt art lives under Downloads, not with the mockups**, because it
+  downloads. The tees themselves are still imaginary.
+- Decorative inline SVGs carry `aria-hidden="true"` plus `focusable="false"`, or
+  they read their baked-in text ("AGE 18", "DATA WITH A PLOT") to a screen
+  reader immediately before the identical card title. Every shirt download chip
+  carries an `aria-label` naming its design: five of them otherwise share the
+  accessible name "PNG (transparent)".
+- `.swag-gallery a:focus-visible` must keep a real outline. A shared hover and
+  focus rule carrying `outline:none` once left all thirteen sticker download
+  links with no visible focus indicator.
+
+### Open items
+
+The maintainer has a fuller set of funny quote stickers, made with Claude
+design, that is not in the repo. Google Drive and Adobe Creative Cloud tool
+calls are refused at the harness level in CCR sessions (`MCP error -32003`), so
+they have to be supplied directly. When they arrive, add them to
+`downloads/stickers/` and to the Quote Stickers gallery; nothing else needs
+touching.
+
+Two smaller pieces are agreed and not yet done: regenerating
+`sticker-sheet.png` from the seven crops (its eyebrow still reads "DRAFTS" and
+about the bottom third of the 1440x1020 canvas is empty), and adding a swag
+cross-link to `teaching/index.qmd`, since the page is currently reachable only
+from the navbar. The cross-link needs the maintainer's pick on the card copy
+first. A homepage card is not the answer: Start Here is deliberately the two
+signature pieces.
+
+### Update checklist
+
+**Adding a sticker:** file in `downloads/stickers/` (transparent PNG), one `<a
+download>` tile in the Quote Stickers `.swag-gallery` with a descriptive `alt`
+and a `.cap` caption. Five tiles fill one row at the current `minmax(150px,
+1fr)`; a sixth wraps to a second row.
+
+**Adding a shirt design:** inline SVG card in the Shirt Art grid (the wrapper
+gets `aria-hidden="true"`), rasterise it to `downloads/shirts/`, add a
+`.chip-link` with an `aria-label` naming the design, and rebuild
+`shirt-designs.png`.
+
+**Adding a mockup:** a `.project-card` in The Merch Table with a
+`pics/kit-*.png` image. Mockups get no download chip: the section lead says once
+that the whole group is imaginary.
+
 ## Other site areas
 
 - `barnum/` mirrors the hiphop pattern (Excel → `build_barnum.R` → HTML) and is
