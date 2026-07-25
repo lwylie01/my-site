@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -40,10 +43,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1206b1bfced5c9c574e073c09d18f4b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-b5fea8fd6af4e04590a9f062d519d04c.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-8d8f942120bbd1d9aa233f2a8b5b52ea.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-c18175630e133999351f3f71539ab7de.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -159,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
 .swag-host{position:absolute;top:3.5rem;right:0;width:150px;text-align:center}
 .swag-host-slot{width:122px;height:122px;border-radius:50%;overflow:hidden;margin:0 auto .5rem;border:2px solid #F4715C;box-shadow:0 4px 14px rgba(46,26,71,.12);background:#FDFBF7}
 .swag-host-slot img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.12);transform-origin:50% 20%}
-.swag-host-cap{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#6A5F72;line-height:1.4}
+.swag-host-cap{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#6A5F72;line-height:1.4}
 @media (max-width:640px){.swag-host{position:static;width:auto;margin:1.2rem 0 0}}
 
 .swag-eyebrow{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#B23A28;margin:0 0 .4rem}
@@ -174,10 +177,11 @@ ul.task-list li input[type="checkbox"] {
 
 /* sticker gallery: the tile IS the download, so no per-card chrome */
 .swag-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(150px,100%),1fr));gap:1rem;margin:1rem 0 1rem}
-.swag-gallery a{display:block;border:1px solid #E7DED0;border-radius:10px;background:#F7F2EC;padding:.75rem;text-align:center;text-decoration:none;transition:box-shadow .2s ease,transform .2s ease}
-.swag-gallery a:hover,.swag-gallery a:focus-visible{box-shadow:0 4px 16px rgba(46,26,71,.10);transform:translateY(-2px);outline:none}
+.swag-gallery a{display:block;border:1px solid #E7DED0;border-radius:10px;background:#FDFBF7;padding:.75rem;text-align:center;text-decoration:none;transition:box-shadow .2s ease,transform .2s ease}
+.swag-gallery a:hover{box-shadow:0 4px 16px rgba(46,26,71,.10);transform:translateY(-2px)}
+.swag-gallery a:focus-visible{outline:2px solid #B23A28;outline-offset:2px}
 .swag-gallery img{width:100%;height:118px;object-fit:contain;display:block;margin-bottom:.55rem}
-.swag-gallery .cap{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:#6A5F72;line-height:1.3}
+.swag-gallery .cap{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:#6A5F72;line-height:1.3}
 
 /* preview well: whole design shown (contain), not cropped like a thumb */
 .swag-art{display:grid;place-items:center;margin:-1.75rem -1.5rem 1.1rem;aspect-ratio:3/2;
@@ -188,6 +192,15 @@ ul.task-list li input[type="checkbox"] {
 .swag-sub{font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);fill:#6A5F72;font-weight:500;letter-spacing:.14em}
 .swag-svg text{dominant-baseline:middle}
 
+/* character stickers fold: quiet by default, mirrors details.codebook-fold */
+.swag-fold{margin:.2rem 0 .6rem;border-top:1px solid #E5DCCF;padding-top:.4rem}
+.swag-fold>summary{cursor:pointer;list-style:none;font-family:var(--bs-font-monospace,'JetBrains Mono',monospace);font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#B23A28;padding:.55rem .2rem}
+.swag-fold>summary::-webkit-details-marker{display:none}
+.swag-fold>summary::before{content:"\25B8\00A0"}
+.swag-fold[open]>summary::before{content:"\25BE\00A0"}
+.swag-fold>summary:focus-visible{outline:2px solid #B23A28;outline-offset:2px;border-radius:4px}
+.swag-fold .swag-gallery{margin-top:.4rem}
+
 .swag-divider{display:flex;align-items:center;gap:1.5rem;margin:3.2rem 0 2.6rem}
 .swag-divider .r{flex:1;height:1px;background:#E5DCCF}
 </style>
@@ -195,7 +208,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="page-header container swag-header">
   <p class="page-header-label">Downloads · No Store</p>
   <h1 class="page-header-title">Swag</h1>
-  <p class="page-header-sub">The arc, the scatter, and the one dot the line misses, put on things. Stickers and wallpapers download as real files; the shirts and the rest are mockups, statistically insignificant as merch but the art is yours to keep.</p>
+  <p class="page-header-sub">The arc, the scatter, and the one dot the line misses, put on things. The stickers and shirt art download as real files; the mugs and totes are mockups, statistically insignificant as merch but the art is yours to keep.</p>
   <div class="swag-host">
     <div class="swag-host-slot"><img src="pics/mascot-headshot.png" alt="Cartoon avatar of Lindsey Wylie"></div>
     <div class="swag-host-cap">Your host</div>
@@ -207,40 +220,32 @@ ul.task-list li input[type="checkbox"] {
 <section class="swag-act">
   <p class="swag-eyebrow">01 · Grab and Go</p>
   <h2 class="swag-h2 anchored">Downloads</h2>
-  <p class="swag-lead">Stickers, wallpapers, and the shirt art, yours to take. Every design in this section hands you a real file.</p>
+  <p class="swag-lead">Stickers and shirt art, yours to take. Every design in this section hands you a real file.</p>
 
-  <h3 class="swag-subhead anchored">Character Stickers</h3>
+  <h3 class="swag-subhead anchored">Quote Stickers</h3>
   <p class="swag-subnote">Click any sticker to download the transparent PNG, or take the whole sheet at once.</p>
   <div class="swag-gallery">
+    <a href="downloads/stickers/sticker-spaghetti-has-no-protagonist.png" download=""><img src="downloads/stickers/sticker-spaghetti-has-no-protagonist.png" alt="Sticker: tangled multi-colour lines, 'Spaghetti Has No Protagonist'" loading="lazy" decoding="async"><span class="cap">Spaghetti Has No Protagonist</span></a>
+    <a href="downloads/stickers/sticker-practically-significant.png" download=""><img src="downloads/stickers/sticker-practically-significant.png" alt="Sticker: 'p < .05, Practically Significant'" loading="lazy" decoding="async"><span class="cap">Practically Significant</span></a>
+    <a href="downloads/stickers/sticker-the-outlier-the-line-misses.png" download=""><img src="downloads/stickers/sticker-the-outlier-the-line-misses.png" alt="Sticker: the arc past a coral dot, 'The Outlier the Line Misses'" loading="lazy" decoding="async"><span class="cap">The Outlier the Line Misses</span></a>
+    <a href="downloads/stickers/sticker-be-the-outlier.png" download=""><img src="downloads/stickers/sticker-be-the-outlier.png" alt="Sticker: a coral badge with a face, 'Be the Outlier'" loading="lazy" decoding="async"><span class="cap">Be the Outlier</span></a>
+    <a href="downloads/stickers/sticker-clarity-is-kindness.png" download=""><img src="downloads/stickers/sticker-clarity-is-kindness.png" alt="Sticker: 'Clarity Is Kindness' over a coral underline" loading="lazy" decoding="async"><span class="cap">Clarity Is Kindness</span></a>
+  </div>
+  <p class="source-chips" style="margin:0 0 .4rem"><a class="chip-link" href="downloads/sticker-sheet.png" download="">Download the whole sticker sheet (PNG)</a></p>
+
+  <details class="swag-fold">
+    <summary>More stickers: the characters and the bare marks</summary>
+    <div class="swag-gallery">
     <a href="pics/sticker-data-plot.png" download=""><img src="pics/thumbs/sticker-data-plot.png" alt="Sticker: the mascot beside the Data with a Plot wordmark" loading="lazy" decoding="async"><span class="cap">Data With a Plot</span></a>
     <a href="pics/sticker-you-got-this.png" download=""><img src="pics/thumbs/sticker-you-got-this.png" alt="Sticker: the mascot giving a thumbs up, 'You Got This'" loading="lazy" decoding="async"><span class="cap">You Got This</span></a>
     <a href="pics/sticker-plot-twist.png" download=""><img src="pics/thumbs/sticker-plot-twist.png" alt="Sticker: the mascot and a little monitor, 'Plot Twist'" loading="lazy" decoding="async"><span class="cap">Plot Twist</span></a>
     <a href="pics/sticker-good-idea.png" download=""><img src="pics/thumbs/sticker-good-idea.png" alt="Sticker: the mascot with a lightbulb, 'Good Idea'" loading="lazy" decoding="async"><span class="cap">Good Idea</span></a>
     <a href="pics/sticker-coffee-fuel.png" download=""><img src="pics/thumbs/sticker-coffee-fuel.png" alt="Sticker: the mascot holding a mug, 'Coffee = Fuel'" loading="lazy" decoding="async"><span class="cap">Coffee = Fuel</span></a>
     <a href="pics/sticker-thinking.png" download=""><img src="pics/thumbs/sticker-thinking.png" alt="Sticker: the mascot thinking, 'Thinking...'" loading="lazy" decoding="async"><span class="cap">Thinking…</span></a>
-  </div>
-  <p class="source-chips" style="margin:0 0 .4rem"><a class="chip-link" href="downloads/sticker-sheet.png" download="">Download the whole sticker sheet (PNG)</a></p>
-
-  <h3 class="swag-subhead anchored">Wallpapers</h3>
-  <div class="project-grid">
-
-    <div class="project-card">
-      <span class="swag-art"><img src="downloads/wallpaper-phone-1170x2532.png" alt="Phone wallpaper: the arc climbing an ink-plum screen" loading="lazy" decoding="async"></span>
-      <span class="project-card-tag">Wallpaper · Download</span>
-      <p class="project-card-title">Phone Wallpaper</p>
-      <p class="project-card-desc">The arc climbing an ink-plum screen, with one coral outlier near the top.</p>
-      <p class="source-chips"><a class="chip-link" href="downloads/wallpaper-phone-1170x2532.png" download="">Phone · 1170 × 2532</a></p>
+  <a href="downloads/stickers/sticker-the-mark.png" download=""><img src="downloads/stickers/sticker-the-mark.png" alt="Sticker: the bare arc-and-pen mark" loading="lazy" decoding="async"><span class="cap">The Mark</span></a>
+  <a href="downloads/stickers/sticker-the-mark-and-scatter.png" download=""><img src="downloads/stickers/sticker-the-mark-and-scatter.png" alt="Sticker: the arc-and-pen mark through a scatter of dots" loading="lazy" decoding="async"><span class="cap">The Mark and Scatter</span></a>
     </div>
-
-    <div class="project-card">
-      <span class="swag-art"><img src="downloads/wallpaper-desktop-1920x1080.png" alt="Desktop wallpaper: the rise-and-fall arc, wide" loading="lazy" decoding="async"></span>
-      <span class="project-card-tag">Wallpaper · Download</span>
-      <p class="project-card-title">Desktop Wallpaper</p>
-      <p class="project-card-desc">The same rise and fall, wide, with room for your icons in the quiet corners.</p>
-      <p class="source-chips"><a class="chip-link" href="downloads/wallpaper-desktop-1920x1080.png" download="">Desktop · 1920 × 1080</a></p>
-    </div>
-
-  </div>
+  </details>
 
   <h3 class="swag-subhead anchored">Shirt Art</h3>
   <p class="swag-subnote">Six flat print designs. The tees and hoodie are mockups, but grab any design on its own, or take the whole pack.</p>
@@ -248,7 +253,7 @@ ul.task-list li input[type="checkbox"] {
   <div class="project-grid">
 
     <div class="project-card">
-      <span class="swag-art swag-svg"><svg viewbox="0 0 300 250" fill="none">
+      <span class="swag-art swag-svg" aria-hidden="true"><svg focusable="false" viewbox="0 0 300 250" fill="none">
         <path d="M40,150 C90,150 108,82 150,78 C198,74 214,120 260,148" stroke="#2E1A47" stroke-width="5" stroke-linecap="round"></path>
         <g fill="#A98BB8"><circle cx="66" cy="146" r="6"></circle><circle cx="102" cy="112" r="6"></circle><circle cx="150" cy="78" r="6"></circle><circle cx="196" cy="104" r="6"></circle><circle cx="236" cy="128" r="6"></circle></g>
         <line x1="130" y1="66" x2="130" y2="160" stroke="#B23A28" stroke-width="4" stroke-linecap="round"></line>
@@ -260,11 +265,11 @@ ul.task-list li input[type="checkbox"] {
       <span class="project-card-tag">Tee · Print Art</span>
       <p class="project-card-title">The Line at 18</p>
       <p class="project-card-desc">The maturity curve, the bright line at 18, and the one point sitting just past it.</p>
-      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-the-line-at-18.png" download="">PNG (transparent)</a></p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-the-line-at-18.png" download="" aria-label="Download The Line at 18, PNG">PNG (transparent)</a></p>
     </div>
 
     <div class="project-card">
-      <span class="swag-art swag-svg"><svg viewbox="0 0 300 250" fill="none">
+      <span class="swag-art swag-svg" aria-hidden="true"><svg focusable="false" viewbox="0 0 300 250" fill="none">
         <path d="M46,120 C86,120 100,84 150,84 C196,84 206,104 258,98" stroke="#2E1A47" stroke-width="5" stroke-linecap="round"></path>
         <g fill="#A98BB8"><circle cx="64" cy="118" r="6"></circle><circle cx="102" cy="94" r="6"></circle><circle cx="150" cy="84" r="6"></circle><circle cx="196" cy="92" r="6"></circle><circle cx="234" cy="98" r="6"></circle></g>
         <circle cx="176" cy="52" r="8" fill="#F4715C"></circle>
@@ -274,12 +279,12 @@ ul.task-list li input[type="checkbox"] {
       </svg></span>
       <span class="project-card-tag">Tee · Print Art</span>
       <p class="project-card-title">I Tell Their Stories With Data</p>
-      <p class="project-card-desc">Your tagline from the site's own social card, under the arc and the one it misses.</p>
-      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-i-tell-their-stories-with-data.png" download="">PNG (transparent)</a></p>
+      <p class="project-card-desc">My tagline, from the site's own social card, under the arc and the one it misses.</p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-i-tell-their-stories-with-data.png" download="" aria-label="Download I Tell Their Stories With Data, PNG">PNG (transparent)</a></p>
     </div>
 
     <div class="project-card">
-      <span class="swag-art swag-svg"><svg viewbox="0 0 300 250" fill="none">
+      <span class="swag-art swag-svg" aria-hidden="true"><svg focusable="false" viewbox="0 0 300 250" fill="none">
         <text class="swag-cap" x="150" y="96" font-size="44" text-anchor="middle">Clarity Is</text>
         <text class="swag-cap" x="150" y="146" font-size="44" text-anchor="middle">Kindness</text>
         <path d="M78,180 C116,170 176,170 214,180" stroke="#B23A28" stroke-width="4" stroke-linecap="round"></path>
@@ -288,12 +293,12 @@ ul.task-list li input[type="checkbox"] {
       </svg></span>
       <span class="project-card-tag">Tee · Print Art</span>
       <p class="project-card-title">Clarity Is Kindness</p>
-      <p class="project-card-desc">Your working premise, set plain. The one that reads from across a room.</p>
-      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-clarity-is-kindness.png" download="">PNG (transparent)</a></p>
+      <p class="project-card-desc">My working premise, set plain. The one that reads from across a room.</p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-clarity-is-kindness.png" download="" aria-label="Download Clarity Is Kindness, PNG">PNG (transparent)</a></p>
     </div>
 
     <div class="project-card">
-      <span class="swag-art swag-art--dark swag-svg"><svg viewbox="0 0 300 250" fill="none">
+      <span class="swag-art swag-art--dark swag-svg" aria-hidden="true"><svg focusable="false" viewbox="0 0 300 250" fill="none">
         <g transform="translate(150,86) scale(1.4) translate(-50,-50)">
           <circle cx="18" cy="68" r="4" fill="#A98BB8"></circle><circle cx="28" cy="84" r="4" fill="#A98BB8"></circle><circle cx="32" cy="52" r="4" fill="#A98BB8"></circle><circle cx="44" cy="26" r="4" fill="#A98BB8"></circle><circle cx="52" cy="46" r="4" fill="#A98BB8"></circle><circle cx="40" cy="42" r="4" fill="#F4715C"></circle>
           <path d="M10,80 C26,80 30,34 50,34 C58,34 58,42 62,46" stroke="#F7F2EC" stroke-width="3.5" stroke-linecap="round"></path>
@@ -304,11 +309,11 @@ ul.task-list li input[type="checkbox"] {
       <span class="project-card-tag">Hoodie · Print Art</span>
       <p class="project-card-title">The Wordmark</p>
       <p class="project-card-desc">The mark and the wordmark, cream on ink. The one a slogan-averse colleague will actually wear.</p>
-      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-the-wordmark.png" download="">PNG (on ink)</a></p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-the-wordmark.png" download="" aria-label="Download The Wordmark, PNG">PNG (on ink)</a></p>
     </div>
 
     <div class="project-card">
-      <span class="swag-art swag-svg"><svg viewbox="0 0 300 250" fill="none">
+      <span class="swag-art swag-svg" aria-hidden="true"><svg focusable="false" viewbox="0 0 300 250" fill="none">
         <g fill="#A98BB8"><circle cx="96" cy="128" r="6"></circle><circle cx="132" cy="140" r="6"></circle><circle cx="174" cy="126" r="6"></circle><circle cx="200" cy="144" r="6"></circle></g>
         <circle cx="166" cy="74" r="15" fill="#F4715C"></circle>
         <circle cx="166" cy="74" r="24" fill="none" stroke="#F4715C" stroke-width="2" opacity=".45"></circle>
@@ -319,11 +324,11 @@ ul.task-list li input[type="checkbox"] {
       <span class="project-card-tag">Tee · Print Art</span>
       <p class="project-card-title">Small Sample, Significant Effect</p>
       <p class="project-card-desc">A few dots, one large result. One person can move the estimate.</p>
-      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-small-sample-significant-effect.png" download="">PNG (transparent)</a></p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-small-sample-significant-effect.png" download="" aria-label="Download Small Sample, Significant Effect, PNG">PNG (transparent)</a></p>
     </div>
 
     <div class="project-card">
-      <span class="swag-art swag-svg"><svg viewbox="0 0 300 250" fill="none">
+      <span class="swag-art swag-svg" aria-hidden="true"><svg focusable="false" viewbox="0 0 300 250" fill="none">
         <g fill="#A98BB8"><circle cx="92" cy="96" r="7"></circle><circle cx="126" cy="84" r="7"></circle><circle cx="194" cy="90" r="7"></circle><circle cx="228" cy="100" r="7"></circle></g>
         <circle cx="160" cy="78" r="11" fill="#F4715C"></circle>
         <text class="swag-cap" x="150" y="150" font-size="34" text-anchor="middle">Women in STEM</text>
@@ -332,15 +337,15 @@ ul.task-list li input[type="checkbox"] {
       <span class="project-card-tag">Tee · Print Art</span>
       <p class="project-card-title">Women in STEM</p>
       <p class="project-card-desc">The one coral dot among the rest, the outlier the default line keeps missing.</p>
-      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-women-in-stem.png" download="">PNG (transparent)</a></p>
+      <p class="source-chips"><a class="chip-link" href="downloads/shirts/shirt-women-in-stem.png" download="" aria-label="Download Women in STEM, PNG">PNG (transparent)</a></p>
     </div>
 
   </div>
 </section>
 
-<div class="swag-divider">
+<div class="swag-divider" aria-hidden="true">
   <span class="r"></span>
-  <svg width="42" height="42" viewbox="0 0 100 100" fill="none"><circle cx="18" cy="68" r="4" fill="#A98BB8"></circle><circle cx="28" cy="84" r="4" fill="#A98BB8"></circle><circle cx="32" cy="52" r="4" fill="#A98BB8"></circle><circle cx="44" cy="26" r="4" fill="#A98BB8"></circle><circle cx="52" cy="46" r="4" fill="#A98BB8"></circle><circle cx="40" cy="42" r="4" fill="#B23A28"></circle><path d="M10,80 C26,80 30,34 50,34 C58,34 58,42 62,46" stroke="#2E1A47" stroke-width="3.5" stroke-linecap="round"></path><g transform="translate(62,46) rotate(45)" stroke="#2E1A47" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0,0 L-9,-20 Q0,-27 9,-20 Z"></path><line x1="0" y1="-4" x2="0" y2="-13"></line><circle cx="0" cy="-16.5" r="2.2"></circle><rect x="-7.5" y="-44" width="15" height="22" rx="6"></rect></g></svg>
+  <svg focusable="false" width="42" height="42" viewbox="0 0 100 100" fill="none"><circle cx="18" cy="68" r="4" fill="#A98BB8"></circle><circle cx="28" cy="84" r="4" fill="#A98BB8"></circle><circle cx="32" cy="52" r="4" fill="#A98BB8"></circle><circle cx="44" cy="26" r="4" fill="#A98BB8"></circle><circle cx="52" cy="46" r="4" fill="#A98BB8"></circle><circle cx="40" cy="42" r="4" fill="#B23A28"></circle><path d="M10,80 C26,80 30,34 50,34 C58,34 58,42 62,46" stroke="#2E1A47" stroke-width="3.5" stroke-linecap="round"></path><g transform="translate(62,46) rotate(45)" stroke="#2E1A47" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0,0 L-9,-20 Q0,-27 9,-20 Z"></path><line x1="0" y1="-4" x2="0" y2="-13"></line><circle cx="0" cy="-16.5" r="2.2"></circle><rect x="-7.5" y="-44" width="15" height="22" rx="6"></rect></g></svg>
   <span class="r"></span>
 </div>
 
@@ -371,19 +376,7 @@ ul.task-list li input[type="checkbox"] {
       <p class="project-card-desc">The mark and "n = 1 website. May not generalize." for your lid.</p>
     </div>
 
-    <div class="project-card">
-      <span class="swag-art"><img src="pics/kit-card.png" alt="Business card, front and back" loading="lazy" decoding="async"></span>
-      <span class="project-card-tag">Business Card · Mockup</span>
-      <p class="project-card-title">The Business Card</p>
-      <p class="project-card-desc">The identity on a card: "bright lines vs. the people in between."</p>
-    </div>
 
-    <div class="project-card">
-      <span class="swag-art"><img src="pics/kit-slides.png" alt="Slide template: a title slide and a content slide" loading="lazy" decoding="async"></span>
-      <span class="project-card-tag">Slides · Mockup</span>
-      <p class="project-card-title">Slide Template</p>
-      <p class="project-card-desc">A title and content slide in the brand: "The stories bright lines miss."</p>
-    </div>
 
   </div>
 </section>
