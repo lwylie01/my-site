@@ -607,6 +607,17 @@ decode (there is no PIL, ImageMagick or pngquant in the CCR sandbox, and pip
 times out), then the outer cream was flood-filled to transparent from the crop
 border. The sheet itself stays as the download for the whole set.
 
+**`sticker-be-the-outlier.png` is the exception: it is no longer a crop.** The
+face baked into the old sheet was an early, much cruder drawing that does not
+resemble the maintainer, so the badge was rebuilt (2026-07-25) from
+`pics/mascot-headshot.png`, the same illustration as the "Your host" avatar and
+the six character stickers. The composition is unchanged (coral disc, Paper
+inner circle, white Spectral wordmark), it renders at 632x632 on transparency,
+and the sheet was regenerated to pick it up. Do not restore it from the old
+sheet. Anything else needing that face should come from `pics/`, not from a
+crop: the six character stickers carry their own baked-in text, so
+`mascot-headshot.png` is the only clean source.
+
 The shirt PNGs are rasterised from the inline SVGs in `index.qmd` with headless
 Chromium (`/opt/pw-browsers/chromium`). **Spectral and JetBrains Mono must be
 inlined as base64 `@font-face` data URIs** or the type silently falls back to
