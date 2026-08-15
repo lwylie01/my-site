@@ -755,7 +755,26 @@ that the whole group is imaginary.
   tables 10/11 when a year closes, then the stopifnot sums and the totals in
   the notes prose. The state layer is
   Holland's 2016 coding, a decade old, and the page says so; re-coding from
-  current statutes is the named next piece of work.
+  current statutes is the named next piece of work. Step one landed 2026-08:
+  `data/state_statutes.csv` is the maintainer's own fifty-state statutory
+  review (Wylie, Knutson, and Greene 2018, *Psychology, Public Policy, and
+  Law* 24(2), table 1, pp. 220-224; a Data Sources card since #102),
+  transcribed cell by cell from the PDF in her Google Drive (apa.org and
+  doi.org are egress-blocked in CCR sessions, so Drive is the route to the
+  article). 58 rows: 52 compassionate release statutes across 46
+  jurisdictions (CA, DC, LA, MD, NY, OK carry two each), 2 temporary-release
+  rows (AZ, SD), 4 None rows (IL, IA, MA, UT). Loaded and guarded in the
+  setup chunk; **no exhibit reads it yet**: which exhibits move from
+  Holland's policy coding to this statute coding is the maintainer's call.
+  The guards assert the printed table, which differs from the article's own
+  prose on four counts (chronic 40 in the table, 39 in prose; murder 6 vs 7;
+  death/life 19 vs 20; time 15 vs 14); the table wins, verified against the
+  PDF text layer. Transcription is faithful to print including its quirks
+  (both California rows numbered "(CA) 2", "Government Code if Counties",
+  Maine's "MURDERSA" for what is evidently M.R.S.A.); correct those only on
+  the maintainer's say-so. Note for future exhibits: a Wylie-coded age span
+  runs 45 (LA) to 70 (SC, federal), not Holland's 55 to 70, because statutes
+  and department policies genuinely differ.
 - The standalone templates carry their own CSS and had no inline prose link
   until #51, so there is no generic `a` rule to inherit and a bare `<a>` in body
   copy renders browser-default blue. Style it, and measure against the rendered
