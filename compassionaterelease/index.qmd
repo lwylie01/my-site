@@ -31,9 +31,9 @@ wi         <- read.csv("data/wisconsin_timeline.csv", fileEncoding = "UTF-8")
 # The statute-level fifty-state review from the maintainer's own article
 # (Wylie, Knutson, and Greene 2018, table 1, pp. 220-224): one row per
 # statute, transcribed cell by cell from the published table. Loaded and
-# guarded here so CI validates the transcription on every render; no exhibit
-# reads it yet. Which exhibits move from the Holland policy coding to this
-# statute coding is the maintainer's call.
+# guarded here so CI validates the transcription on every render. The
+# age-span and terminal-window exhibits read it (2026-08, maintainer's
+# pick); the rest stay on the Holland policy coding until she moves them.
 wylie      <- read.csv("data/state_statutes.csv", fileEncoding = "UTF-8")
 wylie_cr   <- wylie[wylie$status == "Compassionate release", ]
 
@@ -61,10 +61,36 @@ notice   <- util |> filter(chart == "notice")
 age_span  <- ages |> filter(measure == "minimum_age")
 age_count <- ages |> filter(measure == "count")
 
-# The age-span chart draws directly from the CSV rows, so a re-coded state
-# layer changes the chart without touching this file.
-span_df <- age_span |>
-  mutate(y = 1, lab = paste0(state, "\n", value))
+# The age-span and terminal-window exhibits read the maintainer's statute
+# coding (state_statutes.csv). Holland's age rows stay loaded and guarded
+# above as the policy-level reference; no chart reads them now.
+age_df <- wylie_cr |>
+  filter(!age_specified %in% c("", "Not specified")) |>
+  mutate(
+    age_lo = as.numeric(sub("[^0-9].*$", "", age_specified)),
+    age_hi = ifelse(
+      grepl(";", age_specified),
+      as.numeric(sub("[^0-9].*$", "", sub("^[^;]*;\\s*", "", age_specified))),
+      as.numeric(sub("[^0-9].*$", "", age_specified))
+    ),
+    paired = age_hi > age_lo,
+    jur_f  = factor(jurisdiction,
+                    levels = rev(jurisdiction[order(age_lo, age_hi, jurisdiction)]))
+  )
+
+# Months from the printed windows. The named map is exhaustive on purpose:
+# a window wording this map does not know becomes NA and the guard below
+# fails the render, which is the correct response to a new value.
+win_map <- c("30 days" = 1, "6 months" = 6, "6 months or less" = 6,
+             "less than 1 year" = 12, "1 year" = 12, "12 months" = 12,
+             "18 months or less" = 18, "2 years" = 24)
+win_df <- wylie_cr |>
+  filter(!terminal_time %in% c("", "Not specified")) |>
+  mutate(
+    months = unname(win_map[terminal_time]),
+    jur_f  = factor(jurisdiction,
+                    levels = rev(jurisdiction[order(months, jurisdiction)]))
+  )
 
 pol_types <- pol_types |>
   mutate(policy_type_f = factor(policy_type, levels = rev(policy_type)))
@@ -151,6 +177,14 @@ stopifnot(
   sum(grepl("Death/life", wylie_cr$ineligibility)) == 19,
   sum(grepl("Sentence", wylie_cr$ineligibility)) == 21,
   sum(grepl("Time", wylie_cr$ineligibility)) == 15,
+
+  # The two Wylie-coded exhibits (age span, terminal-window dot plot).
+  nrow(age_df) == 12, sum(age_df$paired) == 4,
+  min(age_df$age_lo) == 45, max(age_df$age_hi) == 70,
+  !any(duplicated(age_df$jurisdiction)),
+  nrow(win_df) == 15, !anyNA(win_df$months),
+  min(win_df$months) == 1, max(win_df$months) == 24,
+  !any(duplicated(win_df$jurisdiction)),
 
   # Every row on this page must be able to say where it came from.
   !any(fed_month$source == ""), !any(fed_reason$source == ""),
@@ -445,53 +479,99 @@ of requirements into a finding.</p>
 
 ::: {.chart-card}
 <p class="chart-card-tag">Exhibit 03 · Span</p>
-<p class="chart-card-lede">Where age enters these laws, it enters as a
-specific number, and states did not pick the same one.</p>
+<p class="chart-card-lede">Where age enters these statutes, it enters as
+a number, and no two legislatures reached for quite the same one.</p>
 ```{r chart-age-span}
-#| fig-height: 2.4
+#| fig-height: 4.0
 #| out-width: "100%"
-p_age <- ggplot(span_df, aes(x = value, y = y)) +
-  geom_segment(x = min(span_df$value), xend = max(span_df$value),
-               y = 1, yend = 1,
-               color = "#dcd5dc", linewidth = 1.6) +
-  geom_point(aes(text = paste0(
-    "<b>", state, "</b><br>Minimum age ", value,
-    "<br>Source: Holland et al. (2020), ", source_detail
-  )), color = plum_dark, size = 5) +
-  geom_text(aes(label = lab), nudge_y = 0.42, size = 3.4,
-            color = "#3C3C3C", lineheight = 0.95) +
-  scale_x_continuous(limits = c(50, 75), breaks = seq(50, 75, 5)) +
-  scale_y_continuous(limits = c(0.55, 1.75)) +
+p_age <- ggplot(age_df, aes(y = jur_f)) +
+  geom_segment(
+    data = subset(age_df, paired),
+    aes(x = age_lo, xend = age_hi, y = jur_f, yend = jur_f),
+    color = plum, linewidth = 1.4
+  ) +
+  geom_point(aes(x = age_lo, text = paste0(
+    "<b>", jurisdiction, "</b><br>Qualifying age: ", age_specified,
+    "<br>Source: Wylie, Knutson, and Greene (2018), ", source_detail
+  )), color = plum_dark, size = 3.2) +
+  geom_point(
+    data = subset(age_df, paired),
+    aes(x = age_hi, text = paste0(
+      "<b>", jurisdiction, "</b><br>Qualifying age: ", age_specified,
+      "<br>Source: Wylie, Knutson, and Greene (2018), ", source_detail
+    )), color = plum_dark, size = 3.2
+  ) +
+  scale_x_continuous(limits = c(42, 73), breaks = seq(45, 70, 5)) +
   labs(
-    title = "Fifteen years separate the youngest cutoff from the oldest",
-    subtitle = "Minimum qualifying age among state policies that set one, as of 2016",
+    title = "Old enough at 45 in Louisiana, not until 70 in South Carolina",
+    subtitle = "Statutes that set a qualifying age; a joined pair is one statute whose age depends on the sentence",
     x = "Age", y = NULL
   ) +
-  theme_cr() +
-  theme(axis.text.y = element_blank(), panel.grid.major.y = element_blank())
+  theme_cr()
 
 ggplotly_titled(p_age, tooltip = "text") |> clear_bg()
 ```
-<p class="chart-card-note">Ten states used age as a factor at all, and in
-only three could age decide the question on its own. Wyoming's policy set
-no number, requiring instead that a person be "incapacitated by age."
-Source: Holland, Prost, Hoffmann, and Dickinson (2020), <em>OMEGA</em>
-81(4), p. 614.</p>
+<p class="chart-card-note">Eighteen statutes make age a basis for release
+and twelve set a number. Louisiana's 45 is the youngest and comes with
+twenty years served; South Carolina and the federal statute top the range
+at 70. Six more statutes require age without ever naming one (CT, MO, OR,
+TX, WA, WY). Source: Wylie, Knutson, and Greene (2018), <em>Psychology,
+Public Policy, and Law</em> 24(2), table 1, pp. 220-224.</p>
 <p class="chart-card-note">The same boundary problem shows up whenever a
 law puts a number on a fuzzy category, which is the subject of a short
 exercise on this site:
 <a href="../howold/how_old_is_old.html">How Old Is Old?</a></p>
-<p class="chart-card-note"><strong>Why this chart:</strong> a span rather
-than a bar chart of two values, because the finding is the distance
-between the endpoints, so the distance is what gets drawn. Two bars would
-have asked the reader to compare heights, and the height comparison is not
-the question.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> still a span,
+because the finding is the distance between the endpoints, but one row
+per statute now, because four statutes carry two ages and the pair is the
+point: the age depends on the sentence, which a single dot per state
+would hide.</p>
+:::
+
+## How Long Is Terminal {.section-heading}
+
+::: {.chart-card}
+<p class="chart-card-tag">Exhibit 04 · Dot Plot</p>
+<p class="chart-card-lede">Thirty-five statutes make a terminal illness a
+basis for release. Fifteen say how short the prognosis must be, and they
+do not say the same thing.</p>
+```{r chart-terminal-window}
+#| fig-height: 4.4
+#| out-width: "100%"
+p_win <- ggplot(win_df, aes(x = months, y = jur_f)) +
+  geom_point(aes(text = paste0(
+    "<b>", jurisdiction, "</b><br>Window: ", terminal_time,
+    "<br>Source: Wylie, Knutson, and Greene (2018), ", source_detail
+  )), color = plum_dark, size = 3.2) +
+  scale_x_continuous(limits = c(0, 25), breaks = c(0, 6, 12, 18, 24)) +
+  labs(
+    title = "What terminal means depends on the state",
+    subtitle = "Required life expectancy where the statute specifies one: 15 of 35 terminal-illness statutes",
+    x = "Months", y = NULL
+  ) +
+  theme_cr()
+
+ggplotly_titled(p_win, tooltip = "text") |> clear_bg()
+```
+<p class="chart-card-note">The other twenty statutes require a terminal
+illness without saying how terminal, which leaves the clock to whoever
+reads the file. Where a number exists, it runs from 30 days in Kansas to
+two years in Arkansas and South Carolina, and the wording matters: New
+Jersey's six months is a ceiling ("or less"), North Carolina's is a line.
+Source: Wylie, Knutson, and Greene (2018), <em>Psychology, Public Policy,
+and Law</em> 24(2), table 1, pp. 220-224.</p>
+<p class="chart-card-note"><strong>Why this chart:</strong> a dot plot on
+one shared axis, because the question is a single magnitude compared
+across states, and the stacks at six and twelve months are the finding:
+legislatures reach for round clinical numbers. The printed wording rides
+in the tooltip, because "6 months" and "6 months or less" are different
+laws and a bucket label would erase the difference.</p>
 :::
 
 ## Eligible, Applied, Released {.section-heading}
 
 ::: {.chart-card}
-<p class="chart-card-tag">Exhibit 04 · Nested Bars</p>
+<p class="chart-card-tag">Exhibit 05 · Nested Bars</p>
 <p class="chart-card-lede">From the law to its use: of everyone the states
 themselves counted as eligible over three years, how many applied, and how
 many were released?</p>
@@ -545,7 +625,7 @@ part-in-whole grammar the federal chart below uses.</p>
 ## Does Anyone Have to Count? {.section-heading}
 
 ::: {.chart-card}
-<p class="chart-card-tag">Exhibit 05 · Stat Tiles</p>
+<p class="chart-card-tag">Exhibit 06 · Stat Tiles</p>
 <p class="chart-card-lede">Every number in the section above depends on a
 state having written something down. Most of the work of finding out
 whether a law functions is finding out whether anyone kept the record.</p>
@@ -586,7 +666,7 @@ last.</p>
 ## The Federal Docket {.section-heading}
 
 ::: {.chart-card}
-<p class="chart-card-tag">Exhibit 06 · Part-in-Whole Bars</p>
+<p class="chart-card-tag">Exhibit 07 · Part-in-Whole Bars</p>
 <p class="chart-card-lede">Federal law runs on a different track: since
 2018 people can file their own motions, and a judge rather than a prison
 official decides. Here are four and a half years of that docket, month by
@@ -634,7 +714,7 @@ would have manufactured.</p>
 ## Why Courts Say Yes, and Why They Say No {.section-heading}
 
 ::: {.chart-card}
-<p class="chart-card-tag">Exhibit 07 · Small Multiples</p>
+<p class="chart-card-tag">Exhibit 08 · Small Multiples</p>
 <p class="chart-card-lede">Courts record their reasons, and the reasons are
 the most direct evidence there is of what this law has come to mean in
 practice. Grouped into themes, what does the federal docket say?</p>
@@ -694,7 +774,7 @@ bar would have implied an arithmetic that does not exist.</p>
 ## From Statute to Data {.section-heading}
 
 :::: {.chart-card}
-<p class="chart-card-tag">Exhibit 08 · Codebook Table</p>
+<p class="chart-card-tag">Exhibit 09 · Codebook Table</p>
 <p class="chart-card-lede">The chart above depends on a step that is easy
 to skip past. The Sentencing Commission publishes reason codes; the themes
 are mine, and the code labels are lightly shortened from the Commission's
@@ -741,7 +821,7 @@ wrong pile.</p>
 ## One State, Thirty Years {.section-heading}
 
 ::: {.chart-card}
-<p class="chart-card-tag">Exhibit 09 · Vertical Timeline</p>
+<p class="chart-card-tag">Exhibit 10 · Vertical Timeline</p>
 <p class="chart-card-lede">National counts flatten a law into a yes or a
 no. Any single state's version arrived in pieces, and Wisconsin's is a
 clear case: a statute, a rollback, a rule, a set of forms, a policy.</p>
