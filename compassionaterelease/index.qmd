@@ -272,6 +272,15 @@ source on every row, and the build refuses to render a row that does not.
     </p>
   </div>
   <div class="source-card">
+    <p class="source-eyebrow"><span class="source-dot"></span>State statutes</p>
+    <p class="source-name">Wylie, Knutson, and Greene 2018, <em>Psychology, Public Policy, and Law</em></p>
+    <p class="source-desc">The fifty-state review behind this project: the laws as written, where the policy coding reads what departments keep on file.</p>
+    <p class="source-chips">
+      <a class="chip-link" href="https://doi.org/10.1037/law0000161" title="Extraordinary and Compelling: The Use of Compassionate Release Laws in the United States">DOI<span class="chip-ext">&#8599;</span></a>
+      <a class="chip-link" href="https://www.apa.org/pubs/journals/features/law-law0000161.pdf" title="Extraordinary and Compelling: The Use of Compassionate Release Laws in the United States">PDF<span class="chip-ext">&#8599;</span></a>
+    </p>
+  </div>
+  <div class="source-card">
     <p class="source-eyebrow"><span class="source-dot"></span>State policies</p>
     <p class="source-name">Holland et al. 2020, <em>OMEGA</em></p>
     <p class="source-desc">Fifty-state coding of corrections department policies, collected 2016.</p>
