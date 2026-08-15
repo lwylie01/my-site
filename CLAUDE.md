@@ -733,13 +733,15 @@ that the whole group is imaginary.
   canonical section divider sits before What This Cannot Tell You, and a
   page-scoped rule renders the "Why this chart:" strong leads as mono-caps
   labels (page-scoped so countedwrong and selected-work stay untouched).
-  Nine exhibits, one form each: lollipop, icon array, span, nested-bar funnel,
-  stat tiles, part-in-whole monthly bars, faceted bars, codebook table,
-  vertical timeline. The review pass (maintainer: "too many dumb bells") cut
+  Ten exhibits, one form each: lollipop, icon array, span, dot plot,
+  nested-bar funnel, stat tiles, part-in-whole monthly bars, faceted bars,
+  codebook table, vertical timeline. The review pass (maintainer: "too many
+  dumb bells") cut
   the dot-on-a-stick forms from three to two, requirements became the icon
   array, and the Wisconsin timeline went vertical because its labels are
   phrases and phrases need horizontal room; keep one lollipop and one span,
-  no more. **`anchor_text()` exists because ggplotly drops a constant `hjust`
+  no more (the terminal dot plot deliberately has no stems, because stems
+  would make it a second lollipop). **`anchor_text()` exists because ggplotly drops a constant `hjust`
   on `geom_text`** (textposition comes back null, so plotly centers every
   label on its anchor; that was the timeline's label collision and it also
   put the funnel's dark-bar label on the bar). Pipe any chart whose geom_text
@@ -764,8 +766,14 @@ that the whole group is imaginary.
   article). 58 rows: 52 compassionate release statutes across 46
   jurisdictions (CA, DC, LA, MD, NY, OK carry two each), 2 temporary-release
   rows (AZ, SD), 4 None rows (IL, IA, MA, UT). Loaded and guarded in the
-  setup chunk; **no exhibit reads it yet**: which exhibits move from
-  Holland's policy coding to this statute coding is the maintainer's call.
+  setup chunk. Two exhibits read it since 2026-08 (maintainer's picks): the
+  age span (Exhibit 03, per-statute rows, 12 statutes, 45 to 70, four
+  joined pairs where the age depends on the sentence) and the
+  terminal-window dot plot (Exhibit 04, How Long Is Terminal, 15 statutes,
+  30 days to 2 years, exhibits 05-10 renumbered to make room). Holland's
+  age CSV stays loaded and guarded as the policy-level reference, but no
+  chart reads it now. Whether more exhibits move from Holland's policy
+  coding to this statute coding stays the maintainer's call.
   The guards assert the printed table, which differs from the article's own
   prose on four counts (chronic 40 in the table, 39 in prose; murder 6 vs 7;
   death/life 19 vs 20; time 15 vs 14); the table wins, verified against the
