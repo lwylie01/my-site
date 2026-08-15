@@ -28,6 +28,15 @@ util       <- read.csv("data/state_utilization.csv", fileEncoding = "UTF-8")
 ages       <- read.csv("data/state_age_thresholds.csv", fileEncoding = "UTF-8")
 wi         <- read.csv("data/wisconsin_timeline.csv", fileEncoding = "UTF-8")
 
+# The statute-level fifty-state review from the maintainer's own article
+# (Wylie, Knutson, and Greene 2018, table 1, pp. 220-224): one row per
+# statute, transcribed cell by cell from the published table. Loaded and
+# guarded here so CI validates the transcription on every render; no exhibit
+# reads it yet. Which exhibits move from the Holland policy coding to this
+# statute coding is the maintainer's call.
+wylie      <- read.csv("data/state_statutes.csv", fileEncoding = "UTF-8")
+wylie_cr   <- wylie[wylie$status == "Compassionate release", ]
+
 fed_month <- fed_month |>
   mutate(
     date  = as.Date(sprintf("%d-%02d-01", year, month_num)),
@@ -83,7 +92,8 @@ wi <- wi |> arrange(sort_year)
 # render as an empty citation.
 detail_all <- c(fed_month$source_detail, fed_reason$source_detail,
                 pol_types$source_detail, reqs$source_detail,
-                util$source_detail, ages$source_detail, wi$source_detail)
+                util$source_detail, ages$source_detail, wi$source_detail,
+                wylie$source_detail)
 
 # Fail the CI render loudly rather than publish a wrong page (a failed publish
 # leaves the previous version of the site live). The totals below are the ones
@@ -120,10 +130,33 @@ stopifnot(
 
   nrow(wi) == 8, !anyNA(wi$sort_year), all(diff(wi$sort_year) > 0),
 
+  # The Wylie table transcription. Counts assert the printed table, verified
+  # cell by cell against the PDF; where the article's prose differs (it says
+  # chronic 39, murder 7, death/life 20, time 14), the table wins.
+  nrow(wylie) == 58, nrow(wylie_cr) == 52,
+  length(unique(wylie_cr$abbr)) == 46,
+  identical(sort(wylie$abbr[wylie$status == "None"]),
+            c("IA", "IL", "MA", "UT")),
+  identical(sort(wylie$abbr[wylie$status == "Temporary release only"]),
+            c("AZ", "SD")),
+  sum(grepl("Chronic", wylie_cr$basis)) == 40,
+  sum(grepl("Terminal", wylie_cr$basis)) == 35,
+  sum(grepl("Age", wylie_cr$basis)) == 18,
+  sum(grepl("MH", wylie_cr$basis)) == 15,
+  sum(grepl("Cost", wylie_cr$basis)) == 17,
+  sum(!wylie_cr$age_specified %in% c("", "Not specified")) == 12,
+  sum(!wylie_cr$terminal_time %in% c("", "Not specified")) == 15,
+  sum(grepl("Sex", wylie_cr$ineligibility)) == 7,
+  sum(grepl("Murder", wylie_cr$ineligibility)) == 6,
+  sum(grepl("Death/life", wylie_cr$ineligibility)) == 19,
+  sum(grepl("Sentence", wylie_cr$ineligibility)) == 21,
+  sum(grepl("Time", wylie_cr$ineligibility)) == 15,
+
   # Every row on this page must be able to say where it came from.
   !any(fed_month$source == ""), !any(fed_reason$source == ""),
   !any(pol_types$source == ""), !any(reqs$source == ""),
   !any(util$source == ""), !any(ages$source == ""), !any(wi$source == ""),
+  !any(wylie$source == ""),
   !anyNA(detail_all), !any(detail_all == "")
 )
 
