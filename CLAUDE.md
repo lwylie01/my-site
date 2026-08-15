@@ -15,11 +15,16 @@ working premise (codebook intro). The narrative register, maintainer-stated
 that means full sentences joined with conjunctions or semicolons, not staccato
 fragments (the homepage hero keeps its fragments) and not oracular
 pronouncements; method detail belongs in the prose ("which is what the FBI
-data gives"); at most one dry line per section, placed at the end of a note
-("spaghetti has no protagonist" is the benchmark); first person wherever the
+data gives"); dry lines are rationed per page, not per section: a few per
+page, spaced out, each at the end of a note, because one after every section
+reads robotic (maintainer, 2026-08-15, tightening the old one-per-section
+cap; "spaghetti has no protagonist" is the benchmark, and why-this-chart
+craft notes may keep their flourishes); first person wherever the
 maintainer made the call; field-literate winks welcome. Maturity Gap's
 narration is the calibration standard; the compassionate release page was
-swept to this register 2026-07-21. When drafting copy, offer the maintainer
+swept to this register 2026-07-21 and audited to the tightened ration
+2026-08-15 (its dry closers are now exhibits 01 and 06 plus the craft-note
+flourishes). When drafting copy, offer the maintainer
 2-3 options and let her pick and tune, and get her pick before the copy ships,
 not after: PRs merge within minutes, so any user-facing string flagged "tune
 later" goes live unreviewed (the picker intro headline did exactly that in
