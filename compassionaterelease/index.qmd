@@ -317,7 +317,7 @@ It is also a working demonstration of a method. Statutes and case
 decisions are qualitative data, and the usual way to present them is a
 memo. But most questions people bring to a law are comparative: how many
 states require a diagnosis, how far apart are the age cutoffs, what
-reasons do courts actually give, what changed and when. Those are chart
+reasons do courts give, what changed and when. Those are chart
 questions, so each section asks one, answers it with a chart form suited
 to categorical and legal evidence, and notes why that form got the job.
 
@@ -480,7 +480,7 @@ of requirements into a finding.</p>
 ::: {.chart-card}
 <p class="chart-card-tag">Exhibit 03 · Span</p>
 <p class="chart-card-lede">Where age enters these statutes, it enters as
-a number, and no two legislatures reached for quite the same one.</p>
+a number, and the numbers do not agree.</p>
 ```{r chart-age-span}
 #| fig-height: 4.0
 #| out-width: "100%"
@@ -521,9 +521,9 @@ Public Policy, and Law</em> 24(2), table 1, pp. 220-224.</p>
 law puts a number on a fuzzy category, which is the subject of a short
 exercise on this site:
 <a href="../howold/how_old_is_old.html">How Old Is Old?</a></p>
-<p class="chart-card-note"><strong>Why this chart:</strong> still a span,
-because the finding is the distance between the endpoints, but one row
-per statute now, because four statutes carry two ages and the pair is the
+<p class="chart-card-note"><strong>Why this chart:</strong> a span,
+because the finding is the distance between the endpoints, and one row
+per statute because four statutes carry two ages and the pair is the
 point: the age depends on the sentence, which a single dot per state
 would hide.</p>
 :::
@@ -553,13 +553,14 @@ p_win <- ggplot(win_df, aes(x = months, y = jur_f)) +
 
 ggplotly_titled(p_win, tooltip = "text") |> clear_bg()
 ```
+<p class="chart-card-note">Where a number exists, it runs from 30 days in
+Kansas to two years in Arkansas and South Carolina, and the wording
+matters: New Jersey's six months is a ceiling ("or less"), North
+Carolina's is a line. Source: Wylie, Knutson, and Greene (2018),
+<em>Psychology, Public Policy, and Law</em> 24(2), table 1, pp.
+220-224.</p>
 <p class="chart-card-note">The other twenty statutes require a terminal
-illness without saying how terminal, which leaves the clock to whoever
-reads the file. Where a number exists, it runs from 30 days in Kansas to
-two years in Arkansas and South Carolina, and the wording matters: New
-Jersey's six months is a ceiling ("or less"), North Carolina's is a line.
-Source: Wylie, Knutson, and Greene (2018), <em>Psychology, Public Policy,
-and Law</em> 24(2), table 1, pp. 220-224.</p>
+illness without saying how terminal.</p>
 <p class="chart-card-note"><strong>Why this chart:</strong> a dot plot on
 one shared axis, because the question is a single magnitude compared
 across states, and the stacks at six and twelve months are the finding:
