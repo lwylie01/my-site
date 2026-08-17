@@ -504,7 +504,7 @@ p_age <- ggplot(age_df, aes(y = jur_f)) +
   scale_x_continuous(limits = c(42, 73), breaks = seq(45, 70, 5)) +
   labs(
     title = "Old enough at 45 in Louisiana, not until 70 in South Carolina",
-    subtitle = "Statutes that set a qualifying age; a joined pair is one statute whose age depends on the sentence",
+    subtitle = "Statutes that set a qualifying age, as of 2016; a joined pair is one statute whose age depends on the sentence",
     x = "Age", y = NULL
   ) +
   theme_cr()
@@ -546,7 +546,7 @@ p_win <- ggplot(win_df, aes(x = months, y = jur_f)) +
   scale_x_continuous(limits = c(0, 25), breaks = c(0, 6, 12, 18, 24)) +
   labs(
     title = "What terminal means depends on the state",
-    subtitle = "Required life expectancy where the statute specifies one: 15 of 35 terminal-illness statutes",
+    subtitle = "Required life expectancy where the statute specifies one, as of 2016: 15 of 35 terminal-illness statutes",
     x = "Months", y = NULL
   ) +
   theme_cr()
