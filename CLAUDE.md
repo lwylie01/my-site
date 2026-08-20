@@ -942,7 +942,10 @@ that the whole group is imaginary.
   Writing card (stays, described as a data story, maintainer's choice),
   and howold's reveal link. Since 2026-07-18 the page is also a homepage
   Start Here card (`pics/thumb-maturitygap.jpg`, 1150x430 header
-  screenshot, JPEG q85, 87 KB). The close still links How Old Is Old? and the
+  screenshot, JPEG q85, 87 KB); its description opens with the page
+  subtitle (maintainer-picked 2026-08-20, replacing a leftover "one chart
+  at a time", the phrase her subtitle review had already rejected as
+  verging on snarky). The close still links How Old Is Old? and the
   phrase "count some people wrong" stays as the echo of the old name.
 - Every page with `title: ""` (the section indexes draw their own
   `.page-header`, so they all use it) also needs a `pagetitle:` in its front

@@ -115,10 +115,10 @@ editor:
     <span class="project-card-tag">Data Storytelling</span>
     <p class="project-card-title"><a href="countedwrong/index.html">Maturity Gap: A Line at 18</a></p>
     <p class="project-card-desc">
-      Young adults in the legal system, one chart at a time: federal arrest,
-      prison, and recidivism numbers, then a study that measured the same
-      1,354 people growing up, with a note under every figure on why that
-      chart form got the job.
+      Young adults, the legal system, and the data between them: federal
+      arrest, prison, and recidivism numbers, then a study that measured the
+      same 1,354 people growing up, with a note under every figure on why
+      that chart form got the job.
     </p>
   </div>
 </div>
