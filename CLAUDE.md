@@ -228,7 +228,7 @@ cards promised an interview, and its palette was copied from the periodic table
 rather than from its actual siblings. It is now **two screens**: an `#intro`
 on-ramp (howold's `.screen`/`@keyframes fade` pattern) then `#screen-tool`.
 Results stay hidden until at least one of the seven is answered: `render()`
-returns early and shows `#zero`, because sorting nine cards into "these fit what
+returns early and shows `#zero`, because sorting the cards into "these fit what
 you have" before you have said what you have is a claim the page cannot make.
 This does not cost the footer's credited premise: the tool never *removes* an
 approach, it sorts them, so the whole field still appears at once. The seven
@@ -255,7 +255,7 @@ bare floor.
 
 | File | Role |
 |---|---|
-| `evalpicker/data/evaluation_approaches.xlsx` | Source of truth. Sheets: **Rules** (one row per rule, 8 rows over 7 axes), **Levels** (allowed values per axis, 35 rows), **Approaches** (7), **TMFs** (2; theories, models and frameworks), **Prerequisites** (what must come first, 5), **Copy** (UI strings + one `reason_*` per rule, 62). Copy went 38 to 62 in the July 2026 pass: ~15 strings were welded into the template (both empty states, the tab labels, `Any` / `Clear` / `Already done`, the stats words, the gap leads, the chain annotations) so the "words live in Excel" premise was only half true. Check 5b now enforces it. Text is HTML-escaped on every path, so no markup or links can live in a Copy string. The `<h1>` stays hardcoded like barnum's and howold's: its `<span>` cannot survive escaping, which is why `page_title` was deleted rather than wired |
+| `evalpicker/data/evaluation_approaches.xlsx` | Source of truth. Sheets: **Rules** (one row per rule, 8 rows over 7 axes), **Levels** (allowed values per axis, 37 rows), **Approaches** (17), **TMFs** (2; theories, models and frameworks), **Prerequisites** (what must come first, 8), **Copy** (UI strings + one `reason_*` per rule, 68). Counts re-verified against the built page 2026-08-19. Copy went 38 to 62 in the July 2026 pass: ~15 strings were welded into the template (both empty states, the tab labels, `Any` / `Clear` / `Already done`, the stats words, the gap leads, the chain annotations) so the "words live in Excel" premise was only half true. Check 5b now enforces it. Text is HTML-escaped on every path, so no markup or links can live in a Copy string. The `<h1>` stays hardcoded like barnum's and howold's: its `<span>` cannot survive escaping, which is why `page_title` was deleted rather than wired |
 | `evalpicker/build_eval.R` | Quarto pre-render step. Validates the workbook (see below), then serializes all six sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__APPROACHES_DATA__`, `__TMFS_DATA__`, `__PREREQS_DATA__` and `__COPY_DATA__` in the template, producing `evalpicker/eval_picker.html` (gitignored; built in CI; never edit the output directly) |
 | `evalpicker/app/_template.html` | The picker's look and matching logic |
 | `teaching/index.qmd` | Links `evalpicker/eval_picker.html` as a tool card, now its only link: it was a homepage featured card (`pics/thumb-evalpicker.jpg`) until the 2026-07-21 homepage declutter dropped both picker cards. Moved off `projects/index.qmd` in the July 2026 section reshuffle: the pickers are teaching tools, so Projects holds only the research work |
@@ -282,25 +282,26 @@ makes process evaluation required before outcome or impact only when fidelity
 is Adapted, Local or Not sure: if you do not know what was delivered, the
 numbers are uninterpretable.
 
-**Known gap, live on the site (as of July 2026): two dead options.**
-`Participants` (audience) and `For whom` (question) appear in no `audience_ok`
-or `question_ok` cell on any of the nine items, so picking either fails all nine
-on an Intent rule: 0 fit, 0 close, 9 ruled out. Verified on the built page, not
-inferred. The tool offers a choice and answers it with a wall of refusals. This
-is a content gap, not a rules bug: there is no realist evaluation row (Pawson &
-Tilley own "what works, for whom, in what circumstances") and nothing is written
-for a participant audience. The fix is agreed and is the next PR: add `REALIST`
-and `EMPOWER` (empowerment evaluation, Fetterman) plus widen `audience_ok` on
-the existing rows that genuinely serve that audience (`PROCESS` and `REAIM` are
-the candidates; maintainer decides). It is held, not abandoned, because no
-validator check touches a prose cell: a row with blank prose renders as a thin
-card rather than failing, and TODO placeholder text would publish on push. So
-the rows land only when the prose and sources exist. A worthwhile assertion for
-any future audit: **every Levels value should appear in at least one item's rule
-cell.** Nothing checks that today.
+**Resolved (bf15b6e, 2026-07-15): the two dead options are dead no more.**
+The picker originally shipped with nine items, and `Participants` (audience)
+and `For whom` (question) appeared in no `audience_ok` or `question_ok` cell,
+so picking either failed everything on an Intent rule: 0 fit, 0 close, 9 ruled
+out. The agreed fix landed in the ten-approach batch: `REALIST` (Pawson &
+Tilley own "what works, for whom, in what circumstances") and `EMPOWER`
+(empowerment evaluation, Fetterman) exist, `audience_ok` carries Participants
+on EMPOWER and UFE, and `question_ok` carries For whom on REALIST.
+Re-verified on the live page 2026-08-19: picking Participants now returns 2
+fits. The reason the fix waited is still worth knowing: no validator check
+touches a prose cell, so a row with blank prose renders as a thin card rather
+than failing, and TODO placeholder text would publish on push; rows land only
+when the prose and sources exist. A worthwhile assertion for any future audit:
+**every Levels value should appear in at least one item's rule cell.** Nothing
+checks that today.
 
-The `note_*` overrides look neglected and are not. 42 failure cells can actually
-fire; 5 are bespoke and 37 use the generic `reason_*` template. But every rule
+The `note_*` overrides look neglected and are not (the counts here are from the
+original nine-item page; the pattern is the point, re-count before leaning on
+the numbers). 42 failure cells could actually
+fire; 5 were bespoke and 37 used the generic `reason_*` template. But every rule
 that fires rarely is 100% bespoke (maturity_max 1/1, comparison_required 2/2,
 fidelity_ok 2/2) and every rule that fires constantly is generic (audience,
 purpose, question: 9 items each). The overrides were written exactly where the
@@ -517,7 +518,7 @@ Writing page's coming-soon essay cards carry **no `href`** (they were
 | `selected-work/index.qmd` | One validating R chunk (stopifnot, fail-loud like countedwrong) reads both files and emits `window.SW` JSON for the two chart IIFEs, the research-area sections (curated list + collapsible "All N publications"), the reports section, and the computed citation figure title and footnote. Both figures and every list render from one dataset, so they cannot contradict each other |
 | `selected-work/_metadata.yml` | `freeze: false`; `_freeze/selected-work/` is gitignored |
 | `selected-work/refresh_citations.R` | Updates the OpenAlex reference columns from the API. Never touches `citations` |
-| `.github/workflows/refresh-citations.yml` | Cron, 06:00 UTC on the 1st monthly, plus `workflow_dispatch`. Runs the refresh script and opens a PR (`bot/citation-refresh`) when counts moved; never pushes to main. The PR body lists movers as a prompt to hand-refresh the Scholar numbers and `citations_asof` |
+| `.github/workflows/refresh-citations.yml` | Cron, 06:00 UTC on the 1st monthly, plus `workflow_dispatch`. Runs the refresh script and opens a PR (`bot/citation-refresh`) when counts moved; never pushes to main. The PR body lists movers as a prompt to hand-refresh the Scholar numbers and `citations_asof`. Needs the repo setting Settings → Actions → General → "Allow GitHub Actions to create and approve pull requests" enabled, or the run does the refresh and then dies at PR creation (the first run, 2026-08-15, failed exactly there and its refresh was dropped) |
 
 ### Two authority rules learned the hard way
 
@@ -714,7 +715,9 @@ that the whole group is imaginary.
   buttons to see it.
   No coming-soon project card remains: "A Right That Exists on Paper"
   (`compassionaterelease/`, bullet below) shipped 2026-07-19 (#74) and retired
-  the last one, so `projects/index.qmd` has four live cards.
+  the last one, so `projects/index.qmd` has three live cards (the periodic
+  table, Maturity Gap, and the compassionate release story; an earlier note
+  here said four, which was never true on main).
 - **A Right That Exists on Paper (`compassionaterelease/`; shipped 2026-07-19
   in #74, review pass 2026-07-19, sources-and-voice pass 2026-07-21).** Chart-forward data story on compassionate
   release, the qualitative-data sibling of Maturity Gap on the same machinery:
@@ -941,6 +944,13 @@ that the whole group is imaginary.
   Start Here card (`pics/thumb-maturitygap.jpg`, 1150x430 header
   screenshot, JPEG q85, 87 KB). The close still links How Old Is Old? and the
   phrase "count some people wrong" stays as the echo of the old name.
+- Every page with `title: ""` (the section indexes draw their own
+  `.page-header`, so they all use it) also needs a `pagetitle:` in its front
+  matter, or Quarto titles the browser tab and og:title from the filename:
+  five pages shipped as "index – Data with a Plot" until 2026-08-19. Quarto
+  appends "– Data with a Plot" to `pagetitle` itself, so the value is just the
+  page name ("Projects", "The Plot So Far"). The homepage also carries the
+  og-image tagline as its `description` so link previews have an og:description.
 - `CV/Wylie_Capacity_Dashboard.qmd` is private: gitignored and excluded from
   rendering. Keep it and `_freeze/CV/` out of the public site.
 - `_freeze/` is tracked except `_freeze/hiphop/` and `_freeze/countedwrong/`

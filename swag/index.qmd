@@ -1,5 +1,6 @@
 ---
 title: ""
+pagetitle: "Swag"
 page-layout: full
 toc: false
 image: /pics/brand/og-image.png

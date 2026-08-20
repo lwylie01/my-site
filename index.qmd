@@ -1,5 +1,7 @@
 ---
 title: ""
+pagetitle: "Data with a Plot"
+description: "Adult at 18. Senior at 65. Every bright line misses the ones in between. I tell their stories with data."
 page-layout: full
 toc: true
 image: /pics/brand/og-image.png
@@ -122,9 +124,9 @@ editor:
 </div>
 ```
 
-::: {style="text-align: center; padding: 3rem 0 1rem; color: #6b7280; font-size: 0.9rem;"}
+::: {style="text-align: center; padding: 3rem 0 1rem; color: #6A5F72; font-size: 0.9rem;"}
 Built with [Quarto](https://quarto.org) · Hosted on [GitHub
 Pages](https://pages.github.com)
 
-<span style="display:block; margin-top:0.5rem; font-size:0.8rem; color:#9ca3af; font-style:italic;">n = 1 website. Results may not generalize.</span>
+<span style="display:block; margin-top:0.5rem; font-size:0.8rem; color:#6A5F72; font-style:italic;">n = 1 website. Results may not generalize.</span>
 :::

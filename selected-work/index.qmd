@@ -1,5 +1,6 @@
 ---
 title: ""
+pagetitle: "The Plot So Far"
 page-layout: full
 toc: false
 image: /pics/brand/og-image.png
@@ -28,13 +29,17 @@ cites   <- read.csv("data/citations.csv", fileEncoding = "UTF-8",
 
 meta <- setNames(as.character(meta_df$value), meta_df$key)
 
+# Blank workbook cells arrive as NA, and nzchar(NA) is TRUE: guard both, or a
+# blank url renders as a live link to the literal page "NA".
+filled <- function(x) !is.na(x) & nzchar(x)
+
 # Fail the CI render loudly rather than publish a wrong page (a failed publish
 # leaves the previous version of the site live). This page states citation
 # counts and a colleague's publication record; silently wrong is the worst
 # failure mode it has.
 stopifnot(
   # ids unique and resolvable in both files, 1:1
-  !anyDuplicated(pubs$id), all(nzchar(pubs$id)),
+  !anyDuplicated(pubs$id), all(filled(pubs$id)),
   setequal(pubs$id, cites$id),
   # every area on a publication exists in Areas
   all(pubs$area %in% areas$key),
@@ -44,10 +49,10 @@ stopifnot(
   # area colors are real hex colors (they go straight into SVG fills)
   all(grepl("^#[0-9a-fA-F]{6}$", areas$color)),
   # curated entries need a link and an order
-  all(nzchar(pubs$url[pubs$featured])),
+  all(filled(pubs$url[pubs$featured])),
   all(!is.na(pubs$featured_order[pubs$featured])),
   # every charted row needs its bar label
-  all(nzchar(pubs$short_label[pubs$id %in% cites$id[!is.na(cites$citations)]])),
+  all(filled(pubs$short_label[pubs$id %in% cites$id[!is.na(cites$citations)]])),
   # the Meta keys the page composes text from
   all(c("citations_source", "citations_asof", "scholar_url", "tail_count",
         "tail_total", "ncsc_url", "jji_url") %in% names(meta))
@@ -104,7 +109,7 @@ num_word <- function(n) {
 cite_title <- sprintf(paste0("The %s most-cited publications, colored by ",
                              "thread: about %d citations in all"),
                       num_word(n_charted), total_all)
-merged_note <- if (any(nzchar(charted$cite_note)))
+merged_note <- if (any(filled(charted$cite_note)))
   " Duplicate Scholar records merged (counts summed)." else ""
 cite_note <- sprintf(paste0("Citation counts from %s, %s.%s %s more publications ",
                             "have 9 or fewer citations each (about %d combined), ",
@@ -144,7 +149,7 @@ book_html <- paste0(
 cite_line <- function(row, linked) {
   tail <- if (row$type == "Article") "" else
     sprintf(' <span class="pub-type">(%s)</span>', tolower(row$type))
-  title_html <- if (linked && nzchar(row$url)) {
+  title_html <- if (linked && filled(row$url)) {
     sprintf('<a class="pub-link" href="%s" target="_blank" rel="noopener">%s</a>',
             esc(row$url), esc(row$title))
   } else esc(row$title)
@@ -190,7 +195,7 @@ for (org in unique(reports$org)) {
   items <- ""
   for (j in seq_len(nrow(in_org))) {
     r <- in_org[j, ]
-    t <- if (nzchar(r$url)) {
+    t <- if (filled(r$url)) {
       sprintf('<a class="pub-link" href="%s" target="_blank" rel="noopener">%s</a>',
               esc(r$url), esc(r$title))
     } else esc(r$title)
