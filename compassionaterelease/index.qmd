@@ -317,7 +317,7 @@ It is also a working demonstration of a method. Statutes and case
 decisions are qualitative data, and the usual way to present them is a
 memo. But most questions people bring to a law are comparative: how many
 states require a diagnosis, how far apart are the age cutoffs, what
-reasons do courts actually give, what changed and when. Those are chart
+reasons do courts give, what changed and when. Those are chart
 questions, so each section asks one, answers it with a chart form suited
 to categorical and legal evidence, and notes why that form got the job.
 
@@ -341,7 +341,7 @@ source on every row, and the build refuses to render a row that does not.
   <div class="source-card">
     <p class="source-eyebrow"><span class="source-dot"></span>State statutes</p>
     <p class="source-name">Wylie, Knutson, and Greene 2018, <em>Psychology, Public Policy, and Law</em></p>
-    <p class="source-desc">The fifty-state review behind this project: the laws as written, where the policy coding reads what departments keep on file.</p>
+    <p class="source-desc">The fifty-state review behind this project: the laws as written as of 2016, where the policy coding reads what departments keep on file.</p>
     <p class="source-chips">
       <a class="chip-link" href="https://doi.org/10.1037/law0000161" title="Extraordinary and Compelling: The Use of Compassionate Release Laws in the United States">DOI<span class="chip-ext">&#8599;</span></a>
       <a class="chip-link" href="https://www.apa.org/pubs/journals/features/law-law0000161.pdf" title="Extraordinary and Compelling: The Use of Compassionate Release Laws in the United States">PDF<span class="chip-ext">&#8599;</span></a>
@@ -479,8 +479,11 @@ of requirements into a finding.</p>
 
 ::: {.chart-card}
 <p class="chart-card-tag">Exhibit 03 · Span</p>
-<p class="chart-card-lede">Where age enters these statutes, it enters as
-a number, and no two legislatures reached for quite the same one.</p>
+<p class="chart-card-lede">A policy on file and a statute on the books are
+different units. The two exhibits above describe the policies; this
+exhibit and the next describe the statutes, from my fifty-state review,
+also coded as of 2016. Twelve statutes name a qualifying age, and they do
+not name the same one.</p>
 ```{r chart-age-span}
 #| fig-height: 4.0
 #| out-width: "100%"
@@ -504,7 +507,7 @@ p_age <- ggplot(age_df, aes(y = jur_f)) +
   scale_x_continuous(limits = c(42, 73), breaks = seq(45, 70, 5)) +
   labs(
     title = "Old enough at 45 in Louisiana, not until 70 in South Carolina",
-    subtitle = "Statutes that set a qualifying age; a joined pair is one statute whose age depends on the sentence",
+    subtitle = "Statutes that set a qualifying age, as of 2016; a joined pair is one statute whose age depends on the sentence",
     x = "Age", y = NULL
   ) +
   theme_cr()
@@ -517,13 +520,22 @@ twenty years served; South Carolina and the federal statute top the range
 at 70. Six more statutes require age without ever naming one (CT, MO, OR,
 TX, WA, WY). Source: Wylie, Knutson, and Greene (2018), <em>Psychology,
 Public Policy, and Law</em> 24(2), table 1, pp. 220-224.</p>
+<p class="chart-card-note">Both reviews counted forty-six, and the match
+is coincidence. Holland and colleagues counted departments with a policy
+on file, out of fifty states; my review counted jurisdictions with a
+compassionate release statute, out of fifty-two, the District of Columbia
+and the federal system included. Six jurisdictions had no compassionate
+release statute in 2016: Arizona and South Dakota allowed temporary
+medical release only, and Illinois, Iowa, Massachusetts, and Utah had
+none. The four states without a policy on file are not identified in the
+published figure, so the two lists cannot be matched state to state.</p>
 <p class="chart-card-note">The same boundary problem shows up whenever a
 law puts a number on a fuzzy category, which is the subject of a short
 exercise on this site:
 <a href="../howold/how_old_is_old.html">How Old Is Old?</a></p>
-<p class="chart-card-note"><strong>Why this chart:</strong> still a span,
-because the finding is the distance between the endpoints, but one row
-per statute now, because four statutes carry two ages and the pair is the
+<p class="chart-card-note"><strong>Why this chart:</strong> a span,
+because the finding is the distance between the endpoints, and one row
+per statute because four statutes carry two ages and the pair is the
 point: the age depends on the sentence, which a single dot per state
 would hide.</p>
 :::
@@ -546,20 +558,21 @@ p_win <- ggplot(win_df, aes(x = months, y = jur_f)) +
   scale_x_continuous(limits = c(0, 25), breaks = c(0, 6, 12, 18, 24)) +
   labs(
     title = "What terminal means depends on the state",
-    subtitle = "Required life expectancy where the statute specifies one: 15 of 35 terminal-illness statutes",
+    subtitle = "Required life expectancy where the statute specifies one, as of 2016: 15 of 35 terminal-illness statutes",
     x = "Months", y = NULL
   ) +
   theme_cr()
 
 ggplotly_titled(p_win, tooltip = "text") |> clear_bg()
 ```
+<p class="chart-card-note">Where a number exists, it runs from 30 days in
+Kansas to two years in Arkansas and South Carolina, and the wording
+matters: New Jersey's six months is a ceiling ("or less"), North
+Carolina's is a line. Source: Wylie, Knutson, and Greene (2018),
+<em>Psychology, Public Policy, and Law</em> 24(2), table 1, pp.
+220-224.</p>
 <p class="chart-card-note">The other twenty statutes require a terminal
-illness without saying how terminal, which leaves the clock to whoever
-reads the file. Where a number exists, it runs from 30 days in Kansas to
-two years in Arkansas and South Carolina, and the wording matters: New
-Jersey's six months is a ceiling ("or less"), North Carolina's is a line.
-Source: Wylie, Knutson, and Greene (2018), <em>Psychology, Public Policy,
-and Law</em> 24(2), table 1, pp. 220-224.</p>
+illness without saying how terminal.</p>
 <p class="chart-card-note"><strong>Why this chart:</strong> a dot plot on
 one shared axis, because the question is a single magnitude compared
 across states, and the stacks at six and twelve months are the finding:
@@ -941,10 +954,10 @@ different periods under different law. And it does not report a denial
 rate, because the published sources cannot support one: people leave these
 processes by dying and by withdrawing, not only by being refused.
 
-The state layer is the weak link, and it is weak in a specific way: it is
-the best fifty-state coding anyone has published, and it describes a world
-that has kept moving since 2016. Re-coding it from current statutes is the
-next piece of work.
+The state layer is the weak link, and it is weak in a specific way: the
+policy coding and the statute coding are the best fifty-state reviews
+anyone has published, and both describe a world that has kept moving since
+2016. Re-coding from current statutes is the next piece of work.
 
 <p style="margin-top:2.2rem; font-size:0.95rem;">
 Related on this site:
