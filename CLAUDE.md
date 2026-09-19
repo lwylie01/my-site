@@ -560,7 +560,17 @@ numbers to OpenAlex.
 
 **Citation refresh (monthly PR or by hand):** edit the `citations` column in
 `citations.csv` from the Scholar profile, update `citations_asof` (Meta sheet),
-merge. The chart order, title, and totals recompute.
+merge. The chart order, title, and totals recompute. Two Meta values do NOT
+recompute and go stale silently: `tail_count` and `tail_total` (the footnote's
+"N more publications have 9 or fewer citations each, about M combined") are
+hand-set, and the "9 or fewer" cutoff is why an uncharted paper that reaches 10
+on Scholar must be promoted (give it a `citations` value; it already has a
+`short_label`), moving its count out of the tail. Check both on every refresh.
+The bot only watches OpenAlex, which barely moves on this record (one paper
+changed in two months while 12 of 20 Scholar counts had drifted by 2026-09), so
+a quiet bot PR is not evidence the displayed counts are current: compare the
+Scholar profile itself (it loads fine in a real browser, only scripts are
+blocked) and bump `citations_asof` only after doing so.
 
 **New publication:** row in Publications (id, year, area, type, publisher-record
 title, venue, CV-style authors, url, short_label) + a row in `citations.csv`
