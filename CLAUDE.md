@@ -466,6 +466,63 @@ homepage and Teaching card descriptions mirror the lead's premise sentence, so
 revise them together. This page is deliberately quieter than the site's hero
 voice; do not "punch it up."
 
+## Data STORY Worksheet (`datastory/`)
+
+Shipped 2026-09. A fillable planning worksheet, not a sorter: the five elements
+and seventeen steps of Figure 1 in the maintainer's "Cultivating a Court's Data
+STORY" (NCSC Trends 2025, ch. 12), each step a card of dropdowns, checkboxes and
+text boxes. It digitizes the paper version she already used (a Word table of
+element / step / answer, e.g. her NACM 2025 presentation notes). Same Excel to R
+to one-HTML-page shape as the pickers, vanilla JS, no CDN beyond Google Fonts,
+no new CI packages (readxl plus base R).
+
+Maintainer picks (2026-09-25): structure **C**, the worksheet is the hub and
+deeper tools branch off the step they serve ("Select the Format" links to the
+format picker; future STORY tools hang off their own steps rather than getting
+their own Teaching cards, because a page of single decision tools was judged "a
+bit much"). Name **The Data STORY Worksheet**; intro headline "A data story is
+planned long before it is written, and this is where the planning goes."
+Teaching page: one Data STORY card replaces the format picker's card, with the
+picker as a companion link. No worked example yet (her NACM notes name
+co-presenters and OVW guidance; use them only scrubbed and with her say-so).
+
+### The pieces
+
+| File | Role |
+|---|---|
+| `datastory/data/story_worksheet.xlsx` | Source of truth. Sheets: **Elements** (5), **Steps** (17; label is Figure 1 verbatim, help_text condenses the chapter, optional link_label + link_url), **Fields** (40; input_type select / multi / text / textarea, list_id for the first two), **Options** (41), **Copy** (23 UI strings) |
+| `datastory/build_story.R` | Pre-render step. Validates, then injects `__ELEMENTS_DATA__`, `__STEPS_DATA__`, `__FIELDS_DATA__`, `__OPTIONS_DATA__`, `__COPY_DATA__`, producing `datastory/story_worksheet.html` (gitignored; built in CI; never edit the output) |
+| `datastory/app/_template.html` | Look and behaviour: intro, worksheet with a sticky S-T-O-R-Y rail showing per-element progress, and the plan screen |
+
+### Rules that are decisions
+
+- **Two lists are borrowed, not authored.** `@formats` (Formats sheet
+  format_name) and `@audiences` (Levels audience labels) are read from
+  `formatpicker/data/delivery_formats.xlsx`, so the worksheet and the picker it
+  links to cannot disagree. The Options sheet may not define `@` ids (the
+  validator refuses). Adding a format to the picker adds it here for free.
+- **Answers never leave the browser.** localStorage key
+  `datastory-worksheet-v1`, every access in try/catch; the page works without
+  storage. Courts may plan with real findings, so do not add anything that
+  posts answers anywhere.
+- **Output is print plus Word.** Printing from any screen prints the plan (the
+  print CSS hides the form), and "Download as Word" builds a real `.docx` in the
+  browser: a stored (uncompressed) zip with a hand-rolled CRC-32 and three
+  parts. WordprocessingML is order-sensitive: inside `w:pPr`, `keepNext` must
+  precede `spacing`, and inside `w:rPr` the order is rFonts, b, i, color, sz. A
+  wrong order can make Word call the file corrupt, so keep that order when
+  editing `para()`. Control characters are stripped before they reach the XML.
+- The validator checks: unique ids on every sheet, parents exist, every element
+  has a step and every step a field, numeric `order`, known input types, every
+  select/multi names a list with 2+ options and text fields name none, link
+  pairs complete, and every Copy key the template names resolves (same scan as
+  the pickers' check 5b). A failed render is the validator working; fix the
+  workbook.
+- Verification without R: replicate the injection in Python, drive the page in
+  headless Chromium, and open the downloaded `.docx` with python-docx
+  (installable from a downloaded wheel; LibreOffice is present in the CCR image
+  but cannot load files).
+
 ## The Plot So Far (`selected-work/`)
 
 The publications page. Renamed from "Selected Work" July 2026 once it showed
