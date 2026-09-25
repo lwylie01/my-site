@@ -21,6 +21,9 @@ evalpicker/eval_picker.html
 # Generated format picker (built from Excel by formatpicker/build_format.R on render)
 formatpicker/format_picker.html
 
+# Generated Data STORY worksheet (built from Excel by datastory/build_story.R on render)
+datastory/story_worksheet.html
+
 # Internal/private working files — keep off the public site repo
 CV/Wylie_Capacity_Dashboard.qmd
 CV/Wylie_Capacity_Dashboard.html
