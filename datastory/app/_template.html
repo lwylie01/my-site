@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Data STORY Worksheet · datawithaplot.org</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* Sibling of formatpicker: the site SCSS does not reach a standalone HTML page,
+     so it re-declares the brand's custom properties (Ink Plum / Coral / Mauve on
+     Cream), the same tokens as every other page. */
+  :root {
+    --primary: #2E1A47;      /* Ink Plum: buttons, focus, progress */
+    --secondary: #F4715C;    /* Coral: accent on the dark header only */
+    --eyebrow: #B23A28;      /* Deep Coral: accent text/links on LIGHT */
+    --accent: #A98BB8;       /* Mauve: decorative borders only */
+    --on-dark: #F7F2EC;
+    --light-bg: #F7F2EC;
+    --dark: #2E1A47;
+    --text: #2E1A47;
+    --muted: #6A5F72;
+    --card: #FDFBF7;
+    --line: #E7DED0;
+    --link: #B23A28;
+    --tint: #F5F1F8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Spectral', Georgia, serif;
+    background: var(--light-bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── Header ─────────────────────────────────────────── */
+  header {
+    background: var(--dark);
+    color: var(--on-dark);
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.03em; }
+  header h1 span { color: var(--secondary); }
+  header p { font-size: 0.8rem; color: var(--on-dark); margin-top: 0.1rem; }
+  header a { color: var(--on-dark); font-size: 0.8rem; text-decoration: none; font-weight: 600; }
+  header a:hover { color: var(--secondary); }
+
+  /* ── Screens ────────────────────────────────────────── */
+  /* Three screens: an intro on-ramp, the worksheet, and the plan it produces. */
+  .screen { display: none; animation: fade 0.4s ease; }
+  .screen.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.72rem; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--eyebrow); margin-bottom: 0.6rem;
+  }
+  h2 { font-size: 1.85rem; line-height: 1.2; color: var(--dark); margin-bottom: 0.9rem; font-weight: 700; }
+  .lead { font-size: 1.02rem; color: var(--text); margin-bottom: 1.5rem; }
+  .muted { color: var(--muted); }
+
+  /* ── Buttons ────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.7rem 1.4rem; border-radius: 8px; border: none;
+    font-size: 0.92rem; font-weight: 700; cursor: pointer;
+    font-family: inherit; transition: opacity 0.15s, transform 0.1s;
+    text-decoration: none;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-outline { background: var(--card); color: var(--primary); border: 1.5px solid var(--primary); }
+  .btn-sm { padding: 0.4rem 0.85rem; font-size: 0.8rem; border-radius: 6px; }
+
+  /* ── Element rail ───────────────────────────────────── */
+  /* Sticky, so the five letters stay in reach on a long page. Each is a real
+     link to its section and carries its progress as words, not just a bar. */
+  #rail {
+    position: sticky; top: 0; z-index: 500;
+    background: var(--dark);
+    padding: 0.5rem 1.5rem;
+  }
+  #rail-inner {
+    max-width: 1000px; margin: 0 auto;
+    display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+  }
+  #rail ol { list-style: none; display: flex; gap: 0.35rem; flex-wrap: wrap; flex: 1 1 auto; }
+  .rail-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.3rem 0.65rem 0.3rem 0.35rem; border-radius: 8px;
+    color: var(--on-dark); text-decoration: none;
+    border: 1px solid transparent;
+  }
+  .rail-link:hover { border-color: var(--accent); }
+  .rail-link:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; }
+  .rail-letter {
+    font-size: 1.15rem; font-weight: 700; line-height: 1;
+    width: 1.9rem; height: 1.9rem; border-radius: 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1.5px solid var(--accent); color: var(--on-dark);
+  }
+  .rail-link.done .rail-letter { background: var(--secondary); border-color: var(--secondary); color: var(--dark); }
+  .rail-text { display: flex; flex-direction: column; line-height: 1.2; }
+  .rail-name { font-size: 0.82rem; font-weight: 600; }
+  .rail-prog {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.66rem; letter-spacing: 0.06em; color: var(--accent);
+  }
+  #rail-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  #rail .btn-outline { background: transparent; color: var(--on-dark); border-color: var(--accent); }
+  #rail .btn-primary { background: var(--secondary); color: var(--dark); }
+
+  /* ── Worksheet ──────────────────────────────────────── */
+  main { max-width: 1000px; margin: 0 auto; padding: 1.8rem 1.5rem 3rem; }
+
+  .element { margin-bottom: 2.8rem; scroll-margin-top: 5.5rem; }
+  .element-head { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.1rem; }
+  .element-letter {
+    flex: none; font-size: 2.6rem; font-weight: 700; line-height: 1;
+    width: 3.6rem; height: 3.6rem; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--dark); color: var(--on-dark);
+  }
+  .element-head h2 { font-size: 1.5rem; margin-bottom: 0.2rem; }
+  .element-head h2::after {
+    content: ''; display: block; width: 3rem; height: 3px;
+    margin-top: 0.3rem; background: var(--eyebrow);
+  }
+  .element-intro { font-size: 0.95rem; color: var(--muted); max-width: 70ch; }
+
+  .step {
+    background: var(--card); border: 1px solid var(--line);
+    border-left: 4px solid var(--line);
+    border-radius: 12px; padding: 1.2rem 1.3rem 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .step.done { border-left-color: var(--primary); }
+  .step-tag {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.68rem; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--eyebrow);
+  }
+  .step h3 { font-size: 1.12rem; font-weight: 700; color: var(--dark); line-height: 1.3; margin: 0.15rem 0 0.35rem; }
+  .step-help { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.9rem; max-width: 75ch; }
+  .step-link {
+    display: inline-block; margin: -0.3rem 0 0.9rem;
+    font-size: 0.88rem; font-weight: 600;
+    color: var(--link); text-decoration: underline; text-underline-offset: 2px;
+  }
+  .step-link:hover { color: var(--dark); }
+
+  .field { margin-top: 0.9rem; }
+  .field:first-of-type { margin-top: 0; }
+  .field-label, .field legend {
+    display: block; font-size: 0.97rem; font-weight: 600; color: var(--dark); line-height: 1.35;
+  }
+  .field-help { font-size: 0.84rem; color: var(--muted); margin: 0.15rem 0 0.35rem; }
+  fieldset.field { border: none; }
+  .field select, .field input[type="text"], .field textarea {
+    display: block; width: 100%; margin-top: 0.35rem;
+    border: 1.5px solid var(--accent); border-radius: 8px;
+    padding: 0.55rem 0.7rem; font-size: 0.95rem;
+    background: var(--light-bg); color: var(--text);
+    font-family: inherit; line-height: 1.45;
+  }
+  .field textarea { min-height: 4.6rem; resize: vertical; }
+  .field select { cursor: pointer; }
+  .field select:focus-visible, .field input[type="text"]:focus-visible, .field textarea:focus-visible {
+    outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(46,26,71,0.28);
+  }
+  .field .set { border-color: var(--primary); background: var(--card); }
+  .field ::placeholder { color: var(--muted); opacity: 1; }
+
+  .checks { display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.4rem; }
+  .check { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.93rem; cursor: pointer; }
+  .check input { margin-top: 0.3rem; width: 1rem; height: 1rem; accent-color: var(--primary); flex: none; }
+  .check input:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+  #tool-foot { display: flex; gap: 0.7rem; flex-wrap: wrap; align-items: center; margin-top: 0.5rem; }
+  #saved-note { font-size: 0.82rem; font-style: italic; }
+
+  /* ── Plan ───────────────────────────────────────────── */
+  #plan-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
+  .plan-el { margin-bottom: 1.8rem; break-inside: auto; }
+  .plan-el h3 {
+    font-size: 1.2rem; font-weight: 700; color: var(--dark);
+    border-bottom: 2px solid var(--eyebrow); padding-bottom: 0.25rem; margin-bottom: 0.6rem;
+  }
+  .plan-el h3 .pl { color: var(--eyebrow); margin-right: 0.35rem; }
+  .plan-step { padding: 0.55rem 0; border-bottom: 1px solid var(--line); break-inside: avoid; }
+  .plan-step:last-child { border-bottom: none; }
+  .plan-step h4 { font-size: 0.98rem; font-weight: 700; color: var(--dark); }
+  .plan-step dl { margin-top: 0.2rem; }
+  .plan-step dt { font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem; }
+  .plan-step dd { font-size: 0.95rem; white-space: pre-wrap; }
+  .plan-empty { font-size: 0.9rem; color: var(--muted); font-style: italic; }
+  #plan-date { font-size: 0.85rem; margin-bottom: 1.2rem; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 1.5rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  footer p { margin-bottom: 0.6rem; max-width: 75ch; }
+  /* Underlined on purpose: --link and the --muted text around it are close in
+     hue, so colour alone would not mark the link. */
+  footer a { color: var(--link); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  footer a:hover { color: var(--dark); }
+
+  /* Printing is for the plan. From the worksheet screen, print the plan anyway:
+     a printout of forty form controls is not a plan. */
+  @media print {
+    header a, #rail, #screen-intro, #screen-tool, #plan-actions, footer { display: none !important; }
+    #screen-plan { display: block !important; animation: none; }
+    body { background: white; font-size: 11pt; }
+    .wrap { padding: 0; max-width: none; }
+    header { background: white; color: var(--dark); padding: 0 0 0.6rem; border-bottom: 2px solid var(--dark); margin-bottom: 1rem; }
+    header h1 span { color: var(--eyebrow); }
+    header p { color: var(--muted); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .screen { animation: none; }
+    .btn:active { transform: none; }
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+
+  @media (max-width: 640px) {
+    header, #rail, main { padding-left: 1rem; padding-right: 1rem; }
+    .wrap { padding-left: 1rem; padding-right: 1rem; }
+    h2 { font-size: 1.5rem; }
+    /* On a phone the rail keeps the letters and drops the names, or it eats
+       half the screen before the first question. */
+    .rail-text { display: none; }
+    .rail-link { padding: 0.2rem; }
+    .element-letter { width: 2.8rem; height: 2.8rem; font-size: 2rem; }
+    .step { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>The Data <span>STORY</span> Worksheet</h1>
+    <p id="page-sub"></p>
+  </div>
+  <a href="../index.html">← datawithaplot.org</a>
+</header>
+
+<section class="screen active" id="screen-intro">
+  <div class="wrap">
+    <div class="eyebrow" id="intro-eyebrow"></div>
+    <h2 id="intro-title"></h2>
+    <p class="lead" id="intro-lead"></p>
+    <button class="btn btn-primary" id="go-tool"></button>
+    <p class="muted" id="intro-note" style="font-size:0.8rem;margin-top:0.8rem;"></p>
+  </div>
+</section>
+
+<div class="screen" id="screen-tool">
+  <nav id="rail">
+    <div id="rail-inner">
+      <ol id="rail-list"></ol>
+      <div id="rail-actions">
+        <button class="btn btn-primary btn-sm" id="to-plan"></button>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <div id="worksheet"></div>
+    <div id="tool-foot">
+      <button class="btn btn-primary" id="to-plan-2"></button>
+      <button class="btn btn-outline btn-sm" id="reset"></button>
+      <span class="muted" id="saved-note"></span>
+    </div>
+  </main>
+</div>
+
+<section class="screen" id="screen-plan">
+  <div class="wrap">
+    <div class="eyebrow" id="plan-eyebrow"></div>
+    <h2 id="plan-title"></h2>
+    <p class="lead" id="plan-lead"></p>
+    <p class="muted" id="plan-date"></p>
+    <div id="plan-actions">
+      <button class="btn btn-outline btn-sm" id="back"></button>
+      <button class="btn btn-primary btn-sm" id="print"></button>
+      <button class="btn btn-primary btn-sm" id="docx"></button>
+    </div>
+    <div id="plan"></div>
+  </div>
+</section>
+
+<footer>
+  <p id="scope-note"></p>
+  <p><strong>Where this comes from.</strong>
+    The five elements and seventeen steps are Figure 1 of
+    <a href="https://www.ncsc.org/sites/default/files/media/document/NCSC-Trends-2025.pdf" target="_blank" rel="noopener">Lindsey Wylie's
+    "Cultivating a Court's Data STORY," NCSC Trends in State Courts (2025)</a>,
+    and the guidance under each step condenses that article. The objectives follow
+    the Conference of State Court Administrators (2024), and the expertise ladder,
+    novice through trustee or funder, follows Tabak and colleagues (2013). The
+    format list and the expertise ladder are shared with the
+    <a href="../formatpicker/format_picker.html">format picker</a>, so the two
+    tools always agree.</p>
+</footer>
+
+<script>
+// ─── Data, injected from story_worksheet.xlsx by build_story.R ───────────────
+const ELEMENTS = __ELEMENTS_DATA__;
+const STEPS    = __STEPS_DATA__;
+const FIELDS   = __FIELDS_DATA__;
+const OPTIONS  = __OPTIONS_DATA__;
+const COPY     = __COPY_DATA__;
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+const cell = (o, c) => String((o && o[c] != null) ? o[c] : '').trim();
+const esc  = s => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const byOrder = (a, b) => a.order - b.order;
+
+// build_story.R check 7 scans this file for every key named below and asserts
+// it resolves, so a typo fails the render rather than shipping a literal
+// [key_name]. It reads two shapes: t('key') and setText('id', 'key').
+function t(key, vars) {
+  const row = COPY.find(c => cell(c, 'key') === key);
+  let s = row ? cell(row, 'text') : '[' + key + ']';
+  for (const k in (vars || {})) s = s.split('{' + k + '}').join(vars[k]);
+  return s;
+}
+
+const elements   = ELEMENTS.slice().sort(byOrder);
+const stepsOf    = eid => STEPS.filter(s => cell(s, 'element_id') === eid).sort(byOrder);
+const fieldsOf   = sid => FIELDS.filter(f => cell(f, 'step_id') === sid).sort(byOrder);
+const optionsOf  = lid => OPTIONS.filter(o => cell(o, 'list_id') === lid).sort(byOrder)
+                                 .map(o => cell(o, 'option'));
+
+// Step numbers run 1 to 17 across the whole worksheet, as in Figure 1.
+const STEP_NO = {};
+(function () {
+  let n = 0;
+  elements.forEach(e => stepsOf(cell(e, 'element_id')).forEach(s => { STEP_NO[cell(s, 'step_id')] = ++n; }));
+})();
+
+// ─── Answers ─────────────────────────────────────────────────────────────────
+// Kept in this browser only. Storage can be missing or throw (private windows,
+// blocked site data), so every touch is guarded and the page works without it.
+const STORE_KEY = 'datastory-worksheet-v1';
+let answers = {};
+try { answers = JSON.parse(localStorage.getItem(STORE_KEY) || '{}') || {}; } catch (e) { answers = {}; }
+function persist() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(answers)); } catch (e) { /* storage off */ }
+}
+
+const filled = v => Array.isArray(v) ? v.length > 0 : !!(v && String(v).trim());
+const stepDone = sid => fieldsOf(sid).some(f => filled(answers[cell(f, 'field_id')]));
+
+// ─── Build the worksheet from the data ───────────────────────────────────────
+function fieldHtml(f) {
+  const id   = cell(f, 'field_id');
+  const type = cell(f, 'input_type');
+  const help = cell(f, 'help_text');
+  const helpId = 'fh-' + id;
+  const described = help ? ' aria-describedby="' + helpId + '"' : '';
+  const helpP = help ? '<p class="field-help" id="' + helpId + '">' + esc(help) + '</p>' : '';
+  const val = answers[id];
+
+  if (type === 'multi') {
+    const have = Array.isArray(val) ? val : [];
+    const boxes = optionsOf(cell(f, 'list_id')).map((o, i) =>
+      '<label class="check"><input type="checkbox" data-field="' + esc(id) + '" value="' + esc(o) + '"' +
+      (have.includes(o) ? ' checked' : '') + '><span>' + esc(o) + '</span></label>').join('');
+    return '<fieldset class="field"' + described + '><legend>' + esc(cell(f, 'prompt')) + '</legend>' +
+           helpP + '<div class="checks">' + boxes + '</div></fieldset>';
+  }
+
+  let control;
+  const inputId = 'f-' + id;
+  if (type === 'select') {
+    const opts = optionsOf(cell(f, 'list_id')).map(o =>
+      '<option value="' + esc(o) + '"' + (val === o ? ' selected' : '') + '>' + esc(o) + '</option>').join('');
+    control = '<select id="' + inputId + '" data-field="' + esc(id) + '"' + described + '>' +
+              '<option value="">' + esc(t('select_placeholder')) + '</option>' + opts + '</select>';
+  } else if (type === 'text') {
+    control = '<input type="text" id="' + inputId + '" data-field="' + esc(id) + '"' + described +
+              ' placeholder="' + esc(cell(f, 'placeholder')) + '" value="' + esc(val || '') + '">';
+  } else {
+    control = '<textarea id="' + inputId + '" data-field="' + esc(id) + '"' + described +
+              ' placeholder="' + esc(cell(f, 'placeholder')) + '">' + esc(val || '') + '</textarea>';
+  }
+  return '<div class="field"><label class="field-label" for="' + inputId + '">' +
+         esc(cell(f, 'prompt')) + '</label>' + helpP + control + '</div>';
+}
+
+function buildWorksheet() {
+  document.getElementById('worksheet').innerHTML = elements.map(e => {
+    const eid = cell(e, 'element_id');
+    const steps = stepsOf(eid).map(s => {
+      const sid = cell(s, 'step_id');
+      const link = cell(s, 'link_url')
+        ? '<a class="step-link" href="' + esc(cell(s, 'link_url')) + '" target="_blank" rel="noopener">' +
+          esc(cell(s, 'link_label')) + ' →</a>'
+        : '';
+      return '<article class="step" id="step-' + esc(sid) + '">' +
+        '<span class="step-tag">' + esc(t('step_open', { n: STEP_NO[sid] })) + '</span>' +
+        '<h3>' + esc(cell(s, 'label')) + '</h3>' +
+        (cell(s, 'help_text') ? '<p class="step-help">' + esc(cell(s, 'help_text')) + '</p>' : '') +
+        link + fieldsOf(sid).map(fieldHtml).join('') + '</article>';
+    }).join('');
+    return '<section class="element" id="el-' + esc(eid) + '" aria-labelledby="eh-' + esc(eid) + '">' +
+      '<div class="element-head"><span class="element-letter" aria-hidden="true">' + esc(cell(e, 'letter')) + '</span>' +
+      '<div><h2 id="eh-' + esc(eid) + '">' + esc(cell(e, 'name')) + '</h2>' +
+      '<p class="element-intro">' + esc(cell(e, 'intro')) + '</p></div></div>' + steps + '</section>';
+  }).join('');
+
+  document.getElementById('rail-list').innerHTML = elements.map(e => {
+    const eid = cell(e, 'element_id');
+    return '<li><a class="rail-link" id="rl-' + esc(eid) + '" href="#el-' + esc(eid) + '">' +
+      '<span class="rail-letter" aria-hidden="true">' + esc(cell(e, 'letter')) + '</span>' +
+      '<span class="rail-text"><span class="rail-name">' + esc(cell(e, 'name')) + '</span>' +
+      '<span class="rail-prog" id="rp-' + esc(eid) + '"></span></span></a></li>';
+  }).join('');
+}
+
+// ─── Progress ────────────────────────────────────────────────────────────────
+function refresh() {
+  elements.forEach(e => {
+    const eid = cell(e, 'element_id');
+    const steps = stepsOf(eid);
+    const done = steps.filter(s => stepDone(cell(s, 'step_id'))).length;
+    const prog = t('progress', { done: done, total: steps.length });
+    document.getElementById('rp-' + eid).textContent = prog;
+    const link = document.getElementById('rl-' + eid);
+    link.classList.toggle('done', done === steps.length);
+    // The names are hidden on a phone, so the link's accessible name carries them.
+    link.setAttribute('aria-label', cell(e, 'name') + ', ' + prog);
+    steps.forEach(s => {
+      const el = document.getElementById('step-' + cell(s, 'step_id'));
+      if (el) el.classList.toggle('done', stepDone(cell(s, 'step_id')));
+    });
+  });
+  document.querySelectorAll('#worksheet select, #worksheet input[type="text"], #worksheet textarea')
+    .forEach(el => el.classList.toggle('set', !!el.value.trim()));
+}
+
+function onInput(ev) {
+  const el = ev.target;
+  const id = el.getAttribute('data-field');
+  if (!id) return;
+  if (el.type === 'checkbox') {
+    answers[id] = Array.from(document.querySelectorAll('input[type="checkbox"][data-field="' + id + '"]:checked'))
+      .map(x => x.value);
+  } else {
+    answers[id] = el.value;
+  }
+  if (!filled(answers[id])) delete answers[id];
+  persist();
+  refresh();
+}
+
+// ─── The plan ────────────────────────────────────────────────────────────────
+const shown = v => Array.isArray(v) ? v.join('; ') : String(v || '').trim();
+
+function planModel() {
+  return elements.map(e => ({
+    letter: cell(e, 'letter'),
+    name: cell(e, 'name'),
+    steps: stepsOf(cell(e, 'element_id')).map(s => ({
+      no: STEP_NO[cell(s, 'step_id')],
+      label: cell(s, 'label'),
+      answers: fieldsOf(cell(s, 'step_id'))
+        .filter(f => filled(answers[cell(f, 'field_id')]))
+        .map(f => ({ q: cell(f, 'prompt'), a: shown(answers[cell(f, 'field_id')]) }))
+    }))
+  }));
+}
+
+const today = () => new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+
+function buildPlan() {
+  document.getElementById('plan-date').textContent = t('plan_date', { date: today() });
+  document.getElementById('plan').innerHTML = planModel().map(e =>
+    '<section class="plan-el"><h3><span class="pl">' + esc(e.letter) + '</span>' + esc(e.name) + '</h3>' +
+    e.steps.map(s => '<div class="plan-step"><h4>' + s.no + '. ' + esc(s.label) + '</h4>' +
+      (s.answers.length
+        ? '<dl>' + s.answers.map(x => '<dt>' + esc(x.q) + '</dt><dd>' + esc(x.a) + '</dd>').join('') + '</dl>'
+        : '<p class="plan-empty">' + esc(t('plan_unanswered')) + '</p>') +
+      '</div>').join('') + '</section>').join('');
+}
+
+// ─── Word download ───────────────────────────────────────────────────────────
+// A real .docx, built in the browser with no library: a docx is a zip of XML
+// parts, and a zip with every entry stored (uncompressed) needs only a CRC-32.
+// Nothing leaves the page; the file is assembled here and handed to the browser.
+const CRC_TABLE = (function () {
+  const tb = new Uint32Array(256);
+  for (let n = 0; n < 256; n++) {
+    let c = n;
+    for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1;
+    tb[n] = c >>> 0;
+  }
+  return tb;
+})();
+function crc32(bytes) {
+  let c = 0xFFFFFFFF;
+  for (let i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+
+function zipStore(files) {
+  const enc = new TextEncoder();
+  const chunks = [], central = [];
+  let offset = 0;
+  const u16 = n => [n & 0xFF, (n >>> 8) & 0xFF];
+  const u32 = n => [n & 0xFF, (n >>> 8) & 0xFF, (n >>> 16) & 0xFF, (n >>> 24) & 0xFF];
+  files.forEach(f => {
+    const name = enc.encode(f.name);
+    const data = enc.encode(f.data);
+    const crc = crc32(data);
+    // version 20, flag 0x0800 (UTF-8 names), method 0 (stored), time/date 1980-01-01
+    const common = [].concat(u16(20), u16(0x0800), u16(0), u16(0), u16(33),
+                             u32(crc), u32(data.length), u32(data.length), u16(name.length));
+    const local = new Uint8Array([].concat(u32(0x04034b50), common, u16(0)));
+    chunks.push(local, name, data);
+    central.push(new Uint8Array([].concat(u32(0x02014b50), u16(20), common,
+      u16(0), u16(0), u16(0), u16(0), u32(0), u32(offset))), name);
+    offset += local.length + name.length + data.length;
+  });
+  const cdSize = central.reduce((s, c) => s + c.length, 0);
+  const end = new Uint8Array([].concat(u32(0x06054b50), u16(0), u16(0),
+    u16(files.length), u16(files.length), u32(cdSize), u32(offset), u16(0)));
+  return new Blob(chunks.concat(central, [end]),
+    { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+}
+
+const xmlEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  // XML 1.0 forbids most control characters; a stray one from a paste would
+  // make Word refuse the whole file.
+  .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+
+// One paragraph. Line breaks in an answer become Word line breaks.
+function para(text, o) {
+  o = o || {};
+  const rpr = '<w:rPr><w:rFonts w:ascii="Georgia" w:hAnsi="Georgia"/>' +
+    (o.bold ? '<w:b/>' : '') + (o.italic ? '<w:i/>' : '') +
+    (o.color ? '<w:color w:val="' + o.color + '"/>' : '') +
+    '<w:sz w:val="' + (o.size || 22) + '"/></w:rPr>';
+  const runs = String(text).split(/\r?\n/).map((ln, i) =>
+    '<w:r>' + rpr + (i ? '<w:br/>' : '') + '<w:t xml:space="preserve">' + xmlEsc(ln) + '</w:t></w:r>').join('');
+  // Schema order matters inside pPr: keepNext precedes spacing, or strict
+  // readers (Word among them) can call the file corrupt.
+  const ppr = '<w:pPr>' + (o.keep ? '<w:keepNext/>' : '') +
+    '<w:spacing w:before="' + (o.before || 0) + '" w:after="' + (o.after == null ? 80 : o.after) + '"/></w:pPr>';
+  return '<w:p>' + ppr + runs + '</w:p>';
+}
+
+function docxBody() {
+  let b = para(t('plan_eyebrow').toUpperCase(), { size: 18, color: 'B23A28', after: 40 });
+  b += para(t('plan_title'), { bold: true, size: 40, color: '2E1A47', after: 60 });
+  b += para(t('plan_date', { date: today() }), { italic: true, size: 20, color: '6A5F72', after: 240 });
+  planModel().forEach(e => {
+    b += para(e.letter + '  ' + e.name, { bold: true, size: 30, color: '2E1A47', before: 240, after: 120, keep: true });
+    e.steps.forEach(s => {
+      b += para(s.no + '. ' + s.label, { bold: true, size: 24, color: '2E1A47', before: 120, after: 60, keep: true });
+      if (!s.answers.length) {
+        b += para(t('plan_unanswered'), { italic: true, color: '6A5F72' });
+        return;
+      }
+      s.answers.forEach(x => {
+        b += para(x.q, { italic: true, size: 20, color: '6A5F72', after: 20, keep: true });
+        b += para(x.a, { after: 100 });
+      });
+    });
+  });
+  return b;
+}
+
+function downloadDocx() {
+  const W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+  const doc = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+    '<w:document xmlns:w="' + W + '"><w:body>' + docxBody() +
+    '<w:sectPr><w:pgSz w:w="12240" w:h="15840"/>' +
+    '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="720" w:footer="720" w:gutter="0"/>' +
+    '</w:sectPr></w:body></w:document>';
+  const blob = zipStore([
+    { name: '[Content_Types].xml', data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+      '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+      '<Default Extension="xml" ContentType="application/xml"/>' +
+      '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
+      '</Types>' },
+    { name: '_rels/.rels', data: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>' +
+      '</Relationships>' },
+    { name: 'word/document.xml', data: doc }
+  ]);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'data-story-plan.docx';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+
+// ─── Screens ─────────────────────────────────────────────────────────────────
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+  window.scrollTo(0, 0);
+}
+function toPlan() { buildPlan(); show('screen-plan'); document.getElementById('plan-title').focus(); }
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+const setText = (id, key) => { document.getElementById(id).textContent = t(key); };
+setText('page-sub',      'page_sub');
+setText('intro-eyebrow', 'intro_eyebrow');
+setText('intro-title',   'intro_title');
+setText('intro-lead',    'intro_lead');
+setText('go-tool',       'intro_btn');
+setText('intro-note',    'intro_note');
+setText('to-plan',       'btn_plan');
+setText('to-plan-2',     'btn_plan');
+setText('reset',         'btn_reset');
+setText('saved-note',    'saved_note');
+setText('plan-eyebrow',  'plan_eyebrow');
+setText('plan-title',    'plan_title');
+setText('plan-lead',     'plan_lead');
+setText('back',          'btn_back');
+setText('print',         'btn_print');
+setText('docx',          'btn_docx');
+setText('scope-note',    'scope_note');
+document.getElementById('rail').setAttribute('aria-label', t('nav_label'));
+document.getElementById('plan-title').setAttribute('tabindex', '-1');
+
+buildWorksheet();
+refresh();
+
+const ws = document.getElementById('worksheet');
+ws.addEventListener('input', onInput);
+ws.addEventListener('change', onInput);
+
+document.getElementById('go-tool').addEventListener('click', () => {
+  show('screen-tool');
+  const first = document.querySelector('#worksheet select, #worksheet input, #worksheet textarea');
+  if (first) first.focus();
+});
+document.getElementById('to-plan').addEventListener('click', toPlan);
+document.getElementById('to-plan-2').addEventListener('click', toPlan);
+document.getElementById('back').addEventListener('click', () => show('screen-tool'));
+document.getElementById('print').addEventListener('click', () => window.print());
+document.getElementById('docx').addEventListener('click', downloadDocx);
+document.getElementById('reset').addEventListener('click', () => {
+  if (!window.confirm(t('confirm_reset'))) return;
+  answers = {};
+  persist();
+  buildWorksheet();
+  refresh();
+});
+// Printing from the worksheet prints the plan, so it must be current.
+window.addEventListener('beforeprint', buildPlan);
+</script>
+</body>
+</html>

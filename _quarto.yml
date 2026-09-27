@@ -15,6 +15,7 @@ project:
   #   gut/data/gut_cases.xlsx            -> gut/trust_your_gut.html
   #   evalpicker/data/evaluation_approaches.xlsx -> evalpicker/eval_picker.html
   #   formatpicker/data/delivery_formats.xlsx    -> formatpicker/format_picker.html
+  #   datastory/data/story_worksheet.xlsx        -> datastory/story_worksheet.html
   # Every generated page needs a build script here AND a resources entry below,
   # or it silently stops being published. Keep both lists in sync when merging.
   pre-render:
@@ -24,6 +25,7 @@ project:
     - gut/build_gut.R
     - evalpicker/build_eval.R
     - formatpicker/build_format.R
+    - datastory/build_story.R
   resources:
     - hiphop/hiphop_periodic_table.html
     - hiphop/data/hiphop_artists.xlsx
@@ -37,6 +39,8 @@ project:
     - evalpicker/data/evaluation_approaches.xlsx
     - formatpicker/format_picker.html
     - formatpicker/data/delivery_formats.xlsx
+    - datastory/story_worksheet.html
+    - datastory/data/story_worksheet.xlsx
     - "CV/Wylie CV 7.2026.pdf"
     - pics/brand/og-image.png
     - pics/brand/mark-on-light.svg

@@ -396,7 +396,7 @@ under the private working folder, not in this repo.
 | `formatpicker/data/delivery_formats.xlsx` | Source of truth. Sheets: **Rules** (3, one per question), **Levels** (13), **Formats** (21), **Copy** (41: UI strings plus one `reason_`/`short_` per rule). Editable in Excel |
 | `formatpicker/build_format.R` | Pre-render step. Validates the workbook (checks 1-5b from `build_eval.R`, minus the prerequisite checks 6-8), serializes the four sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__FORMATS_DATA__`, `__COPY_DATA__`, producing `formatpicker/format_picker.html` (gitignored; built in CI; never edit the output) |
 | `formatpicker/app/_template.html` | The picker's look + matching logic |
-| `teaching/index.qmd` | Links `formatpicker/format_picker.html` as a tool card, now its only link: it was a homepage featured card (`pics/thumb-formatpicker.jpg`, 1150x430) until the 2026-07-21 homepage declutter dropped both picker cards. Like the evaluation picker, it moved off `projects/index.qmd` in the July 2026 reshuffle |
+| `teaching/index.qmd` | Since 2026-09-27 the picker has no card of its own: it is the companion link on the Data STORY Worksheet card (maintainer's call, structure C below), and the worksheet's "Select the Format" step links to it too. Before that it had its own Teaching card, and before the 2026-07-21 homepage declutter a homepage featured card (`pics/thumb-formatpicker.jpg`, 1150x430). Like the evaluation picker, it moved off `projects/index.qmd` in the July 2026 reshuffle |
 
 ### The model
 
@@ -465,6 +465,65 @@ current headline is "There is no single best format, and that is the point." The
 homepage and Teaching card descriptions mirror the lead's premise sentence, so
 revise them together. This page is deliberately quieter than the site's hero
 voice; do not "punch it up."
+
+## Data STORY Worksheet (`datastory/`)
+
+Shipped 2026-09. A fillable planning worksheet, not a sorter: the five elements
+and seventeen steps of Figure 1 in the maintainer's "Cultivating a Court's Data
+STORY" (NCSC Trends 2025, ch. 12), each step a card of dropdowns, checkboxes and
+text boxes. It digitizes the paper version she already used (a Word table of
+element / step / answer, e.g. her NACM 2025 presentation notes). Same Excel to R
+to one-HTML-page shape as the pickers, vanilla JS, no CDN beyond Google Fonts,
+no new CI packages (readxl plus base R).
+
+Maintainer picks (2026-09-25): structure **C**, the worksheet is the hub and
+deeper tools branch off the step they serve ("Select the Format" links to the
+format picker; future STORY tools hang off their own steps rather than getting
+their own Teaching cards, because a page of single decision tools was judged "a
+bit much"). Name **The Data STORY Worksheet**; intro headline "A data story is
+planned long before it is written, and this is where the planning goes."
+Teaching page: one Data STORY card replaces the format picker's card, with the
+picker as a companion link; card description maintainer-picked 2026-09-27
+("...It will not write the story for you, but it will show you which parts
+you have not thought through yet"). The Teaching grid still has six cards. No worked example yet (her NACM notes name
+co-presenters and OVW guidance; use them only scrubbed and with her say-so).
+
+### The pieces
+
+| File | Role |
+|---|---|
+| `datastory/data/story_worksheet.xlsx` | Source of truth. Sheets: **Elements** (5), **Steps** (17; label is Figure 1 verbatim, help_text condenses the chapter, optional link_label + link_url), **Fields** (40; input_type select / multi / text / textarea, list_id for the first two), **Options** (41), **Copy** (23 UI strings) |
+| `datastory/build_story.R` | Pre-render step. Validates, then injects `__ELEMENTS_DATA__`, `__STEPS_DATA__`, `__FIELDS_DATA__`, `__OPTIONS_DATA__`, `__COPY_DATA__`, producing `datastory/story_worksheet.html` (gitignored; built in CI; never edit the output) |
+| `datastory/app/_template.html` | Look and behaviour: intro, worksheet with a sticky S-T-O-R-Y rail showing per-element progress, and the plan screen |
+
+### Rules that are decisions
+
+- **Two lists are borrowed, not authored.** `@formats` (Formats sheet
+  format_name) and `@audiences` (Levels audience labels) are read from
+  `formatpicker/data/delivery_formats.xlsx`, so the worksheet and the picker it
+  links to cannot disagree. The Options sheet may not define `@` ids (the
+  validator refuses). Adding a format to the picker adds it here for free.
+- **Answers never leave the browser.** localStorage key
+  `datastory-worksheet-v1`, every access in try/catch; the page works without
+  storage. Courts may plan with real findings, so do not add anything that
+  posts answers anywhere.
+- **Output is print plus Word.** Printing from any screen prints the plan (the
+  print CSS hides the form), and "Download as Word" builds a real `.docx` in the
+  browser: a stored (uncompressed) zip with a hand-rolled CRC-32 and three
+  parts. WordprocessingML is order-sensitive: inside `w:pPr`, `keepNext` must
+  precede `spacing`, and inside `w:rPr` the order is rFonts, b, i, color, sz. A
+  wrong order can make Word call the file corrupt, so keep that order when
+  editing `para()`. Control characters are stripped before they reach the XML.
+- The validator checks: unique ids on every sheet, parents exist, every element
+  has a step and every step a field, numeric `order`, known input types, every
+  select/multi names a list with 2+ options and text fields name none, link
+  pairs complete, and every Copy key the template names resolves (same scan as
+  the pickers' check 5b). A failed render is the validator working; fix the
+  workbook.
+- Verification without R: replicate the injection in Python, drive the page in
+  headless Chromium, and open the downloaded `.docx` with python-docx
+  (installable from a downloaded wheel; LibreOffice is present in the CCR image
+  but cannot load files).
 
 ## The Plot So Far (`selected-work/`)
 
@@ -696,15 +755,16 @@ that the whole group is imaginary.
 
 - `barnum/` mirrors the hiphop pattern (Excel → `build_barnum.R` → HTML) and is
   the template for self-contained interactives: `howold/` ("How Old Is Old?"),
-  `gut/` ("Trust Your Gut?"), `evalpicker/` and `formatpicker/` (both above) all
-  follow it. Each is a
+  `gut/` ("Trust Your Gut?"), `evalpicker/`, `formatpicker/` and `datastory/`
+  (all above) follow it. Each is a
   `build_*.R` pre-render step plus `app/_template.html` plus `data/*.xlsx`,
   with a gitignored HTML output: edit the xlsx, CI rebuilds. howold and gut
   shipped July 2026 (reveal punch lines maintainer-approved 2026-07). The July
   2026 reshuffle turned the Teaching page from prose into a card grid (matching
   Projects/Writing): it keeps the "How I Teach" intro and concept pills, then a
   `.project-grid` of six tool cards (the Hip-Hop module cross-listed from
-  Projects, Barnum, howold, gut, and both pickers), then "Topics I Teach". The
+  Projects, Barnum, howold, gut, the evaluation picker, and since 2026-09-27
+  the Data STORY Worksheet, which absorbed the format picker's card), then "Topics I Teach". The
   per-tool session-design callouts were condensed into one after the grid.
   Before that, howold and gut sat under a prose "Two Shorter Exercises" heading.
   How Old Is Old? and Counted
