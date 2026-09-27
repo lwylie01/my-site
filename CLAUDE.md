@@ -799,6 +799,16 @@ that the whole group is imaginary.
   the essay was live. The link sits in howold's reveal (`#screen-2`), which is
   `display:none` until the exercise is done, so drive the sliders and both
   buttons to see it.
+  **Projects regroup (2026-09-27, maintainer-picked)**: the three project
+  cards used to sit under the page's only heading, "The Method", so they read
+  as part of it. The work now comes first under **The Work** (`01 · projects`,
+  `#the-work`), with The Method after it (`02 · how I work`, `#the-method`),
+  both as raw `<h2 class="section-heading" data-eyebrow=...>` inside the page's
+  single `{=html}` block. The tech chips (R / Quarto, HTML / JS, Excel /
+  readxl) were dropped here too, matching Teaching; the topic chips stay. The
+  Hip-Hop card's jargon sentence became "Built to teach what goes into a score
+  and what can quietly bend it, using a subject people genuinely argue about"
+  (her pick), and its chips are Interactive plus Measurement.
   No coming-soon project card remains: "A Right That Exists on Paper"
   (`compassionaterelease/`, bullet below) shipped 2026-07-19 (#74) and retired
   the last one, so `projects/index.qmd` has three live cards (the periodic
