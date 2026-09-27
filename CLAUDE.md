@@ -68,7 +68,10 @@ hip-hop `STYLE_COLORS`/`SCORE_HUES`/`CONF_COLOR` and every dashboard `*_pal`
 Areas colours.
 
 Maintainer workflow (learned 2026-07): PRs merge within minutes of opening.
-One PR per batch of work. Immediately before every push, check whether the
+One PR per batch of work. Open PRs **ready for review, never as drafts**
+(maintainer, 2026-09-27): if a tool creates one as a draft, mark it ready
+straight away. A PR that must not merge yet (copy still awaiting her pick)
+says so in its title instead of hiding behind draft status. Immediately before every push, check whether the
 branch's PR just merged; if it did, restart the branch from origin/main (same
 name, force-with-lease) and open a new PR rather than stacking. This also
 protects the unmergeable binary xlsx.
