@@ -851,6 +851,13 @@ that the whole group is imaginary.
   the maintainer's say-so. Note for future exhibits: a Wylie-coded age span
   runs 45 (LA) to 70 (SC, federal), not Holland's 55 to 70, because statutes
   and department policies genuinely differ.
+- Standalone-template footers follow the column above them (2026-09-27):
+  intro and plan screens use the 760px `.wrap` while the footer was sized for
+  the tool screen (1000-1100px), so its text sat 120-170px left of the content.
+  A `body:has(#screen-intro.active...) footer { max-width: 760px }` rule in
+  evalpicker, formatpicker and datastory fixes it, and the phone query gives
+  `footer` the same 1rem gutter as `main`. A new standalone page with screens of
+  different widths needs the same rule.
 - The standalone templates carry their own CSS and had no inline prose link
   until #51, so there is no generic `a` rule to inherit and a bare `<a>` in body
   copy renders browser-default blue. Style it, and measure against the rendered
