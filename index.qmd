@@ -49,7 +49,7 @@ editor:
 
 ```{=html}
 <div class="bio-block">
-  <span class="bio-avatar"><img src="pics/Headshot1.jpg" alt="Lindsey E. Wylie" /></span>
+  <span class="bio-avatar"><img src="pics/headshot-420.jpg" alt="Lindsey E. Wylie" width="420" height="576" /></span>
   <div class="bio-body">
     <p>I study how the legal system measures people: how it decides who
     counts as an adult, who is high-risk, who is competent, and what follows
@@ -100,11 +100,10 @@ editor:
       <img src="pics/thumb-periodic.jpg" alt="" loading="lazy" />
     </a>
     <span class="project-card-tag">Data Storytelling</span>
-    <p class="project-card-title"><a href="hiphop/hiphop_periodic_table.html">A Periodic Table of Hip-Hop Artists</a></p>
+    <p class="project-card-title"><a href="hiphop/hiphop_periodic_table.html">The Hip-Hop Periodic Table</a></p>
     <p class="project-card-desc">
-      A dataset built to teach measurement validity, sampling bias, uncertainty
-      communication, and visualization design, using a subject people genuinely
-      argue about.
+      A dataset of 187 hip-hop acts, built to teach what goes into a score and
+      what can quietly bend it, using a subject people genuinely argue about.
     </p>
   </div>
 
