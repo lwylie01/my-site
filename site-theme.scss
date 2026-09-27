@@ -909,7 +909,8 @@ details.codebook-fold[open] > summary::before { content: "\25BE\00A0"; }
 .essay-meta {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
+  gap: 0.75rem;
   margin-bottom: 0.75rem;
 }
 
@@ -922,7 +923,10 @@ details.codebook-fold[open] > summary::before { content: "\25BE\00A0"; }
   color: $deep-coral;
 }
 
-.essay-read { font-size: 0.75rem; color: $muted-ink; }
+.essay-read { font-size: 0.75rem; color: $muted-ink; white-space: nowrap; flex: none; }
+/* Where a piece was published, when it lives elsewhere: its own line, because
+   a venue is too long for the read-time slot beside the tag. */
+.essay-venue { font-size: 0.8rem; font-style: italic; color: $muted-ink; margin: -0.25rem 0 0.5rem; }
 
 .essay-title {
   font-size: 1.1rem;
@@ -943,6 +947,31 @@ details.codebook-fold[open] > summary::before { content: "\25BE\00A0"; }
   font-size: 0.75rem;
   font-weight: 600;
   color: $deep-coral;
+}
+
+/* The visible "Read" affordance on a live essay card: the whole card is the
+   link, but on a phone nothing else says so. */
+.essay-go {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: $deep-coral;
+}
+
+/* Writing's "In the Works": unwritten essays as a compact list, not cards, so
+   they neither look clickable nor push the published work down the page. */
+.essay-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 2rem;
+  li {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid #E7DED0;
+    &:last-child { border-bottom: none; }
+  }
+  .essay-tag { display: block; margin-bottom: 0.2rem; }
+  .essay-title { font-size: 1rem; margin-bottom: 0.2rem; }
+  .essay-desc { margin-bottom: 0; }
 }
 
 /* CONCEPT PILLS */
