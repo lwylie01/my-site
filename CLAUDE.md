@@ -805,7 +805,10 @@ that the whole group is imaginary.
   `#the-work`), with The Method after it (`02 · how I work`, `#the-method`),
   both as raw `<h2 class="section-heading" data-eyebrow=...>` inside the page's
   single `{=html}` block. The tech chips (R / Quarto, HTML / JS, Excel /
-  readxl) were dropped here too, matching Teaching; the topic chips stay.
+  readxl) were dropped here too, matching Teaching; the topic chips stay. The
+  Hip-Hop card's jargon sentence became "Built to teach what goes into a score
+  and what can quietly bend it, using a subject people genuinely argue about"
+  (her pick), and its chips are Interactive plus Measurement.
   No coming-soon project card remains: "A Right That Exists on Paper"
   (`compassionaterelease/`, bullet below) shipped 2026-07-19 (#74) and retired
   the last one, so `projects/index.qmd` has three live cards (the periodic

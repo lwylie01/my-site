@@ -28,12 +28,13 @@ toc: false
     <p class="project-card-desc">
       A fully documented dataset of 187 hip-hop acts (143 solo artists and 44
       groups), each scored on five parts of lyricism, with confidence ratings
-      for every act and a published data dictionary. Built to show how a score
-      gets made, and how much it depends on who was counted and how, using a
-      subject people genuinely argue about.
+      for every act and a published data dictionary. Built to teach what goes into
+      a score and what can quietly bend it, using a subject people genuinely
+      argue about.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#6A5F72;"></span>Interactive</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Measurement</span>
     </div>
     <br>
     <a href="../hiphop/hiphop_periodic_table.html" style="font-weight:600; color:#B23A28;">
