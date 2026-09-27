@@ -219,6 +219,11 @@
     margin: 0 auto;
   }
   footer p { margin-bottom: 0.6rem; max-width: 75ch; }
+  /* The footer follows the column above it. The intro and plan screens use the
+     narrow 760px .wrap, so while either shows, the footer narrows to match;
+     otherwise its text started 120px left of the content it sits under. Browsers without
+     :has() keep the wide footer, which is only misaligned, never broken. */
+  body:has(#screen-intro.active, #screen-plan.active) footer { max-width: 760px; }
   /* Underlined on purpose: --link and the --muted text around it are close in
      hue, so colour alone would not mark the link. */
   footer a { color: var(--link); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
@@ -243,7 +248,7 @@
   }
 
   @media (max-width: 640px) {
-    header, #rail, main { padding-left: 1rem; padding-right: 1rem; }
+    header, #rail, main, footer { padding-left: 1rem; padding-right: 1rem; }
     .wrap { padding-left: 1rem; padding-right: 1rem; }
     h2 { font-size: 1.5rem; }
     /* On a phone the rail keeps the letters and drops the names, or it eats
