@@ -52,9 +52,8 @@ went into that call.
     <span class="project-card-tag">Exercise · Measurement</span>
     <p class="project-card-title">The Barnum Test</p>
     <p class="project-card-desc">
-      Answer a few questions, read the profile written about you, and rate how
-      accurate it feels; the reveal explains why a description that fits everyone
-      tells you very little about anyone.
+      A short personality profile that almost everyone rates as accurate, which
+      is exactly the problem it is built to show.
     </p>
     <a href="../barnum/barnum_test.html" style="font-weight:600; color:#B23A28;">
       Take the Barnum Test →
