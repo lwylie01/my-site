@@ -315,6 +315,12 @@ h2.section-heading[data-eyebrow]::before {
   height: 150px;
   object-fit: cover;
 }
+/* On a phone the card is narrower than the 1150x430 screenshot's shape, so a
+   fixed 150px height cropped its sides ("...dic Table of Hip-Hop Artists").
+   Below 700px the box takes the screenshot's own proportions instead. */
+@media (max-width: 700px) {
+  .project-card-thumb img { height: auto; aspect-ratio: 1150 / 430; }
+}
 
 /* Scatter-and-trend motif used as a divider between homepage sections:
    the mark centered between two faint rules. */

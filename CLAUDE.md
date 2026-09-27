@@ -1074,6 +1074,18 @@ that the whole group is imaginary.
   at a time", the phrase her subtitle review had already rejected as
   verging on snarky). The close still links How Old Is Old? and the
   phrase "count some people wrong" stays as the echo of the old name.
+- **Homepage phone pass (2026-09-27, maintainer-picked).** The bio avatar is
+  `pics/headshot-420.jpg` (420x576, ~39 KB, no metadata). The original
+  `pics/Headshot1.jpg` was a 949 KB 2787x3824 phone photo shown at 140px, and
+  its EXIF carried **GPS coordinates**, served publicly until this pass. Any
+  photo added to the site must be resized and stripped of EXIF first (Pillow:
+  `ImageOps.exif_transpose`, resize, save without `exif=`); a quick scan of
+  every JPEG for a GPS IFD with lat/long takes seconds. The Hip-Hop card is
+  **"The Hip-Hop Periodic Table"** on the homepage, Teaching and Projects alike
+  (it was three different names), and the homepage description matches
+  Projects' plain wording. Below 700px `.project-card-thumb img` takes the
+  screenshot's own 1150/430 proportions, because the fixed 150px height cropped
+  its sides on a phone.
 - Every page with `title: ""` (the section indexes draw their own
   `.page-header`, so they all use it) also needs a `pagetitle:` in its front
   matter, or Quarto titles the browser tab and og:title from the filename:
