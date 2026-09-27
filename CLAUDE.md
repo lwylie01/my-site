@@ -567,9 +567,18 @@ with text. Dot stacks grow upward from a baseline that centers the deepest
 stack, so single dots sit level with their label. Each research area shows a
 curated list plus a **"N more publications in this area" expander that holds
 only what the curated list does not already show**; do not change it back to
-an all-inclusive list, repeats were the complaint that prompted it. The
-Writing page's coming-soon essay cards carry **no `href`** (they were
-`href="#"` dead links); give a card its real link when the essay ships.
+an all-inclusive list, repeats were the complaint that prompted it.
+
+The Writing page (regrouped 2026-09-27, maintainer-picked) has two labelled
+sections: **On the Record** (`01 · published`, `#on-the-record`), live pieces
+as `.essay-card` links each ending in a visible `.essay-go` "Read ... →" line,
+and **In the Works** (`02 · in progress`, `#in-the-works`), unwritten essays
+as a compact `.essay-list` with no read times (a read time on an unwritten
+piece is a promise the page cannot keep) and no hover lift, so they do not
+look clickable. When an essay ships, move it from the list to a card with its
+real link. "Cultivating a Court's Data STORY" is the published Trends 2025
+chapter, so it sits On the Record linking the NCSC PDF, with its venue as an
+`.essay-venue` line; it was wrongly listed as coming soon until then.
 
 ### The pieces
 
