@@ -764,12 +764,27 @@ that the whole group is imaginary.
   with a gitignored HTML output: edit the xlsx, CI rebuilds. howold and gut
   shipped July 2026 (reveal punch lines maintainer-approved 2026-07). The July
   2026 reshuffle turned the Teaching page from prose into a card grid (matching
-  Projects/Writing): it keeps the "How I Teach" intro and concept pills, then a
-  `.project-grid` of six tool cards (the Hip-Hop module cross-listed from
-  Projects, Barnum, howold, gut, the evaluation picker, and since 2026-09-27
-  the Data STORY Worksheet, which absorbed the format picker's card), then "Topics I Teach". The
-  per-tool session-design callouts were condensed into one after the grid.
-  Before that, howold and gut sat under a prose "Two Shorter Exercises" heading.
+  Projects/Writing). **Teaching regroup (2026-09-27, maintainer-picked)**: the
+  maintainer found the intros cheesy and the page too full for visitors who are
+  not data people or social scientists, so "The Hook" section and its six
+  jargon concept pills were removed, and the six cards split into **Short
+  Exercises** (Hip-Hop Periodic Table first as the flagship, then Barnum, How Old
+  Is Old?, Trust Your Gut?) and **Planning Tools** (evaluation picker, Data
+  STORY Worksheet), each with a one-sentence intro. Those two headings are
+  working names she kept over the themed pairs offered (Cold Reads / Table
+  Reads / Rehearsals with Storyboards / Outlines) and may revisit. Cards carry a
+  plain tag ("Exercise · Prediction", "Planning Tool · Evaluation") instead of
+  the old tech chips (R / Quarto, HTML / JS), which told a non-data visitor
+  nothing; do not bring the tech chips back. Both grids use
+  `.project-grid--pairs` (site-theme.scss: two columns, one below 700px),
+  because the three-column default orphaned the fourth exercise. The header
+  subtitle is "The exercises below each ask you to make a quick judgment, and
+  the planning tools help you work through an evaluation or report of your
+  own," and the header link names the chapter by its real title, "Cultivating a
+  Court's Data STORY" (it had read "Telling Your Court's Data Story"). The
+  Usual Subjects is trimmed to one line per topic. Phone height went from
+  4,656px to 3,519px. Before all this, howold and gut sat under a prose "Two
+  Shorter Exercises" heading.
   How Old Is Old? and Counted
   Wrong now link to each other: the howold link was deferred while the essay
   was still coming, so #48 corrected only its tense and #51 added the link once
