@@ -100,7 +100,7 @@ to reach.
 
   <div class="project-card">
     <span class="project-card-tag">Planning Tool · Evaluation</span>
-    <p class="project-card-title">Which Evaluation Should We Do?</p>
+    <p class="project-card-title">Which Evaluation Should We&nbsp;Do?</p>
     <p class="project-card-desc">
       Say what you have and what you want to know, and every type of evaluation
       sorts into what fits, what does not, and what could fit with more time or
