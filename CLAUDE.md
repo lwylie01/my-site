@@ -770,9 +770,17 @@ that the whole group is imaginary.
   jargon concept pills were removed, and the six cards split into **Short
   Exercises** (Hip-Hop Periodic Table first as the flagship, then Barnum, How Old
   Is Old?, Trust Your Gut?) and **Planning Tools** (evaluation picker, Data
-  STORY Worksheet), each with a one-sentence intro. Those two headings are
-  working names she kept over the themed pairs offered (Cold Reads / Table
-  Reads / Rehearsals with Storyboards / Outlines) and may revisit. Cards carry a
+  STORY Worksheet), each with a one-sentence intro. Same day, those working
+  names became themed headings with the plain names kept as `data-eyebrow`
+  labels (maintainer-picked from a story-craft brainstorm): **Warm-Ups**
+  (`01 · short exercises`) and **Storyboards** (`02 · planning tools`), with
+  The Usual Subjects labelled `03 · topics`. "Storyboards" is grounded, not a
+  pun: her chapter recommends storyboarding to plan a data story. The labels
+  are the findability half of the bargain, so keep them if the headings change
+  again. Anchors stay `#short-exercises` / `#planning-tools`. Rejected
+  directions, for the record: stage and screen (Table Reads, Cold Reads),
+  case files (Case Files, The Lineup), and plain (Try It Yourself / Plan Your
+  Own). Cards carry a
   plain tag ("Exercise · Prediction", "Planning Tool · Evaluation") instead of
   the old tech chips (R / Quarto, HTML / JS), which told a non-data visitor
   nothing; do not bring the tech chips back. Both grids use

@@ -21,7 +21,7 @@ toc: false
 </div>
 ```
 
-## Short Exercises {.section-heading}
+## Warm-Ups {#short-exercises .section-heading data-eyebrow="01 · short exercises"}
 
 Each one asks you to make a quick call about something familiar, such as a
 favorite artist or the age at which someone becomes old, and then shows what
@@ -89,7 +89,7 @@ went into that call.
 </div>
 ```
 
-## Planning Tools {.section-heading}
+## Storyboards {#planning-tools .section-heading data-eyebrow="02 · planning tools"}
 
 These are for when you have an evaluation or report of your own to plan, and
 they sort through the options with you based on what you have and who you need
@@ -135,7 +135,7 @@ to reach.
 
 ---
 
-## The Usual Subjects {.section-heading}
+## The Usual Subjects {#the-usual-subjects .section-heading data-eyebrow="03 · topics"}
 
 **Measurement and metrics:** building performance measures that hold up, and
 knowing when a composite score helps and when it misleads.
