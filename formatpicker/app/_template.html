@@ -350,6 +350,12 @@
     margin: 0 auto;
   }
   footer p { margin-bottom: 0.6rem; max-width: 75ch; }
+  /* The footer follows the column above it. The intro screen uses the narrow
+     760px .wrap, so while it shows, the footer narrows to match; otherwise its
+     text started 170px left of the content it sits under. The tool screen's
+     main is 1100px, the footer's own width, so it needs nothing. Browsers without
+     :has() keep the wide footer, which is only misaligned, never broken. */
+  body:has(#screen-intro.active) footer { max-width: 760px; }
   /* Underlined on purpose: --link and the --muted text around it are close in
      hue, so colour alone would not mark the link. Hover darkens rather than
      brightening, so both states clear AA. */
@@ -371,7 +377,7 @@
   }
 
   @media (max-width: 640px) {
-    header, #stats-bar, main { padding-left: 1rem; padding-right: 1rem; }
+    header, #stats-bar, main, footer { padding-left: 1rem; padding-right: 1rem; }
     .wrap, .wrap-wide { padding-left: 1rem; padding-right: 1rem; }
     h2 { font-size: 1.5rem; }
   }
