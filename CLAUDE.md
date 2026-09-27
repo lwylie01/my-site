@@ -569,6 +569,21 @@ curated list plus a **"N more publications in this area" expander that holds
 only what the curated list does not already show**; do not change it back to
 an all-inclusive list, repeats were the complaint that prompted it.
 
+Phone pass 2026-09-27 (maintainer-picked): both figures draw twice. At 560px
+and wider they are the original 920-unit drawings (timeline gutter labels,
+citation labels left of the bars, `minWidth: 680px` with the swipe hint as a
+fallback). Below 560px a compact drawing is built to the pixel instead: the
+thread names move to a wrapping HTML legend, the timeline gets the full width
+(ticks every fourth year, a thin color rule per lane) and each citation label
+sits above its bar, so nothing needs swiping and every count shows. Tooltips
+open on click as well as hover, because on touch `pointerleave` fires the
+moment a finger lifts and a hover-only tip just flashes; only a mouse leaving
+hides it, and a tap outside the charts dismisses it. That is what makes the
+header's "Tap or hover any point" true, so keep the two together. Headings
+carry plain labels (`01 · research areas`, `02 · program evaluations`,
+`03 · citations`, `04 · cv`), matching the other section pages, and the
+`.pub-all` summaries are padded to a ~48px tap target in brand muted ink.
+
 The Writing page (regrouped 2026-09-27, maintainer-picked) has two labelled
 sections: **On the Record** (`01 · published`, `#on-the-record`), live pieces
 as `.essay-card` links each ending in a visible `.essay-go` "Read ... →" line,
