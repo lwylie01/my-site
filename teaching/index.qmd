@@ -154,22 +154,28 @@ start an argument, not settle one.
   </div>
 
   <div class="project-card">
-    <span class="project-card-tag">Data Storytelling · Decision Tool</span>
-    <p class="project-card-title">Which Deliverable Fits?</p>
+    <span class="project-card-tag">Data Storytelling · Worksheet</span>
+    <p class="project-card-title">The Data STORY Worksheet</p>
     <p class="project-card-desc">
-      One set of findings can become a two-page brief, a formal report, a
-      dashboard, or a documentary, and the right choice turns on who it is for,
-      how far it has to travel, and what you need it to do.
+      The five elements of a data story, strategy through yield, laid out as
+      seventeen steps you can fill in, with a one-page plan to print or download
+      at the end. It will not write the story for you, but it will show you which
+      parts you have not thought through yet.
     </p>
     <div class="project-card-meta">
       <span><span class="project-card-accent" style="background:#A98BB8;"></span>R / Quarto</span>
-      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Decision tool</span>
+      <span><span class="project-card-accent" style="background:#2E1A47;"></span>Worksheet</span>
       <span><span class="project-card-accent" style="background:#F4715C;"></span>Interactive</span>
     </div>
     <br>
-    <a href="../formatpicker/format_picker.html" style="font-weight:600; color:#B23A28;">
-      Open the format picker →
+    <a href="../datastory/story_worksheet.html" style="font-weight:600; color:#B23A28;">
+      Open the worksheet →
     </a>
+    <p style="font-size:0.85rem; margin-top:0.5rem; color:#6A5F72;">
+      Companion tool:
+      <a href="../formatpicker/format_picker.html">format picker</a>
+      (which deliverable fits)
+    </p>
   </div>
 
 </div>

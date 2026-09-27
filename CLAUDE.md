@@ -396,7 +396,7 @@ under the private working folder, not in this repo.
 | `formatpicker/data/delivery_formats.xlsx` | Source of truth. Sheets: **Rules** (3, one per question), **Levels** (13), **Formats** (21), **Copy** (41: UI strings plus one `reason_`/`short_` per rule). Editable in Excel |
 | `formatpicker/build_format.R` | Pre-render step. Validates the workbook (checks 1-5b from `build_eval.R`, minus the prerequisite checks 6-8), serializes the four sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__FORMATS_DATA__`, `__COPY_DATA__`, producing `formatpicker/format_picker.html` (gitignored; built in CI; never edit the output) |
 | `formatpicker/app/_template.html` | The picker's look + matching logic |
-| `teaching/index.qmd` | Links `formatpicker/format_picker.html` as a tool card, now its only link: it was a homepage featured card (`pics/thumb-formatpicker.jpg`, 1150x430) until the 2026-07-21 homepage declutter dropped both picker cards. Like the evaluation picker, it moved off `projects/index.qmd` in the July 2026 reshuffle |
+| `teaching/index.qmd` | Since 2026-09-27 the picker has no card of its own: it is the companion link on the Data STORY Worksheet card (maintainer's call, structure C below), and the worksheet's "Select the Format" step links to it too. Before that it had its own Teaching card, and before the 2026-07-21 homepage declutter a homepage featured card (`pics/thumb-formatpicker.jpg`, 1150x430). Like the evaluation picker, it moved off `projects/index.qmd` in the July 2026 reshuffle |
 
 ### The model
 
@@ -483,7 +483,9 @@ their own Teaching cards, because a page of single decision tools was judged "a
 bit much"). Name **The Data STORY Worksheet**; intro headline "A data story is
 planned long before it is written, and this is where the planning goes."
 Teaching page: one Data STORY card replaces the format picker's card, with the
-picker as a companion link. No worked example yet (her NACM notes name
+picker as a companion link; card description maintainer-picked 2026-09-27
+("...It will not write the story for you, but it will show you which parts
+you have not thought through yet"). The Teaching grid still has six cards. No worked example yet (her NACM notes name
 co-presenters and OVW guidance; use them only scrubbed and with her say-so).
 
 ### The pieces
@@ -753,15 +755,16 @@ that the whole group is imaginary.
 
 - `barnum/` mirrors the hiphop pattern (Excel → `build_barnum.R` → HTML) and is
   the template for self-contained interactives: `howold/` ("How Old Is Old?"),
-  `gut/` ("Trust Your Gut?"), `evalpicker/` and `formatpicker/` (both above) all
-  follow it. Each is a
+  `gut/` ("Trust Your Gut?"), `evalpicker/`, `formatpicker/` and `datastory/`
+  (all above) follow it. Each is a
   `build_*.R` pre-render step plus `app/_template.html` plus `data/*.xlsx`,
   with a gitignored HTML output: edit the xlsx, CI rebuilds. howold and gut
   shipped July 2026 (reveal punch lines maintainer-approved 2026-07). The July
   2026 reshuffle turned the Teaching page from prose into a card grid (matching
   Projects/Writing): it keeps the "How I Teach" intro and concept pills, then a
   `.project-grid` of six tool cards (the Hip-Hop module cross-listed from
-  Projects, Barnum, howold, gut, and both pickers), then "Topics I Teach". The
+  Projects, Barnum, howold, gut, the evaluation picker, and since 2026-09-27
+  the Data STORY Worksheet, which absorbed the format picker's card), then "Topics I Teach". The
   per-tool session-design callouts were condensed into one after the grid.
   Before that, howold and gut sat under a prose "Two Shorter Exercises" heading.
   How Old Is Old? and Counted
