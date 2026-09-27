@@ -158,11 +158,13 @@ ul.task-list li input[type="checkbox"] {
 
 <style>
   .pub-all { margin: 0.2rem 0 2rem; }
+  /* Tall enough to tap: at 0.2rem padding the summary was ~20px, under the
+     24px minimum target. Muted ink / Ink Plum replace the old off-brand grays. */
   .pub-all summary {
-    cursor: pointer; font-weight: 600; color: #4b5563; font-size: 0.92rem;
-    padding: 0.2rem 0; list-style-position: outside;
+    cursor: pointer; font-weight: 600; color: #6A5F72; font-size: 0.92rem;
+    padding: 0.65rem 0; list-style-position: outside;
   }
-  .pub-all summary:hover { color: #1f2937; }
+  .pub-all summary:hover { color: #2E1A47; }
   .pub-all[open] summary { margin-bottom: 0.5rem; }
   .pub-type { color: #6A5F72; font-size: 0.85em; }
 </style>
@@ -172,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
   <h1 class="page-header-title">The Plot So Far</h1>
   <p class="page-header-sub">
     Every published work (articles, law reviews, book chapters, and the
-    book) plotted by year and organized into four threads. Hover
+    book) plotted by year and organized into four threads. Tap or hover
     any point for the citation; highlights follow.
   </p>
 </div>
@@ -201,10 +203,13 @@ ul.task-list li input[type="checkbox"] {
 
   const years = PUBS.map(p => p.y);
   const Y0 = Math.min(...years), Y1 = Math.max(...years);
-  // Area labels live in a left gutter and the years axis starts after it, so
-  // label text and data dots occupy separate columns and can never collide.
-  const W = 920, GUT_W = 196, PAD_R = 16, PAD_T = 8, TICK_H = 30;
-  const DOT_R = 6, STACK_GAP = 17, LINE_H = 16;
+
+  const ns = "http://www.w3.org/2000/svg";
+  const el = (n, attrs) => {
+    const e = document.createElementNS(ns, n);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  };
 
   // simple word-wrap for the gutter labels
   const wrapLabel = (label, max) => {
@@ -218,16 +223,7 @@ ul.task-list li input[type="checkbox"] {
     return lines;
   };
 
-  const ns = "http://www.w3.org/2000/svg";
-  const el = (n, attrs) => {
-    const e = document.createElementNS(ns, n);
-    for (const k in attrs) e.setAttribute(k, attrs[k]);
-    return e;
-  };
-  const X0 = GUT_W + 12, X1 = W - PAD_R - 6;
-  const xFor = y => X0 + ((y - Y0) / (Y1 - Y0)) * (X1 - X0);
-
-  // lane heights sized to the deepest stack in each thread
+  // stack index per thread-year, computed once
   const stacks = {};
   PUBS.forEach(p => {
     const k = p.t + p.y;
@@ -240,53 +236,9 @@ ul.task-list li input[type="checkbox"] {
       .filter(k => k.startsWith(t.key)).map(k => stacks[k]));
   });
 
-  // lane height fits whichever is taller: the dot stack or the wrapped label
-  let laneY = PAD_T;
-  const lanes = {};
-  THREADS.forEach(t => {
-    const lines = wrapLabel(t.label, 22);
-    const h = Math.max(laneMax[t.key] * STACK_GAP + 6, lines.length * LINE_H + 6) + 14;
-    lanes[t.key] = { top: laneY, height: h, lines: lines, max: laneMax[t.key], ...t };
-    laneY += h;
-  });
-  const H = laneY + TICK_H;
-
-  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "group",
-    "aria-label": "Timeline of publications by year and thread" });
-  svg.style.fontFamily = "inherit";
-  // below this width the chart scrolls horizontally instead of shrinking,
-  // so the text stays legible on phones
-  svg.style.minWidth = "680px";
-  svg.style.display = "block";
-
-  // hairline year gridlines + ticks (solid, recessive)
-  for (let y = Y0; y <= Y1; y++) {
-    const x = xFor(y);
-    svg.appendChild(el("line", { x1: x, y1: PAD_T, x2: x, y2: laneY, stroke: "#f0ece7", "stroke-width": 1 }));
-    if (y % 2 === 1) {
-      const tick = el("text", { x: x, y: laneY + 20, "text-anchor": "middle", fill: "#777", "font-size": 13.5 });
-      tick.style.fontVariantNumeric = "tabular-nums";
-      tick.textContent = y;
-      svg.appendChild(tick);
-    }
-  }
-
-  // lane separators + gutter labels (the identity channel — text in ink,
-  // swatch carries color), vertically centered in each lane
-  THREADS.forEach((t, i) => {
-    const L = lanes[t.key];
-    if (i > 0) svg.appendChild(el("line", { x1: 8, y1: L.top, x2: W - PAD_R, y2: L.top, stroke: "#eee9e4", "stroke-width": 1 }));
-    const mid = L.top + L.height / 2;
-    svg.appendChild(el("circle", { cx: 14, cy: mid, r: 6, fill: t.color }));
-    L.lines.forEach((line, k) => {
-      const y = mid + (k - (L.lines.length - 1) / 2) * LINE_H + 5;
-      const lbl = el("text", { x: 27, y: y, fill: "#3C3C3C", "font-size": 14.5, "font-weight": 600 });
-      lbl.textContent = line;
-      svg.appendChild(lbl);
-    });
-  });
-
-  // dots: series color fill + 2px surface ring; 24px transparent hit target
+  // Tooltip. On a phone there is no hover: pointerleave fires the moment a
+  // finger lifts, so touch taps are handled by click and dismissed by a tap
+  // elsewhere, and only a mouse leaving hides the tip.
   const tip = document.getElementById("pub-tooltip");
   const showTip = (p, target) => {
     tip.replaceChildren();
@@ -306,32 +258,127 @@ ul.task-list li input[type="checkbox"] {
   };
   const hideTip = () => { tip.style.display = "none"; };
 
-  PUBS.forEach(p => {
-    const L = lanes[p.t];
-    const cx = xFor(p.y);
-    // stacks grow upward from a baseline that centers the deepest stack in
-    // the lane, so single dots sit level with their gutter label
-    const base = L.top + L.height / 2 + ((L.max - 1) * STACK_GAP) / 2;
-    const cy = base - p.stackIdx * STACK_GAP;
-    svg.appendChild(el("circle", { cx, cy, r: DOT_R, fill: L.color, stroke: "#ffffff", "stroke-width": 2 }));
-    const hit = el("circle", { cx, cy, r: 12, fill: "transparent", tabindex: 0, role: "img",
-      "aria-label": `${p.title}. ${p.venue}, ${p.y}. ${p.type}.` });
-    hit.style.cursor = "pointer";
-    hit.addEventListener("pointerenter", () => showTip(p, hit));
-    hit.addEventListener("pointerleave", hideTip);
-    hit.addEventListener("focus", () => showTip(p, hit));
-    hit.addEventListener("blur", hideTip);
-    svg.appendChild(hit);
-  });
-
   const chartBox = document.getElementById("pubchart");
-  chartBox.appendChild(svg);
   const hint = document.getElementById("pubchart-swipe-hint");
-  const updateHint = () => {
+
+  // Two drawings. Wide screens keep the original: area labels in a left
+  // gutter, years after it, so text and dots never collide. Below COMPACT_AT
+  // the gutter would eat half a phone, so the thread names move to a wrapping
+  // legend above and the dots get the full width (1 unit = 1px).
+  const COMPACT_AT = 560;
+  let mode = null;
+
+  function build(compact) {
+    chartBox.replaceChildren();
+    hideTip();
+
+    const W = compact ? Math.max(260, chartBox.clientWidth) : 920;
+    const GUT_W = compact ? 0 : 196, PAD_R = compact ? 10 : 16, PAD_T = 8, TICK_H = 30;
+    const DOT_R = compact ? 5 : 6, STACK_GAP = compact ? 13 : 17, LINE_H = 16;
+    const X0 = compact ? 14 : GUT_W + 12, X1 = W - PAD_R - 6;
+    const xFor = y => X0 + ((y - Y0) / (Y1 - Y0)) * (X1 - X0);
+
+    if (compact) {
+      const legend = document.createElement("div");
+      legend.style.cssText = "display:flex; flex-wrap:wrap; gap:0.35rem 1rem; margin:0 0 0.6rem; font-size:0.82rem; color:#3C3C3C; font-weight:600;";
+      THREADS.forEach(t => {
+        const item = document.createElement("span");
+        item.style.cssText = "display:inline-flex; align-items:center; gap:0.4rem;";
+        const sw = document.createElement("span");
+        sw.setAttribute("aria-hidden", "true");
+        sw.style.cssText = `width:10px; height:10px; border-radius:50%; background:${t.color}; flex:none;`;
+        item.append(sw, document.createTextNode(t.label));
+        legend.appendChild(item);
+      });
+      chartBox.appendChild(legend);
+    }
+
+    // lane height fits whichever is taller: the dot stack or the wrapped label
+    let laneY = PAD_T;
+    const lanes = {};
+    THREADS.forEach(t => {
+      const lines = compact ? [] : wrapLabel(t.label, 22);
+      const h = Math.max(laneMax[t.key] * STACK_GAP + 6, lines.length * LINE_H + 6) + (compact ? 10 : 14);
+      lanes[t.key] = { top: laneY, height: h, lines: lines, max: laneMax[t.key], ...t };
+      laneY += h;
+    });
+    const H = laneY + TICK_H;
+
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "group",
+      "aria-label": "Timeline of publications by year and thread" });
+    svg.style.fontFamily = "inherit";
+    // wide drawing: below this width the chart scrolls instead of shrinking,
+    // so text stays legible; the compact drawing already fits the box
+    if (!compact) svg.style.minWidth = "680px";
+    svg.style.display = "block";
+
+    // hairline year gridlines + ticks (solid, recessive); every fourth year
+    // on a phone, where odd years would collide
+    for (let y = Y0; y <= Y1; y++) {
+      const x = xFor(y);
+      svg.appendChild(el("line", { x1: x, y1: PAD_T, x2: x, y2: laneY, stroke: "#f0ece7", "stroke-width": 1 }));
+      if (compact ? (y - Y0) % 4 === 0 : y % 2 === 1) {
+        const tick = el("text", { x: x, y: laneY + 20, "text-anchor": "middle", fill: "#777", "font-size": compact ? 12 : 13.5 });
+        tick.style.fontVariantNumeric = "tabular-nums";
+        tick.textContent = y;
+        svg.appendChild(tick);
+      }
+    }
+
+    // lane separators + gutter labels (the identity channel — text in ink,
+    // swatch carries color), vertically centered in each lane
+    THREADS.forEach((t, i) => {
+      const L = lanes[t.key];
+      if (i > 0) svg.appendChild(el("line", { x1: compact ? 0 : 8, y1: L.top, x2: W - PAD_R, y2: L.top, stroke: "#eee9e4", "stroke-width": 1 }));
+      if (compact) {
+        // a thin color rule at the lane's edge ties it to the legend
+        svg.appendChild(el("rect", { x: 0, y: L.top + 4, width: 3, height: L.height - 8, rx: 1.5, fill: t.color }));
+        return;
+      }
+      const mid = L.top + L.height / 2;
+      svg.appendChild(el("circle", { cx: 14, cy: mid, r: 6, fill: t.color }));
+      L.lines.forEach((line, k) => {
+        const y = mid + (k - (L.lines.length - 1) / 2) * LINE_H + 5;
+        const lbl = el("text", { x: 27, y: y, fill: "#3C3C3C", "font-size": 14.5, "font-weight": 600 });
+        lbl.textContent = line;
+        svg.appendChild(lbl);
+      });
+    });
+
+    // dots: series color fill + 2px surface ring; 24px transparent hit target
+    PUBS.forEach(p => {
+      const L = lanes[p.t];
+      const cx = xFor(p.y);
+      // stacks grow upward from a baseline that centers the deepest stack in
+      // the lane, so single dots sit level with their gutter label
+      const base = L.top + L.height / 2 + ((L.max - 1) * STACK_GAP) / 2;
+      const cy = base - p.stackIdx * STACK_GAP;
+      svg.appendChild(el("circle", { cx, cy, r: DOT_R, fill: L.color, stroke: "#ffffff", "stroke-width": 2 }));
+      const hit = el("circle", { cx, cy, r: 12, fill: "transparent", tabindex: 0, role: "img",
+        "aria-label": `${p.title}. ${p.venue}, ${p.y}. ${p.type}.` });
+      hit.style.cursor = "pointer";
+      hit.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") showTip(p, hit); });
+      hit.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") hideTip(); });
+      hit.addEventListener("click", e => { e.stopPropagation(); showTip(p, hit); });
+      hit.addEventListener("focus", () => showTip(p, hit));
+      hit.addEventListener("blur", hideTip);
+      svg.appendChild(hit);
+    });
+
+    chartBox.appendChild(svg);
     hint.style.display = chartBox.scrollWidth > chartBox.clientWidth ? "inline" : "none";
+  }
+
+  const render = () => {
+    const compact = chartBox.clientWidth < COMPACT_AT;
+    // the wide drawing scales itself; the compact one is drawn to the pixel,
+    // so it redraws on any width change
+    if (compact !== mode || compact) { mode = compact; build(compact); }
   };
-  updateHint();
-  window.addEventListener("resize", updateHint);
+  render();
+  let raf = 0;
+  window.addEventListener("resize", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(render); });
+  document.addEventListener("click", e => { if (!e.target.closest("#pubchart, #citechart")) hideTip(); });
 })();
 </script>
 <div class="section-divider" aria-hidden="true">
@@ -345,8 +392,8 @@ ul.task-list li input[type="checkbox"] {
     <circle cx="122" cy="4" r="3.6" fill="#B23A28"></circle>
   </svg>
 </div>
-<section id="the-plot-thickens" class="level2 section-heading">
-<h2 class="section-heading anchored" data-anchor-id="the-plot-thickens">The Plot Thickens</h2>
+<section id="the-plot-thickens" class="level2 section-heading" data-eyebrow="01 · research areas">
+<h2 class="section-heading anchored" data-eyebrow="01 · research areas" data-anchor-id="the-plot-thickens">The Plot Thickens</h2>
 <div class="container" style="max-width: 820px;">
   <h3 class="pub-area-title anchored"><span class="pub-area-dot" style="background:#8a4090;"></span>Aging and the Law</h3>
   <p class="pub-area-desc">How the legal system meets older adults: as litigants, victims, caregivers, and prisoners.</p>
@@ -448,8 +495,8 @@ ul.task-list li input[type="checkbox"] {
   </svg>
 </div>
 </section>
-<section id="the-applied-side" class="level2 section-heading">
-<h2 class="section-heading anchored" data-anchor-id="the-applied-side">The Applied Side</h2>
+<section id="the-applied-side" class="level2 section-heading" data-eyebrow="02 · program evaluations">
+<h2 class="section-heading anchored" data-eyebrow="02 · program evaluations" data-anchor-id="the-applied-side">The Applied Side</h2>
 <div class="container" style="max-width: 820px;">
   <p class="pub-area-desc" style="margin-top:0;">Program evaluation is where the methods meet the field: process and outcome evaluations, assessment tools, and research briefs for courts and justice agencies, at the <a href="https://www.ncsc.org" target="_blank" rel="noopener">National Center for State Courts</a> and before that directing research for the <a href="https://www.unomaha.edu/college-of-public-affairs-and-community-service/juvenile-justice-institute/index.php" target="_blank" rel="noopener">Juvenile Justice Institute</a>'s Evidence-based Nebraska project. Most of these reports were published to agency sites that have since moved or retired them, so titles are listed here and copies are available on request.</p>
   <details class="pub-all"><summary>National Center for State Courts: 9 reports</summary>
@@ -494,8 +541,8 @@ ul.task-list li input[type="checkbox"] {
   </svg>
 </div>
 </section>
-<section id="the-paper-trail" class="level2 section-heading">
-<h2 class="section-heading anchored" data-anchor-id="the-paper-trail">The Paper Trail</h2>
+<section id="the-paper-trail" class="level2 section-heading" data-eyebrow="03 · citations">
+<h2 class="section-heading anchored" data-eyebrow="03 · citations" data-anchor-id="the-paper-trail">The Paper Trail</h2>
 <div class="container" style="max-width: 960px;">
   <div id="citechart-card" class="chart-card">
     <p class="chart-card-tag">Figure · Citations</p>
@@ -515,11 +562,7 @@ ul.task-list li input[type="checkbox"] {
   SW.areas.forEach(a => { THREADS[a.key] = { label: a.label, key: a.legend, color: a.color }; });
   const CITES = SW.cites;
 
-  const W = 920, LABEL_W = 258, VAL_W = 52, PAD_T = 34, ROW_H = 27, BAR_H = 15;
-  const H = PAD_T + CITES.length * ROW_H + 30;
   const MAXV = Math.max(...CITES.map(d => d.n));
-  const x0 = LABEL_W + 8, x1 = W - VAL_W;
-  const xFor = v => x0 + (v / MAXV) * (x1 - x0);
 
   const ns = "http://www.w3.org/2000/svg";
   const el = (n, attrs) => {
@@ -528,32 +571,8 @@ ul.task-list li input[type="checkbox"] {
     return e;
   };
 
-  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "group",
-    "aria-label": "Bar chart of citations for the most-cited publications" });
-  svg.style.fontFamily = "inherit";
-  svg.style.minWidth = "680px";
-  svg.style.display = "block";
-
-  // legend row (identity channel for the four threads)
-  let lx = 8;
-  Object.values(THREADS).forEach(t => {
-    svg.appendChild(el("rect", { x: lx, y: 6, width: 13, height: 13, rx: 3, fill: t.color }));
-    const lt = el("text", { x: lx + 19, y: 17, fill: "#555", "font-size": 13.5 });
-    lt.textContent = t.key;
-    svg.appendChild(lt);
-    lx += 19 + t.key.length * 7.1 + 26;
-  });
-
-  // gridlines every 50 (solid hairlines, recessive), sized to the data
-  for (let v = 50; v < MAXV; v += 50) {
-    const gx = xFor(v);
-    svg.appendChild(el("line", { x1: gx, y1: PAD_T - 4, x2: gx, y2: H - 26, stroke: "#f0ece7", "stroke-width": 1 }));
-    const gt = el("text", { x: gx, y: H - 10, "text-anchor": "middle", fill: "#999", "font-size": 12.5 });
-    gt.style.fontVariantNumeric = "tabular-nums";
-    gt.textContent = v;
-    svg.appendChild(gt);
-  }
-
+  // Tooltip; touch taps via click, only a mouse leaving hides it (see the
+  // timeline for why pointerleave cannot be trusted on a phone).
   const tip = document.getElementById("pub-tooltip");
   const showTip = (d, target) => {
     tip.replaceChildren();
@@ -576,45 +595,116 @@ ul.task-list li input[type="checkbox"] {
   };
   const hideTip = () => { tip.style.display = "none"; };
 
-  CITES.forEach((d, i) => {
-    const y = PAD_T + i * ROW_H;
-    const by = y + (ROW_H - BAR_H) / 2;
-    const bw = xFor(d.n) - x0;
-
-    const lbl = el("text", { x: LABEL_W, y: by + BAR_H - 3, "text-anchor": "end", fill: "#3C3C3C", "font-size": 13.5 });
-    lbl.textContent = d.short;
-    svg.appendChild(lbl);
-
-    // bar: square at baseline, 4px rounded data-end
-    const r = Math.min(4, bw);
-    const bar = el("path", { d: `M ${x0} ${by} L ${x0 + bw - r} ${by} Q ${x0 + bw} ${by} ${x0 + bw} ${by + r} L ${x0 + bw} ${by + BAR_H - r} Q ${x0 + bw} ${by + BAR_H} ${x0 + bw - r} ${by + BAR_H} L ${x0} ${by + BAR_H} Z`,
-      fill: THREADS[d.t].color });
-    svg.appendChild(bar);
-
-    const val = el("text", { x: x0 + bw + 8, y: by + BAR_H - 3, fill: "#3C3C3C", "font-size": 13, "font-weight": 600 });
-    val.style.fontVariantNumeric = "tabular-nums";
-    val.textContent = d.n;
-    svg.appendChild(val);
-
-    // full-row hit target (>24px tall) with keyboard focus
-    const hit = el("rect", { x: 0, y: y, width: W, height: ROW_H, fill: "transparent", tabindex: 0, role: "img",
-      "aria-label": `${d.title}. ${d.venue}, ${d.y}. ${d.n} citations.` });
-    hit.style.cursor = "pointer";
-    hit.addEventListener("pointerenter", () => { bar.setAttribute("opacity", "0.75"); showTip(d, hit); });
-    hit.addEventListener("pointerleave", () => { bar.removeAttribute("opacity"); hideTip(); });
-    hit.addEventListener("focus", () => { bar.setAttribute("opacity", "0.75"); showTip(d, hit); });
-    hit.addEventListener("blur", () => { bar.removeAttribute("opacity"); hideTip(); });
-    svg.appendChild(hit);
-  });
-
   const box = document.getElementById("citechart");
-  box.appendChild(svg);
   const hint = document.getElementById("citechart-swipe-hint");
-  const updateHint = () => {
+
+  // Two drawings, as with the timeline. Wide screens keep labels left of the
+  // bars; below COMPACT_AT each label sits above its bar, so the bars get the
+  // full width, every count stays visible, and the legend wraps as HTML.
+  const COMPACT_AT = 560;
+  let mode = null;
+
+  function build(compact) {
+    box.replaceChildren();
+    hideTip();
+
+    const W = compact ? Math.max(260, box.clientWidth) : 920;
+    const LABEL_W = compact ? 0 : 258, VAL_W = compact ? 34 : 52;
+    const PAD_T = compact ? 4 : 34, ROW_H = compact ? 38 : 27, BAR_H = compact ? 12 : 15;
+    const H = PAD_T + CITES.length * ROW_H + 30;
+    const x0 = compact ? 0 : LABEL_W + 8, x1 = W - VAL_W;
+    const xFor = v => x0 + (v / MAXV) * (x1 - x0);
+
+    if (compact) {
+      const legend = document.createElement("div");
+      legend.style.cssText = "display:flex; flex-wrap:wrap; gap:0.35rem 1rem; margin:0 0 0.6rem; font-size:0.82rem; color:#555;";
+      Object.values(THREADS).forEach(t => {
+        const item = document.createElement("span");
+        item.style.cssText = "display:inline-flex; align-items:center; gap:0.4rem;";
+        const sw = document.createElement("span");
+        sw.setAttribute("aria-hidden", "true");
+        sw.style.cssText = `width:11px; height:11px; border-radius:3px; background:${t.color}; flex:none;`;
+        item.append(sw, document.createTextNode(t.key));
+        legend.appendChild(item);
+      });
+      box.appendChild(legend);
+    }
+
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, width: "100%", role: "group",
+      "aria-label": "Bar chart of citations for the most-cited publications" });
+    svg.style.fontFamily = "inherit";
+    if (!compact) svg.style.minWidth = "680px";
+    svg.style.display = "block";
+
+    // legend row (identity channel for the four threads); HTML on a phone
+    if (!compact) {
+      let lx = 8;
+      Object.values(THREADS).forEach(t => {
+        svg.appendChild(el("rect", { x: lx, y: 6, width: 13, height: 13, rx: 3, fill: t.color }));
+        const lt = el("text", { x: lx + 19, y: 17, fill: "#555", "font-size": 13.5 });
+        lt.textContent = t.key;
+        svg.appendChild(lt);
+        lx += 19 + t.key.length * 7.1 + 26;
+      });
+    }
+
+    // gridlines every 50 (solid hairlines, recessive), sized to the data
+    for (let v = 50; v < MAXV; v += 50) {
+      const gx = xFor(v);
+      svg.appendChild(el("line", { x1: gx, y1: PAD_T - 4, x2: gx, y2: H - 26, stroke: "#f0ece7", "stroke-width": 1 }));
+      const gt = el("text", { x: gx, y: H - 10, "text-anchor": "middle", fill: "#999", "font-size": 12.5 });
+      gt.style.fontVariantNumeric = "tabular-nums";
+      gt.textContent = v;
+      svg.appendChild(gt);
+    }
+
+    CITES.forEach((d, i) => {
+      const y = PAD_T + i * ROW_H;
+      const by = compact ? y + 19 : y + (ROW_H - BAR_H) / 2;
+      const bw = xFor(d.n) - x0;
+
+      const lbl = compact
+        ? el("text", { x: 0, y: y + 14, fill: "#3C3C3C", "font-size": 13 })
+        : el("text", { x: LABEL_W, y: by + BAR_H - 3, "text-anchor": "end", fill: "#3C3C3C", "font-size": 13.5 });
+      lbl.textContent = d.short;
+      svg.appendChild(lbl);
+
+      // bar: square at baseline, 4px rounded data-end
+      const r = Math.min(4, bw);
+      const bar = el("path", { d: `M ${x0} ${by} L ${x0 + bw - r} ${by} Q ${x0 + bw} ${by} ${x0 + bw} ${by + r} L ${x0 + bw} ${by + BAR_H - r} Q ${x0 + bw} ${by + BAR_H} ${x0 + bw - r} ${by + BAR_H} L ${x0} ${by + BAR_H} Z`,
+        fill: THREADS[d.t].color });
+      svg.appendChild(bar);
+
+      const val = el("text", { x: x0 + bw + 6, y: by + BAR_H - (compact ? 1 : 3), fill: "#3C3C3C", "font-size": compact ? 12.5 : 13, "font-weight": 600 });
+      val.style.fontVariantNumeric = "tabular-nums";
+      val.textContent = d.n;
+      svg.appendChild(val);
+
+      // full-row hit target (>24px tall) with keyboard focus
+      const hit = el("rect", { x: 0, y: y, width: W, height: ROW_H, fill: "transparent", tabindex: 0, role: "img",
+        "aria-label": `${d.title}. ${d.venue}, ${d.y}. ${d.n} citations.` });
+      hit.style.cursor = "pointer";
+      const on = () => { bar.setAttribute("opacity", "0.75"); showTip(d, hit); };
+      const off = () => { bar.removeAttribute("opacity"); hideTip(); };
+      hit.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") on(); });
+      hit.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") off(); });
+      hit.addEventListener("click", e => { e.stopPropagation(); svg.querySelectorAll("path[opacity]").forEach(b => b.removeAttribute("opacity")); on(); });
+      hit.addEventListener("focus", on);
+      hit.addEventListener("blur", off);
+      svg.appendChild(hit);
+    });
+
+    box.appendChild(svg);
     hint.style.display = box.scrollWidth > box.clientWidth ? "inline" : "none";
+  }
+
+  const render = () => {
+    const compact = box.clientWidth < COMPACT_AT;
+    if (compact !== mode || compact) { mode = compact; build(compact); }
   };
-  updateHint();
-  window.addEventListener("resize", updateHint);
+  render();
+  let raf = 0;
+  window.addEventListener("resize", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(render); });
 })();
 </script>
 <div class="section-divider" aria-hidden="true">
@@ -629,8 +719,8 @@ ul.task-list li input[type="checkbox"] {
   </svg>
 </div>
 </section>
-<section id="curriculum-vitae" class="level2 section-heading">
-<h2 class="section-heading anchored" data-anchor-id="curriculum-vitae">Curriculum Vitae</h2>
+<section id="curriculum-vitae" class="level2 section-heading" data-eyebrow="04 · cv">
+<h2 class="section-heading anchored" data-eyebrow="04 · cv" data-anchor-id="curriculum-vitae">Curriculum Vitae</h2>
 <div class="container" style="max-width: 820px;">
   <p style="color:#4b5563;">
     The full CV includes all peer-reviewed publications, book chapters, law
