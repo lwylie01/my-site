@@ -103,8 +103,9 @@ total_all  <- round((sum(charted$citations) + tail_total) / 10) * 10
 num_word <- function(n) {
   words <- c("one","two","three","four","five","six","seven","eight","nine","ten",
              "eleven","twelve","thirteen","fourteen","fifteen","sixteen",
-             "seventeen","eighteen","nineteen","twenty")
-  if (n >= 1 && n <= 20) words[n] else as.character(n)
+             "seventeen","eighteen","nineteen","twenty","twenty-one",
+             "twenty-two","twenty-three","twenty-four","twenty-five")
+  if (n >= 1 && n <= length(words)) words[n] else as.character(n)
 }
 cite_title <- sprintf(paste0("The %s most-cited publications, colored by ",
                              "thread: about %d citations in all"),
