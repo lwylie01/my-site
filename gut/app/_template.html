@@ -50,6 +50,11 @@
   header p { font-size: 0.8rem; color: var(--on-dark); margin-top: 0.1rem; }
   header a { color: var(--on-dark); font-size: 0.8rem; text-decoration: none; font-weight: 600; }
   header a:hover { color: var(--secondary); }
+  /* Top-bar links: padded to a ~44px tap target, with a focus ring that shows
+     on the dark bar (the browser default is dark on dark). */
+  .top-links { display: flex; gap: 0.25rem 1rem; flex-wrap: wrap; margin: -0.6rem 0; }
+  .top-links a { display: inline-flex; align-items: center; min-height: 44px; }
+  header a:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; border-radius: 2px; }
 
   /* ── Progress ───────────────────────────────────────── */
   #progress {
@@ -223,7 +228,10 @@
     <h1>Trust Your <span>Gut</span>?</h1>
     <p>datawithaplot.org · clinical vs. actuarial prediction</p>
   </div>
-  <a href="../index.html">← datawithaplot.org</a>
+  <nav class="top-links" aria-label="Site">
+    <a href="../index.html">← datawithaplot.org</a>
+    <a href="../teaching/index.html">Teaching</a>
+  </nav>
 </header>
 
 <div id="progress">
@@ -330,7 +338,7 @@
 
     <div style="margin-top:2rem;display:flex;gap:0.8rem;flex-wrap:wrap;">
       <button class="btn btn-outline" id="restart">↻ Run the stack again</button>
-      <a class="btn btn-secondary" href="../projects/index.html">See more projects →</a>
+      <a class="btn btn-secondary" href="../teaching/index.html">More exercises →</a>
     </div>
   </section>
 

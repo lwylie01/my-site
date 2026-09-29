@@ -62,6 +62,12 @@
     padding-bottom: 1px;
   }
   header nav a:hover { color: var(--secondary); border-bottom-color: var(--secondary); }
+  header nav a:focus-visible { outline: 2px solid var(--secondary); outline-offset: 3px; }
+  /* On a phone the nav links and filter controls grow to tap-target size. */
+  @media (max-width: 700px) {
+    header nav a { display: inline-flex; align-items: center; min-height: 44px; }
+    #filters select, #filters input, #filters .btn { min-height: 40px; font-size: 0.9rem; }
+  }
 
   /* ── Filters ─────────────────────────────────────────── */
   #filters {
@@ -168,6 +174,7 @@
     box-shadow: 0 6px 20px rgba(0,0,0,0.25);
   }
   .tile.filtered-out { opacity: 0.12; pointer-events: none; }
+  .tile:focus-visible { outline: 3px solid var(--dark); outline-offset: 2px; z-index: 10; }
 
   .tile-top { display: flex; justify-content: space-between; align-items: flex-start; }
   .tile-num { font-size: 0.6rem; color: rgba(255,255,255,0.7); font-weight: 600; }
@@ -255,6 +262,8 @@
     width: 100%;
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     overflow: hidden;
+    overflow-y: auto;
+    max-height: calc(100vh - 2rem);
     animation: pop-in 0.18s ease;
   }
   @keyframes pop-in { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -407,6 +416,7 @@
   </div>
   <nav aria-label="Site">
     <a href="../index.html">← Home</a>
+    <a href="../teaching/index.html">Teaching</a>
     <a href="hiphop_dashboard.html">Teaching Dashboard</a>
     <a href="data_dictionary.html">Codebook</a>
   </nav>
@@ -414,7 +424,7 @@
 
 <div id="filters">
   <div class="filter-group">
-    <label>Era</label>
+    <label for="filter-era">Era</label>
     <select id="filter-era" onchange="applyFilters()">
       <option value="">All Eras</option>
       <option>Old School</option>
@@ -426,7 +436,7 @@
     </select>
   </div>
   <div class="filter-group">
-    <label>Region</label>
+    <label for="filter-region">Region</label>
     <select id="filter-region" onchange="applyFilters()">
       <option value="">All Regions</option>
       <option>East Coast</option>
@@ -436,7 +446,7 @@
     </select>
   </div>
   <div class="filter-group">
-    <label>Style</label>
+    <label for="filter-style">Style</label>
     <select id="filter-style" onchange="applyFilters()">
       <option value="">All Styles</option>
       <option>Party/Pop</option>
@@ -450,7 +460,7 @@
     </select>
   </div>
   <div class="filter-group">
-    <label>Confidence</label>
+    <label for="filter-conf">Confidence</label>
     <select id="filter-conf" onchange="applyFilters()">
       <option value="">All Tiers</option>
       <option value="H">High (H)</option>
@@ -459,7 +469,7 @@
     </select>
   </div>
   <div class="filter-group">
-    <label>Search</label>
+    <label for="search-input">Search</label>
     <input type="text" id="search-input" placeholder="Artist name…" oninput="applyFilters()">
   </div>
   <button class="btn btn-outline btn-sm" onclick="clearFilters()">Clear</button>
@@ -506,7 +516,7 @@
 
 <!-- Modal -->
 <div id="modal-overlay" onclick="closeModal(event)">
-  <div id="modal">
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-name">
     <div id="modal-header">
       <div class="modal-symbol-box" id="modal-symbol-box"></div>
       <div class="modal-title">
@@ -529,7 +539,7 @@
     </div>
     <div id="modal-footer">
       <div class="conf-note" id="modal-conf-note"></div>
-      <button class="btn btn-primary btn-sm" onclick="closeModal()">Close</button>
+      <button class="btn btn-primary btn-sm" id="modal-close" onclick="closeModal()">Close</button>
     </div>
   </div>
 </div>
@@ -666,6 +676,7 @@ function render() {
       <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${scorePct}%"></div></div>
     `;
 
+    makeTileButton(tile, artist, visible);
     tile.addEventListener('click', () => openModal(artist['#']));
 
     area.appendChild(tile);
@@ -703,7 +714,8 @@ function renderCompounds() {
     tile.className = 'tile';
     tile.dataset.id = artist['#'];
     tile.style.background = STYLE_COLORS[artist['Style']] || '#888';
-    if(!passesFilter(artist, filters)) tile.classList.add('filtered-out');
+    const cVisible = passesFilter(artist, filters);
+    if(!cVisible) tile.classList.add('filtered-out');
 
     const score = artist['Composite Score'] || 0;
     tile.innerHTML = `
@@ -716,6 +728,7 @@ function renderCompounds() {
       <div class="tile-year">${artist['Debut Year']}</div>
       <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${(score/10)*100}%"></div></div>
     `;
+    makeTileButton(tile, artist, cVisible);
     tile.addEventListener('click', () => openModal(artist['#']));
     area.appendChild(tile);
   });
@@ -772,10 +785,30 @@ function updateStats(filters) {
 }
 
 // ─── MODAL ───────────────────────────────────────────────────────────────────
-function openModal(id) {
-  populateModal(id);
-  document.getElementById('modal-overlay').classList.add('active');
+// Tiles are divs laid out on a grid, so keyboard and screen-reader access is
+// added here: each visible tile is a focusable button that opens on Enter or
+// Space. Filtered-out tiles leave the tab order, as they already ignore the mouse.
+function makeTileButton(tile, artist, visible) {
+  tile.setAttribute('role', 'button');
+  tile.setAttribute('aria-label', `${artist['Artist Name']}, ${artist['Style']}, composite ${artist['Composite Score']}`);
+  tile.tabIndex = visible ? 0 : -1;
+  tile.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(artist['#']); }
+  });
 }
+
+let modalReturnFocus = null;
+function openModal(id) {
+  const overlay = document.getElementById('modal-overlay');
+  if(!overlay.classList.contains('active')) modalReturnFocus = document.activeElement;
+  populateModal(id);
+  overlay.classList.add('active');
+  document.getElementById('modal-close').focus({ preventScroll: true });
+  document.getElementById('modal').scrollTop = 0;
+}
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && document.getElementById('modal-overlay').classList.contains('active')) closeModal();
+});
 
 function populateModal(id) {
   const a = artists.find(x=>x['#']===id);
@@ -837,6 +870,8 @@ function populateModal(id) {
 function closeModal(e) {
   if(e && e.target !== document.getElementById('modal-overlay')) return;
   document.getElementById('modal-overlay').classList.remove('active');
+  if(modalReturnFocus && modalReturnFocus.focus) modalReturnFocus.focus();
+  modalReturnFocus = null;
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
