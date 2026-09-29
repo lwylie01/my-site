@@ -849,6 +849,11 @@ that the whole group is imaginary.
   The periodic table's tiles are `role="button"` with `tabindex` and an
   aria-label, open on Enter/Space, the modal is a `role="dialog"` that closes on
   Escape and returns focus to the tile; filtered-out tiles leave the tab order.
+  Its header nav reads Home / Teaching / Dashboard / Codebook ("Teaching
+  Dashboard" beside "Teaching" read as a repeat), and a mono hint, "Swipe the
+  table to see every era." (maintainer-picked to mirror The Plot So Far's
+  chart hints), sits above the grid only while `updateSwipeHint()` finds it
+  wider than its box, so desktop widths never see it.
   How Old Is Old? and Counted
   Wrong now link to each other: the howold link was deferred while the essay
   was still coming, so #48 corrected only its tense and #51 added the link once

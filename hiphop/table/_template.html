@@ -131,6 +131,14 @@
   }
 
   /* ── Grid / Table ─────────────────────────────────────── */
+  /* Shown only while the grid is wider than its box (see updateSwipeHint). */
+  #grid-swipe-hint {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 0.8rem 1rem 0;
+  }
   #grid-container, #compounds-wrap {
     padding: 1rem 1rem 2rem;
     overflow-x: auto;
@@ -417,7 +425,7 @@
   <nav aria-label="Site">
     <a href="../index.html">← Home</a>
     <a href="../teaching/index.html">Teaching</a>
-    <a href="hiphop_dashboard.html">Teaching Dashboard</a>
+    <a href="hiphop_dashboard.html">Dashboard</a>
     <a href="data_dictionary.html">Codebook</a>
   </nav>
 </header>
@@ -503,6 +511,7 @@
   <span>Top scorer: <strong id="stat-top">—</strong></span>
 </div>
 
+<p id="grid-swipe-hint" hidden>Swipe the table to see every era.</p>
 <div id="grid-container">
   <div id="table-area"></div>
 </div>
@@ -877,6 +886,15 @@ function closeModal(e) {
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 layout = buildDefaultLayout();
 render();
+
+// The era grid is eighteen columns wide, so below ~1150px it scrolls
+// sideways; the hint appears only while that is true.
+function updateSwipeHint() {
+  const g = document.getElementById('grid-container');
+  document.getElementById('grid-swipe-hint').hidden = g.scrollWidth <= g.clientWidth + 1;
+}
+updateSwipeHint();
+window.addEventListener('resize', updateSwipeHint);
 </script>
 </body>
 </html>
