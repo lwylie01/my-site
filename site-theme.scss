@@ -378,6 +378,18 @@ h2.section-heading[data-eyebrow]::before {
   text-underline-offset: 2px;
 }
 
+/* Teaching cards: the call-to-action link under each description, and the
+   smaller companion line beneath it. Replaces per-link inline styles. */
+.project-card-cta {
+  font-weight: 600;
+  color: $deep-coral;
+}
+.project-card-companion {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  color: $muted-ink;
+}
+
 .project-card-desc {
   font-size: 0.75rem;
   color: #574B62;

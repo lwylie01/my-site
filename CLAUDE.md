@@ -827,6 +827,33 @@ that the whole group is imaginary.
   Usual Subjects is trimmed to one line per topic. Phone height went from
   4,656px to 3,519px. Before all this, howold and gut sat under a prose "Two
   Shorter Exercises" heading.
+  **Teaching refinement (2026-09-29, every string maintainer-picked):**
+  section 02 is now **The STORY Framework** (was Storyboards; label and anchor
+  unchanged), its intro names the five elements and says the evaluation picker
+  comes first "because a story needs findings before it can be told" (the
+  picker is not itself a STORY element, so keep that framing if the section
+  changes). New subtitle: "Each exercise asks for a quick judgment and then
+  shows what shaped it; the planning tools work through an evaluation or report
+  of your own." The How Old card used to promise a comparison with "everyone
+  else's" answers the page never makes (it compares your four lines with each
+  other and with the law); read a tool before describing it on a card. The
+  Usual Subjects gained Program evaluation and Data storytelling, matching the
+  planning tools. Every Teaching card now has a
+  `pics/thumb-<name>.jpg` header thumbnail (periodic, barnum, howold, gut,
+  evalpicker, datastory), and the card links use `.project-card-cta` /
+  `.project-card-companion` (site-theme.scss) instead of inline styles.
+  Every standalone tool's top bar is a `.top-links` nav: "← datawithaplot.org"
+  plus a "Teaching" link, each padded to 44px, with a coral focus ring
+  (the default ring is invisible on ink). Barnum, How Old and Gut end on "More
+  exercises →" to Teaching (they pointed at Projects after the pages moved).
+  The periodic table's tiles are `role="button"` with `tabindex` and an
+  aria-label, open on Enter/Space, the modal is a `role="dialog"` that closes on
+  Escape and returns focus to the tile; filtered-out tiles leave the tab order.
+  Its header nav reads Home / Teaching / Dashboard / Codebook ("Teaching
+  Dashboard" beside "Teaching" read as a repeat), and a mono hint, "Swipe the
+  table to see every era." (maintainer-picked to mirror The Plot So Far's
+  chart hints), sits above the grid only while `updateSwipeHint()` finds it
+  wider than its box, so desktop widths never see it.
   How Old Is Old? and Counted
   Wrong now link to each other: the howold link was deferred while the essay
   was still coming, so #48 corrected only its tense and #51 added the link once
@@ -957,8 +984,11 @@ that the whole group is imaginary.
   page's own header, so after any chrome change regenerate the live homepage
   thumbnails from the published pages (a follow-up PR, because the new header
   must deploy first). Since the 2026-07-21 declutter that is just
-  `thumb-periodic.jpg` and `thumb-maturitygap.jpg`; the two picker thumbnails
-  are no longer used.
+  `thumb-periodic.jpg` and `thumb-maturitygap.jpg`, plus the six Teaching card
+  thumbnails since 2026-09-29 (barnum, howold, gut, evalpicker, datastory, and
+  periodic again). Headless Chromium in CCR only loads Spectral and JetBrains
+  Mono when launched with `proxy: { server: process.env.HTTPS_PROXY }`;
+  without it the fonts silently fall back and the thumbnail is wrong.
   The homepage "Start Here" grid (headed "Featured Projects" until the July
   2026 naming pass) featured the periodic table, both pickers, and Maturity
   Gap until the **2026-07-21 homepage declutter** cut it to the two signature
@@ -970,8 +1000,8 @@ that the whole group is imaginary.
   moved off the homepage to the Projects page as a condensed band (#88-91 era).
   Do not re-add the picker cards here: Start Here is deliberately the two
   signature pieces now. With both pickers gone from the homepage,
-  `thumb-formatpicker.jpg` and `thumb-evalpicker.jpg` are no longer referenced
-  anywhere. Barnum belongs to Teaching too (14e5a48).
+  `thumb-formatpicker.jpg` is no longer referenced anywhere
+  (`thumb-evalpicker.jpg` is back in use on its Teaching card). Barnum belongs to Teaching too (14e5a48).
 - **Maturity Gap (`countedwrong/`; shipped 2026-07 as the essay
   "Counted Wrong", rebuilt 2026-07-18 as a chart-forward data story).** The
   folder and URL stay `countedwrong/` so nothing external breaks; only
