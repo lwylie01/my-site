@@ -51,6 +51,11 @@
   header p { font-size: 0.8rem; color: var(--on-dark); margin-top: 0.1rem; }
   header a { color: var(--on-dark); font-size: 0.8rem; text-decoration: none; font-weight: 600; }
   header a:hover { color: var(--secondary); }
+  /* Top-bar links: padded to a ~44px tap target, with a focus ring that shows
+     on the dark bar (the browser default is dark on dark). */
+  .top-links { display: flex; gap: 0.25rem 1rem; flex-wrap: wrap; margin: -0.6rem 0; }
+  .top-links a { display: inline-flex; align-items: center; min-height: 44px; }
+  header a:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; border-radius: 2px; }
 
   /* ── Progress ───────────────────────────────────────── */
   #progress {
@@ -119,7 +124,8 @@
   /* ── Sliders ────────────────────────────────────────── */
   .sl-field { padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
   .sl-field:last-child { border-bottom: none; }
-  .sl-top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .sl-top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+  .sl-top > div:first-child { min-width: 0; }
   .sl-q { font-weight: 700; color: var(--dark); font-size: 1.02rem; }
   .sl-note { font-size: 0.8rem; color: var(--muted); }
   .sl-val { font-size: 2rem; font-weight: 700; color: var(--primary); line-height: 1; min-width: 2.4ch; text-align: right; }
@@ -231,7 +237,10 @@
     <h1>How Old Is <span>Old</span>?</h1>
     <p>datawithaplot.org · a study in operationalization</p>
   </div>
-  <a href="../index.html">← datawithaplot.org</a>
+  <nav class="top-links" aria-label="Site">
+    <a href="../index.html">← datawithaplot.org</a>
+    <a href="../teaching/index.html">Teaching</a>
+  </nav>
 </header>
 
 <div id="progress">
@@ -329,7 +338,7 @@
 
     <div style="margin-top:2rem;display:flex;gap:0.8rem;flex-wrap:wrap;">
       <button class="btn btn-outline" id="restart">↻ Draw them again</button>
-      <a class="btn btn-secondary" href="../projects/index.html">See more projects →</a>
+      <a class="btn btn-secondary" href="../teaching/index.html">More exercises →</a>
     </div>
   </section>
 
