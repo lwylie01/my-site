@@ -389,12 +389,22 @@ h2.section-heading[data-eyebrow]::before {
   margin-top: 0.5rem;
   color: $muted-ink;
 }
+/* Where a chip row sits above the call to action (Projects), give the link
+   the gap a <br> used to fake. */
+.project-card-meta + .project-card-cta {
+  display: inline-block;
+  margin-top: 1rem;
+}
 
 .project-card-desc {
   font-size: 0.75rem;
   color: #574B62;
   line-height: 1.6;
   margin-bottom: 1rem;
+}
+/* 0.75rem is about 12px, too small for a four-line paragraph on a phone. */
+@media (max-width: 700px) {
+  .project-card-desc { font-size: 0.9rem; }
 }
 
 .project-card-meta {
