@@ -875,6 +875,17 @@ that the whole group is imaginary.
   the last one, so `projects/index.qmd` has three live cards (the periodic
   table, Maturity Gap, and the compassionate release story; an earlier note
   here said four, which was never true on main).
+  **Projects refinement (2026-09-30, every string maintainer-picked):** new
+  subtitle ("...each built around a real measurement question; the exercises
+  and planning tools live on the Teaching page"), tightened Maturity Gap and
+  compassionate release card descriptions (both claims checked against their
+  pages), chips say "and" not "&" (the area-label rule, applied to chips), and
+  "More projects in progress." became "Work in progress is listed on the
+  Writing page." linking `#in-the-works`. All three cards carry header
+  thumbnails (`thumb-periodic`, `thumb-maturitygap` retaken with the current
+  navbar, new `thumb-compassionaterelease`), links use `.project-card-cta`,
+  and `.project-card-meta + .project-card-cta` replaces the old `<br>` spacer.
+  `.project-card-desc` steps up from 0.75rem to 0.9rem below 700px, sitewide.
 - **A Right That Exists on Paper (`compassionaterelease/`; shipped 2026-07-19
   in #74, review pass 2026-07-19, sources-and-voice pass 2026-07-21).** Chart-forward data story on compassionate
   release, the qualitative-data sibling of Maturity Gap on the same machinery:
@@ -1049,7 +1060,21 @@ that the whole group is imaginary.
   `htmlwidgets::onRender` ResizeObserver calling `Plotly.Plots.resize`:
   plotly draws at a fixed 700px when its container has no width at draw time
   (a background tab), never re-draws without a window resize, and the
-  `.chart-card` overflow: hidden then crops the right edge. The sources
+  `.chart-card` overflow: hidden then crops the right edge.
+  Since 2026-09-30 the same `onRender` also runs `fit()`: plotly never wraps
+  a title, and ggplotly anchors it to the plotting area (`xref: paper`, after
+  the y-axis label margin), so on a phone every folded title and subtitle ran
+  100-550px off the card and was cropped ("Old enough at"), and a few long
+  ones clipped at desktop width too. `fit()` anchors the title to the whole
+  chart (`xref`/`yref: container`), wraps title and subtitle to the chart's
+  width with canvas text measurement, then measures the drawn title and grows
+  `margin.t` and the chart's height together so the plot keeps its height.
+  It only acts on titles of the exact `<b>...</b><br><sup>...</sup>` shape
+  the helper builds. Verify it without R by injecting the JS into the
+  published `gh-pages` pages (`git fetch origin gh-pages`, open the files via
+  `file://`; datawithaplot.org itself is egress-blocked in CCR, and the proxy
+  answers localhost with 405) and checking every `.gtitle` box sits inside its
+  `.chart-card`. The sources
   section is headed "Data Sources" (renamed from "Where the Numbers Come
   From" 2026-07-21, matching compassionaterelease). Voice of
   the craft notes, maintainer-calibrated 2026-07-18: "measured with one

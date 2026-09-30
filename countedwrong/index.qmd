@@ -120,6 +120,10 @@ theme_cw <- function() {
 # cropped inside the card's overflow: hidden. config(responsive) re-draws on
 # window resizes; the ResizeObserver re-draws when the container gets its
 # real width without one.
+# fit() then re-wraps the folded title to the chart's width on every draw
+# (plotly never wraps titles, so on a phone they ran off the card), anchors
+# it to the whole chart rather than the plotting area, and grows the top
+# margin and the chart together so the plot keeps its height.
 ggplotly_titled <- function(p, ...) {
   fig <- ggplotly(p, ...)
   sub <- p$labels$subtitle
@@ -136,12 +140,66 @@ ggplotly_titled <- function(p, ...) {
     config(responsive = TRUE) |>
     htmlwidgets::onRender("
       function(el) {
+        // Plotly never wraps a title, and ggplotly anchors it to the plotting
+        // area, so a long title ran off the card (on a phone, most of it). Anchor
+        // the folded title to the whole chart, wrap title and subtitle to its
+        // width, then measure the drawn title and grow the top margin, and the
+        // chart with it, so the plot keeps its height.
+        var orig = null, canvas = document.createElement('canvas');
+        function wrap(text, font, maxW) {
+          var ctx = canvas.getContext('2d'), lines = [], line = '';
+          ctx.font = font;
+          text.split(' ').forEach(function(w) {
+            var next = line ? line + ' ' + w : w;
+            if (line && ctx.measureText(next).width > maxW) { lines.push(line); line = w; }
+            else line = next;
+          });
+          if (line) lines.push(line);
+          return lines;
+        }
+        function fit() {
+          var fl = el._fullLayout;
+          if (!fl || !fl.title || !fl.width) return;
+          if (orig === null) {
+            var m = /^<b>([\\s\\S]*)<\\/b><br><sup>([\\s\\S]*)<\\/sup>$/.exec(fl.title.text || '');
+            orig = m ? { title: m[1], sub: m[2], t: fl.margin.t, h: fl.height } : false;
+          }
+          if (!orig) return;
+          var size = fl.title.font.size, fam = fl.title.font.family;
+          var maxW = fl.width - 16;
+          var text =
+            wrap(orig.title, 'bold ' + size + 'px ' + fam, maxW)
+              .map(function(s) { return '<b>' + s + '</b>'; }).join('<br>') + '<br>' +
+            wrap(orig.sub, (size * 0.7) + 'px ' + fam, maxW)
+              .map(function(s) { return '<sup>' + s + '</sup>'; }).join('<br>');
+          var p = Promise.resolve();
+          if (text !== fl.title.text || fl.title.xref !== 'container') {
+            p = Plotly.relayout(el, {
+              'title.text': text, 'title.xref': 'container', 'title.x': 0,
+              'title.xanchor': 'left', 'title.pad.l': 8,
+              'title.yref': 'container', 'title.y': 1, 'title.yanchor': 'top'
+            });
+          }
+          p.then(function() {
+            var g = el.querySelector('.gtitle');
+            if (!g) return;
+            var box = g.getBoundingClientRect(), top = el.getBoundingClientRect().top;
+            var padT = Math.max(0, (el._fullLayout.title.pad.t || 0) + 8 - (box.top - top));
+            var need = Math.max(orig.t, Math.ceil(padT + box.height) + 20);
+            var h = Math.round(orig.h + need - orig.t);
+            if (Math.abs(need - el._fullLayout.margin.t) > 2 || Math.abs(h - el._fullLayout.height) > 2) {
+              el.style.height = h + 'px';
+              Plotly.relayout(el, { 'margin.t': need, 'title.pad.t': padT, height: h });
+            }
+          });
+        }
+        fit();
         if (!window.ResizeObserver) return;
         new ResizeObserver(function() {
           var w = el.parentElement.getBoundingClientRect().width;
           if (w > 0 && el._fullLayout &&
               Math.abs(w - el._fullLayout.width) > 1) {
-            Plotly.Plots.resize(el);
+            Plotly.Plots.resize(el).then(fit);
           }
         }).observe(el.parentElement);
       }
