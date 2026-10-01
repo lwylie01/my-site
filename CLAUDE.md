@@ -606,6 +606,19 @@ everywhere we've checked"; it now says simple rules "match or beat expert
 judgment most of the time", which is what the Gut exercise's own sources (Meehl
 1954; the 136-study meta-analysis) support. `.essay-card:focus-visible` carries
 a Deep Coral ring, because the whole card is the link.
+Same day (maintainer's idea pick, wording option A): the three In the Works
+items that already have a matching exercise end on a `.essay-companion` line,
+"Companion exercise: <name> →" (hip-hop essay → The Hip-Hop Periodic Table,
+How Old Is Old? → its exercise, Trust the Checklist → Trust Your Gut?); When
+the Metric Becomes the Policy has none. The item itself stays unclickable; the
+whole companion line is the link (label in muted ink, name underlined Deep
+Coral), because an inline-block name after a separate label dropped to its own
+line on phones and left the label stranded. When an essay ships, its item
+becomes an On the Record card and the companion line goes with it (or moves
+into the card's description). Links in muted-ink text must be underlined:
+Deep Coral and muted ink are about 1.0:1 in luminance, so colour alone does
+not mark them (the sitewide `a { text-decoration: none }` rule makes this the
+default trap); `.project-card-companion a` is underlined for the same reason.
 
 ### The pieces
 
