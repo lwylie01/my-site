@@ -932,6 +932,12 @@ details.codebook-fold[open] > summary::before { content: "\25BE\00A0"; }
     transform: translateY(-2px);
     color: $ink-plum;
   }
+  /* The whole card is the link, so keyboard focus needs a ring as clear as
+     the hover lift; the browser default is a thin dark line. */
+  &:focus-visible {
+    outline: 2px solid $deep-coral;
+    outline-offset: 3px;
+  }
 }
 
 .essay-meta {

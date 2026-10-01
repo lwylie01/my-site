@@ -10,8 +10,9 @@ toc: false
   <p class="page-header-label">Essays</p>
   <h1 class="page-header-title">Writing</h1>
   <p class="page-header-sub">
-    On measurement, evidence, and the gap between how decisions
-    are meant to be made and how they are made in practice.
+    Essays and data stories on measurement and evidence, and on the gap
+    between how decisions are meant to be made and how they are actually
+    made.
   </p>
 </div>
 
@@ -28,16 +29,16 @@ toc: false
     </div>
     <p class="essay-title">Maturity Gap: Young Adults, the Legal System,
     and the Data Between Them</p>
-    <p class="essay-desc">A data story in a dozen chart forms: the system's
-    busiest years are exactly the years the capacities the law assumes at 18
-    are still arriving.</p>
+    <p class="essay-desc">A data story in a dozen chart forms, showing that the
+    years the legal system is busiest are the same years in which the
+    capacities it assumes at 18 are still developing.</p>
     <span class="essay-go">Read the data story →</span>
   </a>
 
   <a class="essay-card" href="../compassionaterelease/index.html">
     <div class="essay-meta">
       <span class="essay-tag">Aging and the Law</span>
-      <span class="essay-read">9 min read</span>
+      <span class="essay-read">12 min read</span>
     </div>
     <p class="essay-title">A Right That Exists on Paper: Compassionate
     Release</p>
@@ -89,10 +90,10 @@ toc: false
     <li>
       <span class="essay-tag">Prediction · Risk</span>
       <p class="essay-title">Trust the Checklist: Why Expert Judgment Keeps Losing</p>
-      <p class="essay-desc">Decades of evidence say a two-variable rule
-      predicts better than the seasoned professional: in pretrial risk, in
-      clinical judgment, almost everywhere we've checked. Why we keep trusting
-      our gut anyway, and what that costs.</p>
+      <p class="essay-desc">Decades of research find that simple statistical
+      rules match or beat expert judgment most of the time, in pretrial risk,
+      clinical practice, and elsewhere. Why we keep trusting our gut anyway,
+      and what that costs.</p>
     </li>
   </ul>
 </div>
