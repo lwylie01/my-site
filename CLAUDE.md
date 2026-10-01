@@ -595,6 +595,18 @@ real link. "Cultivating a Court's Data STORY" is the published Trends 2025
 chapter, so it sits On the Record linking the NCSC PDF, with its venue as an
 `.essay-venue` line; it was wrongly listed as coming soon until then.
 
+Writing refinement (2026-10-01, every string maintainer-picked): new subtitle
+("Essays and data stories on measurement and evidence, and on the gap..."),
+an untangled Maturity Gap description, and two accuracy fixes. The
+compassionate release read time is 12 min, not 9: the published page is about
+2,900 words with the folded codebook excluded (Maturity Gap's 8 min checks out
+at about 2,100). Re-count read times from the published HTML when a data story
+grows. Trust the Checklist no longer says a two-variable rule wins "almost
+everywhere we've checked"; it now says simple rules "match or beat expert
+judgment most of the time", which is what the Gut exercise's own sources (Meehl
+1954; the 136-study meta-analysis) support. `.essay-card:focus-visible` carries
+a Deep Coral ring, because the whole card is the link.
+
 ### The pieces
 
 | File | Role |
