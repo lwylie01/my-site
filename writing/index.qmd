@@ -72,6 +72,8 @@ toc: false
       <p class="essay-desc">Try to score something people argue about, like rap
       lyricism, and every flaw in your workplace metrics becomes easy to
       see.</p>
+      <p class="essay-companion"><a href="../hiphop/hiphop_periodic_table.html"><span class="essay-companion-label">Companion exercise:</span>
+      <span class="essay-companion-name">The Hip-Hop Periodic Table →</span></a></p>
     </li>
     <li>
       <span class="essay-tag">Metrics · Policy</span>
@@ -86,6 +88,8 @@ toc: false
       <p class="essay-desc">The legal system pins hard numbers (18, 50, 65)
       onto a boundary that the science of human development never draws. A
       short piece on turning a fuzzy category into an exact number.</p>
+      <p class="essay-companion"><a href="../howold/how_old_is_old.html"><span class="essay-companion-label">Companion exercise:</span>
+      <span class="essay-companion-name">How Old Is Old? →</span></a></p>
     </li>
     <li>
       <span class="essay-tag">Prediction · Risk</span>
@@ -94,6 +98,8 @@ toc: false
       rules match or beat expert judgment most of the time, in pretrial risk,
       clinical practice, and elsewhere. Why we keep trusting our gut anyway,
       and what that costs.</p>
+      <p class="essay-companion"><a href="../gut/trust_your_gut.html"><span class="essay-companion-label">Companion exercise:</span>
+      <span class="essay-companion-name">Trust Your Gut? →</span></a></p>
     </li>
   </ul>
 </div>

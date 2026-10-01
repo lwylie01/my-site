@@ -389,6 +389,14 @@ h2.section-heading[data-eyebrow]::before {
   margin-top: 0.5rem;
   color: $muted-ink;
 }
+/* Companion lines set a Deep Coral link inside muted-ink text, and the two
+   have almost the same luminance (about 1.0:1), so colour alone cannot mark
+   the link for a colour-blind reader. Underline it. */
+.project-card-companion a,
+.essay-companion-name {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 /* Where a chip row sits above the call to action (Projects), give the link
    the gap a <br> used to fake. */
 .project-card-meta + .project-card-cta {
@@ -1006,6 +1014,17 @@ details.codebook-fold[open] > summary::before { content: "\25BE\00A0"; }
   .essay-tag { display: block; margin-bottom: 0.2rem; }
   .essay-title { font-size: 1rem; margin-bottom: 0.2rem; }
   .essay-desc { margin-bottom: 0; }
+  /* The item stays unclickable (the essay is not written yet); only this
+     line links, to the exercise that already exists. The whole line is the
+     link, so a long name wraps inside it instead of dropping away from its
+     label; its padding makes a ~44px tap target, and the negative margin
+     hands back the bottom padding so the row ends where it did. */
+  .essay-companion {
+    font-size: 0.85rem;
+    margin: 0 0 -0.6rem;
+    a { display: inline-block; padding: 0.6rem 0; }
+  }
+  .essay-companion-label { color: $muted-ink; }
 }
 
 /* CONCEPT PILLS */
