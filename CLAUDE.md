@@ -42,7 +42,13 @@ tokens: **Ink Plum #2E1A47** (primary dark: headings, body on light), **Cream
 only, never body text). One derived neutral, **muted-ink #6A5F72** (~5.3:1 on
 cream), carries muted text. The operating rule for every new colour choice: coral
 is Coral on dark and Deep Coral on light (coral-on-cream is 2.7:1 and fails);
-mauve never carries text. Fonts: **Spectral** (headings 600, body 400, italic for
+mauve never carries text. Links inside running text are underlined (1px, 2px offset,
+maintainer's pick 2026-10-01 from three mocked options): Deep Coral is 2.6:1
+against body ink and about 1.0:1 against muted ink, so colour alone never
+marked a link. The rule is `:where(main p, main li) a:where(:not([class]))`
+in `site-theme.scss`, held at bare-`a` specificity so component rules win;
+any link with a class is skipped. A new standalone "→" link inside a `<p>`
+needs a class (the homepage's `.bio-cta`) or it gets underlined too. Fonts: **Spectral** (headings 600, body 400, italic for
 emphasis and the wordmark's "with a"; fallback Georgia, serif) and **JetBrains
 Mono** for eyebrows/labels/captions/data labels (11-13px, letter-spacing
 0.08-0.12em; fallback monospace), both from Google Fonts, imported in

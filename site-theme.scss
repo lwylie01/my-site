@@ -73,6 +73,21 @@ a {
   &:hover { color: darken($deep-coral, 12%); }
 }
 
+/* Links inside running text are underlined (maintainer's pick, option A,
+   2026-10-01). Deep Coral is only 2.6:1 against body ink and about 1.0:1
+   against muted ink, so colour alone does not mark a link for a colour-blind
+   reader. :where() holds this at the specificity of a bare `a`, so any
+   component rule (card titles, companion lines) still wins, and links that
+   carry a class (buttons, CTAs, chips, essay cards, .pub-link) are skipped.
+   A standalone "→" call to action inside a <p> needs a class for the same
+   reason (the homepage's .bio-cta has no styles of its own; the class is
+   the opt-out). */
+:where(main p, main li) a:where(:not([class])) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
 hr {
   border-color: #E5DCCF;
   margin: 2.5rem 0;
@@ -1022,7 +1037,7 @@ details.codebook-fold[open] > summary::before { content: "\25BE\00A0"; }
   .essay-companion {
     font-size: 0.85rem;
     margin: 0 0 -0.6rem;
-    a { display: inline-block; padding: 0.6rem 0; }
+    a { display: inline-block; padding: 0.6rem 0; text-decoration: none; }
   }
   .essay-companion-label { color: $muted-ink; }
 }
