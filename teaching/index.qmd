@@ -104,7 +104,8 @@ into it.
 
 These tools follow the STORY framework from my Trends chapter (Strategy, Target
 audience, Observations, Representations, Yield); the evaluation picker comes
-first because a story needs findings before it can be told.
+first because a story needs findings before it can be told, and the display
+picker serves the Representations step.
 
 ```{=html}
 <div class="project-grid project-grid--pairs container">
@@ -145,6 +146,23 @@ first because a story needs findings before it can be told.
       <a href="../formatpicker/format_picker.html">format picker</a>
       (which deliverable fits)
     </p>
+  </div>
+
+  <div class="project-card">
+    <a href="../qualpicker/qual_picker.html" class="project-card-thumb" aria-hidden="true" tabindex="-1">
+      <img src="../pics/thumb-qualpicker.jpg" alt="" loading="lazy" />
+    </a>
+    <span class="project-card-tag">Planning Tool · Qualitative Data</span>
+    <p class="project-card-title">Seeing Qualitative Data</p>
+    <p class="project-card-desc">
+      Coded documents and interviews have a shape, and the figure that suits one
+      shape misleads with another. Say what your coding produced, what the figure
+      has to show, and how many cases you have, and thirty-seven displays sort
+      into what fits, what could fit with more, and what is the wrong tool here.
+    </p>
+    <a href="../qualpicker/qual_picker.html" class="project-card-cta">
+      Open the display picker →
+    </a>
   </div>
 
 </div>
