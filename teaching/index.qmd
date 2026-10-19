@@ -155,10 +155,11 @@ picker serves the Representations step.
     <span class="project-card-tag">Planning Tool · Qualitative Data</span>
     <p class="project-card-title">Seeing Qualitative Data</p>
     <p class="project-card-desc">
-      Coded documents and interviews have a shape, and the figure that suits one
-      shape misleads with another. Say what your coding produced, what the figure
-      has to show, and how many cases you have, and thirty-seven displays sort
-      into what fits, what could fit with more, and what is the wrong tool here.
+      The same coded interviews can become a ranked bar chart, a matrix of cases
+      by themes, a timeline, or a page of quotations, and which one is honest
+      depends on what the coding produced and how many cases there are. Answer up
+      to six questions and thirty-seven displays sort into what fits, what could
+      fit with more, and what is the wrong tool here.
     </p>
     <a href="../qualpicker/qual_picker.html" class="project-card-cta">
       Open the display picker →
