@@ -538,7 +538,25 @@ they rarely fit, with `note_*` overrides where the generic reason read badly.
 Do not delete them to tidy the catalogue; the page saying why is the point.
 
 **The mapping is the maintainer's to argue with**, as with the format picker:
-no check touches which display accepts which answer. Seven families:
+no check touches which display accepts which answer. **An in-list cell is an
+OR, so a form that needs two things must list only the one it cannot do
+without.** The first real test (2026-10-19, the maintainer's Missouri Upstream
+action plans: 152 plans across 45 circuits, 41 categories, kept off the repo)
+caught the funnel, part-in-whole bars and quote cards fitting "counts, how
+common" because their cells read "Process;Counts" or "Words;Counts", and the
+time-ordered matrix, spans over time and span chart fitting "which cases have
+which features" through an "Attributes" they did not need. Those cells now
+carry the one shape each form requires (funnel Process, part-in-whole and the
+two time forms Sequence, span Number, quote cards and the role-ordered matrix
+Words). The same test showed `words_ok` = "Pattern" alone was too strict:
+"Helpful, but not required" was tagging every pattern chart "Pair with the
+text", so every pattern chart now accepts Helpful and only "the quotes carry
+the evidence" trips the tag. Re-run that dataset's four questions (counts and
+how common; attributes and compare; words and said; counts and compare across
+several groups) after any mapping change: the clean answers are ranked bar,
+lollipop, icon array, stat tiles, treemap; heatmap, icon array, framework
+matrix, presence grid; codebook, framework and role-ordered matrix, quote
+cards, word tree; heatmap and small multiples. Seven families:
 Counting the codes (12, incl. the exhibits), Matrices (6), Ranges and
 thresholds (3), Time and process (5), Relationships and structure (3), The
 text itself (5), Metaphor and illustration (3). Thirteen rows carry "see it in
