@@ -473,7 +473,9 @@ voice; do not "punch it up."
 
 Built 2026-10-17 (maintainer's picks that day: six axes, keep the weak forms,
 the name, a Teaching card plus the worksheet link, cite now and she checks the
-sources). A third picker, for the question the compassionate release page
+sources; every user-facing string was offered with options and she picked
+option A throughout on 2026-10-19, so the shipped copy is reviewed, not "tune
+later"). A third picker, for the question the compassionate release page
 answers by example: coded documents and interviews have a shape, and which
 figure suits it. Same Excel to R to one-HTML shape as the format picker, which
 it is cloned from (no prerequisites, no TMFs). Answer up to six questions and
