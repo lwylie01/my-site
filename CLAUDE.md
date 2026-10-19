@@ -481,7 +481,20 @@ Built 2026-10-17 (maintainer's picks that day: six axes, keep the weak forms,
 the name, a Teaching card plus the worksheet link, cite now and she checks the
 sources; every user-facing string was offered with options and she picked
 option A throughout on 2026-10-19, so the shipped copy is reviewed, not "tune
-later"). A third picker, for the question the compassionate release page
+later"). Once live she found the intro unclear and not her voice ("evidence
+with a shape", "thresholds inside the text", "ties" were the abstractions),
+so the same day the headline, lead and header subtitle were re-offered in
+her register (the lindsey-voice skill: concrete members unpacked inline,
+mechanism over adjective, one long compound sentence) and she picked:
+headline "Once interviews, statutes, or case files have been coded, they can
+be charted, and the chart depends on what the coding produced."; lead "The
+same coded interviews can become a ranked bar chart, a matrix of cases by
+themes, a timeline, or a page of quotations, and which one is honest depends
+on..."; subtitle "Match the figure to what your coding produced and how many
+cases you have." The Teaching card mirrors the lead's premise sentence, as
+the format picker's does. The intro note stays identical to the format
+picker's on purpose. The thumbnail is a header screenshot that includes the
+headline, so it was retaken with the new copy. A third picker, for the question the compassionate release page
 answers by example: coded documents and interviews have a shape, and which
 figure suits it. Same Excel to R to one-HTML shape as the format picker, which
 it is cloned from (no prerequisites, no TMFs). Answer up to six questions and
