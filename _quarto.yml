@@ -16,6 +16,7 @@ project:
   #   evalpicker/data/evaluation_approaches.xlsx -> evalpicker/eval_picker.html
   #   formatpicker/data/delivery_formats.xlsx    -> formatpicker/format_picker.html
   #   datastory/data/story_worksheet.xlsx        -> datastory/story_worksheet.html
+  #   qualpicker/data/qualitative_displays.xlsx  -> qualpicker/qual_picker.html
   # Every generated page needs a build script here AND a resources entry below,
   # or it silently stops being published. Keep both lists in sync when merging.
   pre-render:
@@ -26,6 +27,7 @@ project:
     - evalpicker/build_eval.R
     - formatpicker/build_format.R
     - datastory/build_story.R
+    - qualpicker/build_qual.R
   resources:
     - hiphop/hiphop_periodic_table.html
     - hiphop/data/hiphop_artists.xlsx
@@ -41,6 +43,8 @@ project:
     - formatpicker/data/delivery_formats.xlsx
     - datastory/story_worksheet.html
     - datastory/data/story_worksheet.xlsx
+    - qualpicker/qual_picker.html
+    - qualpicker/data/qualitative_displays.xlsx
     - "CV/Wylie CV 7.2026.pdf"
     - pics/brand/og-image.png
     - pics/brand/mark-on-light.svg

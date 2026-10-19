@@ -24,6 +24,9 @@ formatpicker/format_picker.html
 # Generated Data STORY worksheet (built from Excel by datastory/build_story.R on render)
 datastory/story_worksheet.html
 
+# Generated qualitative display picker (built from Excel by qualpicker/build_qual.R on render)
+qualpicker/qual_picker.html
+
 # Internal/private working files — keep off the public site repo
 CV/Wylie_Capacity_Dashboard.qmd
 CV/Wylie_Capacity_Dashboard.html
