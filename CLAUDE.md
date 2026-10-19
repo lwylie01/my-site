@@ -527,15 +527,30 @@ use" links to live exhibits (compassionate release exhibits 01-10, Maturity
 Gap's frame, dumbbell and heatmap); the anchors are the published section ids,
 verified against `gh-pages`.
 
-**Sources are credited unread.** The footer names Verdinelli and Scagnoli
-(2013, the nine display types), Miles, Huberman and Saldaña (matrix
-orderings), Henderson and Segal (2013, text displays), Wattenberg and Viégas
-(2008, the word tree), Gale and colleagues (2013, the framework method) and
-Onwuegbuzie and Dickinson (2008, crossover displays), each linked by DOI or
-publisher page. Their hosts are egress-blocked in CCR sessions, so only
-abstracts and secondary summaries were read; the maintainer said to cite now
-and she will check them. Until she has, do not add claims about what those
-papers say beyond the display-type lists already there.
+**Sources, verified 2026-10-19 against the maintainer's own PDFs** (she
+uploaded five from her program evaluation folder). Verdinelli and Scagnoli
+(2013, IJQM 12: nine display types, matrices 60 percent of 377 displays, 27
+percent of 784 articles using any display), Henderson and Segal (2013, NDE
+139: word, sentence and theme levels; word clouds, word trees, phrase nets,
+shaded theme-by-case matrix, thematic map, chronological charts, spectrum
+display; the warning about losing subtlety is on p. 56), Wattenberg and
+Viégas (2008, TVCG 14(6): the word tree as a graphical keyword-in-context,
+font size by square root of frequency, branches under 1 percent pruned),
+Gale and colleagues (2013, BMC Med Res Methodol 13:117: the framework matrix,
+cases by codes with summarised cells, and the "13 out of 20 participants"
+pitfall the counting axis answers) and Onwuegbuzie and Dickinson (2008, TQR
+13(2): Tufte's five levels, Miles and Huberman's ordered displays, quantitizing
+and crossover displays) all say what the page credits them with. **Miles,
+Huberman and Saldaña is the one source still unread** (a book, not in the
+upload); its matrix orderings and checklist matrix are credited on the
+strength of the summaries in Onwuegbuzie and Dickinson (pp. 207-209) and
+Verdinelli and Scagnoli, both of which cite the 1994 edition. The footer
+links are DOIs and the Sage page; doi.org is egress-blocked in CCR, so they
+were not fetched from here. The fix pass that followed the reading: rows with
+no "see it in use" link no longer carry a source string promising one, the
+Onwuegbuzie and Dickinson credit says quantitizing rather than calling every
+bar chart a crossover display, the word tree's not_for concedes that size
+does show frequency roughly, and the footer gained the Gale pitfall.
 
 Verification without R: `make_workbook.py` is not in the repo (the workbook is
 the source now); replicate the build in Python (openpyxl is present in the
