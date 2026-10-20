@@ -46,7 +46,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-faefa32e34d8485b72e3ec72f2cf1e87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-404aa8feaa6ece37f379525afb01cb05.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-b2cd1362aa60dbe8032c743d384fecbd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -162,8 +162,9 @@ ul.task-list li input[type="checkbox"] {
 
 <style>
 /* Page-scoped: the ink band that names the five STORY elements. Coral on ink
-   is the brand's one allowed coral-as-text pairing (5.1:1); the glosses are
-   the worksheet's own element intros, so the two cannot disagree. */
+   is the brand's one allowed coral-as-text pairing (5.1:1). The glosses are
+   one-clause cuts of the worksheet's element intros (maintainer, 2026-10-20);
+   the worksheet keeps the full sentences. */
 .story-band {
   background: #2E1A47;
   color: #F7F2EC;
@@ -186,7 +187,14 @@ ul.task-list li input[type="checkbox"] {
   gap: 1.5rem 1.25rem;
 }
 @media (max-width: 900px) { .story-band-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 520px) { .story-band-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 520px) {
+  /* One column, each element as a row: letter at left, name and clause
+     beside it, so the band stays short on a phone. */
+  .story-band-grid { grid-template-columns: minmax(0, 1fr); gap: 1.1rem; }
+  .story-band-grid > div { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); column-gap: 0.85rem; align-items: start; }
+  .story-el-letter { grid-row: 1 / 3; font-size: 1.8rem; line-height: 1.1; }
+  .story-el-name { margin: 0 0 0.2rem; }
+}
 .story-el-letter {
   font-family: "JetBrains Mono", monospace;
   font-size: 2.1rem;
@@ -235,27 +243,27 @@ ul.task-list li input[type="checkbox"] {
       <div>
         <div class="story-el-letter" aria-hidden="true">S</div>
         <p class="story-el-name">Strategy</p>
-        <p class="story-el-intro">Settle what the story is for, where it will live, who will tell it, and what falls inside its bounds, before any of it is written.</p>
+        <p class="story-el-intro">What the story is for, where it will live, and who will tell it.</p>
       </div>
       <div>
         <div class="story-el-letter" aria-hidden="true">T</div>
         <p class="story-el-name">Target Audience</p>
-        <p class="story-el-intro">Stories land with a narrow, well-defined audience rather than with "the public" or "policymakers," so name who you are speaking to and what they already know and care about.</p>
+        <p class="story-el-intro">One narrow, well-defined audience, not "the public."</p>
       </div>
       <div>
         <div class="story-el-letter" aria-hidden="true">O</div>
         <p class="story-el-name">Observations</p>
-        <p class="story-el-intro">Let the data lead: state what they show, be open about where they came from and what could have bent them, and decide how much of the backstory this audience needs.</p>
+        <p class="story-el-intro">What the data show, where they came from, and what could have bent them.</p>
       </div>
       <div>
         <div class="story-el-letter" aria-hidden="true">R</div>
         <p class="story-el-name">Representations</p>
-        <p class="story-el-intro">Design the narrative and the illustration that carry the finding, with the people behind the data points, not the researcher, as the main characters.</p>
+        <p class="story-el-intro">The narrative and the illustration that carry the finding.</p>
       </div>
       <div>
         <div class="story-el-letter" aria-hidden="true">Y</div>
         <p class="story-el-name">Yield</p>
-        <p class="story-el-intro">Plan how the story goes out and how you will know whether it moved anyone to act, because insights alone are not the harvest.</p>
+        <p class="story-el-intro">How the story goes out and how you will know it moved anyone.</p>
       </div>
     </div>
   </section>
