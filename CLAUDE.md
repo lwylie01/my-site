@@ -651,10 +651,16 @@ Above the grid sits an **ink band** naming the five STORY elements, the
 would break the pages up, and the answer was no, because coral everywhere
 costs the one-coral-dot motif its meaning and Coral on cream fails contrast,
 so the band is Ink Plum with Coral letters (the brand's one coral-as-text
-pairing, 5.1:1) and the element intros in cream. **The band's five glosses
-are the worksheet's own Elements-sheet intros, copied verbatim**, so change
-them there first and re-copy, or the two will disagree. The band's CSS is
-page-scoped in the qmd. The four planning tools' top bars (evalpicker,
+pairing, 5.1:1) and a one-clause gloss per element in cream. The glosses
+shipped as the worksheet's Elements-sheet intros copied verbatim, which made
+the band tall (a single column about 2,000px of the phone page), so the same
+day the maintainer asked for one clause each and the band now carries short
+cuts of those intros (offered as options, maintainer picked A throughout)
+while **the worksheet keeps the full sentences**; a change to an element's
+meaning touches both, and the band's clause should stay a cut of the
+worksheet's sentence, not a new claim. Below 520px each element lays out as
+a row (letter at left, name and clause beside it), which took the phone band
+from about 1,100px to about 650px. The band's CSS is page-scoped in the qmd. The four planning tools' top bars (evalpicker,
 formatpicker, qualpicker, datastory templates) link "STORY" to
 `../story/index.html` instead of Teaching; the three exercises still link
 Teaching. The Projects subtitle names both pages. The STORY-page card copy was
