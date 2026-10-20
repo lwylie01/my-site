@@ -11,8 +11,9 @@ toc: false
   <h1 class="page-header-title">Projects</h1>
   <p class="page-header-sub">
     Applied research and documented datasets, each built around a real
-    measurement question; the exercises and planning tools live on the
-    <a href="../teaching/">Teaching page</a>.
+    measurement question; the exercises live on the
+    <a href="../teaching/">Teaching page</a> and the planning tools under
+    <a href="../story/">STORY</a>.
   </p>
 </div>
 

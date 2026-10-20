@@ -68,6 +68,8 @@ website:
         text: Projects
       - href: teaching/index.qmd
         text: Teaching
+      - href: story/index.qmd
+        text: STORY
       - href: writing/index.qmd
         text: Writing
       - href: selected-work/index.qmd
