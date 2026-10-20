@@ -659,8 +659,9 @@ formatpicker, qualpicker, datastory templates) link "STORY" to
 `../story/index.html` instead of Teaching; the three exercises still link
 Teaching. The Projects subtitle names both pages. The STORY-page card copy was
 offered as options the same day (page subtitle, section intro, the trimmed
-worksheet and qualitative-picker descriptions) and built with option A; see
-the PR for the pick.
+worksheet and qualitative-picker descriptions, plus the Teaching subtitle,
+the Barnum line and the Projects subtitle) and the maintainer picked A
+throughout the same day, so the shipped copy is reviewed.
 
 ## Data STORY Worksheet (`datastory/`)
 
