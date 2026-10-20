@@ -593,7 +593,9 @@ Two, with a `not_for` about half icons and more than five or six categories.
 Infographics are a deliverable, not a figure form, and stay in the format
 picker (`INFOGRAPHIC`, Outreach and media); this picker chooses the figures
 that go inside one. The source cell is "in common use (the Isotype unit
-chart)" pending the rescan, like the choropleth's.
+chart)" pending the rescan, like the choropleth's. Its four prose strings
+were offered as options and the maintainer picked A throughout the same day,
+so the shipped copy is reviewed.
 
 **Sources, verified 2026-10-19 against the maintainer's own PDFs** (she
 uploaded five from her program evaluation folder). Verdinelli and Scagnoli
