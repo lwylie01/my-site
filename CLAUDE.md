@@ -1101,7 +1101,15 @@ that the whole group is imaginary.
   option C) to match the card: "a simple checklist makes the same ten calls,
   and you see where each one does better" (was "a checklist that uses exactly
   two facts makes the same ten calls, and we compare scores"). Retake that
-  thumbnail if the intro changes again. Teaching is one section:
+  thumbnail if the intro changes again. **Two-part card tags** ("Planning
+  Tool · Data Storytelling") are marked up as `<span>A</span>&nbsp;·
+  <span>B</span>` inside `.project-card-tag`, with the halves `nowrap`
+  (site-theme.scss, 2026-10-21), so a tag that cannot fit breaks only after
+  the dot, never mid-phrase or with a line opening on "·"; below 700px the tag
+  drops to the brand's 11px / 0.08em floor, which fits every STORY and
+  Teaching tag on one line at 390px. The Projects tags are longer and still
+  take two lines, now split cleanly at the dot. A new two-part tag needs the
+  same markup. Teaching is one section:
   Warm-Ups (`01 · short exercises`). The notes below describe the page as it
   was before the split and stay as history.
   **Teaching refinement (2026-09-29, every string maintainer-picked):**

@@ -372,6 +372,15 @@ h2.section-heading[data-eyebrow]::before {
   color: $deep-coral;
   margin-bottom: 0.75rem;
 }
+/* Two-part tags ("Planning Tool · Data Storytelling") carry each half in a
+   nowrap span with a non-breaking space before the dot, so a tag that cannot
+   fit breaks only after the dot, never mid-phrase or with a line starting on
+   "·". On phones the tag drops to the brand's 11px / 0.08em floor, which puts
+   every STORY and Teaching tag on one line at 390px. */
+.project-card-tag > span { white-space: nowrap; }
+@media (max-width: 700px) {
+  .project-card-tag { font-size: 0.65rem; letter-spacing: 0.08em; }
+}
 
 .project-card-title {
   font-size: 1.2rem;

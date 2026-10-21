@@ -128,7 +128,7 @@ Representations step.
     <a href="../datastory/story_worksheet.html" class="project-card-thumb" aria-hidden="true" tabindex="-1">
       <img src="../pics/thumb-datastory.jpg" alt="" loading="lazy" />
     </a>
-    <span class="project-card-tag">Planning Tool · Data Storytelling</span>
+    <span class="project-card-tag"><span>Planning Tool</span>&nbsp;· <span>Data Storytelling</span></span>
     <p class="project-card-title">The Data STORY Worksheet</p>
     <p class="project-card-desc">
       Seventeen fillable steps, strategy through yield, with a one-page plan to
@@ -149,7 +149,7 @@ Representations step.
     <a href="../evalpicker/eval_picker.html" class="project-card-thumb" aria-hidden="true" tabindex="-1">
       <img src="../pics/thumb-evalpicker.jpg" alt="" loading="lazy" />
     </a>
-    <span class="project-card-tag">Planning Tool · Evaluation</span>
+    <span class="project-card-tag"><span>Planning Tool</span>&nbsp;· <span>Evaluation</span></span>
     <p class="project-card-title">Which Evaluation Should We&nbsp;Do?</p>
     <p class="project-card-desc">
       Answer up to seven questions about your program, and every evaluation
@@ -165,7 +165,7 @@ Representations step.
     <a href="../qualpicker/qual_picker.html" class="project-card-thumb" aria-hidden="true" tabindex="-1">
       <img src="../pics/thumb-qualpicker.jpg" alt="" loading="lazy" />
     </a>
-    <span class="project-card-tag">Planning Tool · Qualitative Data</span>
+    <span class="project-card-tag"><span>Planning Tool</span>&nbsp;· <span>Qualitative Data</span></span>
     <p class="project-card-title">Seeing Qualitative Data</p>
     <p class="project-card-desc">
       Answer up to six questions about what your coding produced and how many

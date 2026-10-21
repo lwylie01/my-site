@@ -33,7 +33,7 @@ into it.
     <a href="../hiphop/hiphop_periodic_table.html" class="project-card-thumb" aria-hidden="true" tabindex="-1">
       <img src="../pics/thumb-periodic.jpg" alt="" loading="lazy" />
     </a>
-    <span class="project-card-tag">Exercise · Measurement</span>
+    <span class="project-card-tag"><span>Exercise</span>&nbsp;· <span>Measurement</span></span>
     <p class="project-card-title">The Hip-Hop Periodic Table</p>
     <p class="project-card-desc">
       Score a favorite rapper on gut feeling, then compare that score with a table
@@ -50,7 +50,7 @@ into it.
     <a href="../howold/how_old_is_old.html" class="project-card-thumb" aria-hidden="true" tabindex="-1">
       <img src="../pics/thumb-howold.jpg" alt="" loading="lazy" />
     </a>
-    <span class="project-card-tag">Exercise · Definitions</span>
+    <span class="project-card-tag"><span>Exercise</span>&nbsp;· <span>Definitions</span></span>
     <p class="project-card-title">How Old Is Old?</p>
     <p class="project-card-desc">
       Set the age at which someone becomes old, a senior, or too old to drive,
@@ -66,7 +66,7 @@ into it.
     <a href="../gut/trust_your_gut.html" class="project-card-thumb" aria-hidden="true" tabindex="-1">
       <img src="../pics/thumb-gut.jpg" alt="" loading="lazy" />
     </a>
-    <span class="project-card-tag">Exercise · Prediction</span>
+    <span class="project-card-tag"><span>Exercise</span>&nbsp;· <span>Prediction</span></span>
     <p class="project-card-title">Trust Your Gut?</p>
     <p class="project-card-desc">
       Read ten case files, predict who returns to court, and then compare your
