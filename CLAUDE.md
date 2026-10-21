@@ -24,7 +24,14 @@ maintainer made the call; field-literate winks welcome. Maturity Gap's
 narration is the calibration standard; the compassionate release page was
 swept to this register 2026-07-21 and audited to the tightened ration
 2026-08-15 (its dry closers are now exhibits 01 and 06 plus the craft-note
-flourishes). When drafting copy, offer the maintainer
+flourishes). **Humor never at a legal system's expense** (maintainer,
+2026-10-21): she has a sense of humor, but no line may read as negative or
+derogatory toward any court, legal system, legal process, or the people who
+work in them. Dry lines aim at the method, the data, or the reader's own
+assumptions, never at the institutions the site serves. When auditing copy,
+also watch for lines that read as condescending to the visitor ("which parts
+you have not thought through") or dismissive of the public (scare quotes
+around "the public"). When drafting copy, offer the maintainer
 2-3 options and let her pick and tune, and get her pick before the copy ships,
 not after: PRs merge within minutes, so any user-facing string flagged "tune
 later" goes live unreviewed (the picker intro headline did exactly that in
@@ -660,7 +667,12 @@ while **the worksheet keeps the full sentences**; a change to an element's
 meaning touches both, and the band's clause should stay a cut of the
 worksheet's sentence, not a new claim. Below 520px each element lays out as
 a row (letter at left, name and clause beside it), which took the phone band
-from about 1,100px to about 650px. The band's CSS is page-scoped in the qmd. The four planning tools' top bars (evalpicker,
+from about 1,100px to about 650px. The band's CSS is page-scoped in the qmd. **The three card thumbnails are light**
+(2026-10-21, maintainer's call): each is a 1150x430 crop of the tool's intro
+screen taken just below its dark header bar (header bottom at 97px on all
+three), so the band is the page's only ink block; the dark-bar versions made
+four in a row on a phone. Regenerate the same way after any intro-copy change,
+because the intro headline is legible in the crop. The four planning tools' top bars (evalpicker,
 formatpicker, qualpicker, datastory templates) link "STORY" to
 `../story/index.html` instead of Teaching; the three exercises still link
 Teaching. The Projects subtitle names both pages. The STORY-page card copy was
