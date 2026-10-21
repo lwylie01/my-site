@@ -1282,7 +1282,12 @@ that the whole group is imaginary.
   must deploy first). Since the 2026-07-21 declutter that is just
   `thumb-periodic.jpg` and `thumb-maturitygap.jpg`, plus the six Teaching card
   thumbnails since 2026-09-29 (barnum, howold, gut, evalpicker, datastory, and
-  periodic again). Headless Chromium in CCR only loads Spectral and JetBrains
+  periodic again). The STORY navbar entry (2026-10-20) was such a chrome
+  change: `thumb-maturitygap.jpg` and `thumb-compassionaterelease.jpg` are
+  page-top screenshots that showed the navbar without STORY, so both were
+  retaken 2026-10-21 from the published `gh-pages` pages (1150x430 viewport
+  at the top of the page, JPEG q88). Adding or renaming a navbar entry
+  re-stales them. Headless Chromium in CCR only loads Spectral and JetBrains
   Mono when launched with `proxy: { server: process.env.HTTPS_PROXY }`;
   without it the fonts silently fall back and the thumbnail is wrong.
   The homepage "Start Here" grid (headed "Featured Projects" until the July
