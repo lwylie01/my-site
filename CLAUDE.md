@@ -30,8 +30,13 @@ derogatory toward any court, legal system, legal process, or the people who
 work in them. Dry lines aim at the method, the data, or the reader's own
 assumptions, never at the institutions the site serves. When auditing copy,
 also watch for lines that read as condescending to the visitor ("which parts
-you have not thought through") or dismissive of the public (scare quotes
-around "the public"). The first audit under the rule (2026-10-21, every
+you have not thought through"). Quotation marks that mark a term as too
+general ("the public", "policymakers") are the maintainer's deliberate usage
+and are fine when the sentence says why, as the worksheet's Target Audience
+intro does ("rather than with 'the public' or 'policymakers,' so name who you
+are speaking to"); the risk is bare quotes in a short label with no reason
+beside them, where they can read as sarcasm (the STORY band's old 'not "the
+public."' gloss). Do not flag the worksheet sentence. The first audit under the rule (2026-10-21, every
 replacement maintainer-picked, option B throughout) changed five lines: the
 Trust Your Gut? card ("compare your calls with a simple two-factor checklist
 and see where each one does better", replacing "scored against a checklist
@@ -40,8 +45,8 @@ losing to two facts), the STORY band's Target Audience and Yield glosses, the
 worksheet card ("which parts still need planning"), and the evaluation
 picker's `intro_title` ("Not every evaluation fits every program.", was "Most
 of the field is wrong for you."). The worksheet's own Target Audience intro
-still carries scare quotes around "the public" and "policymakers"; it was not
-in that audit's scope. When drafting copy, offer the maintainer
+keeps its quotation marks on purpose (maintainer, 2026-10-21; see above).
+When drafting copy, offer the maintainer
 2-3 options and let her pick and tune, and get her pick before the copy ships,
 not after: PRs merge within minutes, so any user-facing string flagged "tune
 later" goes live unreviewed (the picker intro headline did exactly that in
