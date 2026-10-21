@@ -69,8 +69,8 @@ into it.
     <span class="project-card-tag">Exercise · Prediction</span>
     <p class="project-card-title">Trust Your Gut?</p>
     <p class="project-card-desc">
-      Read ten case files, predict who returns to court, and then see your calls
-      scored against a checklist that uses exactly two facts.
+      Read ten case files, predict who returns to court, and then compare your
+      calls with a simple two-factor checklist and see where each one does better.
     </p>
     <a href="../gut/trust_your_gut.html" class="project-card-cta">
       Trust your gut? →
