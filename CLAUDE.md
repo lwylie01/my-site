@@ -1090,7 +1090,18 @@ that the whole group is imaginary.
   table's own header nav carries Dashboard and Codebook), the subtitle lost
   its planning-tools clause, and the Warm-Ups grid went back to the default
   three-column `.project-grid`, which fits the three remaining exercises on
-  one row (the `--pairs` variant now has no user). Teaching is one section:
+  one row (the `--pairs` variant now has no user). On 2026-10-21 the How Old
+  and Gut thumbnails went light to match the STORY cards (maintainer's call):
+  each is a 1150x430 crop of the exercise's opening screen starting just
+  below the white `#progress` strip (y = 156), so neither the ink header nor
+  the strip's dark active step shows. `thumb-periodic.jpg` keeps its dark
+  header on purpose, because the coloured tiles are the draw. The light Gut
+  crop made the exercise's opening legible on the card, so its "No takebacks"
+  line in `gut/app/_template.html` changed the same day (maintainer's pick,
+  option C) to match the card: "a simple checklist makes the same ten calls,
+  and you see where each one does better" (was "a checklist that uses exactly
+  two facts makes the same ten calls, and we compare scores"). Retake that
+  thumbnail if the intro changes again. Teaching is one section:
   Warm-Ups (`01 · short exercises`). The notes below describe the page as it
   was before the split and stay as history.
   **Teaching refinement (2026-09-29, every string maintainer-picked):**
