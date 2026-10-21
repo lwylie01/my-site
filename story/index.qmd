@@ -94,7 +94,7 @@ toc: false
       <div>
         <div class="story-el-letter" aria-hidden="true">T</div>
         <p class="story-el-name">Target Audience</p>
-        <p class="story-el-intro">One narrow, well-defined audience, not "the public."</p>
+        <p class="story-el-intro">One narrow, well-defined audience, named as specifically as you can.</p>
       </div>
       <div>
         <div class="story-el-letter" aria-hidden="true">O</div>
@@ -109,7 +109,7 @@ toc: false
       <div>
         <div class="story-el-letter" aria-hidden="true">Y</div>
         <p class="story-el-name">Yield</p>
-        <p class="story-el-intro">How the story goes out and how you will know it moved anyone.</p>
+        <p class="story-el-intro">How the story goes out and how you will know it worked.</p>
       </div>
     </div>
   </section>
@@ -133,7 +133,7 @@ Representations step.
     <p class="project-card-desc">
       Seventeen fillable steps, strategy through yield, with a one-page plan to
       print or download at the end; it will not write the story for you, but it
-      will show you which parts you have not thought through yet.
+      will show you which parts still need planning.
     </p>
     <a href="../datastory/story_worksheet.html" class="project-card-cta">
       Open the worksheet →
