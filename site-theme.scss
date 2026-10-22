@@ -1121,4 +1121,7 @@ details.codebook-fold[open] > summary::before { content: "\25BE\00A0"; }
   .section-divider { margin: 2.25rem 0; }
   .section-divider svg { width: 140px; }
   .bio-block { flex-direction: column; gap: 1rem; }
+  /* Stacked, the photo sat flush left with empty space beside it; centre it
+     over the left-aligned bio (maintainer, 2026-10-22). */
+  .bio-avatar { align-self: center; }
 }

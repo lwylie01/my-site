@@ -1432,7 +1432,10 @@ that the whole group is imaginary.
 - **Homepage phone pass (2026-09-27, maintainer-picked).** The bio avatar is
   `pics/headshot-420.jpg` (420x576, ~39 KB, no metadata). The original
   `pics/Headshot1.jpg` was a 949 KB 2787x3824 phone photo shown at 140px, and
-  its EXIF carried **GPS coordinates**, served publicly until this pass. Any
+  its EXIF carried **GPS coordinates**, served publicly until this pass.
+  Below 768px, where the bio stacks into one column, the avatar is centred
+  (`align-self: center`, 2026-10-22, maintainer's call) while the bio text
+  stays left-aligned. Any
   photo added to the site must be resized and stripped of EXIF first (Pillow:
   `ImageOps.exif_transpose`, resize, save without `exif=`); a quick scan of
   every JPEG for a GPS IFD with lat/long takes seconds. The Hip-Hop card is
