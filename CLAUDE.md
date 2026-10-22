@@ -46,6 +46,13 @@ worksheet card ("which parts still need planning"), and the evaluation
 picker's `intro_title` ("Not every evaluation fits every program.", was "Most
 of the field is wrong for you."). The worksheet's own Target Audience intro
 keeps its quotation marks on purpose (maintainer, 2026-10-21; see above).
+The Writing page's In the Works titles were audited the next day (option A,
+maintainer-picked): "How Old Is Old? The Age the Law Pretends to Know" became
+"...Where the Law Draws the Line on Age" ("pretends" called the law dishonest)
+and "Trust the Checklist: Why Expert Judgment Keeps Losing" became "...What
+Simple Rules Get Right" (the Gut card's trap again). The STORY chapter card's
+"Most court data is buried in reports that go unread" was kept on purpose: it
+names the problem the chapter solves without blaming anyone.
 When drafting copy, offer the maintainer
 2-3 options and let her pick and tune, and get her pick before the copy ships,
 not after: PRs merge within minutes, so any user-facing string flagged "tune
