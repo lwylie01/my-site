@@ -154,8 +154,10 @@ cite_line <- function(row, linked) {
     sprintf('<a class="pub-link" href="%s" target="_blank" rel="noopener">%s</a>',
             esc(row$url), esc(row$title))
   } else esc(row$title)
-  sprintf("    <li>%s (%d). %s. <em>%s.</em>%s</li>\n",
-          bold_wylie(esc(row$authors)), row$year, title_html, esc(row$venue), tail)
+  stop_mark <- if (grepl("[?!]$", trimws(row$title))) "" else "."
+  sprintf("    <li>%s (%d). %s%s <em>%s.</em>%s</li>\n",
+          bold_wylie(esc(row$authors)), row$year, title_html, stop_mark,
+          esc(row$venue), tail)
 }
 
 area_sections <- ""

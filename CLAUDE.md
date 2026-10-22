@@ -816,7 +816,11 @@ hides it, and a tap outside the charts dismisses it. That is what makes the
 header's "Tap or hover any point" true, so keep the two together. Headings
 carry plain labels (`01 · research areas`, `02 · program evaluations`,
 `03 · citations`, `04 · cv`), matching the other section pages, and the
-`.pub-all` summaries are padded to a ~48px tap target in brand muted ink.
+`.pub-all` summaries are padded to a ~48px tap target in brand muted ink. The two legends name the threads differently on purpose (2026-10-22,
+maintainer kept it, option A): the timeline uses the full area labels and the
+citations chart the short `legend_key`s, which suit its narrower legend. A
+title ending in "?" or "!" takes no added period in a citation (`cite_line()`),
+so "Am I a Caregiver?" no longer renders as "?."
 
 The Writing page (regrouped 2026-09-27, maintainer-picked) has two labelled
 sections: **On the Record** (`01 · published`, `#on-the-record`), live pieces
