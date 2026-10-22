@@ -1016,6 +1016,15 @@ exists under every row.
   reader immediately before the identical card title. Every shirt download chip
   carries an `aria-label` naming its design: five of them otherwise share the
   accessible name "PNG (transparent)".
+- **The mockup wells show the whole scene** (2026-10-22). The three
+  `pics/kit-*.png` were captures with a white band along the bottom and white
+  rounded-corner pixels, and `.swag-art img`'s `max-height: 100%` never
+  resolved inside the grid well, so each image ran past its 3:2 box and was
+  clipped: the tote lost "the story is in the scatter" and the mug and laptop
+  showed white strips. The PNGs are now trimmed to the scene with the corners
+  filled taupe, and `.swag-art--kit` gives those wells a definite grid track
+  and the scene's own taupe (#D9D0C4) so `contain` letterboxes invisibly. A new
+  mockup image goes in a `swag-art swag-art--kit` well, trimmed the same way.
 - `.swag-gallery a:focus-visible` must keep a real outline. A shared hover and
   focus rule carrying `outline:none` once left all thirteen sticker download
   links with no visible focus indicator.
