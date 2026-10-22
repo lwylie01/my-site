@@ -1016,6 +1016,15 @@ exists under every row.
   reader immediately before the identical card title. Every shirt download chip
   carries an `aria-label` naming its design: five of them otherwise share the
   accessible name "PNG (transparent)".
+- **The mockup wells show the whole scene** (2026-10-22). The three
+  `pics/kit-*.png` were captures with a white band along the bottom and white
+  rounded-corner pixels, and `.swag-art img`'s `max-height: 100%` never
+  resolved inside the grid well, so each image ran past its 3:2 box and was
+  clipped: the tote lost "the story is in the scatter" and the mug and laptop
+  showed white strips. The PNGs are now trimmed to the scene with the corners
+  filled taupe, and `.swag-art--kit` gives those wells a definite grid track
+  and the scene's own taupe (#D9D0C4) so `contain` letterboxes invisibly. A new
+  mockup image goes in a `swag-art swag-art--kit` well, trimmed the same way.
 - `.swag-gallery a:focus-visible` must keep a real outline. A shared hover and
   focus rule carrying `outline:none` once left all thirteen sticker download
   links with no visible focus indicator.
@@ -1040,7 +1049,12 @@ the two signature pieces. Do not add a swag card to any of them.
 **Adding a sticker:** file in `downloads/stickers/` (transparent PNG), one `<a
 download>` tile in the Quote Stickers `.swag-gallery` with a descriptive `alt`
 and a `.cap` caption. Five tiles fill one row at the current `minmax(150px,
-1fr)`; a sixth wraps to a second row.
+1fr)`; a sixth wraps to a second row. Below 520px the gallery is two tiles per row
+(2026-10-22, maintainer's pick B), which cut about 380px of phone scroll from the
+five quote stickers; an odd count leaves the last tile alone on its row. `.cap`
+is `display:block` so its own 1.3 line height applies when a caption wraps
+(as an inline span it inherited the body's looser line box). The
+mockup descriptions use curly quotation marks (same day).
 
 **Adding a shirt design:** inline SVG card in the Shirt Art grid (the wrapper
 gets `aria-hidden="true"`), rasterise it to `downloads/shirts/`, add a
