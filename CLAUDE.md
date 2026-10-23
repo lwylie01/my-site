@@ -1195,7 +1195,8 @@ that the whole group is imaginary.
   thumbnails (`thumb-periodic`, `thumb-maturitygap` retaken with the current
   navbar, new `thumb-compassionaterelease`), links use `.project-card-cta`,
   and `.project-card-meta + .project-card-cta` replaces the old `<br>` spacer.
-  `.project-card-desc` steps up from 0.75rem to 0.9rem below 700px, sitewide.
+  `.project-card-desc` stepped up from 0.75rem to 0.9rem below 700px, sitewide
+  (and at every width since 2026-10-23).
 - **A Right That Exists on Paper (`compassionaterelease/`; shipped 2026-07-19
   in #74, review pass 2026-07-19, sources-and-voice pass 2026-07-21).** Chart-forward data story on compassionate
   release, the qualitative-data sibling of Maturity Gap on the same machinery:
@@ -1466,12 +1467,20 @@ that the whole group is imaginary.
   every JPEG for a GPS IFD with lat/long takes seconds. The Hip-Hop card is
   **"The Hip-Hop Periodic Table"** on the homepage, Teaching and Projects alike
   (it was three different names), and the homepage description matches
-  Projects' plain wording. Any `.project-card-thumb` narrower than 401px
-  (150 x 1150/430) takes the screenshot's own 1150/430 proportions through a
-  container query (2026-10-23; it was a below-700px media query until then),
-  because the fixed 150px height crops the sides of a narrower card: on a phone,
-  and in every three-up grid at desktop widths ("aturity Gap"). Wider cards,
-  like the homepage pair at 1180px and up, keep 150px. The same day
+  Projects' plain wording. `.project-card-thumb img` takes the screenshot's own
+  1150/430 proportions at every width (2026-10-23; a fixed 150px height, with a
+  below-700px exception, until then), because the fixed height cropped the
+  sides of narrow cards (phones, and every three-up grid: "aturity Gap") and
+  the top and bottom of wide ones (the homepage pair, once it went full width).
+  **Homepage desktop pass (2026-10-23, maintainer-picked):** the "On this page"
+  sidebar is gone (`toc: false`; it listed only two sections and pushed the
+  page left of centre), so the homepage content is full width like the other
+  section pages, and Start Here uses `.project-grid--pairs` so two cards never
+  sit beside an empty third track. `.hero-section` has a 2.5rem bottom margin
+  (the first eyebrow sat flush on the card), `.project-card-title a` inherits
+  the title's 600 weight (it rendered at 400, lighter than every other card
+  title), and `.project-card-desc` is 0.9rem at every width (it was 0.75rem,
+  about 12.75px, on desktop). The same day
   `.project-grid`'s minimum dropped from 300px to 290px (maintainer's pick A):
   a `.container` row at 992-1199px is 936px wide, 12px short of three 300px
   cards, so Projects, Teaching, STORY and both Swag grids left one card alone on
