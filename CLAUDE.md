@@ -1513,6 +1513,15 @@ that the whole group is imaginary.
   two-line tag used to sit 5px above its one-line neighbours. The chip-row gap
   above Projects' links (`.project-card-meta + .project-card-cta`) is padding,
   not margin, so the auto margin still applies.
+  **Teaching desktop pass (2026-10-23, maintainer's picks B and B):** the
+  Warm-Ups grid and the "Also still live" line dropped their `container`
+  class, so they share the markdown heading's left edge instead of sitting 12px
+  inside it (Bootstrap's container padding). STORY had the same 12px offset
+  (its band and grid were containers under a markdown heading) and got the
+  same fix in the same PR (maintainer's pick B): the band's wrapper and the
+  grid dropped `container`, so both now span the heading's width. Both pages' section intros sit in a
+  `::: {.section-intro}` div, capped at 760px (about 100 characters a line,
+  down from about 150).
 - Every page with `title: ""` (the section indexes draw their own
   `.page-header`, so they all use it) also needs a `pagetitle:` in its front
   matter, or Quarto titles the browser tab and og:title from the filename:

@@ -82,7 +82,7 @@ toc: false
   </p>
 </div>
 
-<div class="container">
+<div>
   <section class="story-band" aria-labelledby="story-band-title">
     <p class="story-band-eyebrow" id="story-band-title">The five elements</p>
     <div class="story-band-grid">
@@ -118,12 +118,14 @@ toc: false
 
 ## The Tools {#planning-tools .section-heading data-eyebrow="01 · planning tools"}
 
+::: {.section-intro}
 The worksheet holds the plan; the evaluation picker produces the findings a
 story needs before it can be told, and the display picker serves the
 Representations step.
+:::
 
 ```{=html}
-<div class="project-grid container">
+<div class="project-grid">
   <div class="project-card">
     <a href="../datastory/story_worksheet.html" class="project-card-thumb" aria-hidden="true" tabindex="-1">
       <img src="../pics/thumb-datastory.jpg" alt="" loading="lazy" />
