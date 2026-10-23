@@ -1061,13 +1061,21 @@ the two signature pieces. Do not add a swag card to any of them.
 
 **Adding a sticker:** file in `downloads/stickers/` (transparent PNG), one `<a
 download>` tile in the Quote Stickers `.swag-gallery` with a descriptive `alt`
-and a `.cap` caption. Five tiles fill one row at the current `minmax(150px,
-1fr)`; a sixth wraps to a second row. Below 520px the gallery is two tiles per row
+and a `.cap` caption. The gallery is `repeat(auto-fit, minmax(150px, 1fr))`
+(auto-fit since 2026-10-23, maintainer's pick B; auto-fill left an empty sixth
+slot beside the five quote stickers at 1200px and up), so a row with fewer
+tiles than slots stretches them to fill it. Six tiles fit one row from about
+1200px; below that a sixth wraps to a second row. Below 520px the gallery is two tiles per row
 (2026-10-22, maintainer's pick B), which cut about 380px of phone scroll from the
 five quote stickers; an odd count leaves the last tile alone on its row. `.cap`
 is `display:block` so its own 1.3 line height applies when a caption wraps
 (as an inline span it inherited the body's looser line box). The
 mockup descriptions use curly quotation marks (same day).
+
+The shirt cards' download chip (`.project-card > .source-chips`) takes
+`margin-top: auto` (page-scoped, 2026-10-23, maintainer's pick B), so a row's
+chips share the cards' bottom line; The Wordmark's longer description had set
+its chip about 25px below its neighbours'.
 
 **Adding a shirt design:** inline SVG card in the Shirt Art grid (the wrapper
 gets `aria-hidden="true"`), rasterise it to `downloads/shirts/`, add a
