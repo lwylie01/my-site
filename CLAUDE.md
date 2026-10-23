@@ -439,7 +439,7 @@ under the private working folder, not in this repo.
 
 | File | Role |
 |---|---|
-| `formatpicker/data/delivery_formats.xlsx` | Source of truth. Sheets: **Rules** (3, one per question), **Levels** (13), **Formats** (21), **Copy** (41: UI strings plus one `reason_`/`short_` per rule). Editable in Excel |
+| `formatpicker/data/delivery_formats.xlsx` | Source of truth. Sheets: **Rules** (3, one per question), **Levels** (13), **Formats** (21), **Copy** (46: UI strings plus one `reason_`/`short_` per rule, and the five `reach_built_*` / `reach_use_*` phrases). Editable in Excel |
 | `formatpicker/build_format.R` | Pre-render step. Validates the workbook (checks 1-5b from `build_eval.R`, minus the prerequisite checks 6-8), serializes the four sheets to JSON and injects them at `__RULES_DATA__`, `__LEVELS_DATA__`, `__FORMATS_DATA__`, `__COPY_DATA__`, producing `formatpicker/format_picker.html` (gitignored; built in CI; never edit the output) |
 | `formatpicker/app/_template.html` | The picker's look + matching logic |
 | `story/index.qmd` (was `teaching/index.qmd` until 2026-10-20) | Since 2026-09-27 the picker has no card of its own: it is the companion link on the Data STORY Worksheet card (maintainer's call, structure C below), and the worksheet's "Select the Format" step links to it too. Before that it had its own Teaching card, and before the 2026-07-21 homepage declutter a homepage featured card (`pics/thumb-formatpicker.jpg`, 1150x430). Like the evaluation picker, it moved off `projects/index.qmd` in the July 2026 reshuffle |
@@ -517,6 +517,17 @@ or document or archive"), using a bare "or" only for two items that carry no
 "or" of their own, because the objective labels do ("persuade or advocate, or
 support a decision"). Audience names lowercase too in those sentences ("the
 novice audience you named").
+
+The reach reason no longer lists reach labels, which strung together badly
+("built for both internal and external or external reach"); it says what the
+format is for (maintainer's pick A, same day): "Annual Report is built to reach
+outside your court, so using it inside your court means adapting how it is
+polished and shared." `reachVars()` picks `reach_built_outside` for any format
+whose `reach_ok` includes External, else `reach_built_inside`, and one of
+`reach_use_internal` / `_external` / `_both` for the answer. All five phrases
+are Copy rows named by literal `t()` calls, so check 5b covers them. Only six
+format and answer combinations can fail this rule (15 sentences); re-read them
+after any `reach_ok` change.
 
 The intro prose was re-registered the same day: the maintainer found the first
 cut ("No format is best for everything." plus clipped fragments) too
