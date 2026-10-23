@@ -249,7 +249,7 @@ reports_html <- sprintf(paste0(
 #| results: asis
 #| echo: false
 emit('<script>window.SW = ', sw_json, ';</script>\n',
-     '<div class="container" style="max-width: 960px;">\n',
+     '<div class="container" style="max-width: 960px; margin-left: 0; padding-left: 0;">\n',
      '  <div id="pubchart-card" class="chart-card">\n',
      '    <p class="chart-card-tag">Figure · Timeline</p>\n',
      '    <p class="chart-card-title">', tl_title, '</p>\n',
@@ -475,7 +475,7 @@ emit('<script>window.SW = ', sw_json, ';</script>\n',
 ```{r area-sections}
 #| results: asis
 #| echo: false
-emit('<div class="container" style="max-width: 820px;">\n', area_sections, '</div>')
+emit('<div class="container" style="max-width: 820px; margin-left: 0; padding-left: 0;">\n', area_sections, '</div>')
 ```
 
 ```{=html}
@@ -497,7 +497,7 @@ emit('<div class="container" style="max-width: 820px;">\n', area_sections, '</di
 ```{r reports-section}
 #| results: asis
 #| echo: false
-emit('<div class="container" style="max-width: 820px;">\n', reports_html, '</div>')
+emit('<div class="container" style="max-width: 820px; margin-left: 0; padding-left: 0;">\n', reports_html, '</div>')
 ```
 
 ```{=html}
@@ -519,7 +519,7 @@ emit('<div class="container" style="max-width: 820px;">\n', reports_html, '</div
 ```{r cite-card}
 #| results: asis
 #| echo: false
-emit('<div class="container" style="max-width: 960px;">\n',
+emit('<div class="container" style="max-width: 960px; margin-left: 0; padding-left: 0;">\n',
      '  <div id="citechart-card" class="chart-card">\n',
      '    <p class="chart-card-tag">Figure · Citations</p>\n',
      '    <p class="chart-card-title">', cite_title, '</p>\n',
@@ -705,7 +705,7 @@ emit('<div class="container" style="max-width: 960px;">\n',
 ## Curriculum Vitae {#curriculum-vitae .section-heading data-eyebrow="04 · cv"}
 
 ```{=html}
-<div class="container" style="max-width: 820px;">
+<div class="container" style="max-width: 820px; margin-left: 0; padding-left: 0;">
   <p style="color:#4b5563;">
     The full CV includes all peer-reviewed publications, book chapters, law
     reviews, funded grants, project reports, presentations, and courses

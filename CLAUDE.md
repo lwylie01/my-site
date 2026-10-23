@@ -820,7 +820,14 @@ carry plain labels (`01 · research areas`, `02 · program evaluations`,
 maintainer kept it, option A): the timeline uses the full area labels and the
 citations chart the short `legend_key`s, which suit its narrower legend. A
 title ending in "?" or "!" takes no added period in a citation (`cite_line()`),
-so "Am I a Caregiver?" no longer renders as "?."
+so "Am I a Caregiver?" no longer renders as "?." The page's five content blocks (both
+figure cards, the area lists, the reports, the CV block) are `.container`s
+with an inline max-width (960px for figures, 820px for text) and, since
+2026-10-23, `margin-left: 0; padding-left: 0` (maintainer's pick B): Bootstrap
+centred them, so on desktop the figures sat about 100px and the lists about
+170px right of the section headings' left edge, and the padding indented them
+12px on phones. They now share the headings' left edge at every width and keep
+their max-widths; the `.pub-all` summary arrows still hang just left of it.
 
 The Writing page (regrouped 2026-09-27, maintainer-picked) has two labelled
 sections: **On the Record** (`01 · published`, `#on-the-record`), live pieces
