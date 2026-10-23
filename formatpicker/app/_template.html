@@ -486,12 +486,12 @@ const COPY    = __COPY_DATA__;
 // workbook needs a line. The dot is decorative: the group name is spelt out
 // beside it, so these carry no contrast floor.
 const GROUP_COLORS = {
-  'Written report':        '#6B4A24',
-  'Brief & summary':       '#4F6B33',
-  'Presentation':          '#B0791C',
-  'Digital & interactive': '#4E7E92',
-  'Outreach & media':      '#BC4634',
-  'Funding':               '#8A6D3B'
+  'Written report':          '#6B4A24',
+  'Brief and summary':       '#4F6B33',
+  'Presentation':            '#B0791C',
+  'Digital and interactive': '#4E7E92',
+  'Outreach and media':      '#BC4634',
+  'Funding':                 '#8A6D3B'
 };
 
 // Illustration-to-text ratio, the tree's circle colour. Paired with its word,
@@ -658,7 +658,7 @@ function reachPhrase(item) {
   const r = list(cell(item, 'reach_ok'));
   const hasInt = r.includes('Internal') || r.includes('Both');
   const hasExt = r.includes('External') || r.includes('Both');
-  if (hasInt && hasExt) return 'Internal & external';
+  if (hasInt && hasExt) return 'Internal and external';
   if (hasExt) return 'External';
   return 'Internal';
 }
@@ -826,7 +826,12 @@ function populateModal(id) {
   const auds = labels('audience', list(cell(it, 'audience_ok')));
   h += sec(t('modal_best_audiences'), auds ? '<p>' + esc(auds) + '</p>' : '');
 
-  const objs = labels('objective', list(cell(it, 'objective_ok')));
+  // Each objective label is capitalized for its dropdown; mid-list it reads as
+  // prose, so every item after the first takes a lowercase first letter.
+  const objs = list(cell(it, 'objective_ok')).map((v, i) => {
+    const l = label('objective', v);
+    return i ? l.charAt(0).toLowerCase() + l.slice(1) : l;
+  }).join(', ');
   const serves = reachPhrase(it) + (objs ? '. ' + objs : '');
   h += sec(t('modal_serves'), '<p>' + esc(serves) + '</p>');
 

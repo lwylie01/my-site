@@ -465,13 +465,13 @@ out rather than softened, move its rule's `fail_class` to `Intent`.
 
 Three formats were added from practice 2026-07-20 (maintainer's call, from a
 crosswalk against her real deliverables): `INTERACT` Interactive Report
-(Digital & interactive), `VIDEO` Video or Documentary (Outreach & media),
+(Digital and interactive), `VIDEO` Video or Documentary (Outreach and media),
 `GUIDE` How-To Guide (Written report). Four more followed 2026-07-21, from a
 methods-and-references review (the page read as if it all came from the
 maintainer's own Trends chapter): `WORKSHOP` Workshop and `WEBINAR` Webinar
 (kept separate at her request: Workshop is internal and decision-facilitating,
 Webinar reaches outward to raise awareness), `POSTER` Research Poster (those
-three Presentation), and `OPED` Op-ed or Commentary (Outreach & media). None
+three Presentation), and `OPED` Op-ed or Commentary (Outreach and media). None
 are in the Trends Fig. 2 tree and never claim to be: every `source` cell reads
 "Added from practice (2026)", and the footer names them collectively ("seven
 formats added from practice"; the intro screen's note carried the provenance
@@ -500,6 +500,17 @@ h1 and the intro-screen headline are deliberately different so the landing view
 does not repeat one phrase twice; keep them distinct. `intro_note` dropped its
 provenance clause (the footer already carries the sourcing), and the RSD
 handout's footer link text was reprinted to match the new name.
+
+Phone pass 2026-10-23 (maintainer's picks A, A and A): the sitewide "and, never &"
+rule reached this picker's labels. The `family` values are "Brief and summary",
+"Digital and interactive" and "Outreach and media" (`GROUP_COLORS` is keyed by
+family name, so renaming a family means renaming its key, or its dot falls back
+to the default brown), and `reachPhrase()` says "Internal and external".
+`typical_length` takes one style: ranges with "to" ("2 to 4 pages", "20 or more
+pages"), matching the siblings' "6 to 12 months" and "1 to 9 cases", and no
+closing period. The modal's "Reach and objectives it serves" line lowercases
+every objective after the first, since mid-list they read as prose; the
+`reason_objective_ok` sentence still interpolates them capitalized.
 
 The intro prose was re-registered the same day: the maintainer found the first
 cut ("No format is best for everything." plus clipped fragments) too
