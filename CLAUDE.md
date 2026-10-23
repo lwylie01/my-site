@@ -289,6 +289,14 @@ nowrap pill punches out of a narrow viewport), and both grids use
 `minmax(min(Npx, 100%), 1fr)` because an auto-fit track cannot shrink below a
 bare floor.
 
+Phone pass 2026-10-23 (maintainer's picks A and A): the sticky `#results-bar`
+(tabs plus stats) was five rows and 196px at 390px, against the siblings' 91px,
+because each tab label wrapped and the hint and print button took a row each.
+Below 640px the tabs lose their gap and take 0.6rem side padding and the stats
+bar gap is `0.3rem 0.75rem`, so at 390px it is 112px (158px at 320-360px, where
+the tabs still wrap). The header `<h1>` carries `text-wrap: balance`, so phones
+read "Which Evaluation / Should We Do?" instead of stranding "Do?".
+
 ### The pieces
 
 | File | Role |
