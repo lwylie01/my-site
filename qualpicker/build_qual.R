@@ -181,7 +181,7 @@ if (length(missing)) {
 #     scan cannot see these (the capture ends in "_"), so they are listed here.
 SHOWS_VALUES <- c("Passages", "Phrases", "Pattern")
 shows_keys <- paste0("shows_", tolower(SHOWS_VALUES))
-scale_keys <- c("scale_one", "scale_range", "scale_open")
+scale_keys <- c("scale_one", "scale_range", "scale_open", "scale_over")
 missing <- setdiff(c(shows_keys, scale_keys), txt(copy_df$key))
 if (length(missing)) {
   stop("Copy sheet is missing key(s) the template builds by name: ",
