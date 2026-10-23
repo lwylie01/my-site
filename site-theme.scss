@@ -287,9 +287,12 @@ h2.section-heading[data-eyebrow]::before {
 
 /* PROJECT CARDS */
 
+/* 290px, not 300: a .container row at 992-1199px is 936px wide, 12px short
+   of three 300px cards, so every three-card grid left its third card alone
+   on a second row at laptop and tablet-landscape widths. */
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: 1.5rem;
   margin: 1.5rem 0;
 }
@@ -330,10 +333,13 @@ h2.section-heading[data-eyebrow]::before {
   height: 150px;
   object-fit: cover;
 }
-/* On a phone the card is narrower than the 1150x430 screenshot's shape, so a
-   fixed 150px height cropped its sides ("...dic Table of Hip-Hop Artists").
-   Below 700px the box takes the screenshot's own proportions instead. */
-@media (max-width: 700px) {
+/* A card narrower than 401px (150px x 1150/430) is narrower than the
+   screenshot's shape, so the fixed 150px height cropped its sides ("...dic
+   Table of Hip-Hop Artists" on a phone, "aturity Gap" in three-up grids).
+   The thumb is a size container, so any card that narrow, at any viewport,
+   takes the screenshot's own proportions instead; wider cards keep 150px. */
+.project-card-thumb { container-type: inline-size; }
+@container (max-width: 401px) {
   .project-card-thumb img { height: auto; aspect-ratio: 1150 / 430; }
 }
 
