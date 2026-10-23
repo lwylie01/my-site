@@ -3,7 +3,7 @@ title: ""
 pagetitle: "Data with a Plot"
 description: "Adult at 18. Senior at 65. Every bright line misses the ones in between. I tell their stories with data."
 page-layout: full
-toc: true
+toc: false
 image: /pics/brand/og-image.png
 editor:
   markdown:
@@ -94,7 +94,7 @@ editor:
 ## Start Here {#featured .section-heading data-eyebrow="02 · featured work"}
 
 ```{=html}
-<div class="project-grid">
+<div class="project-grid project-grid--pairs">
   <div class="project-card">
     <a href="hiphop/hiphop_periodic_table.html" class="project-card-thumb" aria-hidden="true" tabindex="-1">
       <img src="pics/thumb-periodic.jpg" alt="" loading="lazy" />
