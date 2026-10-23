@@ -553,6 +553,17 @@ const axisMeta = axis => RULES.find(r => cell(r, 'axis') === axis);
 
 // ─── One rule ────────────────────────────────────────────────────────────────
 // Returns null (passes) or a failure carrying its fail_class.
+// The reach reason describes what the format is for rather than listing the
+// reach labels, which read badly strung together ("built for both internal
+// and external or external reach"). A format that reaches outside the court
+// at all is built to reach outside it; otherwise it is built for use inside.
+function reachVars(nm, ok, answer) {
+  const built = ok.includes('External') ? t('reach_built_outside') : t('reach_built_inside');
+  const use = { Internal: t('reach_use_internal'), External: t('reach_use_external'),
+                Both: t('reach_use_both') }[answer] || plabel('reach', answer);
+  return { format: nm, needed: built, have: use };
+}
+
 function checkRule(item, rule, answer) {
   const col  = cell(rule, 'rule_column');
   const axis = cell(rule, 'axis');
@@ -574,6 +585,7 @@ function checkRule(item, rule, answer) {
   if (kind === 'in-list') {
     const ok = list(need);
     if (ok.includes(answer)) return null;
+    if (axis === 'reach') return say('reason_' + col, reachVars(nm, ok, answer));
     return say('reason_' + col, {
       format: nm, have: plabel(axis, answer), needed: plabels(axis, ok)
     });
