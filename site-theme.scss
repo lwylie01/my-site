@@ -310,7 +310,12 @@ h2.section-heading[data-eyebrow]::before {
   .project-grid--pairs { grid-template-columns: minmax(0, 1fr); }
 }
 
+/* A column flexbox so .project-card-cta can sit on the card's bottom edge:
+   cards in a row share a height, and their links now share a line (see the
+   cta rule for the one grid that opts out). */
 .project-card {
+  display: flex;
+  flex-direction: column;
   background: $paper;
   border: 1px solid #E7DED0;
   border-radius: 10px;
@@ -411,9 +416,24 @@ h2.section-heading[data-eyebrow]::before {
 
 /* Teaching cards: the call-to-action link under each description, and the
    smaller companion line beneath it. Replaces per-link inline styles. */
+/* As a flex item the tag loses the inline line box that set it about 5px
+   lower; this margin puts it back where it sat before the card became a
+   flexbox, so only the link moves. */
+.project-card > .project-card-tag {
+  margin-top: 0.3rem;
+}
+
 .project-card-cta {
+  align-self: flex-start;
   font-weight: 600;
   color: $deep-coral;
+}
+/* Push the link to the card's bottom edge so a row's links share a line, but
+   not in a grid with a companion line under a link (STORY's worksheet card):
+   there the pushed link would sit a companion line above its neighbours, and
+   left alone the three already sit within about 15px of each other. */
+.project-grid:not(:has(.project-card-companion)) .project-card-cta {
+  margin-top: auto;
 }
 .project-card-companion {
   font-size: 0.85rem;
@@ -429,10 +449,11 @@ h2.section-heading[data-eyebrow]::before {
   text-underline-offset: 2px;
 }
 /* Where a chip row sits above the call to action (Projects), give the link
-   the gap a <br> used to fake. */
+   the gap a <br> used to fake. Padding, not margin, so the cta's auto top
+   margin can still push it to the card's bottom edge. */
 .project-card-meta + .project-card-cta {
   display: inline-block;
-  margin-top: 1rem;
+  padding-top: 1rem;
 }
 
 /* 0.9rem at every width (2026-10-23): 0.75rem, about 12.75px against 17px

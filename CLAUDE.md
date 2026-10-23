@@ -1499,6 +1499,20 @@ that the whole group is imaginary.
   cards, so Projects, Teaching, STORY and both Swag grids left one card alone on
   a second row at laptop and tablet-landscape widths. Portrait tablets
   (768-991px) still show two plus one, on purpose: three-up there is too narrow.
+  **Card links share a line (2026-10-23, maintainer's pick B):** `.project-card`
+  is a column flexbox, and `.project-card-cta` takes `margin-top: auto` so the
+  "Read"/"Explore"/"Open" links in a row sit on the cards' shared bottom edge
+  (Projects and Teaching; they had followed each description to a different
+  height). Two details came with it. A grid holding a `.project-card-companion`
+  opts out through `:has()`: STORY's worksheet card carries the companion line
+  under its link, so pushing link and line to the bottom left that link a whole
+  line above its neighbours, while unpushed the three sit within a few px.
+  And as a flex item the tag lost the inline line box that had set a one-line
+  tag about 5px lower, so `.project-card > .project-card-tag` takes a 0.3rem
+  top margin to restore it; tags now sit at one height across a row, where a
+  two-line tag used to sit 5px above its one-line neighbours. The chip-row gap
+  above Projects' links (`.project-card-meta + .project-card-cta`) is padding,
+  not margin, so the auto margin still applies.
 - Every page with `title: ""` (the section indexes draw their own
   `.page-header`, so they all use it) also needs a `pagetitle:` in its front
   matter, or Quarto titles the browser tab and og:title from the filename:
