@@ -180,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
 .swag-subnote{font-size:.85rem;color:#6A5F72;max-width:640px;line-height:1.55;margin:0 0 1rem}
 
 /* sticker gallery: the tile IS the download, so no per-card chrome */
-.swag-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(150px,100%),1fr));gap:1rem;margin:1rem 0 1rem}
+.swag-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:1rem;margin:1rem 0 1rem}
 .swag-gallery a{display:block;border:1px solid #E7DED0;border-radius:10px;background:#FDFBF7;padding:.75rem;text-align:center;text-decoration:none;transition:box-shadow .2s ease,transform .2s ease}
 .swag-gallery a:hover{box-shadow:0 4px 16px rgba(46,26,71,.10);transform:translateY(-2px)}
 .swag-gallery a:focus-visible{outline:2px solid #B23A28;outline-offset:2px}
@@ -207,6 +207,8 @@ ul.task-list li input[type="checkbox"] {
 .swag-fold[open]>summary::before{content:"\25BE\00A0"}
 .swag-fold>summary:focus-visible{outline:2px solid #B23A28;outline-offset:2px;border-radius:4px}
 .swag-fold .swag-gallery{margin-top:.4rem}
+/* the shirt cards' download chip sits on the card's bottom edge, so a row's chips share a line */
+.project-card > .source-chips{margin-top:auto}
 
 .swag-divider{display:flex;align-items:center;gap:1.5rem;margin:3.2rem 0 2.6rem}
 .swag-divider .r{flex:1;height:1px;background:#E5DCCF}
