@@ -517,11 +517,25 @@ const levelRow = (axis, v) => levelsOf(axis).find(x => cell(x, 'level_value') ==
 const rank  = (axis, v) => { const r = levelRow(axis, v); return r ? r.order : null; };
 const label = (axis, v) => { const r = levelRow(axis, v); return r ? cell(r, 'label') : v; };
 const labels = (axis, vs) => vs.map(v => label(axis, v)).join(', ');
-// Prose forms: the dropdown labels carry a "(general public)"-style gloss that
-// reads awkwardly mid-sentence, so reason strings use the label with the
-// parenthetical stripped ("Internal", "Novice").
-const plabel  = (axis, v) => label(axis, v).replace(/\s*\([^)]*\)\s*$/, '');
-const plabels = (axis, vs) => vs.map(v => plabel(axis, v)).join(', ');
+// Prose forms: the dropdown labels carry a "(general public)"-style gloss and a
+// capital that read awkwardly mid-sentence, so reason strings use the label
+// with the parenthetical stripped and the first letter lowered ("internal",
+// "novice", "inform or explain"). Lists join with a final ", or", as
+// qualpicker's do: these are alternatives, and the comma keeps a label that
+// itself contains "or" from running into the next.
+const plabel  = (axis, v) => {
+  const s = label(axis, v).replace(/\s*\([^)]*\)\s*$/, '');
+  return s.charAt(0).toLowerCase() + s.slice(1);
+};
+const plabels = (axis, vs) => {
+  const p = vs.map(v => plabel(axis, v));
+  if (p.length < 2) return p.join('');
+  // Two plain items take a bare "or"; a comma joins anything longer, or any
+  // pair where an item has its own "or" ("persuade or advocate, or support a
+  // decision").
+  if (p.length === 2 && !p.some(x => / or /.test(x))) return p.join(' or ');
+  return p.slice(0, -1).join(', ') + ', or ' + p[p.length - 1];
+};
 
 // build_format.R check 5b scans this file for every key named below and asserts
 // it resolves, so a typo fails the render rather than shipping a literal
