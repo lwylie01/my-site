@@ -517,10 +517,13 @@ const FAMILY_ORDER = Object.keys(FAMILY_COLORS);
 // its word beside it (build_qual.R check 6 fixes the three values).
 const SHOWS_LEVEL = { 'Pattern': 1, 'Phrases': 2, 'Passages': 3 };
 
-// The case-count chip: the units axis in words. Lower bound from units_min,
-// upper from units_max; a blank max is open-ended.
-const SCALE_LO = { 'One': 'one', 'Handful': 'a few', 'Dozens': 'dozens', 'Many': 'many' };
-const SCALE_HI = { 'One': 'one', 'Handful': 'a few', 'Dozens': 'dozens', 'Many': 'many' };
+// The case-count chip: the units axis in numbers that match the question's
+// own ranges (a handful is under 10, a few dozen is 10 to 50, many is over
+// 50). Lower bound from units_min, upper from units_max; a blank max, or a
+// max of Many, is open-ended. The words these replaced ("a few to dozens
+// cases", "many or more cases") did not read as English.
+const SCALE_LO = { 'One': '1', 'Handful': '2', 'Dozens': '10' };
+const SCALE_HI = { 'One': '1', 'Handful': '9', 'Dozens': '50' };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const cell = (o, c) => String((o && o[c]) || '').trim();
@@ -678,8 +681,9 @@ function showsChip(v) {
 function scalePhrase(item) {
   const lo = cell(item, 'units_min'), hi = cell(item, 'units_max');
   if (lo === 'One' && hi === 'One') return t('scale_one');
+  if (lo === 'Many') return t('scale_over');
   const loW = SCALE_LO[lo] || SCALE_LO['One'];
-  if (!hi) return t('scale_open', { lo: loW });
+  if (!hi || hi === 'Many') return t('scale_open', { lo: loW });
   return t('scale_range', { lo: loW, hi: SCALE_HI[hi] });
 }
 
