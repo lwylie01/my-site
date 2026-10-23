@@ -287,6 +287,13 @@ h2.section-heading[data-eyebrow]::before {
   }
 }
 
+/* A one- or two-sentence intro under a section heading (Teaching, STORY):
+   at full width it ran about 150 characters a line on a laptop, so it stops
+   at 760px, about 100 (2026-10-23). */
+.section-intro {
+  max-width: 760px;
+}
+
 /* PROJECT CARDS */
 
 /* 290px, not 300: a .container row at 992-1199px is 936px wide, 12px short

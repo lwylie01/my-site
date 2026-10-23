@@ -118,9 +118,11 @@ toc: false
 
 ## The Tools {#planning-tools .section-heading data-eyebrow="01 · planning tools"}
 
+::: {.section-intro}
 The worksheet holds the plan; the evaluation picker produces the findings a
 story needs before it can be told, and the display picker serves the
 Representations step.
+:::
 
 ```{=html}
 <div class="project-grid container">
