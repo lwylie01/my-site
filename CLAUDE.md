@@ -1466,9 +1466,17 @@ that the whole group is imaginary.
   every JPEG for a GPS IFD with lat/long takes seconds. The Hip-Hop card is
   **"The Hip-Hop Periodic Table"** on the homepage, Teaching and Projects alike
   (it was three different names), and the homepage description matches
-  Projects' plain wording. Below 700px `.project-card-thumb img` takes the
-  screenshot's own 1150/430 proportions, because the fixed 150px height cropped
-  its sides on a phone.
+  Projects' plain wording. Any `.project-card-thumb` narrower than 401px
+  (150 x 1150/430) takes the screenshot's own 1150/430 proportions through a
+  container query (2026-10-23; it was a below-700px media query until then),
+  because the fixed 150px height crops the sides of a narrower card: on a phone,
+  and in every three-up grid at desktop widths ("aturity Gap"). Wider cards,
+  like the homepage pair at 1180px and up, keep 150px. The same day
+  `.project-grid`'s minimum dropped from 300px to 290px (maintainer's pick A):
+  a `.container` row at 992-1199px is 936px wide, 12px short of three 300px
+  cards, so Projects, Teaching, STORY and both Swag grids left one card alone on
+  a second row at laptop and tablet-landscape widths. Portrait tablets
+  (768-991px) still show two plus one, on purpose: three-up there is too narrow.
 - Every page with `title: ""` (the section indexes draw their own
   `.page-header`, so they all use it) also needs a `pagetitle:` in its front
   matter, or Quarto titles the browser tab and og:title from the filename:
