@@ -793,6 +793,16 @@ co-presenters and OVW guidance; use them only scrubbed and with her say-so).
   pairs complete, and every Copy key the template names resolves (same scan as
   the pickers' check 5b). A failed render is the validator working; fix the
   workbook.
+- Phone pass 2026-10-23 (maintainer's picks A, A and A). Questions are spaced
+  by `.field + .field`, not `.field:first-of-type`: the old rule matched by tag,
+  so the first `<fieldset>` (a checkbox group) in a step lost its gap, and five
+  questions sat flush against the one above. Below 640px each `.check` row is
+  about 38px tall (it was 24px with ~5px between, easy to miss with a thumb),
+  and since the rail hides the "1 of 4 steps" counts there, a 3px bar under each
+  letter fills as steps are answered (`--p`, set on the link in `refresh()`;
+  Coral fill on a faint mauve track), so a half-done element shows before its
+  letter fills. The `.step-tag` went from 0.68rem to 0.7rem, the brand's 11px
+  floor. The phone page is about 10,190px at 390px.
 - Verification without R: replicate the injection in Python, drive the page in
   headless Chromium, and open the downloaded `.docx` with python-docx
   (installable from a downloaded wheel; LibreOffice is present in the CCR image
