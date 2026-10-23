@@ -509,8 +509,14 @@ to the default brown), and `reachPhrase()` says "Internal and external".
 `typical_length` takes one style: ranges with "to" ("2 to 4 pages", "20 or more
 pages"), matching the siblings' "6 to 12 months" and "1 to 9 cases", and no
 closing period. The modal's "Reach and objectives it serves" line lowercases
-every objective after the first, since mid-list they read as prose; the
-`reason_objective_ok` sentence still interpolates them capitalized.
+every objective after the first, since mid-list they read as prose. The reason
+sentences followed the same day (maintainer's pick A): `plabel()` now lowers the
+first letter as well as stripping the gloss, the same as qualpicker's, and
+`plabels()` joins with a final ", or" ("inform or explain, support a decision,
+or document or archive"), using a bare "or" only for two items that carry no
+"or" of their own, because the objective labels do ("persuade or advocate, or
+support a decision"). Audience names lowercase too in those sentences ("the
+novice audience you named").
 
 The intro prose was re-registered the same day: the maintainer found the first
 cut ("No format is best for everything." plus clipped fragments) too
