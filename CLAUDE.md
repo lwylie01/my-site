@@ -864,6 +864,12 @@ into the card's description). Links in muted-ink text must be underlined:
 Deep Coral and muted ink are about 1.0:1 in luminance, so colour alone does
 not mark them (the sitewide `a { text-decoration: none }` rule makes this the
 default trap); `.project-card-companion a` is underlined for the same reason.
+Desktop pass 2026-10-23 (maintainer's picks B and B): `.essay-card` is a
+column flexbox and `.essay-go` takes `margin-top: auto`, so the three "Read"
+links share the cards' bottom line instead of following their descriptions to
+three heights; and `.essay-list` is capped at 520px, the page subtitle's width,
+so an In the Works description runs about 85 characters a line instead of about
+140 across the full page.
 
 ### The pieces
 

@@ -956,8 +956,11 @@ details.codebook-fold[open] > summary::before { content: "\25BE\00A0"; }
   margin-bottom: 2rem;
 }
 
+/* A column flexbox so .essay-go can sit on the card's bottom edge: the
+   cards in a row share a height, and the "Read" links now share a line. */
 .essay-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   background: $paper;
   border: 1px solid #E7DED0;
   border-radius: 10px;
@@ -1025,14 +1028,19 @@ details.codebook-fold[open] > summary::before { content: "\25BE\00A0"; }
    link, but on a phone nothing else says so. */
 .essay-go {
   display: inline-block;
+  align-self: flex-start;
+  margin-top: auto;
   font-weight: 600;
   font-size: 0.95rem;
   color: $deep-coral;
 }
 
 /* Writing's "In the Works": unwritten essays as a compact list, not cards, so
-   they neither look clickable nor push the published work down the page. */
+   they neither look clickable nor push the published work down the page.
+   520px, the page subtitle's width, keeps a description near 85 characters a
+   line; full width ran about 140 on a laptop (2026-10-23). */
 .essay-list {
+  max-width: 520px;
   list-style: none;
   padding: 0;
   margin: 1rem 0 2rem;
