@@ -1364,6 +1364,20 @@ that the whole group is imaginary.
   had been nearer to hand than "Will miss" on every file, which can nudge the
   answers), and the next file scrolls to its "File N of 10" line, not the page
   top. Small labels went to 0.7rem (11.2px).
+  Score-screen copy audited the same day under the humor rule (maintainer
+  picked from offered options): the losing punch line ends "which is the usual
+  result: across decades of studies, simple rules match or beat expert
+  judgment most of the time" (was "Don't take it personally: it beats almost
+  everyone"), the winning one "That happens, and on another stack it might
+  not; over many files, the checklist tends to come out ahead" (was "Enjoy
+  it: run enough stacks, and the checklist wins"), the heading is "Why Two
+  Facts Go So Far" (was "Why the Checklist Wins"), the checklist "weighs them
+  the same way on every file, whether it is the first of the morning or the
+  tenth" (was "...never gives one extra chance because someone brought their
+  mom"), and the Teaching Prompt's lesson is "building the checklist,
+  auditing it, and studying the cases it gets wrong, which puts expertise to
+  better use than second-guessing it file by file" (was "...not overriding it
+  one charming file at a time"). Visitors here are often pretrial staff.
 - Standalone-template footers follow the column above them (2026-09-27):
   intro and plan screens use the 760px `.wrap` while the footer was sized for
   the tool screen (1000-1100px), so its text sat 120-170px left of the content.
