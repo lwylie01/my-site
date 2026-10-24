@@ -314,7 +314,7 @@
     <h3>File by File</h3>
     <div class="rv" id="rv-list"></div>
 
-    <h3>Why the Checklist Wins</h3>
+    <h3>Why Two Facts Go So Far</h3>
     <p>This fight is old. In 1954, the psychologist Paul Meehl compared expert
       predictions with simple statistical rules across every study he could find,
       and the rules kept winning. Almost fifty years later, a meta-analysis of 136
@@ -323,9 +323,8 @@
     <p>The reason is not that experts know too little. It is that files like these
       are full of vivid, useless detail. The apology letter, the anger, the
       exhaustion: they feel like signal and behave like noise. Two boring facts
-      carry most of the real information, and the checklist never gets distracted
-      from them, never has a rough morning, never gives one extra chance because
-      someone brought their mom.</p>
+      carry most of the real information, and the checklist weighs them the same
+      way on every file, whether it is the first of the morning or the tenth.</p>
     <p>There is also a quieter trap in the stack: most people return to court.
       Guess "returns" every time and you score <span id="base-inline"></span> of 10
       here without opening a single file. A gut that calls a lot of misses has to
@@ -335,8 +334,9 @@
       <div class="ct">Teaching Prompt: Clinical vs. Actuarial Judgment</div>
       <p>The lesson is not that judgment is worthless. Someone had to pick the two
         variables, and someone should keep studying the exceptions the rule gets
-        wrong. The lesson is where judgment belongs: building the checklist and
-        auditing it, not overriding it one charming file at a time. When intuition
+        wrong. The lesson is where judgment belongs: building the checklist,
+        auditing it, and studying the cases it gets wrong, which puts expertise to
+        better use than second-guessing it file by file. When intuition
         and a validated rule disagree, the rule is the better bet, and it does not
         get tired by the tenth file.</p>
     </div>
@@ -447,13 +447,15 @@ function buildScore() {
   const punch = document.getElementById("score-punch");
   if (you < rule) {
     punch.innerHTML = `You called <b>${you} of ${n}</b>. The two-fact checklist called ` +
-      `<b>${rule}</b>. Don't take it personally: it beats almost everyone.`;
+      `<b>${rule}</b>, which is the usual result: across decades of studies, simple ` +
+      `rules match or beat expert judgment most of the time.`;
   } else if (you === rule) {
     punch.innerHTML = `You called <b>${you} of ${n}</b>. So did the checklist, and it ` +
       `only read two lines per file.`;
   } else {
     punch.innerHTML = `You called <b>${you} of ${n}</b> and beat the checklist's ` +
-      `<b>${rule}</b>. Enjoy it: run enough stacks, and the checklist wins.`;
+      `<b>${rule}</b>. That happens, and on another stack it might not; over many ` +
+      `files, the checklist tends to come out ahead.`;
   }
 
   document.getElementById("stat-you").textContent = you + "/" + n;
