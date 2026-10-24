@@ -1349,6 +1349,21 @@ that the whole group is imaginary.
   but `scrollToYou()` opens them centred on your lines (or at the lowest when
   they span wider than the box) instead of on 15 to 60. Labels, ticks, step
   numbers and `.l-cat` went to 0.7rem (11.2px), the brand floor.
+- **Trust Your Gut? is now "Who Comes Back to Court?"** (2026-10-24,
+  maintainer's pick B: she had forgotten what the old name meant, and with
+  "Gut" in coral it read as "your instinct is about to lose", the reading the
+  2026-10-21 audit took off the card). The `<title>`, the header `<h1>`
+  (`Who Comes <span>Back</span> to Court?`, balanced), the Teaching card title
+  and CTA ("Try Who Comes Back to Court? →", the How Old CTA's shape), and
+  the Writing page's companion line all moved; the folder, file name
+  (`gut/trust_your_gut.html`) and `thumb-gut.jpg` stay, so no link breaks, and
+  older notes in this file that say "Trust Your Gut?" or "Gut" mean this page.
+  The essay "Trust the Checklist" keeps its title. Phone pass the same day
+  (pick A): a file is taller than a phone, so below 600px `.callrow` is sticky
+  at the bottom, the two calls side by side and the same size ("Will return"
+  had been nearer to hand than "Will miss" on every file, which can nudge the
+  answers), and the next file scrolls to its "File N of 10" line, not the page
+  top. Small labels went to 0.7rem (11.2px).
 - Standalone-template footers follow the column above them (2026-09-27):
   intro and plan screens use the 760px `.wrap` while the footer was sized for
   the tool screen (1000-1100px), so its text sat 120-170px left of the content.

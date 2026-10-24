@@ -1,7 +1,7 @@
 # build_gut.R ─────────────────────────────────────────────────────────────────
 # Generates gut/trust_your_gut.html from the editable Excel file.
 #
-# To update Trust Your Gut?: edit gut/data/gut_cases.xlsx — the "Cases",
+# To update Who Comes Back to Court?: edit gut/data/gut_cases.xlsx — the "Cases",
 # "Rule", "Research", and "Method" sheets — then re-publish. This script is
 # wired into _quarto.yml as a pre-render step, so `quarto render` /
 # `quarto publish` regenerates the page automatically. The branded look/feel
