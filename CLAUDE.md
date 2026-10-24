@@ -1338,6 +1338,17 @@ that the whole group is imaginary.
   runs 45 (LA) to 70 (SC, federal), not Holland's 55 to 70, because statutes
   and department policies genuinely differ.
 - The three pickers' results-bar hint says **"Tap or click"** ("Tap or click any card for the full picture.", "...any format for the detail.", "...any display for the detail."; 2026-10-23, maintainer's pick A), because most visitors arrive on a phone. Each lives in its workbook's Copy sheet (`modal_hint` in qualpicker); keep the three in step.
+- **How Old Is Old? phone pass (2026-10-23, maintainer's picks A and A).** Both
+  number lines were 620px (`.tl { min-width }`) in a ~340px box. "Your Four
+  Lines" (screen 2) had no hint and showed one of four dots; it now takes
+  `.tl-fit` (min-width 0, same 30-to-100 scale) and `layoutLabels()` places the
+  labels from their measured widths: centred on the dot, clamped to the track's
+  padding, stacked on the lowest clear row, and re-run on resize. That needs
+  the screen visible, so `go-yardstick` and `go-law` now call `showScreen()`
+  before building. The law's lines (screen 3) keep scrolling, with their hint,
+  but `scrollToYou()` opens them centred on your lines (or at the lowest when
+  they span wider than the box) instead of on 15 to 60. Labels, ticks, step
+  numbers and `.l-cat` went to 0.7rem (11.2px), the brand floor.
 - Standalone-template footers follow the column above them (2026-09-27):
   intro and plan screens use the 760px `.wrap` while the footer was sized for
   the tool screen (1000-1100px), so its text sat 120-170px left of the content.
