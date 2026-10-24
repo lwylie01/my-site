@@ -352,10 +352,8 @@ p_over <- ggplot(over, aes(x = value, y = stage_f)) +
     percent(value, accuracy = 0.1), "<br>",
     "Source: ", source
   )), color = plum_dark, size = 3.4) +
-  geom_text(aes(label = percent(value, accuracy = 1)),
-            nudge_x = 0.03, size = 3.3, color = "#3C3C3C") +
   scale_x_continuous(labels = percent_format(accuracy = 1),
-                     limits = c(0, 0.36)) +
+                     limits = c(0, 0.44), breaks = seq(0, 0.4, 0.2)) +
   labs(
     title = "One in ten people, three in ten arrests",
     subtitle = "Ages 18 to 24 as a share of each stage; the dotted line is their population share",
@@ -364,7 +362,22 @@ p_over <- ggplot(over, aes(x = value, y = stage_f)) +
   ) +
   theme_cw()
 
-ggplotly_titled(p_over, tooltip = "text") |> clear_bg()
+fig_over <- ggplotly_titled(p_over, tooltip = "text") |> clear_bg()
+# The % labels ride on the dot trace itself: plotly then sets each one just
+# right of its marker at any width, where a geom_text nudge is a fixed data
+# distance that lands on the dot at phone width.
+dot <- which(vapply(fig_over$x$data,
+                    function(tr) identical(tr$mode, "markers"), logical(1)))
+stopifnot(length(dot) == 1, length(fig_over$x$data[[dot]]$x) == nrow(over))
+tr <- fig_over$x$data[[dot]]
+tr$hovertext <- tr$text
+tr$text <- percent(over$value, accuracy = 1)
+tr$mode <- "markers+text"
+tr$textposition <- "middle right"
+tr$textfont <- list(size = 12.5, color = "#3C3C3C")
+tr$cliponaxis <- FALSE
+fig_over$x$data[[dot]] <- tr
+fig_over
 ```
 <p class="chart-card-note">Population and arrests are 2010, sentenced
 prisoners are yearend 2010, and prison releases (age 24 or younger) are
@@ -548,7 +561,7 @@ p_four <- ggplot(psmi, aes(x = age, y = mean)) +
     "Interviews: ", format(n, big.mark = ",")
   )), color = plum_dark, size = 1.4) +
   facet_wrap(~ measure_f, nrow = 2) +
-  scale_x_continuous(breaks = seq(14, 24, 2)) +
+  scale_x_continuous(breaks = c(14, 18, 24)) +
   scale_y_continuous(limits = c(2.6, 3.6), breaks = seq(2.6, 3.4, 0.4)) +
   labs(
     title = "The same shape in all four measures",
@@ -556,7 +569,9 @@ p_four <- ggplot(psmi, aes(x = age, y = mean)) +
     x = "Age at interview",
     y = "Mean score"
   ) +
-  theme_cw()
+  theme_cw() +
+  # wide enough that the 24 and 14 ticks of neighbouring panels part on a phone
+  theme(panel.spacing.x = unit(40, "pt"))
 
 ggplotly_titled(p_four, tooltip = "text") |> clear_bg()
 ```
@@ -591,7 +606,8 @@ p_caps <- ggplot(cap3, aes(x = age, y = mean)) +
     "Mean score: ", sprintf("%.2f", mean), "<br>",
     "Interviews: ", format(n, big.mark = ",")
   )), color = plum_dark, size = 2.6) +
-  facet_wrap(~ measure_f, scales = "free_y", nrow = 2) +
+  facet_wrap(~ measure_f, scales = "free_y", nrow = 2,
+             labeller = as_labeller(function(x) sub(" of ", "<br>of ", x, fixed = TRUE))) +
   scale_x_continuous(breaks = c(14, 18, 24)) +
   labs(
     title = "Every capacity keeps arriving after the line",
@@ -599,7 +615,8 @@ p_caps <- ggplot(cap3, aes(x = age, y = mean)) +
     x = "Age at interview",
     y = "Mean score"
   ) +
-  theme_cw()
+  theme_cw() +
+  theme(panel.spacing.x = unit(28, "pt"))
 
 ggplotly_titled(p_caps, tooltip = "text") |> clear_bg()
 ```
