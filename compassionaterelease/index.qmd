@@ -223,6 +223,8 @@ theme_cr <- function() {
 # cropped inside the card's overflow: hidden. config(responsive) re-draws on
 # window resizes; the ResizeObserver re-draws when the container gets its
 # real width without one.
+# displayModeBar = FALSE: on a touch screen plotly shows its toolbar all the
+# time, and it sat on top of every folded title.
 # fit() then re-wraps the folded title to the chart's width on every draw
 # (plotly never wraps titles, so on a phone they ran off the card), anchors
 # it to the whole chart rather than the plotting area, and grows the top
@@ -240,7 +242,7 @@ ggplotly_titled <- function(p, ...) {
       )
   }
   fig |>
-    config(responsive = TRUE) |>
+    config(responsive = TRUE, displayModeBar = FALSE) |>
     htmlwidgets::onRender("
       function(el) {
         // Plotly never wraps a title, and ggplotly anchors it to the plotting

@@ -1513,7 +1513,18 @@ that the whole group is imaginary.
   published `gh-pages` pages (`git fetch origin gh-pages`, open the files via
   `file://`; datawithaplot.org itself is egress-blocked in CCR, and the proxy
   answers localhost with 405) and checking every `.gtitle` box sits inside its
-  `.chart-card`. The sources
+  `.chart-card`. Since 2026-10-24 both copies also pass `displayModeBar =
+  FALSE` to `config()`: on a touch screen plotly shows its toolbar all the
+  time (no hover state), and it sat on top of every folded title, on all ten
+  Maturity Gap charts and all eight compassionate release ones. The same phone
+  pass (maintainer's defaults) gave the overrepresentation dot plot short row
+  labels ("Population", "All arrests", "Sentenced prisoners", "State prison
+  releases"; the long "Share of ..." forms crowded the plot to about a third of
+  a phone's width), `nudge_x` 0.03 and limits 0 to 0.36 so the % labels clear
+  the dots and 29% fits; turned the capacities slope chart into a 2x2 grid
+  (`nrow = 2`, fig-height 5.6, like the four-measures chart; at `nrow = 1` the
+  panel titles printed over each other on a phone); and shortened the
+  dumbbell's x title to "Percent rearrested". The sources
   section is headed "Data Sources" (renamed from "Where the Numbers Come
   From" 2026-07-21, matching compassionaterelease). Voice of
   the craft notes, maintainer-calibrated 2026-07-18: "measured with one
