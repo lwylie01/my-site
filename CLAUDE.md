@@ -1520,11 +1520,17 @@ that the whole group is imaginary.
   pass (maintainer's defaults) gave the overrepresentation dot plot short row
   labels ("Population", "All arrests", "Sentenced prisoners", "State prison
   releases"; the long "Share of ..." forms crowded the plot to about a third of
-  a phone's width), `nudge_x` 0.03 and limits 0 to 0.36 so the % labels clear
-  the dots and 29% fits; turned the capacities slope chart into a 2x2 grid
-  (`nrow = 2`, fig-height 5.6, like the four-measures chart; at `nrow = 1` the
-  panel titles printed over each other on a phone); and shortened the
-  dumbbell's x title to "Percent rearrested". The sources
+  a phone's width), and its % labels ride on the dot trace (`mode`
+  "markers+text", `textposition` "middle right", hover moved to `hovertext`)
+  so plotly sets them beside the marker at any width; a `geom_text` nudge is a
+  fixed data distance and still sat on the dots on a phone (#158 tried 0.03),
+  and the axis runs 0 to 44% with ticks every 20% so 29% fits. It turned the
+  capacities slope chart into a 2x2 grid (`nrow = 2`, fig-height 5.6, like the
+  four-measures chart; at `nrow = 1` the panel titles printed over each other
+  on a phone), with a labeller wrapping "Consideration of Others"; both faceted
+  charts tick 14, 18, 24 and take a wider `panel.spacing.x` (40pt and 28pt),
+  because neighbouring panels' 24 and 14 ran together as "2414". It also
+  shortened the dumbbell's x title to "Percent rearrested". The sources
   section is headed "Data Sources" (renamed from "Where the Numbers Come
   From" 2026-07-21, matching compassionaterelease). Voice of
   the craft notes, maintainer-calibrated 2026-07-18: "measured with one
