@@ -74,7 +74,7 @@
     display: inline-flex; width: 18px; height: 18px; border-radius: 50%;
     background: var(--line); color: var(--muted);
     align-items: center; justify-content: center; margin-right: 0.4rem;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
   }
   .step.active .num { background: #fff; color: var(--primary); }
   .step.done .num { background: var(--primary); color: #fff; }
@@ -152,6 +152,9 @@
   /* ── Number line ────────────────────────────────────── */
   .tl-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
   .tl { min-width: 620px; position: relative; padding: 1rem 2.2rem 0.6rem; }
+  /* Your Four Lines fits its box instead of scrolling: same scale, labels
+     stacked by layoutLabels() from their measured widths. */
+  .tl.tl-fit { min-width: 0; }
   .tl-lane { position: relative; }
   .tl-lane.lawlane { height: 64px; }
   .tl-dot {
@@ -163,7 +166,7 @@
   .tl-dot.law { background: var(--primary); cursor: pointer; }
   .tl-lane.lawlane .tl-dot { bottom: auto; top: 8px; }
   .tl-lab {
-    position: absolute; transform: translateX(-50%); font-size: 0.66rem;
+    position: absolute; transform: translateX(-50%); font-size: 0.7rem;
     font-weight: 700; color: var(--text); white-space: nowrap;
   }
   .tl-lane.lawlane .tl-lab { top: 26px; color: var(--primary); }
@@ -172,7 +175,7 @@
   .tl-tick { position: absolute; top: 0; width: 1px; height: 7px; background: var(--accent); }
   .tl-ticklab {
     position: absolute; top: 8px; transform: translateX(-50%);
-    font-size: 0.68rem; color: var(--muted);
+    font-size: 0.7rem; color: var(--muted);
   }
   .tl-legend { display: flex; gap: 1.2rem; flex-wrap: wrap; font-size: 0.74rem; color: var(--muted); margin-top: 0.6rem; }
   .tl-legend span::before { content: "● "; }
@@ -196,7 +199,7 @@
   }
   .ll-item .l-name { font-size: 0.98rem; color: var(--dark); font-weight: 700; }
   .ll-item .l-cat {
-    display: inline-block; font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+    display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
     letter-spacing: 0.04em; padding: 0.12rem 0.5rem; border-radius: 12px;
     background: #F3EEF7; color: var(--primary); margin-left: 0.5rem; vertical-align: 2px;
   }
@@ -402,34 +405,63 @@ function showScreen(n) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+// Your labels, laid out from their measured widths once the track is on
+// screen: each sits centred on its dot unless that would push it past the
+// track's padding, and takes the lowest row where it clears the label to its
+// left. Re-run on resize, because the fitted track changes width with the box.
+function layoutLabels(lane) {
+  const W = lane.clientWidth;
+  if (!W) return;
+  const lastRight = [];
+  let top = 0;
+  lane.querySelectorAll(".tl-lab").forEach(lab => {
+    const w = lab.offsetWidth;
+    let left = parseFloat(lab.dataset.frac) * W - w / 2;
+    left = Math.max(-30, Math.min(left, W + 30 - w));
+    let row = 0;
+    while (lastRight[row] !== undefined && left < lastRight[row] + 6) row++;
+    lastRight[row] = left + w;
+    top = Math.max(top, row);
+    lab.style.left = left + "px";
+    lab.style.transform = "none";
+    lab.style.bottom = (24 + 18 * row) + "px";
+  });
+  lane.style.height = (56 + 18 * top) + "px";
+}
+
+// When a track is wider than its box (the law's lines on a phone), open it on
+// your lines rather than on its left end, where they are usually off screen.
+function scrollToYou(el) {
+  const sc = el.querySelector(".tl-scroll");
+  if (!sc || sc.scrollWidth <= sc.clientWidth) return;
+  const box = sc.getBoundingClientRect();
+  const marks = [...el.querySelectorAll(".youlane .tl-dot, .youlane .tl-lab")]
+    .map(m => m.getBoundingClientRect());
+  if (!marks.length) return;
+  const a = Math.min(...marks.map(m => m.left)) - box.left + sc.scrollLeft;
+  const b = Math.max(...marks.map(m => m.right)) - box.left + sc.scrollLeft;
+  sc.scrollLeft = (b - a <= sc.clientWidth - 24) ? (a + b) / 2 - sc.clientWidth / 2 : a - 12;
+}
+
+window.addEventListener("resize", () =>
+  document.querySelectorAll(".screen.active .youlane").forEach(layoutLabels));
+
 // ── Number-line renderer ─────────────────────────────────────────────────────
 // rows: [{lane: "you"|"law", age, label, id}]
-function renderTrack(el, minA, maxA, rows, hint) {
+function renderTrack(el, minA, maxA, rows, hint, fit) {
   const pct = a => ((a - minA) / (maxA - minA) * 100).toFixed(2) + "%";
 
   const you = rows.filter(r => r.lane === "you").sort((a, b) => a.age - b.age);
   const law = rows.filter(r => r.lane === "law").sort((a, b) => a.age - b.age);
 
-  let html = '<div class="tl-scroll"><div class="tl">';
+  let html = `<div class="tl-scroll"><div class="tl${fit ? " tl-fit" : ""}">`;
 
   if (you.length) {
-    // Collision-aware label rows: place each label on the lowest row where it
-    // fits, measured against the track's minimum rendered width.
-    const laneW = 550;
-    const rowOf = [], lastRight = [];
+    html += '<div class="tl-lane youlane" style="height:56px">';
     you.forEach(r => {
-      const x = (r.age - minA) / (maxA - minA) * laneW;
-      const half = ((r.label.length + String(r.age).length + 3) * 6 + 10) / 2;
-      let row = 0;
-      while (lastRight[row] !== undefined && x - half < lastRight[row] + 6) row++;
-      lastRight[row] = x + half;
-      rowOf.push(row);
-    });
-    const laneH = 56 + 18 * Math.max(...rowOf);
-    html += `<div class="tl-lane youlane" style="height:${laneH}px">`;
-    you.forEach((r, i) => {
+      const frac = (r.age - minA) / (maxA - minA);
       html += `<div class="tl-dot you" style="left:${pct(r.age)}" title="${r.label} · ${r.age}"></div>` +
-        `<div class="tl-lab" style="left:${pct(r.age)};bottom:${24 + 18 * rowOf[i]}px">${r.label} · ${r.age}</div>`;
+        `<div class="tl-lab" data-frac="${frac}" style="left:${pct(r.age)};bottom:24px">${r.label} · ${r.age}</div>`;
     });
     html += "</div>";
   }
@@ -457,6 +489,8 @@ function renderTrack(el, minA, maxA, rows, hint) {
   }
   if (hint) html += `<p class="tl-hint">${hint}</p>`;
   el.innerHTML = html;
+  const lane = el.querySelector(".youlane");
+  if (lane) layoutLabels(lane);
 
   el.querySelectorAll(".tl-dot.law").forEach(d => {
     d.onclick = () => {
@@ -493,7 +527,7 @@ function buildYardstick() {
 
   const minS = Math.min(...PROMPTS.map(p => p.slider_min));
   const maxS = Math.max(...PROMPTS.map(p => p.slider_max));
-  renderTrack(document.getElementById("you-track"), minS, maxS, entries, "");
+  renderTrack(document.getElementById("you-track"), minS, maxS, entries, "", true);
 }
 
 // ── Screen 2: the law's lines ────────────────────────────────────────────────
@@ -504,6 +538,7 @@ function buildLaw() {
   LINES.forEach(l => rows.push({ lane: "law", label: l.label, age: l.age, id: "ll-" + l.age }));
   renderTrack(document.getElementById("law-track"), 15, 100, rows,
     "Scroll sideways on a small screen.");
+  scrollToYou(document.getElementById("law-track"));
 
   const list = document.getElementById("law-list");
   list.innerHTML = "";
@@ -538,8 +573,9 @@ function buildLaw() {
     "<b>Honest note:</b> " + notes.join(" ");
 }
 
-document.getElementById("go-yardstick").onclick = () => { buildYardstick(); showScreen(1); };
-document.getElementById("go-law").onclick = () => { buildLaw(); showScreen(2); };
+// Show the screen before building it: the number lines measure their labels.
+document.getElementById("go-yardstick").onclick = () => { showScreen(1); buildYardstick(); };
+document.getElementById("go-law").onclick = () => { showScreen(2); buildLaw(); };
 
 document.getElementById("restart").onclick = () => {
   state.touched = {};
