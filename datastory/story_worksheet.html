@@ -156,7 +156,7 @@
   .step.done { border-left-color: var(--primary); }
   .step-tag {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 0.68rem; font-weight: 500; text-transform: uppercase;
+    font-size: 0.7rem; font-weight: 500; text-transform: uppercase;
     letter-spacing: 0.1em; color: var(--eyebrow);
   }
   .step h3 { font-size: 1.12rem; font-weight: 700; color: var(--dark); line-height: 1.3; margin: 0.15rem 0 0.35rem; }
@@ -168,8 +168,11 @@
   }
   .step-link:hover { color: var(--dark); }
 
-  .field { margin-top: 0.9rem; }
-  .field:first-of-type { margin-top: 0; }
+  /* Space between questions, not above a step's first. :first-of-type matched
+     by tag, so the first <fieldset> in a step lost its gap even when a <div>
+     question came before it. */
+  .field { margin-top: 0; }
+  .field + .field { margin-top: 0.9rem; }
   .field-label, .field legend {
     display: block; font-size: 0.97rem; font-weight: 600; color: var(--dark); line-height: 1.35;
   }
@@ -259,7 +262,22 @@
     /* On a phone the rail keeps the letters and drops the names, or it eats
        half the screen before the first question. */
     .rail-text { display: none; }
-    .rail-link { padding: 0.2rem; }
+    .rail-link { padding: 0.2rem 0.2rem 0.5rem; }
+    /* With the counts hidden, a bar under each letter fills as its steps are
+       answered (--p, set in refresh()), so progress shows before a letter is
+       complete, by length rather than colour alone. */
+    .rail-letter { position: relative; }
+    .rail-letter::after {
+      content: ''; position: absolute; left: 0; bottom: -6px; height: 3px; border-radius: 2px;
+      width: calc(var(--p, 0) * 100%); background: var(--secondary);
+    }
+    .rail-letter::before {
+      content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 3px;
+      border-radius: 2px; background: rgba(169, 139, 184, 0.35);
+    }
+    /* Checkbox rows tall enough for a thumb. */
+    .checks { gap: 0; }
+    .check { padding: 0.45rem 0; }
     .element-letter { width: 2.8rem; height: 2.8rem; font-size: 2rem; }
     .step { padding: 1rem; }
   }
@@ -464,6 +482,7 @@ function refresh() {
     document.getElementById('rp-' + eid).textContent = prog;
     const link = document.getElementById('rl-' + eid);
     link.classList.toggle('done', done === steps.length);
+    link.style.setProperty('--p', steps.length ? done / steps.length : 0);
     // The names are hidden on a phone, so the link's accessible name carries them.
     link.setAttribute('aria-label', cell(e, 'name') + ', ' + prog);
     steps.forEach(s => {
