@@ -1378,6 +1378,21 @@ that the whole group is imaginary.
   auditing it, and studying the cases it gets wrong, which puts expertise to
   better use than second-guessing it file by file" (was "...not overriding it
   one charming file at a time"). Visitors here are often pretrial staff.
+  A repetition pass followed (maintainer's picks A, A, B, A, A): the intro
+  headline is "Ten people, ten court dates." (was "Ten files. Who comes back?",
+  a near-repeat of the new title; `thumb-gut.jpg` was retaken because the crop
+  shows it); the Meehl paragraph no longer restates the research claim the
+  score line now carries ("...and the rules held up in comparison after
+  comparison... reached the same conclusion, in medicine, education, and
+  courtrooms alike"; "This fight is old" and "the rules kept winning" went
+  with it); the Teaching Prompt opens "Judgment is not worthless: someone had
+  to pick the two variables" and ends at "the rule is the better bet" (no
+  second "studying" clause, no "tired by the tenth file"); the Dawes source
+  note ends at "...outperform the experts who built them" (its "because they
+  never get tired, bored, or charmed" echoed the removed digs); and the
+  Jasmine K. note reads "...easy for the rule, and cases like this are where
+  false confidence comes from" (it used "the gut" twice). The last two are
+  workbook cells (Research and Cases sheets).
 - Standalone-template footers follow the column above them (2026-09-27):
   intro and plan screens use the 760px `.wrap` while the footer was sized for
   the tool screen (1000-1100px), so its text sat 120-170px left of the content.
