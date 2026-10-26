@@ -1301,7 +1301,18 @@ that the whole group is imaginary.
   put the funnel's dark-bar label on the bar). Pipe any chart whose geom_text
   sets hjust through it; the same drop hits `annotate("text", hjust = ...)`.
   Facet tick labels that must survive 280px phone panels are bare numbers
-  with the unit in the axis title (the reasons chart). The reason themes are
+  with the unit in the axis title (the reasons chart). Phone pass 2026-10-26
+  (maintainer's picks A throughout): the lollipop's counts ride on the dot
+  trace (the Maturity Gap dot plot's fix; a nudge sat on the dots), its axis
+  is "States" and "Medical clemency or pardon" wraps; the monthly bars tick
+  bare years; the reasons chart wraps theme names over 17 characters, is 5.0
+  tall, takes a 36pt panel gap and titles its axis "Percent of reasons"; the
+  Wisconsin timeline wraps events at 18 (14 stacked labels into each other).
+  `legend_below()` in both data stories now sets `xanchor = "left"`: ggplotly
+  left it centered, so `x = 0` hung half the legend off the plot's left edge
+  and plotly widened the left margin about 90px to hold it, which is what
+  clipped the timeline's labels (and cost Maturity Gap's sexes chart 42px).
+  The reason themes are
   the maintainer's own coding over the Commission's codes and the codebook
   table is the contract: change one, change both. Quarterly USSC update =
   extend the open fiscal year's rows in `federal_motions_monthly.csv` from the

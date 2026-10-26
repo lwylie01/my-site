@@ -319,10 +319,13 @@ clear_bg <- function(fig) {
 # below the title and pad the bottom margin. Pipe every chart that has a
 # legend through this; legend-free charts do not need it. The y offset is
 # relative to plot height, so shorter charts need a deeper y (and more b)
-# to clear the title by the same number of pixels.
+# to clear the title by the same number of pixels. xanchor must be "left":
+# ggplotly leaves it centered, so x = 0 hung half the legend off the plot's
+# left edge and plotly widened the left margin to hold it, squeezing the chart.
 legend_below <- function(fig, y = -0.28, b = 95) {
   layout(fig,
-         legend = list(orientation = "h", x = 0, y = y, yanchor = "top"),
+         legend = list(orientation = "h", x = 0, xanchor = "left",
+                       y = y, yanchor = "top"),
          margin = list(b = b))
 }
 
@@ -458,16 +461,32 @@ p_types <- ggplot(pol_types, aes(x = n, y = policy_type_f)) +
   )),
   size = 4,
   color = ifelse(pol_types$policy_type == "No policy", coral_dark, plum_dark)) +
-  geom_text(aes(label = n), nudge_x = 1.6, size = 3.4, color = "#3C3C3C") +
-  scale_x_continuous(limits = c(0, 36)) +
+  scale_x_continuous(limits = c(0, 42), breaks = seq(0, 40, 10)) +
+  scale_y_discrete(labels = function(x) wrap_lab(x, 18)) +
   labs(
     title = "Forty-six had a policy on file; four had none",
     subtitle = "Policy types across the fifty state corrections departments, as of 2016",
-    x = "Number of states", y = NULL
+    x = "States", y = NULL
   ) +
   theme_cr()
 
-ggplotly_titled(p_types, tooltip = "text") |> clear_bg()
+fig_types <- ggplotly_titled(p_types, tooltip = "text") |> clear_bg()
+# The counts ride on the dot trace itself: plotly then sets each one just
+# right of its marker at any width, where a geom_text nudge is a fixed data
+# distance that lands on the dot at phone width.
+dot <- which(vapply(fig_types$x$data,
+                    function(tr) identical(tr$mode, "markers"), logical(1)))
+stopifnot(length(dot) == 1,
+          length(fig_types$x$data[[dot]]$x) == nrow(pol_types))
+tr <- fig_types$x$data[[dot]]
+tr$hovertext <- tr$text
+tr$text <- as.character(pol_types$n)
+tr$mode <- "markers+text"
+tr$textposition <- "middle right"
+tr$textfont <- list(size = 12.9, color = "#3C3C3C")
+tr$cliponaxis <- FALSE
+fig_types$x$data[[dot]] <- tr
+fig_types
 ```
 <p class="chart-card-note">Forty-six states had a compassionate release
 policy on their corrections department's books; four did not. The unit is
@@ -757,7 +776,7 @@ p_fed <- ggplot(fed_month, aes(x = date)) +
     "<b>", label, "</b><br>",
     granted, " granted of ", comma(total), " (", granted_pct, "%)"
   )), fill = plum_dark, width = 26) +
-  scale_x_date(date_breaks = "1 year", date_labels = "%b %Y") +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
   scale_y_continuous(labels = comma) +
   labs(
     title = "The pandemic surge receded; the grant rate did not",
@@ -792,7 +811,7 @@ would have manufactured.</p>
 the most direct evidence there is of what this law has come to mean in
 practice. Grouped into themes, what does the federal docket say?</p>
 ```{r chart-reasons}
-#| fig-height: 4.3
+#| fig-height: 5.0
 #| out-width: "100%"
 rt <- reason_theme |>
   mutate(
@@ -809,17 +828,19 @@ p_rt <- ggplot(rt, aes(x = share, y = theme_f, fill = outcome_f)) +
   facet_wrap(~ outcome_f, ncol = 2) +
   scale_fill_manual(values = c(Granted = plum_series, Denied = coral_dark),
                     guide = "none") +
+  # long theme names take two lines, which gives the panels their width back
+  scale_y_discrete(labels = function(x) ifelse(nchar(x) > 17, wrap_lab(x, 14), x)) +
   scale_x_continuous(breaks = seq(0, 0.4, 0.2), limits = c(0, 0.47),
                      labels = function(x) 100 * x) +
   labs(
     title = "Sentence length wins release more often than illness does",
     subtitle = "Themes among reasons cited by federal courts, fiscal year 2025",
-    x = "Percent of reasons cited for that outcome", y = NULL
+    x = "Percent of reasons", y = NULL
   ) +
   theme_cr() +
   # Widen the gutter so the two facets' percent ticks stay apart at phone
   # widths.
-  theme(panel.spacing.x = grid::unit(1.4, "lines"))
+  theme(panel.spacing.x = grid::unit(36, "pt"))
 
 # No legend here on purpose: the facet strips already say Granted and Denied,
 # so a legend would encode the same thing twice.
@@ -905,7 +926,7 @@ wi_p <- wi |>
   mutate(
     lane = rep(c(1, -1), length.out = n()),
     kind_f = factor(kind, levels = c("Statute", "Rule", "Forms", "Policy")),
-    lab = paste0(period, "\n", wrap_lab(event, 20))
+    lab = paste0(period, "\n", wrap_lab(event, 18))
   )
 
 p_wi <- ggplot(wi_p, aes(x = 0, y = sort_year)) +

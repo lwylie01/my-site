@@ -216,10 +216,13 @@ clear_bg <- function(fig) {
 # below the title and pad the bottom margin. Pipe every chart that has a
 # legend through this; legend-free charts do not need it. The y offset is
 # relative to plot height, so shorter charts need a deeper y (and more b)
-# to clear the title by the same number of pixels.
+# to clear the title by the same number of pixels. xanchor must be "left":
+# ggplotly leaves it centered, so x = 0 hung half the legend off the plot's
+# left edge and plotly widened the left margin to hold it, squeezing the chart.
 legend_below <- function(fig, y = -0.28, b = 95) {
   layout(fig,
-         legend = list(orientation = "h", x = 0, y = y, yanchor = "top"),
+         legend = list(orientation = "h", x = 0, xanchor = "left",
+                       y = y, yanchor = "top"),
          margin = list(b = b))
 }
 ```
