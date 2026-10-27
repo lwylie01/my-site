@@ -249,6 +249,20 @@ signature work.
   around it by folding each subtitle into the plotly title as a `<br><sup>`
   second line. Pipe new ggplot charts through the helper, not bare
   `ggplotly()`, or the subtitle vanishes.
+- Since 2026-10-27 the helper ends in `fit_card()`, and the four native
+  `plot_ly()` charts (radar, confidence donut, both violins) pipe through it
+  too: every new chart must. It is the data stories' toolbar-off and
+  title-wrapping fix adapted to dashboard cards, with two differences. A card
+  has a fixed height, so `fit()` grows only the top margin (the plot gives up
+  the room) instead of growing the chart past the card's bottom. And charts on
+  a page tab that is not showing draw at plotly's 700px fallback; when the tab
+  opens, plotly's own responsive handler resizes them before a ResizeObserver
+  sees a change, so `fit()` re-runs on every `plotly_afterplot` instead (it
+  relayouts only when the title or margin moves, so it settles). Before this,
+  19 of the charts ran their titles off the card on a phone and 15 did on a
+  laptop. Chart C on page 5 is native, so its title is hand-built in the same
+  `<b>…</b><br><sup>…</sup>` shape and font (sans, 18.6px, theme_hiphop's
+  14pt) as A, B and D, which is what lets `fit()` treat all four alike.
 
 ## Evaluation Picker (`evalpicker/`)
 
