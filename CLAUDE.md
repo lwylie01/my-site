@@ -263,6 +263,31 @@ signature work.
   laptop. Chart C on page 5 is native, so its title is hand-built in the same
   `<b>…</b><br><sup>…</sup>` shape and font (sans, 18.6px, theme_hiphop's
   14pt) as A, B and D, which is what lets `fit()` treat all four alike.
+- `fit_card()` carries a second hook since 2026-10-27 (maintainer's picks A
+  on legends, era labels and phone height) that lays out what sits under the
+  plot after every draw. A horizontal legend anchors to the chart's bottom
+  edge (`legend.yref: 'container'`, plotly 2.25 has it) with `margin.b` sized
+  to the measured axis band plus the legend: ggplotly sets it a fraction of
+  the plot's height below, which landed on the axis title of six charts. An
+  x axis title wider than the plot wraps; a y axis title drawn past the
+  chart's left edge (the paneled charts' "Vocab Breadth") gets `margin.l`.
+  Era names on an x axis are two-line via `two_line()` (chart C by hand), and
+  where the widest line still exceeds its share of the plot (2000s, 2010s,
+  2020s under about 200px) the hook tilts them -45 on one line; the old fixed
+  30-degree tilts are gone. ggplotly writes a label break as `<br />`, so the
+  hook matches `<br\s*\/?>`. Below 576px a chart takes the widget's 400px
+  default rather than the row heights, so a front-matter
+  `include-in-header` style sets it to 520px there.
+- Open, deliberately not fixed yet (2026-10-27): the three charts with a
+  colour scale (page 3's score heatmap, the canon map, the style
+  fingerprints) leave their plots 64-89px wide on a phone, because the
+  scale and the long row labels take the width; the fingerprint and
+  heatmap column labels collide for that reason, not their wording. Laying
+  the scale flat below with `colorbar.yref: 'container'` drew it mid-chart
+  over a 338px background box and kept the right margin, and positioning it
+  in paper units ran the margin away (plotly also autoexpands for a
+  colourbar), so it needs its own pass. At 768px the dashboard keeps its
+  desktop grid and page 5's four charts get 111px cards.
 
 ## Evaluation Picker (`evalpicker/`)
 
