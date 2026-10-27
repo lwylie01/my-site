@@ -293,9 +293,24 @@ signature work.
   in plotly 2.25 (`colorbar.yref: 'container'` drew it mid-chart over a
   338px background box and kept the right margin; paper units ran the
   margin away against plotly's own colourbar autoexpand).
-- Open (2026-10-28): page 3's score heatmap on a phone, where its era strip
-  labels are cut at the right edge and the 2010s rows (the most artists)
-  overprint, which is density rather than layout.
+- Page 3's score heatmap is one panel (2026-10-28, maintainer's picks A and
+  A, from a mock): `facet_grid(era ~ ., space = "free_y")` lost its free
+  space in ggplotly, so every era panel was the same height, the 2010s' 23
+  artists overprinted while Old School's 4 sat in 25px rows, and the era
+  strips were cut off on a phone. Now each era opens with a bold heading row
+  in the name column (`scale_y_discrete(limits = )` with "era: " keys, no
+  tiles), every artist row is 14px with 11px names, the dimension names sit
+  along the top (`xaxis.side`), and the chart is `heat_h` tall from its row
+  count. The chart had also been 900px in a 797px card at every width,
+  cropping the 2020s and the dimension names, so page 3's rows are fixed
+  pixel heights: the heatmap's row 1260px with a `stopifnot(heat_h <= 1220)`
+  guard (raise the row when the data outgrows it), then Era Averages alone
+  in a 520px row, then the bottom pair at 640px. A fixed row squeezes the
+  percentage rows, because the grid sizes from its content (measured: a
+  1260px row left the bottom row 455px), which is why the others are fixed
+  too. Era Averages was to join the bottom row, but three across left the
+  dominant-dimension and top-20 plots 64-68px wide at 1024px, so it took its
+  own row instead.
 - The dashboard's `nav-buttons` merge into the site navbar (2026-10-28,
   maintainer's pick A): only "Periodic Table" and "Codebook" stay, because
   the home and GitHub buttons repeated the site navbar's own Home and GitHub.
