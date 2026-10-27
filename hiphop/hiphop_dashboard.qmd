@@ -18,14 +18,24 @@ format:
       - icon: github
         href: "https://github.com/lwylie01/my-site"
     scrolling: true
-    # Below 576px a chart takes the widget's 400px default, and once a wrapped
-    # title and a legend take their share the plot was under 100px tall on
-    # some charts; 520px gives it room back.
+    # Below 576px bslib and Quarto stack every row into one column with rows
+    # sized to their content; the second rule extends that to tablets, where
+    # page 5's four charts sat in 111px columns. A stacked chart takes the
+    # widget's 400px default, and once a wrapped title and a legend take their
+    # share some plots were under 100px tall, so stacked charts get at least
+    # 520px (min-height, so page 3's 900px heatmap keeps its own height).
     include-in-header:
       text: |
         <style>
-        @media (max-width: 575.98px) {
-          .quarto-dashboard .plotly.html-widget { height: 520px !important; }
+        @media (max-width: 991.98px) {
+          .quarto-dashboard .plotly.html-widget { min-height: 520px; }
+        }
+        @media (min-width: 576px) and (max-width: 991.98px) {
+          .quarto-dashboard .bslib-grid {
+            grid-template-columns: 1fr !important;
+            grid-template-rows: minmax(1em, max-content) !important;
+            height: auto !important;
+          }
         }
         </style>
 execute:
@@ -214,7 +224,9 @@ ggplotly_titled <- function(p, ...) {
 # x axis title wrapped when it is wider than the plot, and a y axis title that
 # ggplotly drew past the chart's left edge nudged back in. Era labels come in
 # on two lines (two_line()); where even that collides, as 2000s, 2010s and
-# 2020s do in a plot under about 200px, they tilt on one line instead.
+# 2020s do in a plot under about 200px, they tilt on one line instead, and so
+# do the heatmaps' one-word dimension names. Below 576px a colour scale is
+# hidden: it took most of a phone's width, and each subtitle names the colour.
 fit_card <- function(fig) {
   fig |>
     config(responsive = TRUE, displayModeBar = FALSE) |>
@@ -298,12 +310,13 @@ fit_card <- function(fig) {
             }
             if (text !== fl.xaxis.title.text) ups['xaxis.title.text'] = text;
           }
-          // Category labels set on two lines (eras, dimension names) still
-          // collide where single words like 2000s and 2010s get under their
-          // share of a narrow plot; there they tilt on one line instead.
+          // Word labels on an x axis (eras, set on two lines; the heatmaps'
+          // dimension names) tilt onto one line wherever the widest line is
+          // wider than its share of the plot, as 2000s and 2010s are in a plot
+          // under about 200px. Numeric axes never tilt.
           var xa = fl.xaxis;
           if (ticks === null) {
-            ticks = (xa.ticktext || []).some(function(t) { return /<br\\s*\\/?>/.test(t); })
+            ticks = (xa.ticktext || []).some(function(t) { return isNaN(parseFloat(t)); })
               ? xa.ticktext.slice() : false;
           }
           if (ticks) {
@@ -317,6 +330,16 @@ fit_card <- function(fig) {
             if (want.join('|') !== xa.ticktext.join('|') || (tilt ? -45 : 0) !== (xa.tickangle || 0)) {
               ups['xaxis.ticktext'] = want; ups['xaxis.tickangle'] = tilt ? -45 : 0;
             }
+          }
+          // On a phone a colour scale took most of the chart's width (the
+          // canon map and fingerprints kept a 64px plot), so below 576px it is
+          // hidden: each chart's subtitle says what the colour means and a tap
+          // on any mark gives its value.
+          for (var i = 0; i < el.data.length; i++) {
+            var m = el.data[i].marker;
+            if (!m || !m.colorbar) continue;
+            var show = window.innerWidth >= 576;
+            if ((m.showscale !== false) !== show) { Plotly.restyle(el, { 'marker.showscale': show }, [i]); return; }
           }
           if (fl.showlegend && fl.legend.orientation === 'h' && fl.legend.yref !== 'container') {
             ups['legend.x'] = 0; ups['legend.xanchor'] = 'left';
