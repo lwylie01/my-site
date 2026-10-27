@@ -637,15 +637,33 @@ reactable(
 **What does averaging destroy?** Rakim (Rhyme Density 10, composite 8.8) and Scarface (Storytelling 10, composite 8.2) sit six tenths of a point apart on the composite, yet their profiles look nothing alike. Does that similarity mean anything, or does the average erase the most important information? When does averaging help, and when does it mislead?
 :::
 
-## Row {height="45%"}
+## Row {height="1260px"}
 
-### Heatmap: All Artists, All Dimensions {width="65%"}
+### Heatmap: All Artists, All Dimensions
 
 ```{r heatmap-dims}
-dim_long <- artists |>
+# One panel, not facet_grid(era ~ .): ggplotly ignores space = "free_y", so
+# every era got the same height and the 2010s' 23 artists overprinted while
+# Old School's 4 sat in 25px rows, and the era strips on the right were cut
+# off on a phone. Each era now opens with a bold heading row in the name
+# column, every artist row is the same height, and the chart is sized to its
+# rows. Artists run highest composite first within an era, as before.
+heat_artists <- artists |>
   filter(confidence == "H") |>
-  arrange(era, composite) |>
-  select(name, era, rhyme, vocab, story, metaphor, concept) |>
+  arrange(era, desc(composite)) |>
+  select(name, era, rhyme, vocab, story, metaphor, concept)
+
+heat_rows <- unlist(lapply(levels(droplevels(heat_artists$era)), function(e) {
+  c(paste0("era: ", e), heat_artists$name[heat_artists$era == e])
+}))
+heat_h <- length(heat_rows) * 14 + 160
+# Page 3's rows are fixed heights because its grid sizes from content, and
+# the percentage row this chart shared capped it at 797px, cropping the 2020s
+# and the dimension names. Its row is 1260px, so a taller chart would be
+# cropped again: when the guard fails, raise that row with the data.
+stopifnot(heat_h <= 1220)
+
+dim_long <- heat_artists |>
   pivot_longer(rhyme:concept, names_to = "dimension", values_to = "score") |>
   mutate(
     dimension = recode(dimension,
@@ -655,8 +673,7 @@ dim_long <- artists |>
       metaphor = "Metaphor",
       concept  = "Concept"
     ),
-    dimension = factor(dimension, levels = c("Rhyme","Vocab","Story","Metaphor","Concept")),
-    name = factor(name, levels = unique(name))
+    dimension = factor(dimension, levels = c("Rhyme","Vocab","Story","Metaphor","Concept"))
   )
 
 p_heat <- dim_long |>
@@ -668,7 +685,12 @@ p_heat <- dim_long |>
     midpoint = 5.5, limits = c(1, 10),
     name = "Score"
   ) +
-  facet_grid(era ~ ., scales = "free_y", space = "free_y") +
+  # heading rows have no tiles; limits keeps them as empty rows in order
+  scale_y_discrete(
+    limits = rev(heat_rows),
+    labels = function(x) ifelse(startsWith(x, "era: "),
+                                paste0("<b>", sub("era: ", "", x, fixed = TRUE), "</b>"), x)
+  ) +
   labs(
     title = "Dimension scores by artist (High-confidence only)",
     subtitle = "Each column is a dimension; each row an artist; color = score 1–10",
@@ -676,16 +698,19 @@ p_heat <- dim_long |>
   ) +
   theme_hiphop() +
   theme(
-    axis.text.y = element_text(size = 7),
-    strip.text.y = element_text(angle = 0, size = 8),
-    panel.spacing = unit(0.3, "lines")
+    axis.text.y = element_text(size = 8.25),  # 11px, the site's floor
+    panel.grid.major = element_blank()
   )
 
-ggplotly_titled(p_heat, tooltip = "text", height = 900) |>
-  layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
+ggplotly_titled(p_heat, tooltip = "text", height = heat_h) |>
+  # dimension names across the top, where a tall chart cannot crop them
+  layout(xaxis = list(side = "top"),
+         paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-### Era Averages by Dimension {width="35%"}
+## Row {height="520px"}
+
+### Era Averages by Dimension
 
 ```{r era-dim-lines}
 era_dim_avg <- artists |>
@@ -719,7 +744,7 @@ ggplotly_titled(p_era_lines, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
 ```
 
-## Row {height="40%"}
+## Row {height="640px"}
 
 ### Strongest Dimension by Style {width="50%"}
 
