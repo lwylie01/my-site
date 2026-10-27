@@ -8,15 +8,13 @@ format:
       - cosmo
       - ../custom.scss
     logo: ""
+    # Home and GitHub are already in the site navbar these buttons join, so
+    # only the module's own two pages stay (maintainer's pick, 2026-10-28)
     nav-buttons:
-      - icon: house-fill
-        href: "../index.html"
       - text: "Periodic Table"
         href: "hiphop_periodic_table.html"
       - text: "Codebook"
         href: "data_dictionary.html"
-      - icon: github
-        href: "https://github.com/lwylie01/my-site"
     scrolling: true
     # Below 576px bslib and Quarto stack every row into one column with rows
     # sized to their content; the second rule extends that to tablets, where
