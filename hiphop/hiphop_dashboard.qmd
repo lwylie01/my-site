@@ -18,6 +18,16 @@ format:
       - icon: github
         href: "https://github.com/lwylie01/my-site"
     scrolling: true
+    # Below 576px a chart takes the widget's 400px default, and once a wrapped
+    # title and a legend take their share the plot was under 100px tall on
+    # some charts; 520px gives it room back.
+    include-in-header:
+      text: |
+        <style>
+        @media (max-width: 575.98px) {
+          .quarto-dashboard .plotly.html-widget { height: 520px !important; }
+        }
+        </style>
 execute:
   echo: false
   warning: false
@@ -198,6 +208,13 @@ ggplotly_titled <- function(p, ...) {
 # When the page tab is opened, plotly's own responsive handler resizes it
 # before a ResizeObserver can see a change, so fit() re-runs after every
 # draw instead; it only relayouts when the title or margin actually moves.
+# The second hook lays out what sits under the plot: a horizontal legend at the
+# chart's bottom edge under the axis title (ggplotly put it a fixed fraction of
+# the plot's height below, which landed on the title of a short phone plot), an
+# x axis title wrapped when it is wider than the plot, and a y axis title that
+# ggplotly drew past the chart's left edge nudged back in. Era labels come in
+# on two lines (two_line()); where even that collides, as 2000s, 2010s and
+# 2020s do in a plot under about 200px, they tilt on one line instead.
 fit_card <- function(fig) {
   fig |>
     config(responsive = TRUE, displayModeBar = FALSE) |>
@@ -256,8 +273,87 @@ fit_card <- function(fig) {
           setTimeout(function() { busy = false; fit(); }, 0);
         });
       }
+    ") |>
+    htmlwidgets::onRender("
+      function(el) {
+        // Everything under or beside the plotting area, laid out in pixels
+        // after each draw: an x axis title wider than the plot wraps, a
+        // horizontal legend sits at the bottom of the chart under the axis
+        // title (ggplotly sets it a fixed fraction of the plot's height
+        // below, which on a short phone plot lands on the title), and a y
+        // axis title drawn past the chart's left edge is nudged back in.
+        var busy = false, xt = null, ticks = null, canvas = document.createElement('canvas');
+        function below() {
+          var fl = el._fullLayout;
+          if (!fl || !fl.width || !fl.xaxis) return;
+          var box = el.getBoundingClientRect(), ups = {};
+          if (xt === null) xt = (fl.xaxis.title && fl.xaxis.title.text) || '';
+          if (xt && xt.indexOf('<br>') < 0) {
+            var f = fl.xaxis.title.font, ctx = canvas.getContext('2d');
+            ctx.font = f.size + 'px ' + f.family;
+            var words = xt.split(' '), text = xt;
+            if (words.length > 1 && ctx.measureText(xt).width > fl._size.w) {
+              var half = Math.ceil(words.length / 2);
+              text = words.slice(0, half).join(' ') + '<br>' + words.slice(half).join(' ');
+            }
+            if (text !== fl.xaxis.title.text) ups['xaxis.title.text'] = text;
+          }
+          // Category labels set on two lines (eras, dimension names) still
+          // collide where single words like 2000s and 2010s get under their
+          // share of a narrow plot; there they tilt on one line instead.
+          var xa = fl.xaxis;
+          if (ticks === null) {
+            ticks = (xa.ticktext || []).some(function(t) { return /<br\\s*\\/?>/.test(t); })
+              ? xa.ticktext.slice() : false;
+          }
+          if (ticks) {
+            var c2 = canvas.getContext('2d'), widest = 0;
+            c2.font = xa.tickfont.size + 'px ' + xa.tickfont.family;
+            ticks.forEach(function(t) {
+              t.split(/<br\\s*\\/?>/).forEach(function(s) { widest = Math.max(widest, c2.measureText(s).width); });
+            });
+            var tilt = widest + 6 > fl._size.w / ticks.length;
+            var want = tilt ? ticks.map(function(t) { return t.replace(/<br\\s*\\/?>/g, ' '); }) : ticks;
+            if (want.join('|') !== xa.ticktext.join('|') || (tilt ? -45 : 0) !== (xa.tickangle || 0)) {
+              ups['xaxis.ticktext'] = want; ups['xaxis.tickangle'] = tilt ? -45 : 0;
+            }
+          }
+          if (fl.showlegend && fl.legend.orientation === 'h' && fl.legend.yref !== 'container') {
+            ups['legend.x'] = 0; ups['legend.xanchor'] = 'left';
+            ups['legend.yref'] = 'container'; ups['legend.y'] = 0;
+            ups['legend.yanchor'] = 'bottom';
+          }
+          if (Object.keys(ups).length) { Plotly.relayout(el, ups); return; }
+          var plotBottom = fl.height - fl.margin.b, low = plotBottom, left = box.left;
+          el.querySelectorAll('.xtick text, .g-xtitle text, .xtitle').forEach(function(t) {
+            var r = t.getBoundingClientRect();
+            if (r.height) low = Math.max(low, r.bottom - box.top);
+          });
+          el.querySelectorAll('.ytitle, .annotation-text').forEach(function(t) {
+            var r = t.getBoundingClientRect();
+            if (r.width) left = Math.min(left, r.left);
+          });
+          if (left < box.left - 0.5) ups['margin.l'] = fl.margin.l + Math.ceil(box.left - left) + 4;
+          var lg = fl.showlegend && fl.legend.orientation === 'h' && el.querySelector('.legend');
+          if (lg) {
+            var need = Math.ceil(low - plotBottom) + Math.ceil(lg.getBoundingClientRect().height) + 12;
+            if (Math.abs(need - fl.margin.b) > 2) ups['margin.b'] = need;
+          }
+          if (Object.keys(ups).length) Plotly.relayout(el, ups);
+        }
+        below();
+        el.on('plotly_afterplot', function() {
+          if (busy) return;
+          busy = true;
+          setTimeout(function() { busy = false; below(); }, 30);
+        });
+      }
     ")
 }
+
+# Era names on an x axis break at their space ("Old School" over two lines),
+# which fit_card() tilts back onto one line only where a plot is too narrow.
+two_line <- function(x) sub(" ", "\n", x, fixed = TRUE)
 ```
 
 # Overview {.sidebar}
@@ -447,6 +543,7 @@ p_gender <- gender_data |>
     ),
     x = NULL, y = "Share of era", fill = NULL
   ) +
+  scale_x_discrete(labels = two_line) +
   theme_hiphop()
 
 ggplotly_titled(p_gender, tooltip = "text") |>
@@ -594,8 +691,8 @@ p_era_lines <- era_dim_avg |>
     subtitle = "Which dimensions rose or fell over time?",
     x = NULL, y = "Mean score", color = NULL
   ) +
-  theme_hiphop() +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+  scale_x_discrete(labels = two_line) +
+  theme_hiphop()
 
 ggplotly_titled(p_era_lines, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
@@ -795,7 +892,7 @@ p_bar <- era_summary |>
   geom_col(show.legend = FALSE) +
   scale_fill_manual(values = era_pal) +
   coord_flip() +
-  scale_y_continuous(limits = c(0, 10)) +
+  scale_y_continuous(limits = c(0, 10), breaks = c(0, 5, 10)) +
   labs(title = "A: Bar chart", subtitle = "Ranking emphasis", x = NULL, y = "Mean composite") +
   theme_hiphop()
 
@@ -814,8 +911,8 @@ p_line <- era_summary |>
   scale_color_manual(values = era_pal) +
   scale_y_continuous(limits = c(5.5, 8.5)) +
   labs(title = "B: Line chart", subtitle = "Trend / change emphasis", x = NULL, y = "Mean composite") +
-  theme_hiphop() +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+  scale_x_discrete(labels = two_line) +
+  theme_hiphop()
 
 ggplotly_titled(p_line, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
@@ -849,7 +946,8 @@ plot_ly(
     title  = list(text = "<b>C: Violin + box</b><br><sup>Distribution emphasis</sup>",
                   font = list(family = "sans", size = 18.6, color = "#3C3C3C")),
     xaxis  = list(title = "", categoryorder = "array",
-                  categoryarray = era_levels),
+                  categoryarray = era_levels, tickvals = era_levels,
+                  ticktext = gsub("\n", "<br>", two_line(era_levels), fixed = TRUE)),
     yaxis  = list(title = "Composite", range = c(1, 10.5)),
     paper_bgcolor = "rgba(0,0,0,0)",
     plot_bgcolor  = "rgba(0,0,0,0)"
@@ -871,8 +969,8 @@ p_scatter_n <- era_summary2 |>
   scale_size_continuous(range = c(4, 16)) +
   scale_y_continuous(limits = c(5.5, 8.5)) +
   labs(title = "D: Bubble chart", subtitle = "Shows sample size", x = NULL, y = "Mean composite") +
-  theme_hiphop() +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+  scale_x_discrete(labels = two_line) +
+  theme_hiphop()
 
 ggplotly_titled(p_scatter_n, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
@@ -1013,9 +1111,9 @@ p_canon <- canon |>
     subtitle = "Size = number of solo acts; color = mean composite. Style and era ride on position, so no channel is overloaded",
     x = NULL, y = NULL
   ) +
+  scale_x_discrete(labels = two_line) +
   theme_hiphop() +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1),
-        panel.grid.major = element_line(color = "#f0eaf0"))
+  theme(panel.grid.major = element_line(color = "#f0eaf0"))
 
 ggplotly_titled(p_canon, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
@@ -1147,8 +1245,8 @@ p_age_debut <- age_data |>
     subtitle = "Is the genre debuting younger over time?",
     x = NULL, y = "Age at first commercial release"
   ) +
-  theme_hiphop() +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+  scale_x_discrete(labels = two_line) +
+  theme_hiphop()
 
 ggplotly_titled(p_age_debut, tooltip = "text") |>
   layout(paper_bgcolor = "rgba(0,0,0,0)", plot_bgcolor = "rgba(0,0,0,0)")
