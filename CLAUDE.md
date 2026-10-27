@@ -275,19 +275,30 @@ signature work.
   where the widest line still exceeds its share of the plot (2000s, 2010s,
   2020s under about 200px) the hook tilts them -45 on one line; the old fixed
   30-degree tilts are gone. ggplotly writes a label break as `<br />`, so the
-  hook matches `<br\s*\/?>`. Below 576px a chart takes the widget's 400px
-  default rather than the row heights, so a front-matter
-  `include-in-header` style sets it to 520px there.
-- Open, deliberately not fixed yet (2026-10-27): the three charts with a
-  colour scale (page 3's score heatmap, the canon map, the style
-  fingerprints) leave their plots 64-89px wide on a phone, because the
-  scale and the long row labels take the width; the fingerprint and
-  heatmap column labels collide for that reason, not their wording. Laying
-  the scale flat below with `colorbar.yref: 'container'` drew it mid-chart
-  over a 338px background box and kept the right margin, and positioning it
-  in paper units ran the margin away (plotly also autoexpands for a
-  colourbar), so it needs its own pass. At 768px the dashboard keeps its
-  desktop grid and page 5's four charts get 111px cards.
+  hook matches `<br\s*\/?>`. The tilt rule covers any word labels on an x
+  axis, so the heatmaps' one-word dimension names tilt too; numeric axes
+  never do.
+- Layout below 992px (2026-10-28, maintainer's defaults): a front-matter
+  `include-in-header` style extends bslib's and Quarto's phone rules (one
+  column, rows sized to content) from below 576px up to 991px, because at
+  768px the desktop grid gave page 5's four charts 111px columns; and every
+  stacked chart gets `min-height: 520px` (the widget default is 400px, and a
+  wrapped title plus a legend left some plots under 100px). It is
+  `min-height`, not `height`: #162 shipped `height: 520px !important`, which
+  also cut page 3's deliberate 900px heatmap down on phones. Below 576px a
+  colour scale is hidden (`marker.showscale`, in the second hook): it took
+  most of a phone's width and left the canon map and fingerprints 64px
+  plots; each of the three charts' subtitles says what the colour encodes
+  and a tap on any mark gives its value. Laying it flat below did not work
+  in plotly 2.25 (`colorbar.yref: 'container'` drew it mid-chart over a
+  338px background box and kept the right margin; paper units ran the
+  margin away against plotly's own colourbar autoexpand).
+- Open (2026-10-28): page 3's score heatmap on a phone, where its era strip
+  labels are cut at the right edge and the 2010s rows (the most artists)
+  overprint, which is density rather than layout. The dashboard's four
+  `nav-buttons` merge into the site navbar at desktop widths and render as
+  underlined text with no spacing ("Periodic TableCodebook"), and its GitHub
+  icon repeats the site's own; options were put to the maintainer.
 
 ## Evaluation Picker (`evalpicker/`)
 
