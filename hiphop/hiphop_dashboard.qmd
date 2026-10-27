@@ -172,14 +172,91 @@ theme_hiphop <- function() {
 ggplotly_titled <- function(p, ...) {
   fig <- ggplotly(p, ...)
   sub <- p$labels$subtitle
-  if (is.null(sub) || !nzchar(sub)) return(fig)
+  if (!is.null(sub) && nzchar(sub)) {
+    fig <- fig |>
+      layout(
+        title = list(text = paste0(
+          "<b>", p$labels$title, "</b><br><sup>", sub, "</sup>"
+        )),
+        margin = list(t = 70)
+      )
+  }
+  fit_card(fig)
+}
+
+# ── Every chart, ggplot or native plot_ly, ends in fit_card() ────────────────
+# The same fixes the two data stories carry, adapted to dashboard cards.
+# displayModeBar = FALSE: on a touch screen plotly shows its toolbar all the
+# time, and it sat on top of every chart's title.
+# fit() wraps the folded title to the chart's width (plotly never wraps a
+# title, so on a phone most of them ran off the card, and some did on a
+# laptop too) and anchors it to the whole chart rather than the plotting
+# area. A dashboard card has a fixed height, so unlike the data stories'
+# copy it grows only the top margin: the plot gives up the room, rather
+# than the chart growing past the bottom of its card.
+# A chart on a page that is not showing draws at plotly's 700px fallback.
+# When the page tab is opened, plotly's own responsive handler resizes it
+# before a ResizeObserver can see a change, so fit() re-runs after every
+# draw instead; it only relayouts when the title or margin actually moves.
+fit_card <- function(fig) {
   fig |>
-    layout(
-      title = list(text = paste0(
-        "<b>", p$labels$title, "</b><br><sup>", sub, "</sup>"
-      )),
-      margin = list(t = 70)
-    )
+    config(responsive = TRUE, displayModeBar = FALSE) |>
+    htmlwidgets::onRender("
+      function(el) {
+        var orig = null, busy = false, canvas = document.createElement('canvas');
+        function wrap(text, font, maxW) {
+          var ctx = canvas.getContext('2d'), lines = [], line = '';
+          ctx.font = font;
+          text.split(' ').forEach(function(w) {
+            var next = line ? line + ' ' + w : w;
+            if (line && ctx.measureText(next).width > maxW) { lines.push(line); line = w; }
+            else line = next;
+          });
+          if (line) lines.push(line);
+          return lines;
+        }
+        function fit() {
+          var fl = el._fullLayout;
+          if (!fl || !fl.title || !fl.width) return;
+          if (orig === null) {
+            var m = /^<b>([\\s\\S]*)<\\/b><br><sup>([\\s\\S]*)<\\/sup>$/.exec(fl.title.text || '');
+            orig = m ? { title: m[1], sub: m[2], t: fl.margin.t } : false;
+          }
+          if (!orig) return;
+          var size = fl.title.font.size, fam = fl.title.font.family;
+          var maxW = fl.width - 16;
+          var text =
+            wrap(orig.title, 'bold ' + size + 'px ' + fam, maxW)
+              .map(function(s) { return '<b>' + s + '</b>'; }).join('<br>') + '<br>' +
+            wrap(orig.sub, (size * 0.7) + 'px ' + fam, maxW)
+              .map(function(s) { return '<sup>' + s + '</sup>'; }).join('<br>');
+          var p = Promise.resolve();
+          if (text !== fl.title.text || fl.title.xref !== 'container' || fl.title.x !== 0) {
+            p = Plotly.relayout(el, {
+              'title.text': text, 'title.xref': 'container', 'title.x': 0,
+              'title.xanchor': 'left', 'title.pad.l': 8,
+              'title.yref': 'container', 'title.y': 1, 'title.yanchor': 'top'
+            });
+          }
+          p.then(function() {
+            var g = el.querySelector('.gtitle');
+            if (!g) return;
+            var box = g.getBoundingClientRect(), top = el.getBoundingClientRect().top;
+            var padT = Math.max(0, (el._fullLayout.title.pad.t || 0) + 8 - (box.top - top));
+            var need = Math.max(orig.t, Math.ceil(padT + box.height) + 20);
+            if (Math.abs(need - el._fullLayout.margin.t) > 2) {
+              Plotly.relayout(el, { 'margin.t': need, 'title.pad.t': padT });
+            }
+          });
+        }
+        fit();
+        el.on('plotly_afterplot', function() {
+          if (busy) return;
+          busy = true;
+          setTimeout(function() { busy = false; fit(); }, 0);
+        });
+      }
+    ")
 }
 ```
 
@@ -275,7 +352,8 @@ fig_radar |>
     margin = list(t = 10, b = 10),
     paper_bgcolor = "rgba(0,0,0,0)",
     plot_bgcolor  = "rgba(0,0,0,0)"
-  )
+  ) |>
+  fit_card()
 ```
 
 ### Scatter: Composite Score vs. Storytelling {width="60%"}
@@ -402,7 +480,8 @@ plot_ly(conf_counts,
     title = list(text = "Scoring confidence distribution", font = list(size = 13)),
     showlegend = FALSE,
     paper_bgcolor = "rgba(0,0,0,0)"
-  )
+  ) |>
+  fit_card()
 ```
 
 ### What Bias Looks Like in Practice {width="65%"}
@@ -624,7 +703,8 @@ plot_ly(
     yaxis  = list(title = "Composite score", range = c(1, 10.5)),
     paper_bgcolor = "rgba(0,0,0,0)",
     plot_bgcolor  = "rgba(0,0,0,0)"
-  )
+  ) |>
+  fit_card()
 ```
 
 ### Score Range: What We Don't Know {width="50%"}
@@ -764,14 +844,17 @@ plot_ly(
   showlegend = FALSE
 ) |>
   layout(
-    title  = list(text = "C: Violin + box · Distribution emphasis",
-                  font = list(size = 13, color = "#3C3C3C")),
+    # the same two-line title, font and size (theme_hiphop's 14pt) as A, B
+    # and D, which come through ggplotly, so fit_card() treats all four alike
+    title  = list(text = "<b>C: Violin + box</b><br><sup>Distribution emphasis</sup>",
+                  font = list(family = "sans", size = 18.6, color = "#3C3C3C")),
     xaxis  = list(title = "", categoryorder = "array",
                   categoryarray = era_levels),
     yaxis  = list(title = "Composite", range = c(1, 10.5)),
     paper_bgcolor = "rgba(0,0,0,0)",
     plot_bgcolor  = "rgba(0,0,0,0)"
-  )
+  ) |>
+  fit_card()
 ```
 
 ### D: Scatter with n Shown {width="25%"}
