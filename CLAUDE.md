@@ -295,10 +295,14 @@ signature work.
   margin away against plotly's own colourbar autoexpand).
 - Open (2026-10-28): page 3's score heatmap on a phone, where its era strip
   labels are cut at the right edge and the 2010s rows (the most artists)
-  overprint, which is density rather than layout. The dashboard's four
-  `nav-buttons` merge into the site navbar at desktop widths and render as
-  underlined text with no spacing ("Periodic TableCodebook"), and its GitHub
-  icon repeats the site's own; options were put to the maintainer.
+  overprint, which is density rather than layout.
+- The dashboard's `nav-buttons` merge into the site navbar (2026-10-28,
+  maintainer's pick A): only "Periodic Table" and "Codebook" stay, because
+  the home and GitHub buttons repeated the site navbar's own Home and GitHub.
+  They render as `.quarto-dashboard-link`, which was underlined, unspaced
+  ("Periodic TableCodebook") and a dim mauve at about 3:1 on ink, so
+  `custom.scss` (loaded only by the dashboard) styles them like the site's
+  nav links: 85% white, 500 weight, 0.9rem, padded, no underline.
 
 ## Evaluation Picker (`evalpicker/`)
 

@@ -51,6 +51,28 @@ $navbar-fg: #F7F2EC;
   color: #ffffff !important;
 }
 
+/*-- The dashboard's nav-buttons land inside the site navbar as
+     .quarto-dashboard-link, where they rendered underlined, unspaced
+     ("Periodic TableCodebook") and in a dim mauve at about 3:1 on ink.
+     Match the site's own nav links instead. --*/
+.navbar .quarto-dashboard-links {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .quarto-dashboard-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  text-decoration: none !important;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.6rem;
+}
+
+.navbar .quarto-dashboard-link:hover,
+.navbar .quarto-dashboard-link:focus-visible {
+  color: #ffffff !important;
+}
+
 /*-- Cards --*/
 .card {
   border: 0.5px solid #e0e0e0;
