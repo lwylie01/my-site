@@ -225,11 +225,15 @@ ggplotly_titled <- function(p, ...) {
 # 2020s do in a plot under about 200px, they tilt on one line instead, and so
 # do the heatmaps' one-word dimension names. Below 576px a colour scale is
 # hidden: it took most of a phone's width, and each subtitle names the colour.
+# A chart drawn at a set height (page 3's heatmap) keeps that height as its
+# minimum: below 992px, where cards size from their content, htmlwidgets wrote
+# the box 184px shorter than the chart and the 2020s scrolled out of sight.
 fit_card <- function(fig) {
   fig |>
     config(responsive = TRUE, displayModeBar = FALSE) |>
     htmlwidgets::onRender("
       function(el) {
+        if (el.layout && el.layout.height) el.style.minHeight = el.layout.height + 'px';
         var orig = null, busy = false, canvas = document.createElement('canvas');
         function wrap(text, font, maxW) {
           var ctx = canvas.getContext('2d'), lines = [], line = '';

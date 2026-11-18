@@ -310,7 +310,10 @@ signature work.
   1260px row left the bottom row 455px), which is why the others are fixed
   too. Era Averages was to join the bottom row, but three across left the
   dominant-dimension and top-20 plots 64-68px wide at 1024px, so it took its
-  own row instead.
+  own row instead. Below 992px the rows size from content, and htmlwidgets
+  wrote the heatmap's box at 1012px for a 1196px chart, so the 2020s scrolled
+  out of a card that looked complete; `fit_card()`'s first hook now gives any
+  chart with a set layout height that height as its `min-height` (2026-10-27).
 - The dashboard's `nav-buttons` merge into the site navbar (2026-10-28,
   maintainer's pick A): only "Periodic Table" and "Codebook" stay, because
   the home and GitHub buttons repeated the site navbar's own Home and GitHub.
