@@ -1715,6 +1715,13 @@ that the whole group is imaginary.
   at a time", the phrase her subtitle review had already rejected as
   verging on snarky). The close still links How Old Is Old? and the
   phrase "count some people wrong" stays as the echo of the old name.
+- **The Premise bio (2026-11-20)** is the maintainer's own About Me text,
+  written with her resume, replacing the older three-paragraph bio (the
+  system-involved-youth line and the UNO Juvenile Justice Institute history
+  went with it, her call). Two fixes were applied with her yes: the data
+  claim says the code is public "and so are the data wherever they can be
+  shared" (Pathways person-level data never is), and the closing "I would
+  like to hear about it" line was cut under the no-contact-me rule.
 - **Homepage phone pass (2026-09-27, maintainer-picked).** The bio avatar is
   `pics/headshot-420.jpg` (420x576, ~39 KB, no metadata). The original
   `pics/Headshot1.jpg` was a 949 KB 2787x3824 phone photo shown at 140px, and
