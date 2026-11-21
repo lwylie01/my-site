@@ -355,9 +355,17 @@ signature work.
   the compassionate release page's `details.codebook-fold` at every width
   (maintainer's call, label pick A: "Open the variable definitions: all 25
   columns", the count from `nrow(vars)`), which brings the phone page to about
-  15,100px closed. Its desktop column widths were cut to fit the 799px column
-  at 1280px, where the fifth column had run off; at 1024px the opened table
-  (795px) still scrolls inside its 620px box.
+  15,100px closed. Tablet check the same day: the page column is 503px at
+  768px and 620px at 1024px (the TOC sidebar stays), so Variable Definitions
+  alone keeps the stacked layout from 641px to 991px (a second media block
+  scoped to `.lab-vars`; change the phone rules and that block together), and
+  its column minimums sum to 615px so it fits as a table from 992px up. The
+  two-column tables' wide column is 360px so they fit the 503px column. On
+  the table page a `(pointer: coarse) and (min-width: 701px)` block gives the
+  nav links, filters and Close button 44px on tablets (they were 22 to 28px);
+  it keys on the pointer so a laptop with a mouse keeps the compact row. The
+  grid is 1,144px wide, so it swipes sideways below about 1,160px, with the
+  hint showing.
 
 ## Evaluation Picker (`evalpicker/`)
 

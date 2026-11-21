@@ -83,6 +83,38 @@ ladders <- dict_raw[(lmarker + 1):nrow(dict_raw), 1:2] |>
   /* The fold over Variable Definitions: a thumb-sized line to tap. */
   details.codebook-fold > summary { padding: 0.85rem 0.2rem; }
 }
+/* Tablets and small laptops: the page column is 500 to 620px here, and
+   Variable Definitions needs five columns, so it alone keeps the stacked
+   layout up to 991px. The narrower tables fit and stay tables. */
+@media (min-width: 641px) and (max-width: 991px) {
+  .lab-vars .rt-thead { display: none; }
+  .lab-vars .rt-tr-group { padding: 0.9rem 0; border-bottom: 1px solid #E7DED0; }
+  .lab-vars .reactable, .lab-vars .rt-table { overflow: visible; border: 0; background: transparent; }
+  .lab-vars .rt-tbody, .lab-vars .rt-tr-group, .lab-vars .rt-tr { min-width: 0 !important; }
+  .lab-vars .rt-tr { flex-direction: column; }
+  .lab-vars .rt-tr, .lab-vars .rt-td { background: transparent !important; }
+  .lab-vars .rt-tbody .rt-td {
+    display: block; flex: none !important; width: 100% !important;
+    min-width: 0 !important; max-width: none !important;
+    border: 0; padding: 0.2rem 0;
+  }
+  .lab-vars .rt-td, .lab-vars .rt-td-inner {
+    white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word;
+  }
+  .lab-vars .rt-td-inner { padding: 0; }
+  .lab-vars .rt-tr-group { padding: 0.9rem 0.8rem; margin-bottom: 0.5rem; border: 1px solid #E7DED0; border-radius: 8px; background: #FDFBF7 !important; }
+  .lab-vars .rt-td:first-child { font-size: 1.1rem; font-weight: 600; }
+  .lab-vars .rt-td::before {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #6A5F72; margin-top: 0.35rem;
+  }
+  .lab-vars .rt-td:nth-child(2)::before { content: "Type"; }
+  .lab-vars .rt-td:nth-child(3)::before { content: "Allowed values / range"; }
+  .lab-vars .rt-td:nth-child(4)::before { content: "Definition"; }
+  .lab-vars .rt-td:nth-child(5)::before { content: "Source / method"; }
+}
 </style>
 ```
 
@@ -160,7 +192,7 @@ reactable(
   ladders,
   columns = list(
     Dimension = colDef(minWidth = 130, style = list(fontWeight = "600")),
-    Ladder = colDef(minWidth = 420)
+    Ladder = colDef(minWidth = 360)
   ),
   striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
   theme = reactableTheme(
@@ -194,7 +226,7 @@ reactable(
   frame,
   columns = list(
     Rule = colDef(minWidth = 130, style = list(fontWeight = "600")),
-    Definition = colDef(minWidth = 380)
+    Definition = colDef(minWidth = 360)
   ),
   striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
   theme = reactableTheme(
@@ -234,7 +266,7 @@ reactable(
   styles,
   columns = list(
     Style = colDef(minWidth = 130, style = list(fontWeight = "600")),
-    Definition = colDef(minWidth = 420)
+    Definition = colDef(minWidth = 360)
   ),
   striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
   theme = reactableTheme(
@@ -255,11 +287,11 @@ reactable(
 reactable(
   vars,
   columns = list(
-    Variable = colDef(minWidth = 110, style = list(fontWeight = "600")),
-    Type = colDef(minWidth = 95),
-    `Allowed values / range` = colDef(minWidth = 150),
-    Definition = colDef(minWidth = 270),
-    `Source / method` = colDef(minWidth = 170)
+    Variable = colDef(minWidth = 94, style = list(fontWeight = "600")),
+    Type = colDef(minWidth = 80),
+    `Allowed values / range` = colDef(minWidth = 118),
+    Definition = colDef(minWidth = 195),
+    `Source / method` = colDef(minWidth = 128)
   ),
   striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
   theme = reactableTheme(
