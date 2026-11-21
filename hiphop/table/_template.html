@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Periodic Table of Hip-Hop Artists · datawithaplot.org</title>
+<title>The Hip-Hop Periodic Table · datawithaplot.org</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,12 +63,6 @@
   }
   header nav a:hover { color: var(--secondary); border-bottom-color: var(--secondary); }
   header nav a:focus-visible { outline: 2px solid var(--secondary); outline-offset: 3px; }
-  /* On a phone the nav links and filter controls grow to tap-target size. */
-  @media (max-width: 700px) {
-    header nav a { display: inline-flex; align-items: center; min-height: 44px; }
-    #filters select, #filters input, #filters .btn { min-height: 40px; font-size: 0.9rem; }
-  }
-
   /* ── Filters ─────────────────────────────────────────── */
   #filters {
     background: white;
@@ -122,17 +116,18 @@
     font-size: 0.73rem;
   }
   #legend .legend-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0.2rem; }
+  /* A color dot beside ink text: white text on the style fills failed AA on
+     five of the eight (2.2:1 on Party/Pop). */
   .legend-item {
-    display: flex; align-items: center; gap: 0.3rem;
-    padding: 0.15rem 0.5rem;
-    border-radius: 12px;
-    color: white;
+    display: flex; align-items: center; gap: 0.35rem;
+    color: var(--text);
     font-weight: 600;
   }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
 
   /* ── Grid / Table ─────────────────────────────────────── */
   /* Shown only while the grid is wider than its box (see updateSwipeHint). */
-  #grid-swipe-hint {
+  .swipe-hint {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 0.72rem;
     letter-spacing: 0.08em;
@@ -185,7 +180,9 @@
   .tile:focus-visible { outline: 3px solid var(--dark); outline-offset: 2px; z-index: 10; }
 
   .tile-top { display: flex; justify-content: space-between; align-items: flex-start; }
-  .tile-num { font-size: 0.6rem; color: rgba(255,255,255,0.7); font-weight: 600; }
+  /* Tile text takes the tile's own color, set per style in makeTileButton:
+     ink on the light fills, white on the dark ones. */
+  .tile-num { font-size: 0.62rem; font-weight: 600; }
   .tile-shape {
     font-size: 0.8rem; line-height: 1;
     text-shadow: 0 0 2px rgba(0,0,0,0.45);
@@ -196,31 +193,30 @@
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 1.3rem;
     font-weight: 700;
-    color: white;
     line-height: 1;
     text-align: center;
     letter-spacing: -0.02em;
   }
+  /* Two lines at 9px. The debut year left the tile to make the room (the
+     profile carries it); one line at 7px cut 22 names short. Names break
+     between words only: fitNames() steps the type down for the few single
+     words wider than a tile ("Grandmaster"). */
   .tile-name {
-    font-size: 0.45rem;
-    color: rgba(255,255,255,0.9);
+    font-size: 0.5625rem;
     text-align: center;
-    line-height: 1.2;
+    line-height: 1.15;
     font-weight: 600;
-    white-space: nowrap;
+    height: 2.3em;
     overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .tile-year {
-    font-size: 0.5rem;
-    color: rgba(255,255,255,0.7);
-    text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   .score-bar-wrap {
     width: 100%;
     height: 4px;
-    background: rgba(255,255,255,0.2);
+    background: color-mix(in srgb, currentColor 22%, transparent);
     border-radius: 2px;
     overflow: hidden;
     margin-top: 2px;
@@ -228,7 +224,8 @@
   .score-bar-fill {
     height: 100%;
     border-radius: 2px;
-    background: rgba(255,255,255,0.75);
+    background: currentColor;
+    opacity: 0.8;
     transition: width 0.3s;
   }
 
@@ -237,7 +234,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.62rem;
+    font-size: 0.7rem;
     font-weight: 700;
     color: var(--muted);
     width: 72px;
@@ -288,7 +285,6 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 2.2rem;
     font-weight: 700;
-    color: white;
     flex-shrink: 0;
   }
   .modal-title h2 { font-size: 1.25rem; font-weight: 700; color: var(--dark); }
@@ -297,7 +293,7 @@
   }
   .modal-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; }
   .modal-tag {
-    font-size: 0.68rem; font-weight: 600; padding: 0.15rem 0.5rem;
+    font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.5rem;
     border-radius: 10px; background: var(--light-bg); color: var(--muted);
     border: 1px solid var(--accent);
   }
@@ -388,6 +384,7 @@
   }
   #stats-bar span { opacity: 0.8; }
   #stats-bar strong { color: white; opacity: 1; }
+  #stats-bar span span { opacity: 1; }
 
   /* Confidence badge in legend */
   .conf-badge {
@@ -396,9 +393,24 @@
   }
   .conf-dot { width: 9px; height: 9px; border-radius: 50%; }
 
+  /* ── Footer ───────────────────────────────────────────── */
+  footer {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0.5rem 1rem 2.5rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  footer p + p { margin-top: 0.7rem; }
+  footer a { color: var(--eyebrow); text-decoration: underline; text-underline-offset: 2px; }
+  footer a:hover { color: var(--dark); }
+  footer a:focus-visible { outline: 2px solid var(--eyebrow); outline-offset: 3px; }
+  footer .more { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+
   /* Print / export styles */
   @media print {
-    header, #filters, #legend, #stats-bar { display: none; }
+    header, #filters, #legend, #stats-bar, #phone-toggles, footer, .swipe-hint { display: none; }
     #compounds-wrap { padding: 0; }
     #grid-container { padding: 0; }
   }
@@ -413,14 +425,42 @@
     .tile, .grid-spacer, .row-label { width: 58px; height: 74px; }
     .tile-symbol { font-size: 1.15rem; }
   }
+
+  /* On a phone the filters and the key fold behind two buttons, so the table
+     starts near the top of the screen instead of about 750px down. The
+     Filters button counts the filters in use, so a folded panel never hides
+     the reason some tiles are dimmed. This block sits last in the stylesheet
+     so it follows the base rules it overrides. */
+  #phone-toggles { display: none; }
+  @media (max-width: 700px) {
+    header { padding: 0.9rem 1rem 0.5rem; }
+    header h1 { font-size: 1.2rem; text-wrap: balance; }
+    header nav { gap: 0 1.1rem; }
+    header nav a { display: inline-flex; align-items: center; min-height: 44px; }
+    #phone-toggles {
+      display: flex; gap: 0.6rem; padding: 0.6rem 1rem;
+      background: white; border-bottom: 2px solid var(--accent);
+    }
+    #phone-toggles .btn { flex: 1; min-height: 44px; font-size: 0.9rem; }
+    #phone-toggles .btn[aria-expanded="true"] { background: var(--primary); color: white; }
+    #filters, #legend { padding-left: 1rem; padding-right: 1rem; }
+    #filters:not(.open), #legend:not(.open) { display: none; }
+    #filters .filter-group { flex: 1 1 100%; }
+    #filters .filter-group label { flex: 0 0 6.2rem; }
+    #filters select, #filters input[type="text"] { flex: 1; width: auto; min-height: 44px; font-size: 0.9rem; }
+    #filters .btn { min-height: 44px; font-size: 0.9rem; padding: 0 1.2rem; }
+    #stats-bar { padding: 0.5rem 1rem; gap: 0.15rem 1rem; }
+    #modal-close { min-height: 44px; padding: 0 1.2rem; font-size: 0.9rem; }
+    .bond-chip { min-height: 32px; font-size: 0.75rem; }
+  }
 </style>
 </head>
 <body>
 
 <header>
   <div>
-    <h1>Periodic Table of <span>Hip-Hop Artists</span></h1>
-    <p>datawithaplot.org · <span id="subtitle-count">—</span> Artists · Five-Dimension Lyrical Profiles</p>
+    <h1>The <span>Hip-Hop</span> Periodic Table</h1>
+    <p>datawithaplot.org · <span id="subtitle-count">—</span> Acts · Five-Dimension Lyrical Profiles</p>
   </div>
   <nav aria-label="Site">
     <a href="../index.html">← Home</a>
@@ -429,6 +469,11 @@
     <a href="data_dictionary.html">Codebook</a>
   </nav>
 </header>
+
+<div id="phone-toggles">
+  <button type="button" class="btn btn-outline" id="toggle-filters" aria-expanded="false" aria-controls="filters">Filters</button>
+  <button type="button" class="btn btn-outline" id="toggle-legend" aria-expanded="false" aria-controls="legend">Key</button>
+</div>
 
 <div id="filters">
   <div class="filter-group">
@@ -485,14 +530,14 @@
 
 <div id="legend">
   <span class="legend-label">Style:</span>
-  <span class="legend-item" style="background:#bd5f50">Gangsta/Street</span>
-  <span class="legend-item" style="background:#d98a6d">Trap/Drill</span>
-  <span class="legend-item" style="background:#008b7e">Political</span>
-  <span class="legend-item" style="background:#3fbaa0">Conscious/Lyrical</span>
-  <span class="legend-item" style="background:#5f4384">Abstract</span>
-  <span class="legend-item" style="background:#a385c9">Experimental</span>
-  <span class="legend-item" style="background:#a87d2a">Jazz-Rap</span>
-  <span class="legend-item" style="background:#d3ab4d">Party/Pop</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#bd5f50"></span>Gangsta/Street</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#d98a6d"></span>Trap/Drill</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#008b7e"></span>Political</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#3fbaa0"></span>Conscious/Lyrical</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#5f4384"></span>Abstract</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#a385c9"></span>Experimental</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#a87d2a"></span>Jazz-Rap</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#d3ab4d"></span>Party/Pop</span>
   <span style="margin-left:0.8rem" class="legend-label">Region:</span>
   <span class="legend-shape">● East Coast</span>
   <span class="legend-shape">★ West Coast</span>
@@ -506,22 +551,28 @@
 </div>
 
 <div id="stats-bar">
-  <span>Showing <strong id="stat-visible">—</strong> of <strong id="stat-total">—</strong> artists</span>
+  <span>Showing <strong id="stat-visible">—</strong> of <strong id="stat-total">—</strong> acts (<span id="stat-split">—</span>)</span>
   <span>Avg composite: <strong id="stat-avg">—</strong></span>
   <span>Top scorer: <strong id="stat-top">—</strong></span>
 </div>
 
-<p id="grid-swipe-hint" hidden>Swipe the table to see every era.</p>
+<p class="swipe-hint" id="grid-swipe-hint" hidden>Swipe the table to see every era.</p>
 <div id="grid-container">
   <div id="table-area"></div>
 </div>
 
 <div class="section-divider">
-  <h2>⚛️ Compounds <span>· groups &amp; crews (<span id="compound-count">0</span>)</span></h2>
+  <h2>Compounds <span>· groups and crews (<span id="compound-count">0</span>)</span></h2>
 </div>
+<p class="swipe-hint" id="compounds-swipe-hint" hidden>Swipe the table to see every era.</p>
 <div id="compounds-wrap">
   <div id="compounds-area"></div>
 </div>
+
+<footer>
+  <p>Scores are judgments drawn from published criticism and hip-hop scholarship, not calculations. The <a href="data_dictionary.html">codebook</a> documents every variable and every contested call, and the <a href="hiphop_dashboard.html">dashboard</a> charts the same data.</p>
+  <p><a class="more" href="../teaching/index.html">More exercises →</a></p>
+</footer>
 
 <!-- Modal -->
 <div id="modal-overlay" onclick="closeModal(event)">
@@ -560,7 +611,7 @@ const RAW_DATA = __RAW_DATA__;
 // ─── STATE ─────────────────────────────────────────────────────────────────
 const artists = RAW_DATA;
 const elements = artists.filter(a => a['Type'] !== 'Compound');   // solo artists
-const compounds = artists.filter(a => a['Type'] === 'Compound');  // groups & crews
+const compounds = artists.filter(a => a['Type'] === 'Compound');  // groups and crews
 let layout = []; // array of artist IDs or null (empty cells), 18 cols
 
 const SCORE_COLORS = ['Rhyme Density','Vocab Breadth','Storytelling','Metaphor/Imagery','Conceptual Depth'];
@@ -576,6 +627,17 @@ const STYLE_COLORS = {
   'Political': '#008b7e', 'Conscious/Lyrical': '#3fbaa0',
   'Abstract': '#5f4384', 'Experimental': '#a385c9',
   'Jazz-Rap': '#a87d2a', 'Party/Pop': '#d3ab4d'
+};
+// Text color per fill, whichever of ink and white reads better on it. Five
+// fills clear 4.5:1 this way; Jazz-Rap (4.2), Political (4.2) and
+// Gangsta/Street (4.3) clear the 3:1 large-text line the symbol needs and fall
+// just short for the 9px name. The fills are a validated encoding, so they stay.
+const INK = '#2E1A47';
+const STYLE_TEXT = {
+  'Gangsta/Street': '#ffffff', 'Trap/Drill': INK,
+  'Political': '#ffffff', 'Conscious/Lyrical': INK,
+  'Abstract': '#ffffff', 'Experimental': INK,
+  'Jazz-Rap': INK, 'Party/Pop': INK
 };
 const REGION_SHAPE = {
   'East Coast': '●', 'West Coast': '★', 'South': '▲', 'Midwest': '■'
@@ -681,7 +743,6 @@ function render() {
       </div>
       <div class="tile-symbol">${artist['Symbol']}</div>
       <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
-      <div class="tile-year">${artist['Debut Year']}</div>
       <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${scorePct}%"></div></div>
     `;
 
@@ -693,9 +754,10 @@ function render() {
 
   updateStats(filters);
   renderCompounds();
+  fitNames();
 }
 
-// ─── COMPOUNDS (groups & crews) ──────────────────────────────────────────────
+// ─── COMPOUNDS (groups and crews) ──────────────────────────────────────────────
 function renderCompounds() {
   const area = document.getElementById('compounds-area');
   if(!area) return;
@@ -734,7 +796,6 @@ function renderCompounds() {
       </div>
       <div class="tile-symbol">${artist['Symbol']}</div>
       <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
-      <div class="tile-year">${artist['Debut Year']}</div>
       <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${(score/10)*100}%"></div></div>
     `;
     makeTileButton(tile, artist, cVisible);
@@ -766,6 +827,19 @@ function passesFilter(a, f) {
   return true;
 }
 
+// A name whose longest word is wider than its tile is set smaller until the
+// word fits, down to 7.5px; the browser will not hyphenate a capitalized
+// word, and splitting one mid-word ("Grandmas / ter") reads worse.
+function fitNames() {
+  document.querySelectorAll('.tile-name').forEach(el => {
+    el.style.fontSize = '';
+    if(el.scrollWidth <= el.clientWidth) return;
+    const base = parseFloat(getComputedStyle(el).fontSize);
+    const size = Math.max(7.5, Math.floor(base * el.clientWidth / el.scrollWidth * 10) / 10);
+    el.style.fontSize = size + 'px';
+  });
+}
+
 function applyFilters() { render(); }
 
 function clearFilters() {
@@ -778,10 +852,15 @@ function clearFilters() {
 }
 
 function updateStats(filters) {
-  const visible = elements.filter(a => passesFilter(a, filters));
+  // Every count is over all acts, solo and group alike: the filters dim both
+  // grids, and the site's cards quote the same total.
+  const visible = artists.filter(a => passesFilter(a, filters));
   document.getElementById('stat-visible').textContent = visible.length;
-  document.getElementById('stat-total').textContent = elements.length;
-  document.getElementById('subtitle-count').textContent = elements.length;
+  document.getElementById('stat-total').textContent = artists.length;
+  document.getElementById('stat-split').textContent = `${elements.length} solo, ${compounds.length} groups`;
+  document.getElementById('subtitle-count').textContent = artists.length;
+  const inUse = Object.values(filters).filter(Boolean).length;
+  document.getElementById('toggle-filters').textContent = inUse ? `Filters (${inUse})` : 'Filters';
   if(visible.length > 0) {
     const avg = (visible.reduce((s,a)=>s+(a['Composite Score']||0),0)/visible.length).toFixed(1);
     document.getElementById('stat-avg').textContent = avg;
@@ -798,6 +877,7 @@ function updateStats(filters) {
 // added here: each visible tile is a focusable button that opens on Enter or
 // Space. Filtered-out tiles leave the tab order, as they already ignore the mouse.
 function makeTileButton(tile, artist, visible) {
+  tile.style.color = STYLE_TEXT[artist['Style']] || '#ffffff';
   tile.setAttribute('role', 'button');
   tile.setAttribute('aria-label', `${artist['Artist Name']}, ${artist['Style']}, composite ${artist['Composite Score']}`);
   tile.tabIndex = visible ? 0 : -1;
@@ -826,6 +906,7 @@ function populateModal(id) {
 
   document.getElementById('modal-symbol-box').textContent = a['Symbol'];
   document.getElementById('modal-symbol-box').style.background = color;
+  document.getElementById('modal-symbol-box').style.color = STYLE_TEXT[a['Style']] || '#ffffff';
   document.getElementById('modal-name').textContent = a['Artist Name'];
   const spanEnd = a['Active Through'] || 'present';
   const sigSeg = a['Signature Work'] ? `Signature: <i>${a['Signature Work']}</i> · ` : '';
@@ -890,11 +971,24 @@ render();
 // The era grid is eighteen columns wide, so below ~1150px it scrolls
 // sideways; the hint appears only while that is true.
 function updateSwipeHint() {
-  const g = document.getElementById('grid-container');
-  document.getElementById('grid-swipe-hint').hidden = g.scrollWidth <= g.clientWidth + 1;
+  [['grid-container', 'grid-swipe-hint'], ['compounds-wrap', 'compounds-swipe-hint']].forEach(([box, hint]) => {
+    const g = document.getElementById(box);
+    document.getElementById(hint).hidden = g.scrollWidth <= g.clientWidth + 1;
+  });
 }
 updateSwipeHint();
 window.addEventListener('resize', updateSwipeHint);
+window.addEventListener('resize', fitNames);
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitNames);
+
+// Phone only: the two buttons that fold the filters and the key.
+[['toggle-filters', 'filters'], ['toggle-legend', 'legend']].forEach(([btn, panel]) => {
+  const b = document.getElementById(btn);
+  b.addEventListener('click', () => {
+    const open = document.getElementById(panel).classList.toggle('open');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+});
 </script>
 </body>
 </html>

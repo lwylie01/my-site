@@ -39,7 +39,7 @@ into it.
     <p class="project-card-title">The Hip-Hop Periodic Table</p>
     <p class="project-card-desc">
       Score a favorite rapper on gut feeling, then compare that score with a table
-      of 187 hip-hop acts rated on five parts of lyricism, and see how much
+      of {{< var hiphop.acts >}} hip-hop acts rated on five parts of lyricism, and see how much
       depends on what you decided to measure.
     </p>
     <a href="../hiphop/hiphop_periodic_table.html" class="project-card-cta">
