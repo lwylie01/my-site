@@ -102,7 +102,7 @@ editor:
     <span class="project-card-tag">Data Storytelling</span>
     <p class="project-card-title"><a href="hiphop/hiphop_periodic_table.html">The Hip-Hop Periodic Table</a></p>
     <p class="project-card-desc">
-      A dataset of 187 hip-hop acts, built to teach what goes into a score and
+      A dataset of {{< var hiphop.acts >}} hip-hop acts, built to teach what goes into a score and
       what can quietly bend it, using a subject people genuinely argue about.
     </p>
   </div>

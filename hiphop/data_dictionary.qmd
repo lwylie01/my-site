@@ -1,5 +1,5 @@
 ---
-title: "Data Dictionary & Codebook"
+title: "Data Dictionary and Codebook"
 subtitle: "Hip-Hop Periodic Table: what the variables mean, how scores were assigned, and who is in the data"
 format:
   html:
@@ -32,6 +32,58 @@ ladders <- dict_raw[(lmarker + 1):nrow(dict_raw), 1:2] |>
   setNames(c("Dimension", "Ladder")) |> filter(!is.na(Dimension))
 ```
 
+```{=html}
+<style>
+/* Phones: every table on this page becomes a list of stacked entries, one per
+   row, each cell on its own line under a small label. As tables they were
+   wider than a phone: three pushed the whole page sideways (429px in a 375px
+   screen) and Variable Definitions was 890px wide inside a 324px box. The
+   labels repeat the column headings, which are hidden at this width, so a
+   renamed column needs its label renamed here too. */
+@media (max-width: 640px) {
+  .stack table, .stack tbody, .stack tr, .stack td { display: block; width: 100%; }
+  .stack thead, .stack .rt-thead { display: none; }
+  .stack tr, .stack .rt-tr-group { padding: 0.9rem 0; border-bottom: 1px solid #E7DED0; }
+  .stack td { border: 0; padding: 0.2rem 0; }
+  /* reactable sets widths inline (the sum of each column's minWidth), draws
+     its own background and keeps each cell on one line, so each is undone. */
+  .stack .reactable, .stack .rt-table { overflow: visible; border: 0; background: transparent; }
+  .stack .rt-tbody, .stack .rt-tr-group, .stack .rt-tr { min-width: 0 !important; }
+  .stack .rt-tr { flex-direction: column; }
+  .stack .rt-tr, .stack .rt-td { background: transparent !important; }
+  .stack .rt-tbody .rt-td {
+    display: block; flex: none !important; width: 100% !important;
+    min-width: 0 !important; max-width: none !important;
+    border: 0; padding: 0.2rem 0;
+  }
+  .stack .rt-td, .stack .rt-td-inner {
+    white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word;
+  }
+  .stack .rt-td-inner { padding: 0; }
+  /* reactable rows keep their Paper fill, so they get a card's side padding. */
+  .stack .rt-tr-group { padding: 0.9rem 0.8rem; margin-bottom: 0.5rem; border: 1px solid #E7DED0; border-radius: 8px; background: #FDFBF7 !important; }
+  .stack td:first-child, .stack .rt-td:first-child { font-size: 1.1rem; font-weight: 600; }
+  .stack td::before, .stack .rt-td::before {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #6A5F72; margin-top: 0.35rem;
+  }
+  .lab-constructs td:nth-child(2)::before { content: "What it measures"; }
+  .lab-constructs td:nth-child(3)::before { content: "Anchor at 10"; }
+  .lab-rubric td:nth-child(2)::before { content: "Meaning"; }
+  .lab-rubric td:nth-child(3)::before { content: "Criteria"; }
+  .lab-calls td:nth-child(2)::before { content: "The split"; }
+  .lab-calls td:nth-child(3)::before { content: "Ruling"; }
+  .lab-calls td:nth-child(4)::before { content: "Why"; }
+  .lab-vars .rt-td:nth-child(2)::before { content: "Type"; }
+  .lab-vars .rt-td:nth-child(3)::before { content: "Allowed values / range"; }
+  .lab-vars .rt-td:nth-child(4)::before { content: "Definition"; }
+  .lab-vars .rt-td:nth-child(5)::before { content: "Source / method"; }
+}
+</style>
+```
+
 This page documents every variable in the [Hip-Hop Periodic
 Table](hiphop_periodic_table.html) dataset, the constructs behind the five
 lyricism scores, how scores were assigned, and the sampling frame the dataset
@@ -48,6 +100,7 @@ Each act is scored 1–10 on five dimensions of lyricism. Scores are
 text analysis was run. Each dimension has a named anchor at 10 so the top
 of the scale means the same thing across scorers.
 
+::: {.stack .lab-constructs}
 | Construct | What it measures | Anchor at 10 |
 |---|---|---|
 | **Rhyme Density** | Frequency and complexity of rhyme: internal rhyme, multisyllabic chains, rhymes per bar, scheme inventiveness | Rakim: pioneered internal and multisyllabic rhyme as standard practice |
@@ -55,6 +108,7 @@ of the scale means the same thing across scorers.
 | **Storytelling** | Narrative construction: character, plot, perspective shifts, arc within songs and across albums | Scarface |
 | **Metaphor/Imagery** | Density and originality of figurative language: extended metaphor, concrete imagery, double meanings | Lil Wayne: simile machine; metaphor-stacking as his defining critical reputation |
 | **Conceptual Depth** | Thematic ambition and coherence: album-level concepts, social and philosophical substance | Kendrick Lamar: 10 is reserved for carrying a concept across a full album at the highest level |
+:::
 
 The **Composite Score** is the plain average of the five dimensions, rounded
 to one decimal. Counting all five equally is itself a choice, and one of the
@@ -97,6 +151,7 @@ record says between. The floor is defined but empty on purpose: the sampling
 frame requires a national critical record, which excludes each construct's
 true bottom, so the lowest occupied scores sit near 2 and 3, not 1.
 
+::: {.stack}
 ```{r ladders-table}
 #| echo: false
 reactable(
@@ -111,22 +166,26 @@ reactable(
   )
 )
 ```
+:::
 
 ## Confidence Rubric
 
+::: {.stack .lab-rubric}
 | Flag | Meaning | Criteria |
 |---|---|---|
 | **H (High)** | Extensive critical record | Sustained critical/academic attention; multiple long-form analyses of the act's lyrical craft; consistent reception across sources; a body of work large enough that scores are stable across albums |
 | **M (Medium)** | Moderate documentation | Meets 1–2 of the High criteria: historically important but under-analyzed, newer with an incomplete body of work, mixed critical reception, or regional/underground importance without mainstream scholarly attention. Treat as a working estimate |
 | **L (Low)** | Thin or disputed record | Little formal analysis, a very recent debut, single-source scores, or reception clouded by controversy unrelated to the music. Treat as first estimates that need checking |
+:::
 
 Good places to double-check M and L scores: RateYourMusic critical consensus,
 Pitchfork / The Wire discography reviews, Google Scholar (artist +
 "lyricism"), and genre publications (The Source, XXL retrospectives, Passion
 of the Weiss).
 
-## Sampling Frame & Scope Rules
+## Sampling Frame and Scope Rules {#sampling-frame-scope-rules}
 
+::: {.stack}
 ```{r frame-table}
 #| echo: false
 reactable(
@@ -141,6 +200,7 @@ reactable(
   )
 )
 ```
+:::
 
 Two scope rules are worth calling out:
 
@@ -165,6 +225,7 @@ left-field categories is where the strangeness lives: in the words, it is
 Abstract; in the sound or form, it is Experimental. Each definition names an
 anchor act, the same way the five constructs anchor their scales.
 
+::: {.stack}
 ```{r styles-table}
 #| echo: false
 reactable(
@@ -179,19 +240,21 @@ reactable(
   )
 )
 ```
+:::
 
 ## Variable Definitions
 
+::: {.stack .lab-vars}
 ```{r vars-table}
 #| echo: false
 reactable(
   vars,
   columns = list(
     Variable = colDef(minWidth = 110, style = list(fontWeight = "600")),
-    Type = colDef(minWidth = 80),
-    `Allowed values / range` = colDef(minWidth = 160),
-    Definition = colDef(minWidth = 340),
-    `Source / method` = colDef(minWidth = 200)
+    Type = colDef(minWidth = 95),
+    `Allowed values / range` = colDef(minWidth = 150),
+    Definition = colDef(minWidth = 270),
+    `Source / method` = colDef(minWidth = 170)
   ),
   striped = TRUE, bordered = TRUE, sortable = FALSE, pagination = FALSE,
   theme = reactableTheme(
@@ -199,6 +262,7 @@ reactable(
   )
 )
 ```
+:::
 
 ## Contested Calls
 
@@ -210,6 +274,7 @@ pointed elsewhere, and resolved the genuine splits by maintainer ruling. New
 splits get the same treatment as acts are added. The rulings are logged here
 so the judgment is inspectable.
 
+::: {.stack .lab-calls}
 | Act | The split | Ruling | Why |
 |---|---|---|---|
 | Common | *Resurrection* (1994) vs *Like Water for Chocolate* (2000) vs *Be* (2005) | *Resurrection* | The album 90s critics call his best work, and the earliest of a three-way split |
@@ -224,6 +289,7 @@ so the judgment is inspectable.
 | Playboi Carti | *Die Lit* (2018) vs *Whole Lotta Red* (2020) | *Whole Lotta Red* | Divisive at release, canon now; the record the rage sound grew from |
 | Ice Spice | *Like..?* EP (2023) vs *Y2K!* (2024) | *Y2K!* | The EP is the consensus moment, but the candidate pool is full-length projects: the same album-over-EP ruling as GloRilla |
 | Doja Cat | In the frame at all, then *Hot Pink* (2019) vs *Planet Her* (2021) vs *Scarlet* (2023) | In; *Planet Her* | She raps on most songs with a national critical record, so she is in; the defining run beats the bars-forward flex |
+:::
 
 If you would rule differently on any of these, that disagreement is the
 point: the pick is documented, so the argument has something to grab.
