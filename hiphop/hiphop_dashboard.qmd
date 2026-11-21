@@ -152,18 +152,21 @@ conf_pal <- c("H" = "#41ab5d", "M" = "#f6c141", "L" = "#e08214")
 # hue = lane, shade = style within it. Corals = the street lane (Gangsta,
 # Trap/Drill), jades = the message lane (Political, Conscious/Lyrical),
 # purples = the left field (Abstract, Experimental), golds = the crowd lane
-# (Jazz-Rap, Party/Pop). CVD-validated 2026-07: worst colorblind pair is
-# within-family (13.1, above the strict 12 target), so a confusion is a
-# near-miss inside one lane, never a category error. Tooltips still carry
-# the style name on every mark.
+# (Jazz-Rap, Party/Pop). CVD-validated 2026-07 and re-checked 2026-11-21
+# (Machado full-strength simulation, CIE76 difference): worst colorblind pair
+# is within-family (15.3, Gangsta/Street vs Trap/Drill; the strict target is
+# 12), so a confusion is a near-miss inside one lane, never a category error.
+# Gangsta/Street, Political and Jazz-Rap were darkened slightly that day so
+# the periodic table's tile names clear 4.5:1. Tooltips still carry the style
+# name on every mark.
 style_pal <- c(
-  "Gangsta/Street"    = "#bd5f50",
+  "Gangsta/Street"    = "#b7594b",
   "Trap/Drill"        = "#d98a6d",
-  "Political"         = "#008b7e",
+  "Political"         = "#008377",
   "Conscious/Lyrical" = "#3fbaa0",
   "Abstract"          = "#5f4384",
   "Experimental"      = "#a385c9",
-  "Jazz-Rap"          = "#a87d2a",
+  "Jazz-Rap"          = "#976e1a",
   "Party/Pop"         = "#d3ab4d"
 )
 

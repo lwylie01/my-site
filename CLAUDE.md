@@ -333,9 +333,16 @@ signature work.
   Homosapien"). Tile text is ink or white per style (`STYLE_TEXT`, whichever
   reads better on the fill; the score bar follows through `currentColor`), and
   the legend is a color dot beside ink text: white on every fill failed AA on
-  most. Jazz-Rap, Political and Gangsta/Street still sit at 4.2 to 4.3:1, short
-  of 4.5 for small text; fixing that means changing `STYLE_COLORS`, a data
-  encoding shared with the dashboard, so it is the maintainer's call. The
+  most. Jazz-Rap, Political and Gangsta/Street sat at 4.2 to 4.3:1, so on
+  2026-11-21 (maintainer's pick B of three mocked options) those three fills
+  were darkened in `STYLE_COLORS` and the dashboard's `style_pal` together:
+  Gangsta/Street #b7594b, Political #008377, Jazz-Rap #976e1a (now white
+  text). Every lane's darker shade takes white and its lighter shade ink, and
+  all eight names clear 4.5:1. The CVD check behind the "13.1" note is
+  Machado's full-strength simulation in linear RGB with a CIE76 difference;
+  on it the palette went from 13.1 to 15.3 (worst pair still Gangsta/Street
+  against Trap/Drill, within one lane). Re-run that check and the eight
+  contrasts after any palette change. The
   stats bar and header count all acts ("Showing 187 of 187 acts (143 solo, 44
   groups)"); they counted Elements only before. Below 700px the filters and
   the key fold behind two buttons ("Filters", which shows "Filters (N)" while
