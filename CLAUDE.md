@@ -351,9 +351,13 @@ signature work.
   class; the labels repeat the hidden column headings, so renaming a column
   means renaming its label in the page's style block). That ended the sideways
   scroll (429px in a 375px screen) but made the phone page longer, 27,168px
-  from 17,090px, most of it Variable Definitions; folding that table behind a
-  `details` toggle was offered and is undecided. Its desktop column widths
-  were cut to fit the 799px column, where the fifth column had run off.
+  from 17,090px, most of it Variable Definitions, so that table sits behind
+  the compassionate release page's `details.codebook-fold` at every width
+  (maintainer's call, label pick A: "Open the variable definitions: all 25
+  columns", the count from `nrow(vars)`), which brings the phone page to about
+  15,100px closed. Its desktop column widths were cut to fit the 799px column
+  at 1280px, where the fifth column had run off; at 1024px the opened table
+  (795px) still scrolls inside its 620px box.
 
 ## Evaluation Picker (`evalpicker/`)
 

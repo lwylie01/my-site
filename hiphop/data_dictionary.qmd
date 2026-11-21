@@ -80,6 +80,8 @@ ladders <- dict_raw[(lmarker + 1):nrow(dict_raw), 1:2] |>
   .lab-vars .rt-td:nth-child(3)::before { content: "Allowed values / range"; }
   .lab-vars .rt-td:nth-child(4)::before { content: "Definition"; }
   .lab-vars .rt-td:nth-child(5)::before { content: "Source / method"; }
+  /* The fold over Variable Definitions: a thumb-sized line to tap. */
+  details.codebook-fold > summary { padding: 0.85rem 0.2rem; }
 }
 </style>
 ```
@@ -244,6 +246,9 @@ reactable(
 
 ## Variable Definitions
 
+<details class="codebook-fold">
+<summary>Open the variable definitions: all `r nrow(vars)` columns</summary>
+
 ::: {.stack .lab-vars}
 ```{r vars-table}
 #| echo: false
@@ -263,6 +268,8 @@ reactable(
 )
 ```
 :::
+
+</details>
 
 ## Contested Calls
 
