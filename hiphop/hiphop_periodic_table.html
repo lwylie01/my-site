@@ -453,6 +453,15 @@
     #modal-close { min-height: 44px; padding: 0 1.2rem; font-size: 0.9rem; }
     .bond-chip { min-height: 32px; font-size: 0.75rem; }
   }
+
+  /* Touch screens wider than a phone (tablets): the filters stay in their
+     row, but every control still gets a thumb-sized height. Keyed on the
+     pointer, not the width, so a laptop with a mouse keeps its compact row. */
+  @media (pointer: coarse) and (min-width: 701px) {
+    header nav a { display: inline-flex; align-items: center; min-height: 44px; }
+    #filters select, #filters input[type="text"], #filters .btn { min-height: 44px; }
+    #modal-close { min-height: 44px; padding: 0 1.2rem; }
+  }
 </style>
 </head>
 <body>
