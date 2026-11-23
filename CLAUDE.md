@@ -325,12 +325,20 @@ signature work.
   recommendations approved, copy picks A throughout). The table page is
   **"The Hip-Hop Periodic Table"** in its `<title>` and `<h1>`, matching every
   card, and the groups heading is "Compounds · groups and crews (N)" with no
-  emoji. Tiles: the debut year left the tile (the profile carries it) so names
-  get two lines at 9px, breaking between words only; `fitNames()` steps the
-  type down, floor 7.5px, for a single word wider than its tile, because
-  Chrome will not hyphenate a capitalized word and `overflow-wrap: anywhere`
-  split "Grandmas / ter". A few three-line names still clip ("Del the Funky
-  Homosapien"). Tile text is ink or white per style (`STYLE_TEXT`, whichever
+  emoji. Tiles: the debut year left the tile (the profile carries it), and
+  since 2026-11-23 (maintainer's pick B of three mocked options) the tiles are
+  10px taller at each size (72x98, 64x90, 58x84) so a name takes up to three
+  lines at 9px; at two lines ten names were cut on the 58px tile, which phones
+  and most laptops get. Names break between words only. `fitNames()` measures
+  each name on an unclamped copy (the line clamp hides overflow from the tile
+  itself, which fooled the old check) and steps the type down, floor 7.5px,
+  until it fits three lines; Chrome will not hyphenate a capitalized word and
+  `overflow-wrap: anywhere` split "Grandmas / ter", so `NAME_BREAKS` puts a
+  soft hyphen at a syllable in Grandmaster, Blackalicious and Brockhampton.
+  Add any new act whose single word overflows the 58px tile at 7.5px. No name
+  is cut at any width; the smallest is 7.7px, and the page grew about 190px.
+  When mocking tiles outside the grid, copy the page's own font: the names are
+  Spectral, and a copy dropped into a mono wrapper measures wrong. Tile text is ink or white per style (`STYLE_TEXT`, whichever
   reads better on the fill; the score bar follows through `currentColor`), and
   the legend is a color dot beside ink text: white on every fill failed AA on
   most. Jazz-Rap, Political and Gangsta/Street sat at 4.2 to 4.3:1, so on

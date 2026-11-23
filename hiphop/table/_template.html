@@ -159,7 +159,7 @@
   /* ── Tile ─────────────────────────────────────────────── */
   .tile {
     width: 72px;
-    height: 88px;
+    height: 98px;
     border-radius: 6px;
     padding: 4px 5px 5px;
     cursor: pointer;
@@ -197,20 +197,23 @@
     text-align: center;
     letter-spacing: -0.02em;
   }
-  /* Two lines at 9px. The debut year left the tile to make the room (the
-     profile carries it); one line at 7px cut 22 names short. Names break
-     between words only: fitNames() steps the type down for the few single
-     words wider than a tile ("Grandmaster"). */
+  /* Up to three lines at 9px. The debut year left the tile to make the room
+     (the profile carries it), and the tiles are 10px taller than they were
+     (2026-11-23) so a three-line name fits: at two lines, ten names were cut
+     on the smallest tile. Names break between words only; fitNames() steps
+     the type down for the rest, and NAME_BREAKS hyphenates the few single
+     words wider than a tile. */
   .tile-name {
     font-size: 0.5625rem;
     text-align: center;
     line-height: 1.15;
     font-weight: 600;
-    height: 2.3em;
+    height: 3.45em;
     overflow: hidden;
+    hyphens: manual;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
   }
 
   .score-bar-wrap {
@@ -238,7 +241,7 @@
     font-weight: 700;
     color: var(--muted);
     width: 72px;
-    height: 88px;
+    height: 98px;
     border-radius: 6px;
     background: rgba(46,26,71,0.06);
     border: 1.5px dashed var(--accent);
@@ -246,7 +249,7 @@
     line-height: 1.2;
   }
 
-  .grid-spacer { width: 72px; height: 88px; }
+  .grid-spacer { width: 72px; height: 98px; }
 
   /* ── Modal ───────────────────────────────────────────── */
   #modal-overlay {
@@ -418,11 +421,11 @@
   /* Responsive */
   @media (max-width: 1400px) {
     #table-area, #compounds-area { grid-template-columns: repeat(18, 64px); }
-    .tile, .grid-spacer, .row-label { width: 64px; height: 80px; }
+    .tile, .grid-spacer, .row-label { width: 64px; height: 90px; }
   }
   @media (max-width: 1200px) {
     #table-area, #compounds-area { grid-template-columns: repeat(18, 58px); }
-    .tile, .grid-spacer, .row-label { width: 58px; height: 74px; }
+    .tile, .grid-spacer, .row-label { width: 58px; height: 84px; }
     .tile-symbol { font-size: 1.15rem; }
   }
 
@@ -751,7 +754,7 @@ function render() {
         <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${regionLabel(artist)} · ${artist['Style']} · ${artist['Confidence']}-confidence">${REGION_SHAPE[artist['Region']]||'•'}</span>
       </div>
       <div class="tile-symbol">${artist['Symbol']}</div>
-      <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
+      <div class="tile-name" title="${artist['Artist Name']}">${tileName(artist['Artist Name'])}</div>
       <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${scorePct}%"></div></div>
     `;
 
@@ -804,7 +807,7 @@ function renderCompounds() {
         <span class="tile-shape" style="color:${CONF_COLOR[artist['Confidence']]||'#fff'}" title="${regionLabel(artist)} · ${artist['Style']} · ${artist['Confidence']}-confidence">${REGION_SHAPE[artist['Region']]||'•'}</span>
       </div>
       <div class="tile-symbol">${artist['Symbol']}</div>
-      <div class="tile-name" title="${artist['Artist Name']}">${artist['Artist Name']}</div>
+      <div class="tile-name" title="${artist['Artist Name']}">${tileName(artist['Artist Name'])}</div>
       <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${(score/10)*100}%"></div></div>
     `;
     makeTileButton(tile, artist, cVisible);
@@ -836,17 +839,39 @@ function passesFilter(a, f) {
   return true;
 }
 
-// A name whose longest word is wider than its tile is set smaller until the
-// word fits, down to 7.5px; the browser will not hyphenate a capitalized
-// word, and splitting one mid-word ("Grandmas / ter") reads worse.
+// A name that needs more than three lines, or holds a word wider than its
+// tile, is set smaller until it fits, down to 7.5px. The fit is measured on an
+// unclamped copy, because the line clamp hides the overflow from the tile
+// itself. Chrome will not hyphenate a capitalized word, and splitting one at
+// any letter ("Grandmas / ter") reads badly, so NAME_BREAKS puts a soft hyphen
+// at a syllable in the words that need one; add any new act whose single word
+// still overflows at 7.5px on the 58px tile.
+const NAME_LINES = 3;
+const NAME_BREAKS = {
+  'Blackalicious': 'Black\u00adalicious',
+  'Brockhampton': 'Brock\u00adhampton',
+  'Grandmaster Flash': 'Grand\u00admaster Flash'
+};
+function tileName(n) { return NAME_BREAKS[n] || n; }
 function fitNames() {
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:absolute;visibility:hidden;left:-9999px;top:0;text-align:center;font-weight:600;line-height:1.15;hyphens:manual';
+  document.body.appendChild(probe);
   document.querySelectorAll('.tile-name').forEach(el => {
     el.style.fontSize = '';
-    if(el.scrollWidth <= el.clientWidth) return;
-    const base = parseFloat(getComputedStyle(el).fontSize);
-    const size = Math.max(7.5, Math.floor(base * el.clientWidth / el.scrollWidth * 10) / 10);
-    el.style.fontSize = size + 'px';
+    const w = el.clientWidth, cs = getComputedStyle(el);
+    probe.style.width = w + 'px';
+    probe.style.fontFamily = cs.fontFamily;
+    probe.textContent = el.textContent;
+    let size = parseFloat(cs.fontSize);
+    const fits = s => {
+      probe.style.fontSize = s + 'px';
+      return probe.scrollWidth <= w && probe.scrollHeight <= Math.ceil(s * 1.15 * NAME_LINES) + 1;
+    };
+    while (!fits(size) && size > 7.5) size = Math.round((size - 0.1) * 10) / 10;
+    if (size !== parseFloat(cs.fontSize)) el.style.fontSize = size + 'px';
   });
+  probe.remove();
 }
 
 function applyFilters() { render(); }
