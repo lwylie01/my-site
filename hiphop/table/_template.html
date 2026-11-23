@@ -539,13 +539,13 @@
 
 <div id="legend">
   <span class="legend-label">Style:</span>
-  <span class="legend-item"><span class="legend-dot" style="background:#bd5f50"></span>Gangsta/Street</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#b7594b"></span>Gangsta/Street</span>
   <span class="legend-item"><span class="legend-dot" style="background:#d98a6d"></span>Trap/Drill</span>
-  <span class="legend-item"><span class="legend-dot" style="background:#008b7e"></span>Political</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#008377"></span>Political</span>
   <span class="legend-item"><span class="legend-dot" style="background:#3fbaa0"></span>Conscious/Lyrical</span>
   <span class="legend-item"><span class="legend-dot" style="background:#5f4384"></span>Abstract</span>
   <span class="legend-item"><span class="legend-dot" style="background:#a385c9"></span>Experimental</span>
-  <span class="legend-item"><span class="legend-dot" style="background:#a87d2a"></span>Jazz-Rap</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#976e1a"></span>Jazz-Rap</span>
   <span class="legend-item"><span class="legend-dot" style="background:#d3ab4d"></span>Party/Pop</span>
   <span style="margin-left:0.8rem" class="legend-label">Region:</span>
   <span class="legend-shape">● East Coast</span>
@@ -632,21 +632,21 @@ const SCORE_HUES = ['#E98973','#8C6A8D','#7aaa8a','#5a9abf','#bf9a40'];
 // lane. CVD-validated 2026-07: worst colorblind pair is within-family (13.1),
 // so any confusion is a near-miss, never a category error.
 const STYLE_COLORS = {
-  'Gangsta/Street': '#bd5f50', 'Trap/Drill': '#d98a6d',
-  'Political': '#008b7e', 'Conscious/Lyrical': '#3fbaa0',
+  'Gangsta/Street': '#b7594b', 'Trap/Drill': '#d98a6d',
+  'Political': '#008377', 'Conscious/Lyrical': '#3fbaa0',
   'Abstract': '#5f4384', 'Experimental': '#a385c9',
-  'Jazz-Rap': '#a87d2a', 'Party/Pop': '#d3ab4d'
+  'Jazz-Rap': '#976e1a', 'Party/Pop': '#d3ab4d'
 };
-// Text color per fill, whichever of ink and white reads better on it. Five
-// fills clear 4.5:1 this way; Jazz-Rap (4.2), Political (4.2) and
-// Gangsta/Street (4.3) clear the 3:1 large-text line the symbol needs and fall
-// just short for the 9px name. The fills are a validated encoding, so they stay.
+// Text color per fill: in each lane the darker shade takes white and the
+// lighter shade takes ink, and every pairing clears 4.5:1 for the 9px name.
+// Gangsta/Street, Political and Jazz-Rap were darkened 2 to 6 points of
+// lightness (2026-11-21) to get there; they had sat at 4.2 to 4.3:1.
 const INK = '#2E1A47';
 const STYLE_TEXT = {
   'Gangsta/Street': '#ffffff', 'Trap/Drill': INK,
   'Political': '#ffffff', 'Conscious/Lyrical': INK,
   'Abstract': '#ffffff', 'Experimental': INK,
-  'Jazz-Rap': INK, 'Party/Pop': INK
+  'Jazz-Rap': '#ffffff', 'Party/Pop': INK
 };
 const REGION_SHAPE = {
   'East Coast': '●', 'West Coast': '★', 'South': '▲', 'Midwest': '■'
